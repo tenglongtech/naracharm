@@ -1,0 +1,15 @@
+{
+  "name": "@jewelry/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./schema.ts",
+  "types": "./schema.ts",
+  "exports": {
+    ".": "./schema.ts",
+    "./*": "./*.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.2"
+  }
+}

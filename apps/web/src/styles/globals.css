@@ -1,0 +1,64 @@
+@import 'tailwindcss';
+
+/**
+ * 手工民族融合首饰 —— 设计 token
+ * 详见 docs/design/DESIGN_SYSTEM.md
+ * Tailwind v4 用 @theme 定义设计 token
+ */
+@theme {
+  /* 色彩 —— 温暖复古调 (以首页设计稿为准) */
+  --color-brand: #c4745a; /* Terracotta 砖红 - 主品牌色 */
+  --color-accent: #c4745a; /* 同 brand,主强调色 */
+  --color-gold: #d4af37; /* Gold 金 - 点缀 */
+  --color-ink: #3a2e2b; /* Espresso 深棕 - 主文字/深色区块底 */
+  --color-muted: #6b4f47; /* Cocoa 中棕 - 次要文字 */
+  --color-bg: #faf7f1; /* Cream 奶白 - 主背景 */
+  --color-surface: #f3ede2; /* Sand 沙色 - 卡片底 */
+  --color-border: #e8dfd0; /* 浅边线 */
+
+  /* 字体 */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* 圆角 —— 偏小,传达匠人克制感 */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 标题用衬线展示字 */
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* 选中色 */
+::selection {
+  background-color: var(--color-brand);
+  color: white;
+}
+
+/* 尊重用户的动效偏好 (web-design-guidelines) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

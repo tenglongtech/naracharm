@@ -1,0 +1,45 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# next.js
+.next/
+out/
+build
+dist
+
+# env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# assets (大型源文件不进仓库)
+assets/products/*
+!assets/products/.gitkeep
+assets/moodboard/*
+!assets/moodboard/.gitkeep
+
+# 原始素材 (设计稿/产品原图,体积大,不入版本控制)
+产品图片/
+设计稿/
+
+# drizzle
+drizzle/meta/_journal.json.bak
