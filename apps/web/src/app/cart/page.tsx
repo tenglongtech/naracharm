@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import type { Metadata } from 'next';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { CartContents } from '@/components/cart-contents';

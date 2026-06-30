@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import type { MetadataRoute } from 'next';
 import { getActiveProducts, getAllCollections } from '@/lib/storefront';
 import { STORIES } from '@/lib/stories-data';
