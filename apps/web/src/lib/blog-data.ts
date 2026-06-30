@@ -424,6 +424,250 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 6: Obsidian Meaning (月搜 ~18K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'obsidian-meaning-protection-stone',
+    title: 'Obsidian Meaning: The Stone of Protection & Shadow Work',
+    description: 'Discover the meaning and healing properties of black obsidian — the ultimate protection stone. Learn what obsidian does, how it shields against negative energy, and how to wear it.',
+    keywords: ['obsidian meaning', 'black obsidian', 'obsidian healing properties', 'what does obsidian do', 'obsidian protection', 'obsidian bracelet', 'volcanic glass stone'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '5 min read',
+    relatedProducts: ['obsidian-guard-charm', 'obsidian-guardian-charm'],
+    relatedArticles: ['turquoise-meaning-protection-stone', 'tibetan-jewelry-symbols-meaning'],
+    content: [
+      { heading: 'What Is Obsidian?', body: ['Obsidian is not a crystal in the traditional sense — it is volcanic glass, formed when molten lava cools so rapidly that crystals do not have time to grow. The result is a smooth, glossy, usually black stone that has been used by humans for at least 700,000 years.', 'Obsidian can be polished to a mirror-like finish, and ancient civilizations used it for scrying mirrors, arrowheads, and surgical tools. The Aztecs called it *itztli* ("the divine stone") and used it for both weapons and spiritual divination.', 'Today, obsidian is one of the most popular protection stones in crystal healing — worn by people who want to shield themselves from negative energy.'] },
+      { heading: 'Obsidian Meaning: The Shield Stone', body: ['Black obsidian is universally associated with **protection**. Its meaning centers on three qualities:', '**Shielding.** Obsidian is believed to act as an energetic shield, absorbing and blocking negative energy, psychic attacks, and emotional harm. Think of it as spiritual body armor.', '**Truth-revealing.** Obsidian is sometimes called the "stone of truth" because it is believed to bring hidden emotions and subconscious patterns to the surface. This can be uncomfortable — obsidian does not let you hide from yourself.', '**Grounding.** As a stone born from the earth\'s molten core, obsidian has a deeply grounding energy that connects you to the physical world and helps prevent spiritual escapism.'] },
+      { heading: 'Obsidian Healing Properties', body: ['In crystal healing, obsidian is believed to:', '**Block negative energy.** Wear obsidian when you feel drained by difficult people or environments. It is said to absorb negativity before it reaches you.', '**Reveal emotional blockages.** Obsidian is used in "shadow work" — the practice of confronting the hidden, repressed parts of yourself. It brings buried emotions to the surface so they can be healed.', '**Support detoxification.** In traditional healing, obsidian is associated with the digestive system and is believed to aid physical detoxification.', '**Provide travel protection.** Like turquoise, obsidian has a long history as a traveler\'s protective stone.'] },
+      { heading: 'Which Chakra Is Obsidian?', body: ['Obsidian is primarily associated with **the Root Chakra (Muladhara)** — the energy center at the base of the spine that governs survival, safety, and grounding.', 'When the root chakra is balanced, you feel secure, stable, and connected to the physical world. When it is blocked, you may feel anxious, scattered, or disconnected.', 'Obsidian\'s grounding energy is believed to strengthen and stabilize the root chakra, providing a foundation of safety from which all other spiritual work can proceed.'] },
+      { heading: 'How to Wear Obsidian', body: ['Obsidian is most effective when worn on the body, especially as a bracelet or charm:', '**Obsidian bracelets** worn on the right wrist (the projecting side) are believed to actively deflect negative energy outward.', '**Obsidian phone charms** are a modern way to carry protection — your phone goes everywhere with you, and now obsidian does too. [Shop our Obsidian Guard Phone Charm →](/products/obsidian-guard-charm)', '**Obsidian under the pillow** is believed to promote insightful (sometimes intense) dreams and protect during sleep.'] },
+      { heading: 'Obsidian and Turquoise: The Protection Combo', body: ['Obsidian and turquoise are one of the most powerful protection pairings. Where obsidian absorbs and blocks, turquoise deflects and guides. Together, they create a comprehensive energetic defense.', 'Wear an obsidian bracelet on one wrist and turquoise on the other for full-spectrum protection.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 7: Jade Meaning (月搜 ~15K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'jade-meaning-stone-of-wisdom',
+    title: 'Jade Meaning: The Stone of Wisdom, Luck & Eternal Serenity',
+    description: 'Discover the meaning and healing properties of jade — treasured above gold for 3,000 years. Learn what jade means in Chinese culture, its benefits, and how to wear it.',
+    keywords: ['jade meaning', 'jade stone meaning', 'what does jade mean', 'jade healing properties', 'jade pendant meaning', 'chinese jade', 'jade bracelet benefits'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '6 min read',
+    relatedProducts: ['han-jade-lotus-pendant', 'lotus-jade-bracelet'],
+    relatedArticles: ['amethyst-meaning-healing-properties', 'tibetan-jewelry-symbols-meaning'],
+    content: [
+      { heading: 'What Is Jade?', body: ['Jade is actually two different minerals sold under one name: **nephrite** (the traditional Chinese jade, ranging from creamy white to deep green) and **jadeite** (rarer, found in more colors including lavender and black). Both are extremely tough — jade is harder to break than steel, which is why it has been carved into tools and ornaments for over 7,000 years.', 'In Chinese, jade is called *yu* (玉) — a word that also means "precious," "pure," and "noble." The two concepts are inseparable: jade is not just a stone in Chinese culture, it is a moral and spiritual ideal.'] },
+      { heading: 'Jade Meaning in Chinese Culture', body: ['In China, jade has been the most revered stone for over 5,000 years. Confucius compared jade to virtue itself:', '> *"Its smoothness suggests benevolence; its brightness, intelligence; its transparency, honesty; its resilience, justice..."*', 'Jade represents:', '**Wisdom.** Jade is the stone of the scholar — worn by poets, philosophers, and emperors who valued depth over flash.', '**Good fortune.** Jade has long been associated with luck, prosperity, and longevity in Chinese culture.', '**Purity.** The translucent, cool surface of jade symbolizes a pure heart and clear intentions.', '**Immortality.** In ancient China, jade was sometimes placed in the mouths of the deceased, believed to preserve the body and guide the soul.'] },
+      { heading: 'Jade Healing Properties', body: ['In crystal healing, jade is believed to offer:', '**Emotional balance.** Jade has a remarkably soothing energy — not as gentle as rose quartz, but deeper and more grounding. It promotes serenity and emotional stability.', '**Good luck.** Jade is one of the most popular "lucky stones" in the world, believed to attract prosperity and opportunity.', '**Longevity.** In traditional Chinese medicine, jade is associated with the kidneys and is believed to support vitality and long life.', '**Heart healing.** Like rose quartz, jade is associated with the heart chakra, but where rose quartz is about love, jade is about wisdom in matters of the heart.'] },
+      { heading: 'Real Jade vs. Fake Jade', body: ['Because jade is so prized, the market is full of imitations. Here\'s how to tell real jade:', '**Weight.** Real jade is dense and feels heavier than expected for its size. If it feels light, it may be glass or plastic.', '**Temperature.** Real jade is cool to the touch and takes time to warm up in your hand. Fakes warm quickly.', '**Color variation.** Real jade has subtle color variations and natural inclusions. Perfectly uniform color often means dyed or synthetic.', '**Price.** Real jadeite is expensive. If the price seems too good to be true, it probably is.', 'At Nara Charm, we use jade-tone natural stones that capture the aesthetic and meaning of jade at an accessible price. [Shop our Han Jade Lotus Pendant →](/products/han-jade-lotus-pendant)'] },
+      { heading: 'How to Wear Jade', body: ['Jade is traditionally worn as a pendant (close to the heart) or as a bangle (on the wrist).', '**Jade pendants** on a silk cord are timeless — they never go out of style and carry the stone\'s wisdom close to your heart.', '**Jade bracelets** are believed to bring good luck to the wearer. In Chinese tradition, a jade bangle is often passed from mother to daughter as a family heirloom.', 'Jade pairs beautifully with silver — especially lotus-shaped silver accents, which add the Buddhist symbol of purity.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 8: Healing Crystals 101 (月搜 ~40K+)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'healing-crystals-101-beginners-guide',
+    title: 'Healing Crystals 101: A Beginner\'s Guide to Stones, Meanings & Uses',
+    description: 'New to healing crystals? This complete beginner\'s guide covers the top 10 crystals, their meanings, how to choose, cleanse, and use them. Start your crystal journey here.',
+    keywords: ['healing crystals', 'crystals for beginners', 'crystal meanings', 'how to use crystals', 'crystal guide', 'best crystals for healing', 'crystal properties', 'natural stones meaning'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '8 min read',
+    relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'turquoise-sky-bracelet', 'mixed-crystal-bracelet'],
+    relatedArticles: ['amethyst-meaning-healing-properties', 'rose-quartz-meaning-love-stone', 'how-to-style-beaded-bracelets'],
+    content: [
+      { heading: 'What Are Healing Crystals?', body: ['Healing crystals are natural stones — minerals formed by the earth over millions of years — that are believed to carry specific energies or properties. While there is no scientific evidence that crystals can heal physical disease, millions of people worldwide use them for emotional support, spiritual practice, meditation, and as beautiful, meaningful adornments.', 'Think of crystals as wearable intentions. Choosing an amethyst bracelet because you want calm, or a rose quartz because you want love, is a way of setting a daily intention — and having a beautiful physical reminder of that intention on your wrist.'] },
+      { heading: 'The Top 10 Healing Crystals (And What They Do)', body: ['Here are the 10 most popular healing stones and their core meanings:', '**1. Amethyst** — Calm, protection, spiritual wisdom. [Read full guide →](/blog/amethyst-meaning-healing-properties)', '**2. Rose Quartz** — Unconditional love, self-compassion, emotional healing. [Read full guide →](/blog/rose-quartz-meaning-love-stone)', '**3. Turquoise** — Protection, communication, sacred connection. [Read full guide →](/blog/turquoise-meaning-protection-stone)', '**4. Black Obsidian** — Protection, grounding, shadow work. [Read full guide →](/blog/obsidian-meaning-protection-stone)', '**5. Clear Quartz** — Clarity, amplification, energy clearing. The "master healer."', '**6. Citrine** — Abundance, success, positive energy. The "merchant\'s stone."', '**7. Black Tourmaline** — Protection, grounding, EMF shielding.', '**8. Lapis Lazuli** — Truth, communication, inner power.', '**9. Jade** — Wisdom, good luck, serenity. [Read full guide →](/blog/jade-meaning-stone-of-wisdom)', '**10. Carnelian** — Creativity, confidence, motivation.'] },
+      { heading: 'How to Choose Your First Crystal', body: ['The best way to choose a crystal is not by reading a guide (even this one) — it is by **noticing which stone you are drawn to**. Crystal healers believe that stones choose their wearers, not the other way around.', 'That said, if you want a starting point:', '**For stress and anxiety** → Amethyst', '**For love and heartbreak** → Rose Quartz', '**For protection** → Obsidian or Turquoise', '**For luck and prosperity** → Jade or Citrine', '**For confidence** → Carnelian or Tiger\'s Eye', '**For spiritual growth** → Amethyst or Clear Quartz'] },
+      { heading: 'How to Cleanse Crystals', body: ['Crystals are believed to absorb energy, so they need regular cleansing. Here are the most common methods:', '**Moonlight.** Place crystals under the full moon overnight. This is the gentlest method and works for all stones.', '**Running water.** Briefly rinse under cool water (avoid this for soft or water-soluble stones like selenite).', '**Sage smoke.** Pass crystals through the smoke of burning sage or palo santo.', '**Sound.** Use a singing bowl or bell near your crystals — the vibration clears stagnant energy.', '**Other crystals.** Place stones on a bed of clear quartz or selenite, which are believed to cleanse other crystals.'] },
+      { heading: 'How to Use Crystals in Daily Life', body: ['**Wear them.** The most practical way to use crystals is as jewelry — bracelets, necklaces, rings. This keeps the stone\'s energy close to your body all day. [Shop crystal bracelets →](/collections/crystal)', '**Carry them.** Keep a small tumbled stone in your pocket or bag.', '**Meditate with them.** Hold a crystal in your hand or place it on the relevant chakra during meditation.', '**Place them in your space.** Put crystals on your desk, bedside table, or windowsill to influence the energy of a room.', '**Sleep with them.** Place a calming stone (amethyst or rose quartz) under your pillow.'] },
+      { heading: 'Do Crystals Actually Work?', body: ['The honest answer: there is no peer-reviewed scientific evidence that crystals heal physical illness. What studies *do* show is that the ritual of choosing, wearing, and being mindful of a crystal can reduce anxiety and increase feelings of well-being — similar to the placebo effect, but no less real for the person experiencing it.', 'The most balanced view: crystals are beautiful, meaningful objects that connect us to the natural world and to our own intentions. Whether their energy is "real" or symbolic, the act of wearing a stone you chose for its meaning is a daily practice of mindfulness.', 'And if they look beautiful while doing it — which they do — that\'s reason enough.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 9: Beaded Jewelry Care Guide (月搜 ~8K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'beaded-jewelry-care-guide',
+    title: 'How to Care for Beaded Jewelry: Cleaning, Storage & Maintenance Tips',
+    description: 'Keep your beaded bracelets and necklaces beautiful for years. Learn how to clean, store, and maintain natural stone jewelry, elastic bracelets, and silver accents.',
+    keywords: ['beaded jewelry care', 'how to clean beaded bracelet', 'crystal jewelry care', 'natural stone jewelry maintenance', 'elastic bracelet care', 'silver jewelry care', 'how to store beaded jewelry'],
+    category: 'Care Guide',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '5 min read',
+    relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'turquoise-sky-bracelet'],
+    relatedArticles: ['how-to-style-beaded-bracelets', 'healing-crystals-101-beginners-guide'],
+    content: [
+      { heading: 'Why Beaded Jewelry Needs Special Care', body: ['Unlike metal jewelry, beaded bracelets and necklaces are made of natural materials — genuine stones, elastic cord, waxed cotton, and silver accents. Each of these materials behaves differently and requires specific care.', 'With proper care, your beaded jewelry can last for years. Without it, elastic can stretch, stones can crack, and silver can tarnish. Here\'s how to keep every piece looking its best.'] },
+      { heading: 'General Rules for All Beaded Jewelry', body: ['**Last on, first off.** Put your jewelry on after applying lotion, perfume, hairspray, and makeup. Take it off before bed.', '**Avoid water.** Remove beaded bracelets before showering, swimming, or washing dishes. Water weakens elastic cord and can damage porous stones.', '**Avoid chemicals.** Household cleaners, chlorine, and even hand sanitizer can damage stones and cord.', '**Store separately.** Keep beaded jewelry in a soft pouch or separate compartment to prevent scratching.', '**Don\'t stretch elastic.** Roll beaded bracelets on and off your hand — don\'t pull or stretch the cord.'] },
+      { heading: 'How to Clean Natural Stone Beads', body: ['For most natural stone beads (amethyst, rose quartz, agate, etc.):', '**Wipe with a soft, dry cloth** after each wear to remove oils and sweat.', '**For deeper cleaning**, slightly dampen a soft cloth with plain water and wipe gently. Dry immediately with a clean cloth.', '**Never soak** beaded jewelry — water can weaken the elastic cord and seep into porous stones.', '**Never use ultrasonic cleaners** — the vibrations can crack beads and break the cord.'] },
+      { heading: 'Caring for Specific Stones', body: ['**Turquoise:** The most sensitive stone. Avoid ALL water, oils, and chemicals. Turquoise is porous and can change color if it absorbs liquids. Wipe with a dry cloth only.', '**Amethyst & Rose Quartz:** Avoid prolonged sunlight — these stones can fade. Store in a dark pouch.', '**Obsidian:** Fairly durable, but can scratch. Store away from harder stones.', '**Jade:** Wipe with a soft cloth. Some people "condition" jade by rubbing it with their fingers — the natural oils are believed to improve its luster over time.'] },
+      { heading: 'Caring for Silver Accents', body: ['The Miao silver accents on our bracelets will naturally develop a patina (darkening) over time. This is normal and many people find it beautiful.', '**To restore shine:** Rub gently with a silver polishing cloth.', '**To slow tarnishing:** Store in an airtight bag with the anti-tarnish strip included with your order.', '**Never use liquid silver dip** on beaded jewelry — it will damage the cord and stones.'] },
+      { heading: 'When to Restring', body: ['Even with perfect care, elastic cord will eventually stretch or weaken. Signs it\'s time to restring:', '- The bracelet feels loose or stretches easily', '- The cord looks frayed or discolored', '- Beads slide around loosely on the cord', '- You see any gaps between beads', 'With daily wear, expect to restring every 1-2 years. [Contact us](/contact) if you need restrung service.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 10: Phone Charm Trend (月搜 ~12K, 上升趋势)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'phone-charm-trend-2026',
+    title: 'Phone Charms Are Back: The 2026 Jewelry Trend You Need to Know',
+    description: 'Phone charms are the biggest jewelry trend of 2026. Learn why beaded phone charms, crystal wrist straps, and protective phone lanyards are everywhere — and how to choose yours.',
+    keywords: ['phone charm trend', 'beaded phone charm', 'phone charm strap', 'crystal phone charm', 'phone lanyard trend', 'phone wrist strap', 'phone charm 2026', 'kawaii phone charm'],
+    category: 'Styling',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '5 min read',
+    relatedProducts: ['obsidian-guard-charm', 'cinnabar-cord-charm', 'tai-silk-cord-phone-charm'],
+    relatedArticles: ['how-to-style-beaded-bracelets', 'obsidian-meaning-protection-stone'],
+    content: [
+      { heading: 'The Phone Charm Comeback', body: ['Phone charms — those decorative straps that dangle from your phone — are having their biggest moment since the Y2K era. Google Trends data shows searches for "phone charm" hitting their highest level in years, with a significant peak in early 2025 and continued growth into 2026.', 'But the 2026 phone charm is different from the plastic, rhinestone-encrusted versions of the early 2000s. Today\'s phone charms are **natural, meaningful, and beautifully crafted** — made with genuine gemstone beads, hand-braided cord, and cultural symbolism.'] },
+      { heading: 'Why Phone Charms Are Trending', body: ['Several factors are driving the phone charm renaissance:', '**Phones are our most-carried object.** We hold our phones more than any other possession. Personalizing them feels as natural as choosing a watch or a ring.', '**The Y2K nostalgia wave.** Gen Z and Millennials are rediscovering early-2000s aesthetics, and phone charms are a key part of that nostalgia.', '**Meaningful accessories.** Unlike a plain phone case, a crystal phone charm carries intention — protection, luck, love. It\'s jewelry with a purpose.', '**TikTok visibility.** Phone charms are highly visual and photograph beautifully, making them perfect for social media.'] },
+      { heading: 'Types of Phone Charms', body: ['**Beaded phone charms** — Made with natural stone beads (obsidian, turquoise, amethyst) strung on durable cord. The most popular type.', '**Wrist strap phone charms** — A loop of beaded cord that goes around your wrist, preventing drops. Both decorative and functional.', '**Woven/cord phone charms** — Hand-braided cord in traditional patterns (Mongolian knot, Chinese knot, Thai weave). Lightweight and colorful.', '**Crystal phone charms** — Featuring larger, statement crystals or pendants. More jewelry-like, less casual.'] },
+      { heading: 'How to Choose a Phone Charm with Meaning', body: ['Unlike generic phone accessories, gemstone phone charms carry the meaning of their stones:', '**For protection** → Obsidian phone charm (blocks negative energy)', '**For good fortune** → Cinnabar/Red bead phone charm (Asian blessing color)', '**For calm** → Amethyst phone charm (soothing energy)', '**For style** → Thai silk phone charm (iridescent color, beautiful texture)', '[Shop our Phone Charm Collection →](/collections/charms)'] },
+      { heading: 'How to Attach a Phone Charm', body: ['Most phone cases have a small hole at the bottom corner (often called the "lanyard hole") designed for charms and straps. Simply thread the loop of cord through the hole, then pass the charm back through the loop to secure it.', 'If your case doesn\'t have a hole, you can use a phone charm adapter (a small plug that fits into the charging port) or choose a case with a built-in charm attachment point.'] },
+      { heading: 'Phone Charms as the New Bracelet', body: ['In 2026, your phone charm is an extension of your jewelry stack. Coordinate it with your bracelets for a cohesive look — or let it be a standalone statement on the object you hold most.', 'After all, you check your phone an average of 96 times a day. Each time, your charm lights up with you. [Shop phone charms →](/collections/charms)'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 11: Best Crystal Gifts (月搜 ~10K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'best-crystal-gift-guide',
+    title: 'The Crystal Gift Guide: Which Stone to Gift for Every Occasion',
+    description: 'Not sure which crystal to gift? This guide matches stones to occasions — amethyst for stress, rose quartz for love, turquoise for travel. Find the perfect meaningful gift.',
+    keywords: ['crystal gift', 'best crystal to gift', 'jewelry gift guide', 'meaningful jewelry gift', 'crystal bracelet gift', 'gemstone gift meaning', 'spiritual gift guide'],
+    category: 'Gift Guide',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '6 min read',
+    relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'turquoise-sky-bracelet', 'lotus-jade-bracelet'],
+    relatedArticles: ['amethyst-meaning-healing-properties', 'rose-quartz-meaning-love-stone', 'healing-crystals-101-beginners-guide'],
+    content: [
+      { heading: 'Why Crystal Jewelry Makes the Best Gift', body: ['Crystal jewelry is the most meaningful gift you can give. Unlike generic accessories, each stone carries a specific message — calm, love, protection, wisdom. When you gift a crystal bracelet, you\'re not just giving a beautiful object; you\'re giving an intention.', 'Every time the recipient looks at their wrist, they\'ll be reminded of you and the meaning behind the stone you chose.'] },
+      { heading: 'For Stress Relief → Amethyst', body: ['**Message:** "I want you to have peace."', 'Amethyst is the stone of calm. Gift it to someone going through a stressful time — a new job, exams, a difficult transition. It says: "I see you\'re stressed, and I want to help you find your center."', '[Shop Amethyst Peace Bracelet →](/products/amethyst-peace-bracelet)'] },
+      { heading: 'For Love & Romance → Rose Quartz', body: ['**Message:** "My heart is yours."', 'Rose quartz is the stone of unconditional love. Gift it to a partner, a crush, or a close friend. For anniversaries, Valentine\'s Day, or just because.', '[Shop Rose Quartz Bracelet →](/products/rose-quartz-bracelet)'] },
+      { heading: 'For Travel & Protection → Turquoise', body: ['**Message:** "Stay safe on your journey."', 'Turquoise has been a traveler\'s protection stone for thousands of years. Gift it to someone about to travel, study abroad, or start a new chapter.', '[Shop Turquoise Sky Bracelet →](/products/turquoise-sky-bracelet)'] },
+      { heading: 'For Wisdom & Success → Jade', body: ['**Message:** "May you find wisdom and good fortune."', 'Jade is the stone of wisdom and luck. Gift it to a graduate, someone starting a new career, or anyone facing important decisions.', '[Shop Lotus Jade Bracelet →](/products/lotus-jade-bracelet)'] },
+      { heading: 'For Protection → Obsidian', body: ['**Message:** "I\'ve got your back."', 'Obsidian is the ultimate protection stone. Gift it to someone dealing with difficult people, a toxic environment, or emotional challenges.', '[Shop Obsidian Guard Charm →](/products/obsidian-guard-charm)'] },
+      { heading: 'For Every Day → Mixed Crystal', body: ['**Message:** "You deserve balance."', 'Can\'t choose just one? A mixed crystal bracelet combines multiple stones, each bringing its own energy. It\'s the gift of harmony.', '[Shop Mixed Crystal Bracelet →](/products/mixed-crystal-bracelet)'] },
+      { heading: 'How to Present a Crystal Gift', body: ['When giving a crystal gift, tell the recipient **what the stone means**. This transforms a pretty bracelet into a powerful, personal gesture. Every Nara Charm order includes a handwritten story card — so you can add your own message too.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 12: Chakra Stones Guide (月搜 ~14K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'chakra-stones-guide',
+    title: 'Chakra Stones: Which Crystals Balance Each of the 7 Chakras',
+    description: 'Complete guide to chakra stones — which crystals balance each of the 7 chakras, from root to crown. Learn how to choose stones for grounding, creativity, love, and spiritual connection.',
+    keywords: ['chakra stones', '7 chakras crystals', 'root chakra stone', 'heart chakra crystal', 'crown chakra stone', 'chakra healing stones', 'which crystal for which chakra', 'chakra bracelet'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '7 min read',
+    relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'mixed-crystal-bracelet'],
+    relatedArticles: ['healing-crystals-101-beginners-guide', 'amethyst-meaning-healing-properties'],
+    content: [
+      { heading: 'What Are Chakras?', body: ['In Hindu and Buddhist traditions, chakras are energy centers in the body. There are seven main chakras, running from the base of the spine to the top of the head. Each is associated with specific physical, emotional, and spiritual functions.', 'When a chakra is "balanced," energy flows freely. When it\'s blocked, you may experience physical or emotional issues related to that energy center. Crystal healing uses specific stones to help balance each chakra.'] },
+      { heading: 'The 7 Chakras and Their Stones', body: ['**1. Root Chakra (Muladhara)** — Base of spine. Theme: Safety, survival, grounding.', 'Stones: Obsidian, Black Tourmaline, Red Jasper, Hematite.', '**2. Sacral Chakra (Svadhisthana)** — Lower abdomen. Theme: Creativity, passion, pleasure.', 'Stones: Carnelian, Orange Calcite, Sunstone.', '**3. Solar Plexus Chakra (Manipura)** — Upper abdomen. Theme: Confidence, willpower, self-esteem.', 'Stones: Citrine, Tiger\'s Eye, Yellow Jasper.', '**4. Heart Chakra (Anahata)** — Center of chest. Theme: Love, compassion, connection.', 'Stones: Rose Quartz, Jade, Green Aventurine.', '**5. Throat Chakra (Vishuddha)** — Throat. Theme: Communication, truth, self-expression.', 'Stones: Turquoise, Lapis Lazuli, Blue Lace Agate.', '**6. Third Eye Chakra (Ajna)** — Between eyebrows. Theme: Intuition, perception, wisdom.', 'Stones: Amethyst, Lapis Lazuli, Sodalite.', '**7. Crown Chakra (Sahasrara)** — Top of head. Theme: Spiritual connection, higher consciousness.', 'Stones: Amethyst, Clear Quartz, Selenite.'] },
+      { heading: 'How to Use Chakra Stones', body: ['**Wear them.** The easiest way to balance chakras is to wear the corresponding stone as jewelry. A rose quartz bracelet supports the heart chakra; an amethyst bracelet supports the third eye and crown.', '**Meditate with them.** Lie down and place the stone on the corresponding chakra point. For example, place rose quartz on your chest for the heart chakra.', '**Carry them.** Keep chakra stones in your pocket or bag for ongoing support.', '[Shop chakra-friendly crystal bracelets →](/collections/crystal)'] },
+      { heading: 'Which Chakra Do You Need to Balance?', body: ['Not sure which chakra to focus on? Here\'s a quick self-check:', '**Feeling anxious or ungrounded?** → Root (obsidian)', '**Feeling creatively blocked?** → Sacral (carnelian)', '**Feeling powerless or insecure?** → Solar Plexus (citrine)', '**Feeling heartbroken or disconnected?** → Heart (rose quartz)', '**Struggling to speak your truth?** → Throat (turquoise)', '**Feeling unclear or disconnected from intuition?** → Third Eye (amethyst)', '**Feeling spiritually adrift?** → Crown (clear quartz)'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 13: Miao Filigree (月搜 ~5K, 文化深度)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'miao-silver-filigree-tradition',
+    title: 'Miao Silver Filigree: The 300-Year-Old Craft Behind Our Earrings',
+    description: 'Discover the ancient art of Miao silver filigree — a technique where silver is drawn finer than human hair. Learn the history, process, and cultural meaning of this endangered craft.',
+    keywords: ['miao silver', 'miao filigree', 'chinese silver craft', 'miao jewelry', 'silver filigree technique', 'ethnic chinese jewelry', 'miao people silver'],
+    category: 'Symbolism',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '6 min read',
+    relatedProducts: ['miao-filigree-drop-earrings'],
+    relatedArticles: ['tibetan-jewelry-symbols-meaning', 'how-to-style-beaded-bracelets'],
+    content: [
+      { heading: 'Who Are the Miao?', body: ['The Miao (苗族) are an ethnic minority living in the mountainous regions of southwest China — primarily Guizhou, Hunan, and Yunnan provinces. They are one of China\'s 55 recognized minority groups, with a population of about 9 million.', 'For the Miao, silver is not just decoration — it is identity. A Miao bride may wear 10-15 kilograms of silver jewelry at her wedding, representing her family\'s wealth, history, and blessings. Silver is inheritance, adornment, and spiritual protection, all at once.'] },
+      { heading: 'What Is Miao Filigree?', body: ['Miao filigree is a metalworking technique where silver is drawn into wire finer than a human hair, then coiled, twisted, and soldered into intricate forms — flowers, dragons, butterflies, and geometric patterns.', 'The process is painstaking:', '1. Silver is melted and drawn through progressively smaller holes in a drawplate until it becomes hair-thin wire.', '2. The wire is coiled around a template to create shapes — petals, leaves, spirals.', '3. Each tiny element is individually soldered into place with a blowtorch and borax flux.', '4. The finished piece is polished, sometimes "antiqued" with a chemical wash to darken the recesses.', 'A single pair of filigree earrings can take a craftsman 2-3 days to complete.'] },
+      { heading: 'Why Miao Silver Matters', body: ['Miao silver filigree is more than a craft — it is a living link to a culture that has maintained its identity for thousands of years. Each piece carries:', '**Family history.** Miao silver is passed down through generations. A daughter inherits her mother\'s silver, adding her own pieces over time.', '**Spiritual protection.** In Miao belief, silver wards off evil spirits. Babies are given silver bracelets shortly after birth.', **Cultural identity.** The patterns on Miao silver are not random — they are clan symbols, historical records, and stories told in metal.'] },
+      { heading: 'How to Identify Quality Filigree', body: ['True hand-made filigree has telltale signs:', '**Tiny variations.** Each coil and spiral is slightly different — machine-made pieces are perfectly uniform.', '**Delicate movement.** The finest filigree "trembles" when you move — the thin wire elements have a slight, living flexibility.', '**Weight.** Real silver filigree has substance. If it feels too light, it may be silver-plated base metal.', '**Detail.** Look closely: you should see individual wire coils, not a solid cast surface.', '[Shop our Miao Filigree Drop Earrings →](/products/miao-filigree-drop-earrings)'] },
+      { heading: 'An Endangered Craft', body: ['There are fewer than 100 master Miao filigree artisans left. Young people are leaving the mountains for cities, and the 30-year apprenticeship required to master the craft is increasingly rare.', 'By wearing Miao filigree, you are helping to keep this tradition alive — supporting the artisans who practice it and the culture it represents.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 14: Lapis Lazuli (月搜 ~8K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'lapis-lazuli-meaning',
+    title: 'Lapis Lazuli Meaning: The Royal Stone of Truth & Inner Power',
+    description: 'Discover the meaning and healing properties of lapis lazuli — the deep blue stone treasured by pharaohs and artists. Learn what lapis lazuli means and how to wear it.',
+    keywords: ['lapis lazuli meaning', 'lapis lazuli healing properties', 'what does lapis lazuli do', 'lapis lazuli stone', 'royal blue stone', 'lapis lazuli bracelet', 'stone of truth'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '5 min read',
+    relatedProducts: ['mixed-crystal-bracelet'],
+    relatedArticles: ['amethyst-meaning-healing-properties', 'chakra-stones-guide'],
+    content: [
+      { heading: 'What Is Lapis Lazuli?', body: ['Lapis lazuli is a deep blue stone flecked with gold (pyrite) and white (calcite), giving it the appearance of a starry night sky. It has been prized for over 6,000 years — mined in Afghanistan since the Neolithic period.', 'The word "lapis" means stone in Latin; "lazuli" comes from the Persian *lazhward*, the name of the region where it was mined. The English word "azure" (and the color blue itself, in some etymologies) derives from lapis lazuli.'] },
+      { heading: 'Lapis Lazuli Through History', body: ['**Ancient Egypt:** Lapis was the most prized gemstone of the pharaohs. It was carved into scarabs, amulets, and used in the famous death mask of Tutankhamun. Cleopatra used ground lapis as blue eyeshadow.', '**Renaissance art:** Before synthetic paints, ground lapis lazuli was the source of **ultramarine** — the most expensive blue paint in the world. Michelangelo used it in the Sistine Chapel.', '**Ancient Persia and Rome:** Lapis was believed to be a stone of royalty, wisdom, and the divine.'] },
+      { heading: 'Lapis Lazuli Meaning & Properties', body: ['**Truth.** Lapis is the stone of honest communication and self-knowledge. It is believed to help you speak your truth and see yourself clearly.', '**Inner power.** Associated with royalty for millennia, lapis carries an energy of quiet authority and self-confidence.', '**Wisdom.** Lapis stimulates the third eye chakra, enhancing intellectual ability, critical thinking, and spiritual insight.', '**Friendship.** In some traditions, gifting lapis is believed to strengthen the bond between friends.'] },
+      { heading: 'How to Wear Lapis Lazuli', body: ['Lapis is a bold, statement stone. Its deep blue with gold flecks pairs beautifully with silver settings.', 'Wear lapis when you need to speak honestly, make an important decision, or step into your power. It\'s also a stunning accent for evening wear — the gold flecks catch candlelight beautifully.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 15: Endless Knot Meaning (月搜 ~6K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'endless-knot-meaning',
+    title: 'The Endless Knot: Meaning of Buddhism\'s Most Powerful Symbol',
+    description: 'Discover the meaning of the endless knot — the Buddhist symbol of interconnection and infinite wisdom. Learn why it\'s used in jewelry and what it means for the wearer.',
+    keywords: ['endless knot meaning', 'endless knot symbol', 'buddhist symbols meaning', 'infinity knot jewelry', 'mongolian knot meaning', 'endless knot bracelet', 'auspicious symbols buddhism'],
+    category: 'Symbolism',
+    author: 'Nara Charm',
+    publishedAt: '2026-06-30',
+    updatedAt: '2026-06-30',
+    readingTime: '5 min read',
+    relatedProducts: ['hadas-knot-red-cord', 'mongolian-road-knot-cord'],
+    relatedArticles: ['tibetan-jewelry-symbols-meaning', 'obsidian-meaning-protection-stone'],
+    content: [
+      { heading: 'What Is the Endless Knot?', body: ['The endless knot (Sanskrit: *Shrivatsa*; Tibetan: *palbeu*) is one of the Eight Auspicious Symbols of Buddhism. It is a closed, interwoven pattern of lines that loops around itself with no clear beginning or end.', 'It appears in Hindu, Buddhist, and Jain traditions, and across cultures from Tibet to Mongolia to Celtic Britain — wherever humans have been fascinated by the idea of infinity and interconnection.'] },
+      { heading: 'Endless Knot Meanings', body: ['**Interdependence.** The knot\'s lines weave in and out of each other, showing how all things are connected. Everything you do affects everything else.', '**Infinite wisdom.** With no beginning and no end, the knot represents the limitless nature of wisdom and compassion.', '**Eternal bond.** In many cultures, the endless knot is a symbol of enduring love and friendship — a bond that cannot be untied.', '**Luck and protection.** In Tibetan and Mongolian traditions, the endless knot is a protective symbol, believed to bring good fortune and ward off harm.'] },
+      { heading: 'The Endless Knot in Jewelry', body: ['When woven into cord or carved into silver, the endless knot becomes a wearable blessing.', '**In Mongolian tradition**, mothers tie endless knot cords for their children before they travel — a physical manifestation of the blessing "may all things connect to bring you home safely."', '**In Tibetan jewelry**, the knot is often paired with turquoise for a double layer of protection and connection.', '[Shop our Mongolian knot cord →](/products/hadas-knot-red-cord)'] },
+      { heading: 'Why We Never Tie the Knot Shut', body: ['There is a beautiful detail in how endless knot cords are traditionally worn: **the knot is never fully closed.** It has a small opening — a gap — because a blessing must stay alive. It must be able to breathe, to grow, to travel, and one day, intact, to return on the wind.', 'This is why our knot bracelets and phone charms always have that slight looseness. It\'s not a flaw — it\'s the point.'] },
+    ],
+  },
 ];
 
 // ─── 查询函数 ───────────────────────────────────────────────────────────
