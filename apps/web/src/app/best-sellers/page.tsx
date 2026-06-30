@@ -1,21 +1,29 @@
 import type { Metadata } from 'next';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
-import { ProductTile } from '@/components/product-tile';
-import { BEST_SELLERS, SAMPLE_PRODUCTS, type ProductCard } from '@/lib/sample-data';
+import { ProductTile, type ProductCard } from '@/components/product-tile';
+import { getActiveProducts } from '@/lib/storefront';
 
-/**
- * /best-sellers - 畅销页
- * 展示畅销 + 全部商品
- */
 export const metadata: Metadata = {
   title: 'Best Sellers',
   description: 'The most-loved Nara Charm pieces — handmade jewelry our customers keep coming back for.',
 };
 
-export default function BestSellersPage() {
-  // 全部商品 (除畅销外)
-  const bestSlugs = new Set(BEST_SELLERS.map((p) => p.slug));
-  const allProducts: ProductCard[] = SAMPLE_PRODUCTS.filter((p) => !bestSlugs.has(p.slug));
+function toCard(p: Awaited<ReturnType<typeof getActiveProducts>>[number]): ProductCard {
+  return {
+    slug: p.slug,
+    name: p.name,
+    heritage: p.heritage ?? 'Handmade',
+    price: `$${(p.basePriceCents / 100).toFixed(0)}`,
+    compareAt: p.compareAtPriceCents ? `$${(p.compareAtPriceCents / 100).toFixed(0)}` : null,
+    tag: p.compareAtPriceCents ? 'Sale' : p.isFeatured ? 'Featured' : null,
+    image: p.primaryImage ?? undefined,
+  };
+}
+
+export default async function BestSellersPage() {
+  const all = (await getActiveProducts()).map(toCard);
+  const featured = all.filter((p) => p.tag === 'Featured' || p.tag === 'Sale');
+  const best = featured.length > 0 ? featured : all.slice(0, 8);
 
   return (
     <>
@@ -36,25 +44,23 @@ export default function BestSellersPage() {
         <section className="mx-auto max-w-7xl px-4 py-16 md:py-20">
           <h2 className="font-display text-2xl mb-8">Most Loved</h2>
           <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:gap-6">
-            {BEST_SELLERS.map((p) => (
+            {best.map((p) => (
               <ProductTile key={p.slug} product={p} />
             ))}
           </div>
         </section>
 
         {/* 全部商品 */}
-        {allProducts.length > 0 && (
-          <section className="border-t border-border">
-            <div className="mx-auto max-w-7xl px-4 py-16 md:py-20">
-              <h2 className="font-display text-2xl mb-8">All Pieces</h2>
-              <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:gap-6">
-                {allProducts.map((p) => (
-                  <ProductTile key={p.slug} product={p} />
-                ))}
-              </div>
+        <section className="border-t border-border">
+          <div className="mx-auto max-w-7xl px-4 py-16 md:py-20">
+            <h2 className="font-display text-2xl mb-8">All Pieces</h2>
+            <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:gap-6">
+              {all.map((p) => (
+                <ProductTile key={p.slug} product={p} />
+              ))}
             </div>
-          </section>
-        )}
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </>

@@ -1,13 +1,29 @@
+import type { Metadata } from 'next';
 import { LegalPage } from '@/components/legal-page';
+import { siteConfig } from '@/lib/site-config';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'How Nara Charm collects, uses, and protects your personal data. GDPR and CCPA compliant. Your data is never sold.',
+  alternates: { canonical: '/privacy' },
+};
 
 /** /privacy - 隐私政策 */
 export default function PrivacyPage() {
+  const c = siteConfig.company;
   return (
     <LegalPage
       title="Privacy Policy"
       updated="June 2026"
       intro="This policy explains what information we collect, why, and how we protect it."
       sections={[
+        {
+          heading: 'Data Controller',
+          body: [
+            `The data controller responsible for your personal data is ${c.name}, ${c.address}.`,
+            `For any privacy-related questions or requests, contact us at ${c.privacyEmail}.`,
+          ],
+        },
         {
           heading: 'Information We Collect',
           body: [
@@ -33,7 +49,7 @@ export default function PrivacyPage() {
           heading: 'Your Rights (GDPR & CCPA)',
           body: [
             'You have the right to access, correct, export, or delete the personal data we hold about you.',
-            'To exercise any of these rights, email privacy@naracharm.com and we will respond within 30 days.',
+            `To exercise any of these rights, email ${c.privacyEmail} and we will respond within 30 days.`,
           ],
         },
         {
@@ -44,7 +60,7 @@ export default function PrivacyPage() {
         },
         {
           heading: 'Contact',
-          body: ['Questions about your privacy? Email privacy@naracharm.com.'],
+          body: [`Questions about your privacy? Email ${c.privacyEmail}.`],
         },
       ]}
     />

@@ -2,42 +2,53 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
-import { ProductTile } from '@/components/product-tile';
-import {
-  COLLECTIONS,
-  getCollectionBySlug,
-  getProductsByCollection,
-  getCategoryBySlug,
-  getProductsByCategory,
-} from '@/lib/sample-data';
+import { ProductTile, type ProductCard } from '@/components/product-tile';
+import { getCollectionBySlug, getProductsByCollection, getProductsByCategory, getAllCollections } from '@/lib/storefront';
+import { getCollectionNarrative, type CollectionSlug } from '@/lib/collection-narratives';
+import { CATEGORIES, type CategorySlug } from '@/lib/categories';
 
 /**
- * /collections/[slug] - 同时承载两种内容:
- *  1. 系列详情页 (tibetan / thai-wind / fusion) - 文化故事 + Symbols + 商品
- *  2. 品类筛选页 (phone-charms / necklaces / bracelets / earrings) - 简化版商品网格
- * 根据 slug 命中哪种,渲染对应视图。
+ * /collections/[slug]
+ * - 系列详情: 商品从 DB 读 + 叙事(symbols/intro)从静态映射
+ * - 品类筛选: 商品从 DB 按 category 读
  */
 
 type Params = { params: Promise<{ slug: string }> };
 
+function toCard(p: Awaited<ReturnType<typeof getProductsByCollection>>[number]): ProductCard {
+  return {
+    slug: p.slug,
+    name: p.name,
+    heritage: p.heritage ?? 'Handmade',
+    price: `$${(p.basePriceCents / 100).toFixed(0)}`,
+    compareAt: p.compareAtPriceCents ? `$${(p.compareAtPriceCents / 100).toFixed(0)}` : null,
+    tag: p.compareAtPriceCents ? 'Sale' : null,
+    image: p.primaryImage ?? undefined,
+  };
+}
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const collection = getCollectionBySlug(slug);
-  if (collection) return { title: collection.name, description: collection.heroSubtitle };
-  const category = getCategoryBySlug(slug);
+  const collection = await getCollectionBySlug(slug);
+  if (collection) return { title: collection.name, description: collection.description || undefined };
+  const category = CATEGORIES.find((c) => c.slug === slug);
   if (category) return { title: category.name, description: category.heroSubtitle };
   return { title: 'Collection not found' };
 }
 
 export default async function CollectionPage({ params }: Params) {
   const { slug } = await params;
-  const collection = getCollectionBySlug(slug);
-  const category = getCategoryBySlug(slug);
+  const [collection, allCollections] = await Promise.all([
+    getCollectionBySlug(slug),
+    getAllCollections(),
+  ]);
+  const category = CATEGORIES.find((c) => c.slug === slug) as { slug: CategorySlug; name: string; icon: string; heroSubtitle: string } | undefined;
+  const narrative = getCollectionNarrative(slug as CollectionSlug);
   if (!collection && !category) notFound();
 
   // 品类视图
-  if (category) {
-    const products = getProductsByCategory(slug);
+  if (category && !collection) {
+    const products = (await getProductsByCategory(category.slug)).map(toCard);
     return (
       <>
         <SiteHeader />
@@ -74,44 +85,71 @@ export default async function CollectionPage({ params }: Params) {
     );
   }
 
-  // 系列视图 (走到这里 collection 一定存在,因上面 category 分支已 return,未命中则 notFound)
+  // 系列视图
   if (!collection) notFound();
-  const products = getProductsByCollection(slug);
+  const products = (await getProductsByCollection(slug)).map(toCard);
+  const n = narrative;
+
+  // Collection + ItemList JSON-LD
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const collectionJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: collection.name,
+    description: collection.description || n?.intro?.[0] || undefined,
+    url: `${siteUrl}/collections/${slug}`,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: products.length,
+      itemListElement: products.slice(0, 10).map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `${siteUrl}/products/${p.slug}`,
+        name: p.name,
+      })),
+    },
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
       <SiteHeader />
       <main id="main">
         {/* Hero Banner */}
         <section className="relative border-b border-border bg-ink text-bg">
           <div className="mx-auto max-w-7xl px-4 py-20 text-center md:py-28">
             <LotusMark className="mx-auto h-10 w-10 text-gold" />
-            <p className="mt-4 text-xs uppercase tracking-[0.3em] text-gold">{collection.heritage}</p>
-            <h1 className="mt-3 font-display text-4xl md:text-6xl">{collection.heroTitle}</h1>
+            <p className="mt-4 text-xs uppercase tracking-[0.3em] text-gold">{collection.heritage || 'Handmade'}</p>
+            <h1 className="mt-3 font-display text-4xl md:text-6xl">{n?.heroTitle || collection.name}</h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-bg/80">
-              {collection.heroSubtitle}
+              {n?.heroSubtitle || collection.description}
             </p>
-            <p className="mt-4 font-display italic text-bg/60">{collection.tagline}</p>
+            {n?.tagline && <p className="mt-4 font-display italic text-bg/60">{n.tagline}</p>}
           </div>
         </section>
 
         {/* 文化故事 intro */}
-        <section className="mx-auto max-w-3xl px-4 py-16 md:py-20">
-          <div className="space-y-5 leading-relaxed text-ink/85 md:text-lg">
-            {collection.intro.map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
-        </section>
+        {n?.intro && (
+          <section className="mx-auto max-w-3xl px-4 py-16 md:py-20">
+            <div className="space-y-5 leading-relaxed text-ink/85 md:text-lg">
+              {n.intro.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </section>
+        )}
 
-        {/* Symbols & Meaning ⭐ 接 STORY_DOCTRINE 寓意层 */}
-        {collection.symbols.length > 0 && (
+        {/* Symbols & Meaning */}
+        {n?.symbols && n.symbols.length > 0 && (
           <section className="border-y border-border bg-surface">
             <div className="mx-auto max-w-5xl px-4 py-14 md:py-16">
-              <p className="text-center text-xs uppercase tracking-[0.3em] text-brand">Symbols & Meaning</p>
+              <p className="text-center text-xs uppercase tracking-[0.3em] text-brand">Symbols &amp; Meaning</p>
               <h2 className="mt-3 text-center font-display text-3xl md:text-4xl">What Each Symbol Carries</h2>
               <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">
-                {collection.symbols.map((s) => (
+                {n.symbols.map((s) => (
                   <div key={s.name} className="bg-surface p-7">
                     <h3 className="font-display text-lg text-brand">{s.name}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted">{s.meaning}</p>
@@ -136,13 +174,13 @@ export default async function CollectionPage({ params }: Params) {
         </section>
 
         {/* Materials */}
-        {collection.materials.length > 0 && (
+        {n?.materials && n.materials.length > 0 && (
           <section className="border-t border-border bg-surface">
             <div className="mx-auto max-w-5xl px-4 py-14 md:py-16">
               <p className="text-center text-xs uppercase tracking-[0.3em] text-brand">Mindful Materials</p>
               <h2 className="mt-3 text-center font-display text-3xl md:text-4xl">What It&apos;s Made Of</h2>
               <div className="mt-10 grid gap-6 md:grid-cols-3">
-                {collection.materials.map((m) => (
+                {n.materials.map((m) => (
                   <div key={m.name} className="rounded-lg border border-border bg-bg p-6 text-center">
                     <h3 className="font-display text-lg">{m.name}</h3>
                     <p className="mt-1 text-xs uppercase tracking-wider text-gold">{m.origin}</p>
@@ -155,12 +193,12 @@ export default async function CollectionPage({ params }: Params) {
         )}
 
         {/* Styling Tips */}
-        {collection.stylingTips.length > 0 && (
+        {n?.stylingTips && n.stylingTips.length > 0 && (
           <section className="mx-auto max-w-4xl px-4 py-14 md:py-16">
             <p className="text-center text-xs uppercase tracking-[0.3em] text-brand">How to Wear</p>
             <h2 className="mt-3 text-center font-display text-3xl md:text-4xl">Styling Notes</h2>
             <ul className="mt-8 space-y-3">
-              {collection.stylingTips.map((tip) => (
+              {n.stylingTips.map((tip) => (
                 <li key={tip} className="rounded-lg border border-border bg-surface px-6 py-4 text-sm leading-relaxed text-ink/85">
                   ✦ {tip}
                 </li>
@@ -174,7 +212,7 @@ export default async function CollectionPage({ params }: Params) {
           <div className="mx-auto max-w-7xl px-4 py-12 text-center">
             <h2 className="font-display text-2xl">Explore Other Collections</h2>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              {COLLECTIONS.filter((c) => c.slug !== slug).map((c) => (
+              {allCollections.filter((c) => c.slug !== slug).map((c) => (
                 <Link
                   key={c.slug}
                   href={`/collections/${c.slug}`}
@@ -193,10 +231,9 @@ export default async function CollectionPage({ params }: Params) {
 }
 
 export async function generateStaticParams() {
-  // 预生成 系列页 + 品类页 两种 slug
-  const { CATEGORIES } = await import('@/lib/sample-data');
+  const collections = await getAllCollections();
   return [
-    ...COLLECTIONS.map((c) => ({ slug: c.slug })),
+    ...collections.map((c) => ({ slug: c.slug })),
     ...CATEGORIES.map((c) => ({ slug: c.slug })),
   ];
 }

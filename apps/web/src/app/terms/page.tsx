@@ -1,17 +1,35 @@
+import type { Metadata } from 'next';
 import { LegalPage } from '@/components/legal-page';
+import { siteConfig } from '@/lib/site-config';
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'The terms governing your use of Nara Charm and your purchases. Handmade products, pricing, orders, shipping, and returns.',
+  alternates: { canonical: '/terms' },
+};
 
 /** /terms - 服务条款 */
 export default function TermsPage() {
+  const c = siteConfig.company;
   return (
     <LegalPage
       title="Terms of Service"
       updated="June 2026"
-      intro="These terms govern your use of the Nara Charm website and your purchases from us."
+      intro={`These terms govern your use of the ${siteConfig.brand} website and your purchases from us.`}
       sections={[
+        {
+          heading: 'Company Information',
+          body: [
+            `${c.name} is the operator of this website.`,
+            `Registered address: ${c.address}.`,
+            c.registration ? `Business registration: ${c.registration}.` : '',
+            `Contact: ${c.contactEmail}.`,
+          ].filter(Boolean),
+        },
         {
           heading: 'Using This Site',
           body: [
-            'By using naracharm.com, you agree to these terms. You may not use the site for any unlawful purpose or in a way that harms us or others.',
+            `By using this website, you agree to these terms. You may not use the site for any unlawful purpose or in a way that harms us or others.`,
           ],
         },
         {
@@ -50,7 +68,7 @@ export default function TermsPage() {
         },
         {
           heading: 'Contact',
-          body: ['Questions about these terms? Email hello@naracharm.com.'],
+          body: [`Questions about these terms? Email ${c.contactEmail}.`],
         },
       ]}
     />

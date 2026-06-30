@@ -1,71 +1,29 @@
 import Link from 'next/link';
+import { SiteHeaderClient } from './site-chrome-client';
+import { getCart } from '@/lib/cart-actions';
+import { LotusMark } from './lotus-mark';
+import { siteConfig } from '@/lib/site-config';
 
-/** 莲花 logo (简化 SVG,正式 logo 确认后替换) */
-export function LotusMark({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M12 21c-4 0-7-3-7-7 0 0 3-1 7 4 4-5 7-4 7-4 0 4-3 7-7 7z" />
-      <path d="M12 18c-2-2-3-5-3-8 0 0 1.5-1 3 1 1.5-2 3-1 3-1 0 3-1 6-3 8z" />
-      <path d="M12 10c0-3 0-5 0-7" />
-    </svg>
-  );
+const socialConfig = siteConfig.social;
+
+// 重新导出 LotusMark 以保持向后兼容 (历史 import 路径)
+export { LotusMark };
+
+/**
+ * 全站 Header (server) — 拉购物车数量,注入 client header
+ */
+export async function SiteHeader() {
+  let count = 0;
+  try {
+    const cart = await getCart();
+    count = cart.itemCount;
+  } catch {
+    // DB 未就绪时 fallback 0
+  }
+  return <SiteHeaderClient cartCount={count} />;
 }
 
-/** 全站共享 Header (公告栏 + 导航) */
-export function SiteHeader() {
-  return (
-    <>
-      {/* 公告栏 */}
-      <div className="bg-ink text-bg">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 text-[11px] tracking-wide md:text-xs">
-          <span className="hidden sm:block">✦ Free shipping on orders over $120</span>
-          <span className="font-display italic">Jewelry with Spirit · Stories in Every Piece</span>
-          <span className="hidden sm:block">Ship to: 🌍 Worldwide</span>
-        </div>
-      </div>
-
-      {/* 导航 */}
-      <header className="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:py-5">
-          <div className="w-8 md:hidden" />
-          <Link href="/" className="flex items-center gap-2" aria-label="Nara Charm home">
-            <LotusMark className="h-7 w-7 text-brand" />
-            <span className="font-display text-2xl tracking-tight">
-              Nara <span className="text-brand">Charm</span>
-            </span>
-          </Link>
-          <nav className="hidden items-center gap-7 text-sm md:flex" aria-label="Primary">
-            <Link href="/collections" className="hover:text-brand transition-colors">Collections</Link>
-            <Link href="/best-sellers" className="hover:text-brand transition-colors">Best Sellers</Link>
-            <Link href="/stories" className="hover:text-brand transition-colors">Stories</Link>
-            <Link href="/our-craft" className="hover:text-brand transition-colors">Craftsmanship</Link>
-            <Link href="/about" className="hover:text-brand transition-colors">About</Link>
-            <Link href="/gift-guide" className="hover:text-brand transition-colors">Gift Guide</Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <Link href="/search" aria-label="Search" className="hover:text-brand">🔍</Link>
-            <Link href="/account" aria-label="Account" className="hover:text-brand">👤</Link>
-            <Link href="/cart" aria-label="Cart" className="hover:text-brand relative">
-              🛍️
-              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-brand text-[10px] text-bg">0</span>
-            </Link>
-          </div>
-        </div>
-      </header>
-    </>
-  );
-}
-
-/** 全站共享 Footer */
+/** 全站 Footer (server, 纯静态) */
 export function SiteFooter() {
   return (
     <footer className="bg-ink text-bg">
@@ -80,10 +38,10 @@ export function SiteFooter() {
             Every piece carries a story.
           </p>
           <div className="mt-4 flex gap-3 text-lg">
-            <a href="#" aria-label="Instagram" className="hover:text-gold">📷</a>
-            <a href="#" aria-label="TikTok" className="hover:text-gold">🎵</a>
-            <a href="#" aria-label="YouTube" className="hover:text-gold">▶️</a>
-            <a href="#" aria-label="Pinterest" className="hover:text-gold">📌</a>
+            {socialConfig.instagram && <a href={`https://instagram.com/${socialConfig.instagram}`} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-gold">📷</a>}
+            {socialConfig.tiktok && <a href={`https://tiktok.com/@${socialConfig.tiktok}`} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-gold">🎵</a>}
+            {socialConfig.youtube && <a href={`https://youtube.com/@${socialConfig.youtube}`} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-gold">▶️</a>}
+            {socialConfig.pinterest && <a href={`https://pinterest.com/${socialConfig.pinterest}`} target="_blank" rel="noopener noreferrer" aria-label="Pinterest" className="hover:text-gold">📌</a>}
           </div>
         </div>
 

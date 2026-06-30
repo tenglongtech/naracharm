@@ -144,7 +144,7 @@ the jewelry catches light as she turns, lifestyle editorial mood,
 > Tibetan silver. Mongolian braid. Miao filigree. Thai silk.
 > Handmade jewelry, fused for the modern world. 🌍
 > 
-> [品牌名] — Handmade heritage jewelry
+> Nara Charm — Handmade heritage jewelry
 > Shop link in bio 🔗
 
 **Hashtags（10–12 个，混合大小词）**：
@@ -158,7 +158,7 @@ the jewelry catches light as she turns, lifestyle editorial mood,
 - 0s: Where the Silk Road meets the Steppe
 - 8s: Tibetan silver · Mongolian braid · Miao filigree · Thai silk
 - 15s: Handmade. Fused for the modern world.
-- 22s: [品牌名] · Link in bio
+- 22s: Nara Charm · Link in bio
 
 ### YouTube Shorts
 
@@ -166,11 +166,11 @@ the jewelry catches light as she turns, lifestyle editorial mood,
 > Handmade Jewelry From the Silk Road & the Steppe 🌍✨
 
 **描述**：
-> Discover [品牌名] — handmade jewelry fusing the craft traditions of 
-> the Silk Road and the Asian Steppe. Tibetan silver, Mongolian braiding, 
+> Discover Nara Charm — handmade jewelry fusing the craft traditions of
+> the Silk Road and the Asian Steppe. Tibetan silver, Mongolian braiding,
 > Miao filigree, and Thai silk, reimagined for the modern world.
-> 
-> 👉 Shop: [域名]
+>
+> 👉 Shop: naracharm.com
 > 👉 Follow for the craft behind every piece.
 > 
 > #handmadejewelry #artisanjewelry #boho #ethnicjewelry #silkJewelry
@@ -203,7 +203,7 @@ handmade necklace, handmade bracelet, jewelry making
 
 ## 6. 备注
 
-- **品牌名待定**：文案里的 `[品牌名]` `[域名]` 在确认后替换
+- **品牌名已定 (Nara Charm)**：文案里所有 `[品牌名]` / `[域名]` 已替换为 `Nara Charm` / `naracharm.com`
 - **效果图质量影响成片**：镜头 3 用清晰、浅底的产品图效果最好
 - **BGM 选择**：搜 "ethereal cinematic" / "world music ambient" / "hang drum"，注意商业使用版权（TikTok 商业曲库 / Epidemic Sound）
 - **首条视频不必完美**：先跑通"提示词→生成→剪辑→发布"全流程，迭代比一次做精更重要

@@ -2,39 +2,128 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { SiteHeader, SiteFooter } from '@/components/site-chrome';
+import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
 import { ProductTile, type ProductCard } from '@/components/product-tile';
+import { AddToCartForm } from '@/components/add-to-cart-form';
+import { getProductBySlug, getActiveProducts } from '@/lib/storefront';
 
 /**
- * 产品详情页 (PDP) - 还原设计稿"产品页"
- * 结构: 面包屑 → 左右两栏(图55:信息45) → craft story → 材质/保养 → 评价 → 相关推荐
- * Phase 2: 从 Payload 按 slug 查询真实产品数据,现为 getSampleProduct 示例。
+ * 产品详情页 (PDP)
+ * 数据从数据库读取。商品信息(name/price/story/materials/images)动态,
+ * 评价/变体等扩展信息用基于产品的派生数据。
  */
-
-// ─── 数据层 (Phase 2 替换为 Payload Local API 查询) ─────────────────────
-import { SAMPLE_PRODUCTS, getProductBySlug, getRelated } from '@/lib/sample-data';
 
 type Params = { params: Promise<{ slug: string }> };
 
+function toCard(p: Awaited<ReturnType<typeof getActiveProducts>>[number]): ProductCard {
+  return {
+    slug: p.slug,
+    name: p.name,
+    heritage: p.heritage ?? 'Handmade',
+    price: `$${(p.basePriceCents / 100).toFixed(0)}`,
+    compareAt: p.compareAtPriceCents ? `$${(p.compareAtPriceCents / 100).toFixed(0)}` : null,
+    tag: p.compareAtPriceCents ? 'Sale' : null,
+    image: p.primaryImage ?? undefined,
+  };
+}
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return { title: 'Product not found' };
   return {
-    title: product.name,
-    description: product.seoDescription ?? product.shortDesc,
-    openGraph: { title: product.name, description: product.shortDesc, type: 'website' },
+    title: product.seoTitle || product.name,
+    description: product.seoDescription || product.description || undefined,
+    alternates: {
+      canonical: `/products/${slug}`,
+    },
+    openGraph: {
+      title: product.name,
+      description: product.description || undefined,
+      type: 'website',
+      ...(product.primaryImage ? { images: [product.primaryImage] } : {}),
+    },
   };
 }
 
 export default async function ProductPage({ params }: Params) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
-  const related = getRelated(slug, 4);
+  const allProducts = await getActiveProducts();
+  const related = allProducts
+    .filter((p) => p.slug !== slug && (p.collectionSlug === product.collectionSlug || p.heritage === product.heritage))
+    .slice(0, 4)
+    .map(toCard);
+
+  // 派生 PDP 显示数据 (DB 字段 + 默认结构化信息)
+  const price = `$${(product.basePriceCents / 100).toFixed(0)}`;
+  const compareAt = product.compareAtPriceCents ? `$${(product.compareAtPriceCents / 100).toFixed(0)}` : null;
+  const saveLabel = product.compareAtPriceCents
+    ? `${Math.round((1 - product.basePriceCents / product.compareAtPriceCents) * 100)}%`
+    : '';
+
+  // SEO 结构化数据 (Product JSON-LD) - Google 购物搜索优化
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description || product.subtitle || undefined,
+    image: product.images.map((i) => `${process.env.NEXT_PUBLIC_SITE_URL}${i}`),
+    sku: product.slug,
+    brand: { '@type': 'Brand', name: 'Nara Charm' },
+    category: product.category,
+    offers: {
+      '@type': 'Offer',
+      price: (product.basePriceCents / 100).toFixed(2),
+      priceCurrency: 'USD',
+      availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/products/${product.slug}`,
+    },
+  };
+
+  // Breadcrumb JSON-LD (Google 面包屑富片段)
+  const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+      { '@type': 'ListItem', position: 2, name: 'Collections', item: `${SITE}/collections` },
+      ...(product.collectionSlug
+        ? [{ '@type': 'ListItem', position: 3, name: product.collectionName || 'Collection', item: `${SITE}/collections/${product.collectionSlug}` }]
+        : []),
+      { '@type': 'ListItem', position: product.collectionSlug ? 4 : 3, name: product.name, item: `${SITE}/products/${product.slug}` },
+    ],
+  };
+
+  const materials = product.materials ?? [];
+  const specs = [
+    `Bead size: 8mm`,
+    product.category === 'phone-charm' ? 'Length: 18cm' : 'Stretch fit',
+    'Unisex design',
+    'Handmade — slight variation is natural',
+  ];
+  const care = product.careNotes
+    ? product.careNotes.split(/[。\n]/).filter(Boolean)
+    : ['Avoid prolonged water contact', 'Clean with soft cloth', 'Store away from direct sunlight'];
+  const storyParagraphs = product.craftStory ? product.craftStory.split(/\n\n+/).filter(Boolean) : [];
+  const sizes = product.category === 'bracelet'
+    ? ['Small (15cm)', 'Medium (17cm)', 'Large (19cm)']
+    : product.category === 'necklace'
+    ? ['16 in', '18 in', '20 in']
+    : ['One size'];
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <SiteHeader />
       <main id="main" className="pb-20">
         {/* 面包屑 */}
@@ -65,11 +154,14 @@ export default async function ProductPage({ params }: Params) {
                   className="object-cover"
                 />
               ) : (
-                <div className="flex h-full items-center justify-center text-muted/40">[main product image]</div>
+                <div className="flex h-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-surface to-border/30 text-muted/40">
+                  <LotusMark className="h-16 w-16" />
+                  <span className="text-xs uppercase tracking-wider">Image coming soon</span>
+                </div>
               )}
-              {product.tag && (
+              {compareAt && (
                 <span className="absolute left-3 top-3 rounded-sm bg-brand px-3 py-1 text-xs font-medium text-bg">
-                  {product.tag}
+                  Sale
                 </span>
               )}
             </div>
@@ -95,13 +187,13 @@ export default async function ProductPage({ params }: Params) {
 
             {/* 价格 */}
             <div className="mt-4 flex items-center gap-3 text-xl tabular-nums">
-              <span>{product.price}</span>
-              {product.compareAt && (
-                <span className="text-base text-muted line-through">{product.compareAt}</span>
+              <span>{price}</span>
+              {compareAt && (
+                <span className="text-base text-muted line-through">{compareAt}</span>
               )}
-              {product.compareAt && (
+              {compareAt && (
                 <span className="rounded-sm bg-brand/10 px-2 py-0.5 text-xs text-brand">
-                  Save {product.saveLabel}
+                  Save {saveLabel}
                 </span>
               )}
             </div>
@@ -109,19 +201,19 @@ export default async function ProductPage({ params }: Params) {
             {/* 评分 (占位) */}
             <div className="mt-3 flex items-center gap-2 text-sm text-muted">
               <span className="text-gold">★★★★★</span>
-              <span>4.9 · {product.reviewCount} reviews</span>
+              <span>Handmade · Ready to ship</span>
             </div>
 
-            <p className="mt-5 leading-relaxed text-muted">{product.shortDesc}</p>
+            <p className="mt-5 leading-relaxed text-muted">{product.description || product.subtitle}</p>
 
             {/* 变体选择: 颜色 */}
-            {product.colors.length > 0 && (
+            {product.category !== 'phone-charm' && (
               <div className="mt-6">
                 <p className="text-sm font-medium">
-                  Color: <span className="text-muted">{product.colors[0]}</span>
+                  Color: <span className="text-muted">{product.heritage || 'Natural'}</span>
                 </p>
                 <div className="mt-2 flex gap-2">
-                  {product.colorSwatches.map((c) => (
+                  {['#8B6FA8', '#B08D57'].map((c) => (
                     <button
                       key={c}
                       type="button"
@@ -135,11 +227,11 @@ export default async function ProductPage({ params }: Params) {
             )}
 
             {/* 变体选择: 尺寸 */}
-            {product.sizes.length > 0 && (
+            {sizes.length > 0 && (
               <div className="mt-5">
                 <p className="text-sm font-medium">Size</p>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {product.sizes.map((s, i) => (
+                  {sizes.map((s, i) => (
                     <button
                       key={s}
                       type="button"
@@ -156,20 +248,8 @@ export default async function ProductPage({ params }: Params) {
               </div>
             )}
 
-            {/* 数量 + 加购 */}
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <div className="flex items-center rounded-md border border-border">
-                <button type="button" aria-label="Decrease quantity" className="px-3 py-3 text-muted hover:text-ink">−</button>
-                <span className="w-10 text-center text-sm tabular-nums">1</span>
-                <button type="button" aria-label="Increase quantity" className="px-3 py-3 text-muted hover:text-ink">+</button>
-              </div>
-              <button
-                type="button"
-                className="flex-1 rounded-md bg-brand px-8 py-3.5 text-sm font-medium tracking-wide text-bg transition-transform hover:-translate-y-0.5"
-              >
-                ADD TO CART · {product.price}
-              </button>
-            </div>
+            {/* 数量 + 加购 (server action) */}
+            <AddToCartForm productId={product.id} maxStock={product.stock} />
 
             {/* 心愿单 + 立即购买 */}
             <div className="mt-3 flex gap-3">
@@ -195,15 +275,22 @@ export default async function ProductPage({ params }: Params) {
         <section className="bg-surface">
           <div className="mx-auto max-w-4xl px-4 py-14 md:py-20">
             <p className="text-center text-xs uppercase tracking-[0.3em] text-brand">The Craft Story</p>
-            <h2 className="mt-3 text-center font-display text-3xl md:text-4xl">{product.storyTitle}</h2>
+            <h2 className="mt-3 text-center font-display text-3xl md:text-4xl">The Story Behind {product.name}</h2>
             <div className="mt-7 space-y-5 leading-relaxed text-ink/85 md:text-lg">
-              {product.craftStory.map((para, i) => (
+              {storyParagraphs.length > 0 ? storyParagraphs.map((para, i) => (
                 <p key={i}>{para}</p>
-              ))}
+              )) : (
+                <p>{product.description || 'Every piece carries a story, handcrafted by skilled artisans.'}</p>
+              )}
             </div>
             {/* 四层标签 */}
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              {product.storyLayers.map((layer) => (
+              {[
+                `Origin: ${product.heritage || 'Handmade'}`,
+                'Craft: Hand-strung',
+                `Made for: ${product.category}`,
+                'Carried with meaning',
+              ].map((layer) => (
                 <span key={layer} className="rounded-full border border-gold/50 px-4 py-1.5 text-xs text-gold">
                   {layer}
                 </span>
@@ -215,9 +302,9 @@ export default async function ProductPage({ params }: Params) {
         {/* 材质 / 规格 / 保养 */}
         <section className="mx-auto max-w-7xl px-4 py-14">
           <div className="grid gap-8 md:grid-cols-3">
-            <DetailBlock title="Materials" items={product.materials} />
-            <DetailBlock title="Specifications" items={product.specs} />
-            <DetailBlock title="Care Guide" items={product.care} />
+            <DetailBlock title="Materials" items={materials.length > 0 ? materials : ['Hand-selected natural materials']} />
+            <DetailBlock title="Specifications" items={specs} />
+            <DetailBlock title="Care Guide" items={care} />
           </div>
         </section>
 
@@ -226,19 +313,13 @@ export default async function ProductPage({ params }: Params) {
           <div className="mx-auto max-w-4xl px-4 py-14 md:py-16">
             <div className="flex flex-col items-center gap-3 text-center">
               <h2 className="font-display text-3xl">What Customers Say</h2>
-              <p className="text-lg text-gold">★★★★★ 4.9</p>
-              <p className="text-sm text-muted">{product.reviewCount} verified reviews</p>
+              <p className="text-lg text-gold">★★★★★</p>
+              <p className="text-sm text-muted">Reviews coming soon</p>
             </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              {product.reviews.map((r) => (
-                <figure key={r.name} className="rounded-lg border border-border bg-bg p-6">
-                  <div className="text-sm text-gold">★★★★★</div>
-                  <blockquote className="mt-2 leading-relaxed text-ink/85">“{r.text}”</blockquote>
-                  <figcaption className="mt-3 text-sm text-muted">
-                    {r.name} · <span className="text-brand">Verified Buyer</span>
-                  </figcaption>
-                </figure>
-              ))}
+            <div className="mt-10 rounded-lg border border-border bg-bg p-8 text-center text-sm text-muted">
+              ✦ Be the first to share your experience with this piece.
+              <br />
+              <span className="text-xs">Reviews open once the first order ships.</span>
             </div>
           </div>
         </section>
@@ -271,7 +352,8 @@ function DetailBlock({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-// 静态预生成所有示例产品路径 (Phase 2 改 generateStaticParams 查库)
+// 从 DB 预生成所有在售产品路径
 export async function generateStaticParams() {
-  return SAMPLE_PRODUCTS.map((p) => ({ slug: p.slug }));
+  const all = await getActiveProducts();
+  return all.map((p) => ({ slug: p.slug }));
 }

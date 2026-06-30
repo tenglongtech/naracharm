@@ -1,18 +1,52 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
-import { ProductTile } from '@/components/product-tile';
-import { BEST_SELLERS, COLLECTIONS, getProductsByCollection } from '@/lib/sample-data';
+import { ProductTile, type ProductCard } from '@/components/product-tile';
+import { getActiveProducts, getAllCollections } from '@/lib/storefront';
 
 /**
  * Nara Charm 首页
- * 完整还原设计稿结构,11 个区块。
- * 品牌: Nara Charm (莲花 logo) | 配色: 砖红/深棕/金/奶白 (温暖复古)
- * Phase 2: 商品/故事/系列数据从数据库 (Payload) 读取,现为示例数据。
+ * 数据从数据库读取 (Drizzle + 本地 PostgreSQL)
  */
-export default function HomePage() {
+export default async function HomePage() {
+  // 从 DB 读真实数据
+  const allProducts = await getActiveProducts();
+  const allCollections = await getAllCollections();
+
+  // WebSite + ItemList JSON-LD (首页 SEO 增强)
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Nara Charm',
+    url: siteUrl,
+    description: 'Handmade heritage jewelry — stories in every piece.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteUrl}/search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
+  // 首页 Best Sellers: 取 isFeatured 的前 8 个
+  const BEST_SELLERS: ProductCard[] = allProducts
+    .slice()
+    .sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured))
+    .slice(0, 8)
+    .map(toCard);
+
+  // Hero 浮卡: 第一个 featured 产品
+  const heroProduct = allProducts.find((p) => p.isFeatured) ?? allProducts[0];
+
+  // 系列卡片
+  const COLLECTIONS = allCollections.filter((c) => c.isFeatured || allCollections.length <= 4);
+  const coverFor = (slug: string) => allProducts.find((p) => p.collectionSlug === slug)?.primaryImage;
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       <SiteHeader />
       <main id="main">
       {/* ────────────────────────────────────────────
@@ -45,16 +79,40 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Hero 视觉占位 */}
-          <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-surface">
-            <div className="flex h-full items-center justify-center text-muted/50">
-              [hero image · 模特佩戴特写]
-            </div>
-            {/* 小浮卡 */}
-            <div className="absolute bottom-4 left-4 rounded-md bg-bg/95 p-3 shadow-sm backdrop-blur">
-              <p className="font-display text-sm">Red Agate Blessing Bracelet</p>
-              <p className="text-xs text-brand">From the Tibetan Plateau</p>
-            </div>
+          {/* Hero 视觉: 精选产品图 + 品牌叠加 */}
+          <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-gradient-to-br from-surface to-border/40">
+            {heroProduct?.primaryImage ? (
+              <Image
+                src={heroProduct.primaryImage}
+                alt={heroProduct.name}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
+            ) : (
+              <div className="flex h-full flex-col items-center justify-center gap-3 text-muted/40">
+                <LotusMark className="h-16 w-16" />
+                <span className="text-xs uppercase tracking-wider">Nara Charm</span>
+              </div>
+            )}
+            {/* 渐变叠加让浮卡可读 */}
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
+            {/* 小浮卡: 真实产品名 */}
+            {heroProduct && (
+              <Link
+                href={`/products/${heroProduct.slug}`}
+                className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-md bg-bg/95 p-3 shadow-md backdrop-blur transition-transform hover:-translate-y-0.5"
+              >
+                <div>
+                  <p className="font-display text-sm">{heroProduct.name}</p>
+                  <p className="text-xs text-brand">{heroProduct.heritage || 'Handmade with care'}</p>
+                </div>
+                <span className="text-sm tabular-nums">
+                  ${(heroProduct.basePriceCents / 100).toFixed(0)}
+                </span>
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -109,7 +167,7 @@ export default function HomePage() {
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:gap-6">
             {COLLECTIONS.map((c) => {
-              const cover = getProductsByCollection(c.slug)[0]?.image;
+              const cover = coverFor(c.slug);
               return (
                 <Link key={c.name} href={`/collections/${c.slug}`} className="group relative block overflow-hidden rounded-lg">
                   <div className="relative aspect-[4/5] bg-bg">
@@ -122,7 +180,7 @@ export default function HomePage() {
                   <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink/85 via-ink/20 to-transparent p-6 text-bg">
                     <p className="text-xs uppercase tracking-wider text-gold">{c.heritage}</p>
                     <h3 className="mt-1 font-display text-2xl">{c.name}</h3>
-                    <p className="mt-1 text-sm text-bg/80">{c.tagline}</p>
+                    <p className="mt-1 text-sm text-bg/80">{c.description}</p>
                     <span className="mt-3 inline-block text-sm font-medium group-hover:underline">Discover →</span>
                   </div>
                 </Link>
@@ -240,9 +298,20 @@ export default function HomePage() {
   );
 }
 
-// ─── 示例数据 (Phase 2 替换为 Payload 查询) ─────────────────────────────
-// BEST_SELLERS / COLLECTIONS 已从 @/lib/sample-data 导入
-// 下方仅保留首页特有的 STORIES / CRAFT_STEPS 展示数据
+// ─── 辅助: DB 产品 → 前台 ProductCard ───────────────────────────────────
+function toCard(p: Awaited<ReturnType<typeof getActiveProducts>>[number]): ProductCard {
+  return {
+    slug: p.slug,
+    name: p.name,
+    heritage: p.heritage ?? 'Handmade',
+    price: `$${(p.basePriceCents / 100).toFixed(0)}`,
+    compareAt: p.compareAtPriceCents ? `$${(p.compareAtPriceCents / 100).toFixed(0)}` : null,
+    tag: p.compareAtPriceCents ? 'Sale' : p.isFeatured ? 'Featured' : null,
+    image: p.primaryImage ?? undefined,
+  };
+}
+
+// ─── 首页静态展示数据 (STORIES / CRAFT_STEPS) ────────────────────────────
 
 const STORIES = [
   {

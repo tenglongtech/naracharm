@@ -1,0 +1,26 @@
+{
+  "id": "0003_order_number_seq",
+  "prevId": "0002_slippery_may_parker",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {},
+  "enums": {},
+  "schemas": {},
+  "sequences": {
+    "public.order_number_seq": {
+      "name": "order_number_seq",
+      "schema": "public",
+      "isCyclic": false,
+      "increment": "1",
+      "startWith": "10000",
+      "minValue": "1",
+      "maxValue": "9223372036854775807",
+      "cache": "1"
+    }
+  },
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

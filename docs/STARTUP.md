@@ -1,6 +1,7 @@
 # 启动指引 & 待决策清单
 
-> Phase 0 现状：脚手架已搭好并可运行，文档已就绪。
+> Phase 0–2 现状：脚手架已搭好并可运行，占位 SKU 已入库（10 个产品 + 5 系列 + 库存）。
+> 真实产品到位后，在 Payload/Admin 后台一对一改 `primaryImage` / `craftStory` / `basePriceCents` 即可。
 > 下一步推进**依赖你的几项决策**。请逐项确认。
 
 ---
@@ -10,14 +11,17 @@
 | # | 交付物 | 位置 |
 |---|---|---|
 | 1 | 项目章程 + 路线图 | `README.md` |
-| 2 | 品牌名 4 选 1 提案 | `docs/brand/NAMING.md` |
+| 2 | 品牌名决策（Nara Charm · 莲花 logo） | `docs/brand/NAMING.md` |
 | 3 | 技术栈选型报告（2026-06） | `docs/design/TECH_STACK.md` |
 | 4 | 设计系统（色彩/字体/组件） | `docs/design/DESIGN_SYSTEM.md` |
 | 5 | 数据模型 schema（Drizzle） | `packages/db/schema.ts` + `SCHEMA.md` |
-| 6 | 产品录入模板 | `docs/PRODUCT_TEMPLATE.md` |
-| 7 | 视频工作流 + 第 1 条示范视频 | `docs/content/video/WORKFLOW.md` + `001-brand-intro-launch.md` |
-| 8 | 运营 SOP（物流/客服/退换货/内容日历） | `docs/ops/SOP.md` |
-| 9 | Next.js 16 脚手架（已验证可运行） | `apps/web/` |
+| 6 | 占位 SKU 清单（10 个） | `docs/PLACEHOLDER_SKUS.md` + `scripts/seed-placeholders.ts` |
+| 7 | 占位图生成器（品牌色 SVG） | `scripts/generate-placeholders.mjs` |
+| 8 | 产品录入模板 | `docs/PRODUCT_TEMPLATE.md` |
+| 9 | 视频工作流 + 第 1 条示范视频 | `docs/content/video/WORKFLOW.md` + `001-brand-intro-launch.md` |
+| 10 | 运营 SOP（物流/客服/退换货/内容日历） | `docs/ops/SOP.md` |
+| 11 | Next.js 16 脚手架（已验证可运行） | `apps/web/` |
+| 12 | SEO 基础设施（sitemap/robots/OG/JSON-LD/canonical） | `apps/web/src/app/{sitemap,robots,opengraph-image,icon}.{ts,tsx}` |
 
 **脚手架验证状态**：Next.js 16.2.9 + Turbopack，类型检查零错误，首页 HTTP 200，内容渲染正确。
 
@@ -28,7 +32,7 @@
 ```bash
 cd /Users/matt/dev/首饰跨境电商
 cp apps/web/.env.example apps/web/.env.local   # 先填 DATABASE_URL 等才能用 DB 功能
-pnpm dev                                          # 启动 → http://localhost:3000
+pnpm dev                                          # 启动 → http://localhost:37000
 ```
 
 > 不填 `.env.local` 也能看首页（首页是静态占位，未连数据库）。
@@ -40,10 +44,9 @@ pnpm dev                                          # 启动 → http://localhost:
 
 ### 🔴 P0 · 立即决定（阻塞后续）
 
-#### 1. 品牌名（4 选 1 或给方向）
-- 候选：**Silk & Steppe**（推荐）/ Khatak / Tengri / Caravan Road
+#### 1. 品牌名 ✅ **已定 · Nara Charm**
 - 详见 `docs/brand/NAMING.md`
-- **影响**：域名、社媒账号、设计、SEO、全部文案
+- 域名建议：`naracharm.com`（待注册）
 
 #### 2. 视频策略：是否采纳「AI + 真实」双轨？
 - AI 用于：产品美学/穿搭/情绪片/节日场景 ✅
@@ -53,10 +56,10 @@ pnpm dev                                          # 启动 → http://localhost:
 
 ### 🟡 P1 · 本周内决定
 
-#### 3. 提供首批产品素材
-- 按模板填 8–15 个 SKU：效果图 + 名称 + 描述
-- 详见 `docs/PRODUCT_TEMPLATE.md`
-- 你确认后，我据此做：商品页设计、首批视频提示词、定价建议
+#### 3. 替换占位 SKU 为真实产品
+- 占位数据已入库（10 个产品 + 5 系列），详见 `docs/PLACEHOLDER_SKUS.md`
+- 真实图到位后，在 Admin 后台改 `primaryImage` / `craftStory` / `basePriceCents` 等字段
+- 或重新跑 `pnpm db:seed:placeholder` 覆盖
 
 #### 4. 跑通第一条视频（验证 AI 工作流）
 - 用 `001-brand-intro-launch.md` 的提示词喂 Seedance 2
@@ -69,6 +72,7 @@ pnpm dev                                          # 启动 → http://localhost:
 - 准备：公司注册证 (CI)、商业登记证 (BR)、银行账户
 - Stripe 港区支持香港公司直连
 - 第 5 周接支付前必须就绪
+- **MVP 阶段**：用 Stripe 测试模式 (test mode) 模拟支付, 不需要真公司
 
 #### 6. 账户注册清单
 - [ ] Neon 数据库（免费额度起步）

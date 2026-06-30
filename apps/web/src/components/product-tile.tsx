@@ -15,8 +15,8 @@ export type ProductCard = {
 /** 商品卡片 - 首页 Best Sellers / 系列页 / 相关推荐 复用 */
 export function ProductTile({ product }: { product: ProductCard }) {
   return (
-    <Link href={`/products/${product.slug}`} className="group block">
-      <div className="relative aspect-square overflow-hidden rounded-md bg-surface">
+    <Link href={`/products/${product.slug}`} className="group block transition-transform duration-300 hover:-translate-y-1">
+      <div className="relative aspect-square overflow-hidden rounded-md bg-surface shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
         {product.image ? (
           <Image
             src={product.image}

@@ -1,16 +1,37 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
-import type { Metadata } from 'next';
+import { useRouter } from 'next/navigation';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
-import { AuthLayout, FormField, Input, Button, Divider } from '@/components/ui';
+import { AuthLayout, FormField, Input, Button } from '@/components/ui';
+import { signIn } from '@/lib/auth-client';
 
 /**
- * /login - 登录页
- * Phase 4: 接 Better Auth (signInEmail) 后激活真实登录逻辑。
- * 当前为 UI 占位,提交暂不处理。
+ * /login - 登录页 (接 Better Auth)
  */
-export const metadata: Metadata = { title: 'Sign In' };
-
 export default function LoginPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    const email = String(formData.get('email') || '');
+    const password = String(formData.get('password') || '');
+    const result = await signIn(email, password);
+    setLoading(false);
+    if (result.error) {
+      setError(result.error.message || '登录失败,请检查邮箱和密码');
+    } else {
+      router.push('/account');
+      router.refresh();
+    }
+  };
+
   return (
     <>
       <SiteHeader />
@@ -24,15 +45,12 @@ export default function LoginPage() {
           </>
         }
       >
-        {/* 社交登录占位 (Phase 4 接 Better Auth socialProviders) */}
-        <div className="grid grid-cols-2 gap-3">
-          <Button variant="outline" type="button">Google</Button>
-          <Button variant="outline" type="button">Apple</Button>
-        </div>
-        <Divider />
-
-        {/* 邮箱密码表单 */}
-        <form className="space-y-4" /* action={signIn} Phase 4 */>
+        {error && (
+          <div className="mb-4 rounded-md border border-brand/30 bg-brand/10 px-4 py-2.5 text-sm text-brand">
+            {error}
+          </div>
+        )}
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <FormField label="Email" htmlFor="email" required>
             <Input id="email" name="email" type="email" autoComplete="email" required placeholder="your@email.com" />
           </FormField>
@@ -46,7 +64,9 @@ export default function LoginPage() {
             </label>
             <Link href="/forgot-password" className="text-brand hover:underline">Forgot password?</Link>
           </div>
-          <Button type="submit" className="w-full">Sign In</Button>
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? 'Signing in…' : 'Sign In'}
+          </Button>
         </form>
       </AuthLayout>
       <SiteFooter />

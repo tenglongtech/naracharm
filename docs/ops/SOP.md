@@ -60,7 +60,7 @@
 ## 二、客服
 
 ### 2.1 渠道
-- **主**：邮箱 support@[品牌名].com（24h 内回复）
+- **主**：邮箱 support@naracharm.com（24h 内回复）
 - **辅**：站内聊天 Tidio（工作时间在线）
 - **社媒**：TikTok/Instagram DM（定期查）
 

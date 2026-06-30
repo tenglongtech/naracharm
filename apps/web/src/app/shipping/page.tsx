@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { LegalPage } from '@/components/legal-page';
+import { siteConfig } from '@/lib/site-config';
+
+export const metadata: Metadata = {
+  title: 'Shipping Policy',
+  description: 'Handmade and shipped worldwide from our studio. Free shipping over $120. Delivery in 7–15 business days with tracking.',
+  alternates: { canonical: '/shipping' },
+};
 
 /** /shipping - 运输政策 */
 export default function ShippingPage() {
+  const c = siteConfig.company;
   return (
     <LegalPage
       title="Shipping"
@@ -41,7 +50,7 @@ export default function ShippingPage() {
         {
           heading: 'Where We Ship',
           body: [
-            'We ship worldwide. If your country is not available at checkout, contact us at hello@naracharm.com and we will do our best to help.',
+            `We ship worldwide. If your country is not available at checkout, contact us at ${c.contactEmail} and we will do our best to help.`,
           ],
         },
       ]}

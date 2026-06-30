@@ -1,9 +1,13 @@
 /**
- * 数据库连接 (Neon serverless + Drizzle)
- * Server Component / Server Action / Route Handler 中 import 使用
+ * 数据库连接 (本地 PostgreSQL + Drizzle)
+ *
+ * 本地开发用 postgres.js 驱动直连本地 PostgreSQL
+ * 上线后可切换为 @neondatabase/serverless (或保持 postgres.js 连云数据库)
+ *
+ * 在 Server Component / Server Action / Route Handler 中 import 使用
  */
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
 import * as schema from '@jewelry/db';
 
 // 开发环境避免热更新重复创建连接
@@ -13,8 +17,12 @@ declare global {
 }
 
 function createDb() {
-  const sql = neon(process.env.DATABASE_URL!);
-  return drizzle({ client: sql, schema });
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error('DATABASE_URL 未设置。请检查 .env.local');
+  }
+  const client = postgres(connectionString, { max: 1 });
+  return drizzle({ client, schema });
 }
 
 export const db = globalThis.__db ?? createDb();

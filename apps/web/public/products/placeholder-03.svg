@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <defs>
+    <linearGradient id="bg-3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FAF7F1" />
+      <stop offset="100%" stop-color="#F3EDE2" />
+    </linearGradient>
+  </defs>
+  <!-- 背景 -->
+  <rect width="1000" height="1000" fill="url(#bg-3)" />
+  <!-- 4 角纹样 -->
+  <g stroke="#C4745A" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M 0 100 Q 25 90 50 100 T 100 100" />
+    <path d="M 1000 900 Q 975 890 950 900 T 900 900" />
+  </g>
+  <!-- 中央莲花图标 (简化) -->
+  <g transform="translate(500 460)" stroke="#3A2E2B" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 0 60 C -30 30 -50 0 -50 -30 C -30 -45 -10 -40 0 -20 C 10 -40 30 -45 50 -30 C 50 0 30 30 0 60 Z" />
+    <path d="M 0 40 C -15 20 -25 0 -25 -20 C -15 -25 -5 -22 0 -10 C 5 -22 15 -25 25 -20 C 25 0 15 20 0 40 Z" />
+    <line x1="0" y1="60" x2="0" y2="20" />
+  </g>
+  <!-- 标题 -->
+  <text x="500" y="620" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="42" font-style="italic" fill="#3A2E2B">
+    New Drop
+  </text>
+  <!-- 副标题 -->
+  <text x="500" y="680" text-anchor="middle"
+        font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif"
+        font-size="20" letter-spacing="3" fill="#6B4F47">
+    A PIECE IS ON THE LOOM
+  </text>
+  <!-- 底部金线 -->
+  <line x1="400" y1="740" x2="600" y2="740" stroke="#D4AF37" stroke-width="1" />
+  <!-- 编号 -->
+  <text x="500" y="780" text-anchor="middle"
+        font-family="-apple-system, sans-serif"
+        font-size="12" letter-spacing="2" fill="#6B4F47" opacity="0.5">
+    PLACEHOLDER · 03
+  </text>
+</svg>

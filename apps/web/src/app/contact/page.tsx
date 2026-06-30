@@ -3,7 +3,11 @@ import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
 import { FormField, Input, Button } from '@/components/ui';
 
 /** /contact - 联系我们 */
-export const metadata: Metadata = { title: 'Contact Us' };
+export const metadata: Metadata = {
+  title: 'Contact Us',
+  description: 'Questions about an order, a piece, or a custom request? Contact Nara Charm — we reply within 24 hours.',
+  alternates: { canonical: '/contact' },
+};
 
 export default function ContactPage() {
   return (

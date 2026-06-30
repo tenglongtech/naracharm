@@ -1,6 +1,7 @@
 # 手工民族融合首饰 · 跨境电商独立站
 
 > **定位**：面向欧美市场的手工民族融合首饰品牌 + TikTok/YouTube 内容矩阵
+> **品牌名**：**Nara Charm** · 莲花 logo · `Jewelry with Spirit · Stories in Every Piece`
 > **文化脉络**：中国 / 泰 / 藏 / 蒙古 / 西南少数民族——单品或融合风格，手工制作为主
 > **品类**：手机挂链 · 项链 · 手链 · 耳钉
 > **收款**：香港公司 + Stripe 港区 ｜ **物流**：国内制作 + 国际直邮
@@ -8,14 +9,14 @@
 
 ---
 
-## 0. 当前状态（Phase 0 · 准备中）
+## 0. 当前状态（Phase 0–2 · 脚手架 + 占位 SKU）
 
 | 事项 | 状态 | 说明 |
 |---|---|---|
-| 品牌名 | ⏳ 待定（4 选 1） | Silk & Steppe（推荐）/ Khatak / Tengri / Caravan Road |
-| 域名 | ⏳ 待查 | 品牌名确认后查可用性 |
-| 收款主体 | ✅ 香港公司 | 待开通 Stripe 港区账户 |
-| 产品素材 | ⏳ 待提供 | 效果图 + 名称 + 描述 |
+| 品牌名 | ✅ **Nara Charm** | 莲花 logo · 详见 [`docs/brand/NAMING.md`](docs/brand/NAMING.md) |
+| 域名 | ⏳ 待注册 | naracharm.com 优先（详见 `docs/brand/NAMING.md`） |
+| 收款主体 | ⏳ 待注册 | 香港公司 + Stripe 港区（**MVP 阶段用 Stripe 测试模式**） |
+| 产品素材 | ✅ 占位数据已入库 | 10 SKU + 5 系列 · [`docs/PLACEHOLDER_SKUS.md`](docs/PLACEHOLDER_SKUS.md) |
 | 技术栈 | ✅ 已定 | 见第三节 |
 | 视频策略 | ⏳ 待确认 | 建议「AI + 真实」双轨 |
 
@@ -105,13 +106,18 @@
 
 ### 技术 & 设计
 - 技术栈详情：[`docs/design/TECH_STACK.md`](docs/design/TECH_STACK.md)
+- ⭐ **后端架构决策**：[`docs/design/BACKEND.md`](docs/design/BACKEND.md)
 - 设计系统：[`docs/design/DESIGN_SYSTEM.md`](docs/design/DESIGN_SYSTEM.md)
 - 数据模型：[`packages/db/SCHEMA.md`](packages/db/SCHEMA.md)
+- 图片生成 prompt 清单：[`docs/design/IMAGE_PROMPTS.md`](docs/design/IMAGE_PROMPTS.md)
 
 ### 运营 & 内容
+- ⭐ **后台使用手册（给你看）**：[`docs/ADMIN_GUIDE.md`](docs/ADMIN_GUIDE.md)
+- ⭐ **本地开发启动指南**：[`docs/DEV_SETUP.md`](docs/DEV_SETUP.md)
 - 产品录入模板（**含故事字段**）：[`docs/PRODUCT_TEMPLATE.md`](docs/PRODUCT_TEMPLATE.md)
 - 视频工作流（**故事驱动脚本**）：[`docs/content/video/WORKFLOW.md`](docs/content/video/WORKFLOW.md)
 - 运营 SOP：[`docs/ops/SOP.md`](docs/ops/SOP.md)
+- 本地域名配置（可选）：[`docs/LOCAL_DOMAIN_SETUP.md`](docs/LOCAL_DOMAIN_SETUP.md)
 
 ### 启动
 - 启动指引 & 待决策清单：[`docs/STARTUP.md`](docs/STARTUP.md)

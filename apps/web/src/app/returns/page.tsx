@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { LegalPage } from '@/components/legal-page';
+import { siteConfig } from '@/lib/site-config';
+
+export const metadata: Metadata = {
+  title: 'Returns & Exchanges',
+  description: '30-day returns on unworn items. Free replacement for damaged or defective pieces. See our full return policy.',
+  alternates: { canonical: '/returns' },
+};
 
 /** /returns - 退换货政策 (30 天) */
 export default function ReturnsPage() {
+  const c = siteConfig.company;
   return (
     <LegalPage
       title="Returns & Exchanges"
@@ -18,8 +27,8 @@ export default function ReturnsPage() {
         {
           heading: 'How to Start a Return',
           body: [
-            'Email hello@naracharm.com with your order number and the reason for return.',
-            'We will reply with a return address and instructions. Return shipping is paid by the customer, unless the item is defective or we made a mistake.',
+            `Email ${c.contactEmail} with your order number and the reason for return.`,
+            `We will reply with a return address (${c.returnAddress}) and instructions. Return shipping is paid by the customer, unless the item is defective or we made a mistake.`,
             'Returns are processed to our warehouse. Once we receive and inspect your item, your refund is issued within 5 business days to the original payment method.',
           ],
         },
