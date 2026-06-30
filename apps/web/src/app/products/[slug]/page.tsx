@@ -354,6 +354,10 @@ function DetailBlock({ title, items }: { title: string; items: string[] }) {
 
 // 从 DB 预生成所有在售产品路径
 export async function generateStaticParams() {
-  const all = await getActiveProducts();
-  return all.map((p) => ({ slug: p.slug }));
+  try {
+    const all = await getActiveProducts();
+    return all.map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
 }

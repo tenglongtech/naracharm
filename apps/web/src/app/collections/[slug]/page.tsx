@@ -231,9 +231,13 @@ export default async function CollectionPage({ params }: Params) {
 }
 
 export async function generateStaticParams() {
-  const collections = await getAllCollections();
-  return [
-    ...collections.map((c) => ({ slug: c.slug })),
-    ...CATEGORIES.map((c) => ({ slug: c.slug })),
-  ];
+  try {
+    const collections = await getAllCollections();
+    return [
+      ...collections.map((c) => ({ slug: c.slug })),
+      ...CATEGORIES.map((c) => ({ slug: c.slug })),
+    ];
+  } catch {
+    return [];
+  }
 }

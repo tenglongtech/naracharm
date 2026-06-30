@@ -34,8 +34,11 @@ export type StorefrontProduct = {
 
 // ─── 查所有在售商品 (首页 Best Sellers 用) ──────────────────────────────
 export async function getActiveProducts(): Promise<StorefrontProduct[]> {
-  const rows = await db
-    .select({
+  if (!db) return [];
+  let rows: any[];
+  try {
+    rows = await db
+      .select({
       id: products.id,
       slug: products.slug,
       name: products.name,
@@ -108,6 +111,10 @@ export async function getActiveProducts(): Promise<StorefrontProduct[]> {
     }
   }
   return Array.from(map.values());
+  } catch (e) {
+    console.error('[storefront] getActiveProducts failed:', e);
+    return [];
+  }
 }
 
 // ─── 按 slug 查单个产品 ──────────────────────────────────────────────────
@@ -140,8 +147,10 @@ export type StorefrontCollection = {
 };
 
 export async function getAllCollections(): Promise<StorefrontCollection[]> {
-  const rows = await db
-    .select({
+  if (!db) return [];
+  try {
+    const rows = await db
+      .select({
       id: collections.id,
       slug: collections.slug,
       name: collections.name,
@@ -153,7 +162,11 @@ export async function getAllCollections(): Promise<StorefrontCollection[]> {
     .from(collections)
     .orderBy(collections.sortOrder);
 
-  return rows.map((r: any) => ({ ...r, productCount: Number(r.productCount) }));
+    return rows.map((r: any) => ({ ...r, productCount: Number(r.productCount) }));
+  } catch (e) {
+    console.error('[storefront] getAllCollections failed:', e);
+    return [];
+  }
 }
 
 export async function getCollectionBySlug(slug: string): Promise<StorefrontCollection | null> {
