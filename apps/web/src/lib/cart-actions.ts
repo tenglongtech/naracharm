@@ -84,7 +84,7 @@ async function loadCart(cartId: string): Promise<CartView> {
     .leftJoin(inventory, eq(inventory.variantId, productVariants.id))
     .where(eq(cartLines.cartId, cartId));
 
-  const lines = rows.map((r) => {
+  const lines = rows.map((r: any) => {
     const available = Math.max(0, (r.invQuantity ?? 0) - (r.invReserved ?? 0));
     return {
       lineId: r.lineId,
@@ -103,8 +103,8 @@ async function loadCart(cartId: string): Promise<CartView> {
     };
   });
 
-  const subtotalCents = lines.reduce((s, l) => s + l.lineTotalCents, 0);
-  const itemCount = lines.reduce((s, l) => s + l.quantity, 0);
+  const subtotalCents = lines.reduce((s: number, l: any) => s + l.lineTotalCents, 0);
+  const itemCount = lines.reduce((s: number, l: any) => s + l.quantity, 0);
   const qualifiesFreeShipping = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS;
   const toFreeShippingCents = Math.max(0, FREE_SHIPPING_THRESHOLD_CENTS - subtotalCents);
   const shippingCents = subtotalCents === 0 || qualifiesFreeShipping ? 0 : 690;

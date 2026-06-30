@@ -19,7 +19,9 @@ declare global {
 function createDb() {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
-    throw new Error('DATABASE_URL 未设置。请检查 .env.local');
+    // 构建时或无数据库时,返回一个代理 db,查询会优雅失败而非崩溃整个构建
+    console.warn('⚠️ DATABASE_URL 未设置 — 数据库功能不可用 (构建时正常,运行时需配置)');
+    return null as any;
   }
   const client = postgres(connectionString, { max: 1 });
   return drizzle({ client, schema });

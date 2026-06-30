@@ -28,7 +28,7 @@ export default function AdminDashboard() {
           getAllOrders(),
         ]);
         setStats(s);
-        setLowStockProducts(allProducts.filter((p) => p.stock <= 10));
+        setLowStockProducts(allProducts.filter((p: any) => p.stock <= 10));
         setRecentOrders(orders.slice(0, 5));
       } finally {
         setLoading(false);

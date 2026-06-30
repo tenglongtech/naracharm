@@ -153,7 +153,7 @@ export async function getAllCollections(): Promise<StorefrontCollection[]> {
     .from(collections)
     .orderBy(collections.sortOrder);
 
-  return rows.map((r) => ({ ...r, productCount: Number(r.productCount) }));
+  return rows.map((r: any) => ({ ...r, productCount: Number(r.productCount) }));
 }
 
 export async function getCollectionBySlug(slug: string): Promise<StorefrontCollection | null> {
