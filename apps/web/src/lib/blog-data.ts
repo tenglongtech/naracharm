@@ -906,7 +906,6 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     ],
   },
 ];
-];
 
 // ─── 查询函数 ───────────────────────────────────────────────────────────
 export function getArticleBySlug(slug: string): BlogArticle | undefined {
