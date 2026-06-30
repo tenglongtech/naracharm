@@ -668,6 +668,244 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       { heading: 'Why We Never Tie the Knot Shut', body: ['There is a beautiful detail in how endless knot cords are traditionally worn: **the knot is never fully closed.** It has a small opening — a gap — because a blessing must stay alive. It must be able to breathe, to grow, to travel, and one day, intact, to return on the wind.', 'This is why our knot bracelets and phone charms always have that slight looseness. It\'s not a flaw — it\'s the point.'] },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 16: Carnelian Meaning (月搜 ~7K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'carnelian-meaning-stone-of-motivation',
+    title: 'Carnelian Meaning: The Stone of Motivation, Confidence & Creativity',
+    description: 'Discover the meaning and healing properties of carnelian — the fiery orange stone of motivation and courage. Learn what carnelian does and how to wear it for confidence.',
+    keywords: ['carnelian meaning', 'carnelian stone', 'carnelian healing properties', 'what does carnelian do', 'carnelian bracelet', 'stone of motivation', 'orange crystal meaning'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '5 min read',
+    relatedProducts: ['mixed-crystal-bracelet'],
+    relatedArticles: ['healing-crystals-101-beginners-guide', 'chakra-stones-guide'],
+    content: [
+      { heading: 'What Is Carnelian?', body: ['Carnelian is a vibrant orange-to-red variety of chalcedony, a type of microcrystalline quartz. Its warm, fiery color has made it one of the most popular stones throughout human history — used by ancient Egyptians, Greeks, Romans, and Islamic cultures for seals, amulets, and jewelry.', 'The name comes from the Latin *carneus*, meaning "flesh-colored" — a reference to its warm, reddish-orange hue. The finest carnelian has a deep, translucent red-orange that seems to glow from within.'] },
+      { heading: 'Carnelian Meaning: The Motivator', body: ['If amethyst is the stone of calm, carnelian is its opposite — the stone of **action**. Its core meanings:', '**Motivation.** Carnelian is believed to stimulate ambition, drive, and the courage to pursue goals. It is the stone for procrastinators and dreamers who need a push to act.', '**Creativity.** Connected to the sacral chakra, carnelian is said to unlock creative blocks and inspire new ideas.', '**Confidence.** Carnelian carries a bold, warm energy that is believed to boost self-esteem and social courage.', '**Vitality.** In ancient traditions, carnelian was associated with blood, energy, and physical stamina.'] },
+      { heading: 'Carnelian in History', body: ['**Ancient Egypt:** Carnelian was associated with the goddess Isis and was worn by the living and placed on the dead for protection in the afterlife. Egyptian architects wore carnelian as a sign of their rank.', '**Ancient Rome:** Roman soldiers wore carnelian amulets engraved with warriors or lions for courage in battle.', **Islamic tradition:** The Prophet Muhammad was said to wear a carnelian ring, and the stone remains popular in Islamic jewelry today.'] },
+      { heading: 'How to Wear Carnelian', body: ['Wear carnelian when you need a boost — before a job interview, a presentation, a creative session, or any moment requiring courage and energy.', '**On the right wrist** (the projecting side) to send its bold energy outward.', '**As a pendant** near the sacral or solar plexus chakra for maximum effect on confidence and creativity.', 'Carnelian pairs beautifully with grounding stones like obsidian (to balance its intensity) or turquoise (for protection during bold actions).'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 17: Tiger's Eye Meaning (月搜 ~9K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'tigers-eye-meaning',
+    title: 'Tiger\'s Eye Meaning: The Stone of Courage, Focus & Protection',
+    description: 'Discover the meaning and healing properties of tiger\'s eye — the golden-brown stone of courage and mental focus. Learn what tiger\'s eye does and how to wear it.',
+    keywords: ['tigers eye meaning', 'tiger eye stone', 'tigers eye healing properties', 'what does tigers eye do', 'tiger eye bracelet', 'stone of courage', 'protection crystal'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '5 min read',
+    relatedProducts: ['mixed-crystal-bracelet'],
+    relatedArticles: ['carnelian-meaning-stone-of-motivation', 'obsidian-meaning-protection-stone'],
+    content: [
+      { heading: 'What Is Tiger\'s Eye?', body: ['Tiger\'s eye is a chatoyant (iridescent) gemstone with golden-brown bands that shimmer as light moves across it — like the eye of a cat, or indeed, a tiger. This optical effect, called chatoyancy, is caused by parallel fibers of crocidolite embedded in quartz.', 'It has been used in jewelry and amulets for thousands of years, from ancient Rome to traditional African and Asian cultures. Roman soldiers carried tiger\'s eye into battle for courage and protection.'] },
+      { heading: 'Tiger\'s Eye Meaning', body: ['**Courage.** Like the animal it\'s named after, tiger\'s eye represents bravery, strength, and the ability to face challenges head-on.', '**Mental focus.** Tiger\'s eye is believed to sharpen the mind, improve concentration, and help you make clear, rational decisions.', '**Protection.** Tiger\'s eye has a long history as a protective stone, especially for travelers. It is believed to reflect negative energy back to its source.', '**Willpower.** Tiger\'s eye is often recommended for those trying to break bad habits or build new ones — it strengthens resolve and self-discipline.'] },
+      { heading: 'How to Wear Tiger\'s Eye', body: ['Tiger\'s eye is a solar plexus chakra stone, associated with personal power and will.', 'Wear it on the right wrist to project confidence outward, or as a pendant to keep its grounding energy centered.', 'It pairs beautifully with hematite (grounding) and clear quartz (amplification) for a powerful focus and protection combination.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 18: Clear Quartz (月搜 ~12K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'clear-quartz-meaning-master-healer',
+    title: 'Clear Quartz Meaning: The Master Healer & Energy Amplifier',
+    description: 'Discover clear quartz — the "master healer" crystal. Learn what clear quartz means, how it amplifies energy, cleanses other stones, and why it\'s essential for any collection.',
+    keywords: ['clear quartz meaning', 'clear quartz healing properties', 'what does clear quartz do', 'master healer crystal', 'clear quartz bracelet', 'quartz crystal meaning', 'energy amplifier stone'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '5 min read',
+    relatedProducts: ['mixed-crystal-bracelet'],
+    relatedArticles: ['healing-crystals-101-beginners-guide', 'amethyst-meaning-healing-properties'],
+    content: [
+      { heading: 'What Is Clear Quartz?', body: ['Clear quartz (silicon dioxide) is the most abundant mineral on Earth\'s surface and one of the most versatile crystals in healing practice. It is completely transparent — or nearly so — and has been used in tools, jewelry, and spiritual practice since the Stone Age.', 'The word "quartz" comes from the Greek *krustallos*, meaning "ice" — ancient Greeks believed clear quartz was permanently frozen water that would never melt.'] },
+      { heading: 'Clear Quartz Meaning: The Master Healer', body: ['Clear quartz is called the **"master healer"** because of its unique ability:', '**Amplification.** Clear quartz is believed to amplify the energy of any stone it is placed near. Pair it with amethyst, and the amethyst\'s calming energy intensifies. Pair it with rose quartz, and the loving energy grows.', '**Clarity.** As its name suggests, clear quartz represents mental clarity — cutting through confusion, fog, and distraction to reveal what matters.', '**Programmability.** In crystal healing, clear quartz is considered the most "programmable" stone — meaning you can set an intention into it, and it will hold and amplify that intention.', '**Cleansing.** Clear quartz can cleanse and recharge other crystals placed on or near it.'] },
+      { heading: 'How to Use Clear Quartz', body: ['**Pair it with any stone.** Place clear quartz next to your amethyst bracelet to amplify its calming power. This is one of the most effective crystal combinations.', '**Set an intention.** Hold a clear quartz stone, close your eyes, and focus on what you want. Crystal healers believe the stone will "store" that intention and radiate it.', '**Place it in your space.** A clear quartz cluster on your desk is believed to clear mental fog and amplify focus.', '**Use it to cleanse.** Place your other jewelry on a clear quartz geode overnight to recharge them.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 19: Evil Eye Meaning (月搜 ~22K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'evil-eye-meaning-protection-symbol',
+    title: 'Evil Eye Meaning: What It Is, How It Works & Why People Wear It',
+    description: 'What is the evil eye? Discover the history and meaning of the evil eye symbol — one of the most powerful protection amulets in the world. Learn how to use it.',
+    keywords: ['evil eye meaning', 'what is the evil eye', 'evil eye protection', 'evil eye bracelet', 'evil eye jewelry meaning', 'nazar amulet', 'evil eye symbol', 'blue eye protection'],
+    category: 'Symbolism',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '6 min read',
+    relatedProducts: ['obsidian-guard-charm', 'turquoise-sky-bracelet'],
+    relatedArticles: ['obsidian-meaning-protection-stone', 'tibetan-jewelry-symbols-meaning'],
+    content: [
+      { heading: 'What Is the Evil Eye?', body: ['The evil eye is one of the oldest and most widespread belief systems in human history — found in Mediterranean, Middle Eastern, South Asian, and Latin American cultures. The belief is simple: a malevolent glare, usually motivated by envy, can cause harm to the person being looked at.', 'The harm can be physical (illness), emotional (depression or bad luck), or material (loss of wealth). The "evil eye" is not a person — it is the negative energy transmitted through a jealous or envious look.', 'To protect against it, cultures across the world created **evil eye amulets** — talismans designed to deflect the harmful gaze.'] },
+      { heading: 'The Nazar: The Blue Eye Amulet', body: ['The most recognizable evil eye amulet is the **nazar** — a circular talisman made of concentric circles in dark blue, light blue, white, and sometimes yellow/gold. It looks like an eye, and it works by "staring back" at the evil gaze, deflecting it.', 'The nazar originated in Turkey and the Mediterranean, where it is still seen everywhere — pinned to baby clothes, hung in homes, painted on boats, and worn as jewelry. The color blue is significant — in the regions where the belief originated, blue-eyed people were considered rare and potentially more likely to cast the evil eye, making blue the protective color.'] },
+      { heading: 'Evil Eye Jewelry: How to Wear It', body: ['Wearing an evil eye amulet is one of the most common ways to carry protection. Popular forms include:', '**Evil eye bracelets** — the most common, worn on the left wrist (the receiving side) to absorb and deflect negative energy.', '**Evil eye necklaces** — keep the protection close to your heart.', '**Evil eye phone charms** — modern protection for your most-used device.', 'In many traditions, an evil eye bracelet is given by a loved one rather than bought for yourself — the act of gifting is believed to add an extra layer of protection.'] },
+      { heading: 'What Happens When an Evil Eye Bracelet Breaks?', body: ['One of the most common questions about evil eye jewelry. In traditional belief, **if your evil eye bracelet breaks, it has done its job** — it absorbed a negative energy that was directed at you, and the breaking means the protection worked.', 'When this happens, the traditional practice is to thank the amulet, dispose of it (buried or thrown into running water), and replace it with a new one.'] },
+      { heading: 'Evil Eye and Crystal Combinations', body: ['For double protection, evil eye amulets are often combined with protective stones:', '**Obsidian + Evil Eye** — Maximum protection. Obsidian absorbs negativity; the evil eye deflects it.', '**Turquoise + Evil Eye** — Both are protection symbols in their respective cultures (Middle Eastern and Tibetan/Native American), creating a cross-cultural protection shield.', '[Shop protection jewelry →](/collections/charms)'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 20: Bracelet Size Guide (月搜 ~15K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'bracelet-size-guide-how-to-measure',
+    title: 'Bracelet Size Guide: How to Measure Your Wrist for the Perfect Fit',
+    description: 'Not sure what bracelet size to buy? This complete guide shows you how to measure your wrist, choose the right bracelet size, and find the perfect fit for beaded and stretch bracelets.',
+    keywords: ['bracelet size guide', 'how to measure wrist for bracelet', 'what size bracelet do i need', 'bracelet size chart', 'beaded bracelet size', 'stretch bracelet fit', 'wrist measurement guide'],
+    category: 'Care Guide',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '4 min read',
+    relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'turquoise-sky-bracelet'],
+    relatedArticles: ['how-to-style-beaded-bracelets', 'beaded-jewelry-care-guide'],
+    content: [
+      { heading: 'How to Measure Your Wrist', body: ['You only need two things: a flexible measuring tape (or a strip of paper and a ruler).', '**Step 1:** Wrap the tape (or paper strip) snugly around your wrist bone — the bony bump on the outside of your wrist.', '**Step 2:** Note the measurement in centimeters (cm). This is your **wrist size** — not your bracelet size.', '**Step 3:** Add ease (see below) to get your bracelet size.'] },
+      { heading: 'How Much Ease to Add', body: ['Different bracelet styles need different amounts of "ease" (extra room):', '**Stretch beaded bracelets (8mm beads):** Add 1-1.5cm. These should slide over your hand and sit snugly on the wrist.', '**Stretch beaded bracelets (6mm beads):** Add 0.5-1cm. Smaller beads are lighter, so less ease is needed.', '**Cord bracelets (slip knot):** Adjustable. Fits most wrists. No measuring needed.', '**Bangles (non-opening):** Must fit over your hand. Measure the widest part of your hand knuckles, not your wrist.'] },
+      { heading: 'Standard Bracelet Sizes', body: ['| Size | Wrist Measurement | Fits Wrist |', '|------|-------------------|------------|', '| Small | 15cm / 5.9in | 13.5-14cm wrists (slim) |', '| Medium | 17cm / 6.7in | 15.5-16cm wrists (most common) |', '| Large | 19cm / 7.5in | 17.5-18cm wrists |', '**Medium (17cm) fits about 70% of adults.** If you\'re unsure, choose Medium.'] },
+      { heading: 'Tips for the Perfect Fit', body: ['**Measure at the end of the day.** Your wrists are slightly larger in the evening than in the morning.', '**Measure both wrists.** About 10% of people have different-sized wrists. Use the larger one.', '**Consider bead size.** 8mm beads (the most common) create a bracelet that sits slightly higher on the wrist than 6mm beads.', '**When in doubt, go slightly larger.** A loose bracelet is comfortable; a tight one is not.', '[Shop bracelets with size options →](/collections/bracelets)'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 21: How to Layer Necklaces (月搜 ~10K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'how-to-layer-necklaces',
+    title: 'How to Layer Necklaces: The Complete Guide to Necklace Stacking',
+    description: 'Learn how to layer necklaces like a stylist — which lengths to combine, how to mix pendants and chains, and the rules for creating a perfect layered necklace look.',
+    keywords: ['how to layer necklaces', 'layered necklaces', 'necklace stacking', 'how to wear multiple necklaces', 'layering necklace guide', 'necklace lengths guide', 'stacking pendant necklaces'],
+    category: 'Styling',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '5 min read',
+    relatedProducts: ['han-jade-lotus-pendant', 'caravan-fusion-necklace'],
+    relatedArticles: ['how-to-style-beaded-bracelets', 'beaded-jewelry-care-guide'],
+    content: [
+      { heading: 'Why Layer Necklaces?', body: ['Layering necklaces is the jewelry equivalent of mixing patterns in fashion — it adds depth, personality, and visual interest that a single necklace cannot achieve alone. Done well, it looks effortless. Done poorly, it looks tangled.', 'Here\'s how to do it well.'] },
+      { heading: 'Rule 1: Use Different Lengths', body: ['The most important rule of necklace layering is to use necklaces of **different lengths** so they don\'t bunch together. A classic three-layer combination:', '**16 inch (40cm)** — Sits at the collarbone. Best for a small pendant or choker-style piece.', '**18 inch (45cm)** — Sits just below the collarbone. The most common length; good for a medium pendant.', '**20 inch (50cm)** — Sits lower on the chest. Best for a larger pendant or statement piece.', 'This creates three visible tiers, each with its own focal point.'] },
+      { heading: 'Rule 2: Mix Pendant Sizes', body: ['If all three necklaces have large pendants, the look becomes heavy. Instead, vary the sizes:', '**Shortest necklace:** Small pendant or no pendant (just a chain).', '**Middle necklace:** Medium pendant (a lotus, a small stone, a charm).', '**Longest necklace:** Largest pendant (a jade piece, a statement stone).', 'This creates a visual cascade from small to large.'] },
+      { heading: 'Rule 3: Stick to a Color Story', body: ['For a cohesive look, keep your metals and stones in the same color family:', '**Silver + cool stones:** Silver chain + amethyst pendant + turquoise pendant.', '**Gold + warm stones:** Gold chain + citrine pendant + carnelian pendant.', '**Mixed metals (advanced):** Silver + gold + rose gold, kept delicate. Works best with thin chains and tiny pendants.'] },
+      { heading: 'Rule 4: Odd Numbers Work Best', body: ['In visual design, odd numbers are more pleasing than even. **Three necklaces** is the sweet spot for layering — enough for visual impact, not so many that they tangle.', 'If you want to go bolder, try five — but keep each necklace thin and lightweight.'] },
+      { heading: 'Preventing Tangles', body: ['The biggest frustration with layered necklaces is tangling. Here\'s how to prevent it:', '**Use a necklace spacer/clasp** — a small clip that holds the chains apart at the back of your neck.', '**Choose different chain styles** — a cable chain, a rope chain, and a bead chain tangle less than three identical chains.', '**Keep the shortest necklace snug** — a choker-length necklace won\'t slide into the longer ones.', '[Shop necklaces for layering →](/collections/necklaces)'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 22: Citrine Meaning (月搜 ~6K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'citrine-meaning-merchants-stone',
+    title: 'Citrine Meaning: The Merchant\'s Stone of Abundance & Joy',
+    description: 'Discover the meaning and healing properties of citrine — the golden stone of abundance, success, and positive energy. Learn what citrine does and how to wear it.',
+    keywords: ['citrine meaning', 'citrine healing properties', 'what does citrine do', 'citrine stone', 'merchants stone', 'citrine bracelet', 'stone of abundance', 'yellow crystal meaning'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '4 min read',
+    relatedProducts: ['mixed-crystal-bracelet'],
+    relatedArticles: ['carnelian-meaning-stone-of-motivation', 'healing-crystals-101-beginners-guide'],
+    content: [
+      { heading: 'What Is Citrine?', body: ['Citrine is a golden-yellow to amber variety of quartz, colored by traces of iron. Its name comes from the French *citron*, meaning "lemon" — a reference to its warm, sunny color.', 'Natural citrine is actually quite rare; much of the citrine on the market is heat-treated amethyst (which turns yellow when baked at high temperatures). Both natural and heat-treated citrine carry the same meaning in crystal healing.'] },
+      { heading: 'Citrine Meaning: The Stone of Abundance', body: ['**Wealth.** Citrine is famously called the "Merchant\'s Stone" or "Success Stone" — it is believed to attract prosperity, abundance, and financial success. Many shopkeepers keep a citrine in their cash register.', '**Joy.** Citrine carries a warm, sunny energy that is believed to dispel depression, self-doubt, and negative thought patterns. It is like wearing a piece of sunlight.', '**Confidence.** Connected to the solar plexus chakra, citrine boosts self-worth, willpower, and the courage to pursue your goals.', '**Energy.** Unlike many crystals that absorb energy, citrine is believed to *transmute* negative energy into positive — it doesn\'t need cleansing.'] },
+      { heading: 'How to Wear Citrine', body: ['Wear citrine when you want to attract abundance, boost your mood, or step into a more confident version of yourself.', '**For business:** Wear a citrine bracelet to meetings, interviews, or negotiations.', '**For mood:** Wear citrine on gray days, during winter, or whenever you need an energy boost.', 'Citrine does not need cleansing (one of very few stones that doesn\'t) — it is self-clearing. Just wear it and enjoy.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 23: Mother's Day Crystal Gift (月搜 ~8K seasonal)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'best-jewelry-gifts-for-mom',
+    title: 'Best Crystal Jewelry Gifts for Mom: Meaningful Stones She\'ll Love',
+    description: 'Looking for the perfect jewelry gift for Mom? This guide matches crystals to every type of mom — rose quartz for love, jade for wisdom, amethyst for calm. Find a gift that says everything.',
+    keywords: ['jewelry gift for mom', 'crystal gift for mother', 'best gift for mom', 'mothers day jewelry', 'meaningful gift for mom', 'rose quartz gift', 'jade pendant gift'],
+    category: 'Gift Guide',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '5 min read',
+    relatedProducts: ['rose-quartz-bracelet', 'lotus-jade-bracelet', 'amethyst-peace-bracelet'],
+    relatedArticles: ['best-crystal-gift-guide', 'rose-quartz-meaning-love-stone'],
+    content: [
+      { heading: 'Why Crystal Jewelry Is the Perfect Gift for Mom', body: ['Moms deserve more than a generic gift. Crystal jewelry lets you give something beautiful **and** meaningful — each stone carries a specific message that says what words sometimes cannot.', 'Unlike flowers (which fade) or chocolates (which disappear), a crystal bracelet is a lasting reminder of your love. Every time she looks at her wrist, she\'ll think of you.'] },
+      { heading: 'For the Mom Who Gives Everything → Rose Quartz', body: ['**Message:** "Thank you for your endless love."', 'Rose quartz is the stone of unconditional love — the perfect representation of a mother\'s love. Gift it to say: "I know how much you\'ve given me, and I love you for it."', '[Shop Rose Quartz Bracelet →](/products/rose-quartz-bracelet)'] },
+      { heading: 'For the Mom Who Is Your Wisdom Guide → Jade', body: ['**Message:** "You\'ve taught me everything."', 'Jade is the stone of wisdom, patience, and serenity — the qualities of a mother who has guided you through life. Gift it to honor her wisdom.', '[Shop Lotus Jade Bracelet →](/products/lotus-jade-bracelet)'] },
+      { heading: 'For the Stressed Mom → Amethyst', body: ['**Message:** "You deserve peace."', 'Moms carry a lot. Amethyst is the stone of calm — gift it to the mom who is always taking care of everyone else, to remind her to take care of herself too.', '[Shop Amethyst Bracelet →](/products/amethyst-peace-bracelet)'] },
+      { heading: 'For the Mom Who Worries → Turquoise', body: ['**Message:** "I\'m safe. Stop worrying."', 'Turquoise is the traveler\'s protection stone. If you\'ve moved away from home, gift your mom turquoise — it says: "I\'m protected, even when I\'m far from you."', '[Shop Turquoise Bracelet →](/products/turquoise-sky-bracelet)'] },
+      { heading: 'How to Make It Extra Special', body: ['Every Nara Charm order arrives in a keepsake box with a **handwritten story card**. When gifting to Mom, use this card to write a personal message — tell her which stone you chose and why. This transforms a beautiful bracelet into a treasured keepsake she\'ll wear every day.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 24: Best Stones for Anxiety (月搜 ~12K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'best-crystals-for-anxiety',
+    title: 'The 7 Best Crystals for Anxiety & Stress Relief',
+    description: 'Looking for natural anxiety relief? These 7 crystals are believed to calm the mind, reduce stress, and promote peace. Learn which stones help with anxiety and how to use them.',
+    keywords: ['crystals for anxiety', 'best crystal for stress', 'anxiety relief stones', 'crystals for calm', 'amethyst for anxiety', 'rose quartz stress relief', 'healing crystals for anxiety'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '6 min read',
+    relatedProducts: ['amethyst-peace-bracelet', 'amethyst-calm-bracelet', 'rose-quartz-bracelet'],
+    relatedArticles: ['amethyst-meaning-healing-properties', 'healing-crystals-101-beginners-guide'],
+    content: [
+      { heading: 'Can Crystals Help with Anxiety?', body: ['Let\'s be honest: crystals are not a substitute for professional mental health treatment. If you struggle with chronic anxiety, please talk to a doctor or therapist.', 'That said, many people find that crystals provide **comfort, grounding, and a tangible reminder to breathe**. The act of choosing a calming stone, wearing it, and touching it when stressed is itself a mindfulness practice — and mindfulness is proven to reduce anxiety.', 'Here are the 7 stones most recommended by crystal healers for anxiety and stress.'] },
+      { heading: '1. Amethyst — The All-Round Calmer', body: ['Amethyst is the #1 stone recommended for anxiety. Its calming energy is believed to quiet racing thoughts, reduce nervous tension, and promote mental clarity.', 'If you\'re choosing just one stone for anxiety, make it amethyst. [Shop Amethyst →](/products/amethyst-peace-bracelet)'] },
+      { heading: '2. Rose Quartz — For Emotional Anxiety', body: ['If your anxiety is tied to relationships, self-worth, or heartbreak, rose quartz is the stone. Its gentle, loving energy soothes the emotional root of anxiety.'] },
+      { heading: '3. Black Tourmaline — For Overwhelm', body: ['When anxiety comes from being overwhelmed — too much information, too many demands — black tourmaline grounds you. It draws excess energy down into the earth, like an energetic lightning rod.'] },
+      { heading: '4. Lepidolite — For Racing Thoughts', body: ['Lepidolite contains natural lithium (used in some anti-anxiety medications) and is one of the most powerful stones for calming a frantic mind, especially at bedtime.'] },
+      { heading: '5. Howlite — For Sleep Anxiety', body: ['If anxiety keeps you awake, howlite is the stone. Place it under your pillow for a calmer, more restful night.'] },
+      { heading: '6. Clear Quartz — For Mental Clarity', body: ['When anxiety creates brain fog and confusion, clear quartz cuts through the noise, helping you see clearly and make decisions.'] },
+      { heading: '7. Smoky Quartz — For Grounding', body: ['Smoky quartz is the ultimate grounding stone — it pulls anxious energy down and out, leaving you feeling stable and present.'] },
+      { heading: 'How to Use Crystals for Anxiety', body: ['**Wear them.** A crystal bracelet keeps the calming energy on your body all day. Touch it when you feel anxious.', '**Hold one during anxious moments.** When anxiety spikes, hold a calming stone in your hand and focus on its weight and texture.', '**Place them by your bed.** Amethyst, lepidolite, or howlite under your pillow for nighttime anxiety.', '**Breathe with them.** Hold your crystal and do 4-7-8 breathing (inhale 4, hold 7, exhale 8) while focusing on the stone. The combination of breathwork and tactile grounding is powerful.'] },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 25: Red Agate / Cinnabar Meaning (月搜 ~5K)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'red-agate-cinnabar-meaning',
+    title: 'Red Agate & Cinnabar Meaning: The Asian Stones of Blessing & Fortune',
+    description: 'Discover the meaning of red agate and cinnabar — the red stones used across Asia for blessing, protection, and good fortune. Learn what these sacred red stones mean.',
+    keywords: ['red agate meaning', 'cinnabar meaning', 'red stone meaning', 'agate healing properties', 'red bracelet meaning', 'chinese red stone', 'blessing bracelet red'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-01',
+    updatedAt: '2026-07-01',
+    readingTime: '5 min read',
+    relatedProducts: ['cinnabar-cord-charm'],
+    relatedArticles: ['tibetan-jewelry-symbols-meaning', 'endless-knot-meaning'],
+    content: [
+      { heading: 'Why Red?', body: ['In many Asian cultures — Chinese, Tibetan, Mongolian, Indian — red is not just a color. It is the color of **life, blessing, protection, and good fortune**. Red threads are tied around wrists for protection. Red envelopes are given for luck. Brides wear red for prosperity.', 'So it is no surprise that red stones — red agate, cinnabar, carnelian, red jasper — carry some of the most powerful symbolic meanings in Asian jewelry traditions.'] },
+      { heading: 'Red Agate Meaning', body: ['Red agate is a variety of chalcedony with warm, translucent red-to-orange bands. In Chinese and Tibetan traditions, red agate is:', '**A protective stone.** Red agate is believed to ward off evil and protect the wearer from harm — especially the harm caused by envy or jealousy.', '**A stone of vitality.** Red agate\'s warm energy is associated with blood, life force, and physical stamina.', '**A grounding stone.** Like the root chakra it connects to, red agate provides stability and emotional balance.', 'In Tibetan jewelry, red agate is often combined with turquoise — red representing earth and life, turquoise representing sky and spirit.'] },
+      { heading: 'Cinnabar Meaning', body: ['Cinnabar (赤砂) is a deep red mineral that has been used in Chinese art and jewelry for over 8,000 years. In Chinese culture, cinnabar represents:', '**Imperial power.** Cinnabar red was the color of Chinese emperors — reserved for the highest authority.', '**Blessing and good fortune.** Cinnabar objects were given as gifts to bring luck, prosperity, and long life.', '**Spiritual protection.** In Taoist tradition, cinnabar was associated with immortality and spiritual transformation.'] },
+      { heading: 'The Red Thread Tradition', body: ['Across Asia, the practice of tying a red thread around the wrist is one of the most ancient forms of protective jewelry:', '**In Tibetan Buddhism**, red threads are blessed by lamas and tied around the wrists of the faithful for protection and good fortune.', '**In Chinese tradition**, red threads are tied by elders for children and travelers, often during the New Year.', '**In Hindu tradition**, red threads (kalawa) are tied during religious ceremonies for blessing and protection.', 'Our red cord phone charms and bracelets carry this ancient tradition into the modern world. [Shop red cord charms →](/products/cinnabar-cord-charm)'] },
+    ],
+  },
+];
 ];
 
 // ─── 查询函数 ───────────────────────────────────────────────────────────
