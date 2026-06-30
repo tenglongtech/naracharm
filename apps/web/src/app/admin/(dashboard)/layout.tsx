@@ -1,11 +1,24 @@
 import { redirect } from 'next/navigation';
+import type { Metadata } from 'next';
 import { getSession } from '@/lib/auth';
 import { AdminShell } from '@/components/admin-shell';
 
 /**
  * 后台布局 (server component)
  * 守卫: 未登录 → 跳 /admin/login; 非 admin → 显示无权限
+ * SEO: 完全屏蔽搜索引擎 (noindex + nofollow)
  */
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
+};
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
 
