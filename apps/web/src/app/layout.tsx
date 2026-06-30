@@ -20,11 +20,11 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Nara Charm | Handmade Beaded Bracelets, Crystal Jewelry & Phone Charms',
+    default: 'Nara Charm | Handmade Beaded Bracelets & Crystal Jewelry',
     template: '%s | Nara Charm',
   },
   description:
-    'Handmade beaded bracelets, crystal necklaces, phone charms & earrings. Tibetan silver, boho, natural stone & ethnic jewelry with a story. Free shipping over $120.',
+    'Handmade beaded bracelets, crystal necklaces & phone charms. Tibetan silver, boho & natural stone jewelry with a story. Free shipping over $120.',
   applicationName: 'Nara Charm',
   keywords: [
     'handmade jewelry',
