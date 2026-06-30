@@ -7,8 +7,9 @@ import { getAllCollections, getActiveProducts } from '@/lib/storefront';
 import { CATEGORIES } from '@/lib/categories';
 
 export const metadata: Metadata = {
-  title: 'All Collections',
-  description: 'Explore Nara Charm collections by tradition. Handmade heritage jewelry.',
+  title: 'Jewelry Collections | Beaded Bracelets, Crystal Necklaces & Phone Charms',
+  description: 'Browse all handmade jewelry collections: Tibetan silver, crystal bracelets, beaded necklaces, boho phone charms, Miao filigree earrings. Natural stone jewelry with a story.',
+  alternates: { canonical: '/collections' },
 };
 
 export default async function CollectionsIndexPage() {

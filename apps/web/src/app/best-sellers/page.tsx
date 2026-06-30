@@ -5,8 +5,9 @@ import { ProductTile, type ProductCard } from '@/components/product-tile';
 import { getActiveProducts } from '@/lib/storefront';
 
 export const metadata: Metadata = {
-  title: 'Best Sellers',
-  description: 'The most-loved Nara Charm pieces — handmade jewelry our customers keep coming back for.',
+  title: 'Best Selling Handmade Bracelets, Necklaces & Phone Charms',
+  description: 'Shop our best-selling handmade beaded bracelets, crystal necklaces, phone charms, and Tibetan silver jewelry. Natural stone jewelry with meaning. Free shipping over $120.',
+  alternates: { canonical: '/best-sellers' },
 };
 
 function toCard(p: Awaited<ReturnType<typeof getActiveProducts>>[number]): ProductCard {

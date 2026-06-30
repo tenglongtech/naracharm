@@ -33,7 +33,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const collection = await getCollectionBySlug(slug);
   if (collection) return { title: collection.name, description: collection.description || undefined };
   const category = CATEGORIES.find((c) => c.slug === slug);
-  if (category) return { title: category.name, description: category.heroSubtitle };
+  if (category) return {
+    title: category.seoTitle,
+    description: category.seoDescription,
+    alternates: { canonical: `/collections/${slug}` },
+  };
   return { title: 'Collection not found' };
 }
 
@@ -43,22 +47,23 @@ export default async function CollectionPage({ params }: Params) {
     getCollectionBySlug(slug),
     getAllCollections(),
   ]);
-  const category = CATEGORIES.find((c) => c.slug === slug) as { slug: CategorySlug; name: string; icon: string; heroSubtitle: string } | undefined;
+  const category = CATEGORIES.find((c) => c.slug === slug);
+  const cat = category as typeof CATEGORIES[0] | undefined;
   const narrative = getCollectionNarrative(slug as CollectionSlug);
   if (!collection && !category) notFound();
 
   // 品类视图
-  if (category && !collection) {
-    const products = (await getProductsByCategory(category.slug)).map(toCard);
+  if (cat && !collection) {
+    const products = (await getProductsByCategory(cat.slug)).map(toCard);
     return (
       <>
         <SiteHeader />
         <main id="main">
           <section className="border-b border-border bg-ink text-bg">
             <div className="mx-auto max-w-7xl px-4 py-16 text-center md:py-20">
-              <div className="text-5xl">{category.icon}</div>
-              <h1 className="mt-4 font-display text-4xl md:text-5xl">{category.name}</h1>
-              <p className="mx-auto mt-4 max-w-xl text-bg/80">{category.heroSubtitle}</p>
+              <div className="text-5xl">{cat.icon}</div>
+              <h1 className="mt-4 font-display text-4xl md:text-5xl">{cat.name}</h1>
+              <p className="mx-auto mt-4 max-w-xl text-bg/80">{cat.heroSubtitle}</p>
             </div>
           </section>
           <section className="mx-auto max-w-7xl px-4 py-16 md:py-20">
@@ -75,7 +80,7 @@ export default async function CollectionPage({ params }: Params) {
               </>
             ) : (
               <div className="rounded-lg border border-border bg-surface p-12 text-center">
-                <p className="text-muted">More {category.name.toLowerCase()} are being handcrafted. Check back soon.</p>
+                <p className="text-muted">More {cat.name.toLowerCase()} are being handcrafted. Check back soon.</p>
                 <Link href="/collections" className="mt-4 inline-block text-sm text-brand hover:underline">Browse all collections →</Link>
               </div>
             )}
