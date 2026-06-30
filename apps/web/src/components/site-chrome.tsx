@@ -60,11 +60,11 @@ export function SiteFooter() {
         <div>
           <h3 className="font-display text-sm uppercase tracking-wider text-gold">About</h3>
           <ul className="mt-4 space-y-2 text-sm text-bg/75">
+            <li><Link href="/blog" className="hover:text-bg">Crystal Guide & Meanings</Link></li>
             <li><Link href="/our-craft" className="hover:text-bg">Our Craft</Link></li>
             <li><Link href="/stories" className="hover:text-bg">Stories</Link></li>
             <li><Link href="/about" className="hover:text-bg">About Us</Link></li>
             <li><Link href="/gift-guide" className="hover:text-bg">Gift Guide</Link></li>
-            <li><Link href="/stockists" className="hover:text-bg">Stockists</Link></li>
             <li><Link href="/wholesale" className="hover:text-bg">Wholesale</Link></li>
           </ul>
         </div>

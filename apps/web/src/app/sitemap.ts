@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 import type { MetadataRoute } from 'next';
 import { getActiveProducts, getAllCollections } from '@/lib/storefront';
 import { STORIES } from '@/lib/stories-data';
+import { BLOG_ARTICLES } from '@/lib/blog-data';
 
 /**
  * Sitemap · Next.js 16 原生,部署时自动生成 /sitemap.xml
@@ -17,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/collections`, changeFrequency: 'weekly', priority: 0.9, lastModified: now },
     { url: `${base}/best-sellers`, changeFrequency: 'weekly', priority: 0.8, lastModified: now },
     { url: `${base}/stories`, changeFrequency: 'weekly', priority: 0.8, lastModified: now },
+    { url: `${base}/blog`, changeFrequency: 'weekly', priority: 0.9, lastModified: now },
     { url: `${base}/our-craft`, changeFrequency: 'monthly', priority: 0.8, lastModified: now },
     { url: `${base}/gift-guide`, changeFrequency: 'monthly', priority: 0.8, lastModified: now },
     { url: `${base}/about`, changeFrequency: 'monthly', priority: 0.6, lastModified: now },
@@ -59,5 +61,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.warn('sitemap: 数据库未就绪,跳过动态条目', e);
   }
 
-  return [...staticPages, ...storyEntries, ...collectionEntries, ...productEntries];
+  // 博客文章
+  const blogEntries: MetadataRoute.Sitemap = BLOG_ARTICLES.map((a) => ({
+    url: `${base}/blog/${a.slug}`,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+    lastModified: new Date(a.updatedAt),
+  }));
+
+  return [...staticPages, ...storyEntries, ...blogEntries, ...collectionEntries, ...productEntries];
 }
