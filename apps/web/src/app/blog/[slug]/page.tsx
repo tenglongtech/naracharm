@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
-import { BLOG_ARTICLES, getArticleBySlug, getRelatedArticles } from '@/lib/blog-data';
+import { BLOG_ARTICLES, getArticleBySlug, getRelatedArticles, isNewArticle, isRecentlyUpdated, formatBlogDate } from '@/lib/blog-data';
 import { ProductTile, type ProductCard } from '@/components/product-tile';
 import { getActiveProducts } from '@/lib/storefront';
 
@@ -100,12 +100,21 @@ export default async function BlogArticlePage({ params }: Params) {
           <p className="text-xs uppercase tracking-[0.3em] text-brand">{article.category}</p>
           <h1 className="mt-3 font-display text-3xl leading-tight md:text-5xl">{article.title}</h1>
           <p className="mt-4 text-muted">{article.description}</p>
-          <div className="mt-3 flex items-center gap-3 text-xs text-muted">
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
             <span>By {article.author}</span>
             <span>·</span>
-            <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            <span>{formatBlogDate(article.publishedAt)}</span>
+            {isRecentlyUpdated(article) && (
+              <>
+                <span>·</span>
+                <span className="text-brand">Updated {formatBlogDate(article.updatedAt)}</span>
+              </>
+            )}
             <span>·</span>
             <span>{article.readingTime}</span>
+            {isNewArticle(article) && (
+              <span className="ml-1 rounded-full bg-brand/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand">New</span>
+            )}
           </div>
         </article>
 

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
 import { ProductTile, type ProductCard } from '@/components/product-tile';
 import { getActiveProducts, getAllCollections } from '@/lib/storefront';
+import { getRecentBlogArticles, isNewArticle, formatBlogDate, formatBlogDateShort } from '@/lib/blog-data';
 
 /**
  * Nara Charm 首页
@@ -204,10 +205,13 @@ export default async function HomePage() {
           </p>
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {STORIES.map((s) => (
+          {STORIES.map((s, i) => (
             <article key={s.title} className="rounded-lg border border-border bg-surface p-7">
-              <div className="mb-4 text-3xl">{s.icon}</div>
-              <p className="text-xs uppercase tracking-wider text-gold">{s.heritage}</p>
+              <div className="flex items-start justify-between">
+                <div className="text-3xl">{s.icon}</div>
+                <span className="text-[10px] text-muted">{formatBlogDateShort(STORIES_PUBLISHED[i])}</span>
+              </div>
+              <p className="mt-3 text-xs uppercase tracking-wider text-gold">{s.heritage}</p>
               <h3 className="mt-2 font-display text-xl">{s.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">{s.excerpt}</p>
               <Link href={`/stories/${s.slug}`} className="mt-4 inline-block text-sm text-brand hover:underline">
@@ -219,7 +223,43 @@ export default async function HomePage() {
       </section>
 
       {/* ────────────────────────────────────────────
-          8. 4 步工艺流程 How It's Made
+          8. Latest from the Blog (新鲜内容展示)
+      ──────────────────────────────────────────── */}
+      <section className="mx-auto max-w-7xl px-4 py-16 md:py-20">
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-brand">Fresh from the journal</p>
+            <h2 className="mt-2 font-display text-3xl md:text-4xl">Latest from Our Blog</h2>
+          </div>
+          <Link href="/blog" className="text-sm text-brand hover:underline">View all articles →</Link>
+        </div>
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {getRecentBlogArticles(3).map((a) => (
+            <Link
+              key={a.slug}
+              href={`/blog/${a.slug}`}
+              className="group block rounded-lg border border-border bg-surface p-6 transition-all hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] text-muted">{formatBlogDate(a.publishedAt)}</span>
+                {isNewArticle(a) && (
+                  <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-brand">New</span>
+                )}
+              </div>
+              <h3 className="mt-3 font-display text-lg group-hover:text-brand">{a.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted line-clamp-2">{a.description}</p>
+              <div className="mt-4 flex items-center gap-2 text-xs text-muted">
+                <span className="uppercase tracking-wider text-gold">{a.category}</span>
+                <span>·</span>
+                <span>{a.readingTime}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ────────────────────────────────────────────
+          9. 4 步工艺流程 How It's Made
       ──────────────────────────────────────────── */}
       <section className="border-y border-border bg-surface">
         <div className="mx-auto max-w-7xl px-4 py-16 md:py-20">
@@ -242,7 +282,7 @@ export default async function HomePage() {
       </section>
 
       {/* ────────────────────────────────────────────
-          9. 礼物定位 Gift Section
+          10. 礼物定位 Gift Section
       ──────────────────────────────────────────── */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:py-24">
         <div className="grid items-center gap-8 rounded-lg bg-ink p-8 text-bg md:grid-cols-2 md:p-12">
@@ -272,7 +312,7 @@ export default async function HomePage() {
       </section>
 
       {/* ────────────────────────────────────────────
-          10. 信任徽章 Trust Badges
+          11. 信任徽章 Trust Badges
       ──────────────────────────────────────────── */}
       <section className="border-t border-border">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-12 text-center sm:grid-cols-3">
@@ -337,6 +377,9 @@ const STORIES = [
     excerpt: 'For the Miao, a bride wears her entire family history around her neck — hammered, over three years, into silver.',
   },
 ];
+
+/** 首页故事展示日期 (对应 stories-data.ts 里的 publishedAt) */
+const STORIES_PUBLISHED = ['2026-05-12', '2026-05-19', '2026-05-26'];
 
 const CRAFT_STEPS = [
   { title: 'Inspired', desc: 'Each design begins with a real craft tradition and its story.' },

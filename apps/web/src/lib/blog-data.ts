@@ -905,6 +905,282 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       { heading: 'The Red Thread Tradition', body: ['Across Asia, the practice of tying a red thread around the wrist is one of the most ancient forms of protective jewelry:', '**In Tibetan Buddhism**, red threads are blessed by lamas and tied around the wrists of the faithful for protection and good fortune.', '**In Chinese tradition**, red threads are tied by elders for children and travelers, often during the New Year.', '**In Hindu tradition**, red threads (kalawa) are tied during religious ceremonies for blessing and protection.', 'Our red cord phone charms and bracelets carry this ancient tradition into the modern world. [Shop red cord charms →](/products/cinnabar-cord-charm)'] },
     ],
   },
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 26: Personality Bracelet Guide (新鲜内容 · 2026-07-06)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'how-to-choose-bracelet-by-personality',
+  title: 'How to Choose a Bracelet That Matches Your Personality Type',
+  description: 'Not sure which bracelet suits you? Match your personality to the perfect stone — amethyst for thinkers, carnelian for doers, rose quartz for feelers. Find your fit.',
+  keywords: ['bracelet personality guide', 'choose jewelry by personality', 'which crystal am I', 'stone matching personality', 'jewelry personality type', 'crystal personality quiz', 'what bracelet should I wear'],
+  category: 'Styling',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-06',
+  updatedAt: '2026-07-06',
+  readingTime: '5 min read',
+  relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'turquoise-sky-bracelet', 'obsidian-guardian-charm'],
+  relatedArticles: ['healing-crystals-101-beginners-guide', 'how-to-style-beaded-bracelets'],
+  content: [
+    { heading: 'Why Personality Matters in Jewelry', body: ['Your bracelet is more than an accessory — it is a daily companion. The stone on your wrist touches your skin dozens of times a day, catching your eye, catching the light, catching your intention.', 'When a stone resonates with your personality, it does not just look right — it feels right. Here is how to find the stone that matches who you are.'] },
+    { heading: 'The Thinker (Overthinker) → Amethyst', body: ['**You are:** Analytical, introspective, often in your own head. You think before you speak. You need moments of quiet.', '**Your stone:** Amethyst. Its calming energy quiets the mental chatter, helping you find clarity without shutting down your thoughts.', '**Also consider:** Clear quartz, for amplifying mental clarity. Lapis lazuli, for deeper wisdom.', '[Shop Amethyst Peace Bracelet →](/products/amethyst-peace-bracelet)'] },
+    { heading: 'The Doer (Go-Getter) → Carnelian', body: ['**You are:** Energetic, ambitious, action-oriented. You make things happen. You thrive on momentum.', '**Your stone:** Carnelian. Its fiery orange energy fuels motivation, creativity, and the courage to take bold action.', '**Also consider:** Citrine, for abundance and success. Tiger\'s eye, for focus and willpower.'] },
+    { heading: 'The Feeler (Empath) → Rose Quartz', body: ['**You are:** Emotional, intuitive, deeply connected to others. You feel things deeply — sometimes too deeply.', '**Your stone:** Rose Quartz. Its gentle, loving energy soothes emotional sensitivity and reminds you to extend compassion to yourself, not just others.', '**Also consider:** Jade, for emotional wisdom. Moonstone, for emotional balance.'] },
+    { heading: 'The Protector (Guardian) → Obsidian', body: ['**You are:** Grounded, protective, practical. You take care of people. You need to feel secure before you can thrive.', '**Your stone:** Black Obsidian. The ultimate shield stone, it absorbs negative energy and keeps you steady in chaos.', '**Also consider:** Black tourmaline, for grounding. Turquoise, for protective wisdom.'] },
+    { heading: 'The Seeker (Spiritual) → Lapis Lazuli', body: ['**You are:** Curious, philosophical, always searching for deeper meaning. You ask big questions.', '**Your stone:** Lapis Lazuli. The stone of truth and inner power, it connects you to ancient wisdom and your own inner knowing.', '**Also consider:** Amethyst, for spiritual connection. Clear quartz, for amplifying intention.'] },
+    { heading: 'Mix and Match? Absolutely.', body: ['Most people are a blend — a Thinker who needs protection, a Doer who needs heart. Stacking bracelets lets you combine energies. A Carnelian on the right wrist (action) and Rose Quartz on the left (love) creates a beautiful balance.', '[Shop our full collection →](/collections)'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 27: History of Gemstone Jewelry (新鲜内容 · 2026-07-07)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'history-of-gemstone-jewelry',
+  title: 'The History of Gemstone Jewelry: From Ancient Amulets to Modern Fashion',
+  description: 'Explore the 40,000-year history of gemstone jewelry — from prehistoric amulets and Egyptian royal tombs to Victorian sentimentality and modern crystal healing. How stones became our oldest adornment.',
+  keywords: ['history of jewelry', 'gemstone history', 'ancient jewelry', 'history of crystal healing', 'gemstone jewelry timeline', 'vintage jewelry history', 'jewelry through the ages'],
+  category: 'Symbolism',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-07',
+  updatedAt: '2026-07-07',
+  readingTime: '7 min read',
+  relatedProducts: ['tibetan-amulet-925-bracelet', 'caravan-fusion-necklace'],
+  relatedArticles: ['tibetan-jewelry-symbols-meaning', 'healing-crystals-101-beginners-guide', 'evil-eye-meaning-protection-symbol'],
+  content: [
+    { heading: 'The First Adornment: Prehistoric Jewelry (40,000 – 10,000 BCE)', body: ['Humans have been wearing jewelry longer than we have had written language, agriculture, or permanent settlements. The oldest known jewelry — shell beads found in Blombos Cave, South Africa — dates back over 75,000 years.', 'These first adornments were not decorative in the way we think of jewelry today. They were **meaningful objects** — worn for protection, status, ritual, and identity. The stones chosen were not the rarest, but the most symbolically powerful.', 'In prehistoric burials, bodies were adorned with beads, tusks, and carved stones — suggesting that even in death, humans wanted to carry their meaning with them. The impulse to wear meaning on the body is as old as humanity itself.'] },
+    { heading: 'Ancient Egypt: Jewelry for the Afterlife (3000 – 30 BCE)', body: ['Ancient Egyptians elevated jewelry to an art form — and a spiritual necessity. Both the living and the dead wore jewelry: the living for protection and status, the dead to carry their identity into the afterlife.', '**Lapis Lazuli** was the most prized stone, imported from Afghanistan at great cost. It was the stone of royalty and the gods, used in Tutankhamun\'s famous death mask.', '**Turquoise** was associated with the goddess Hathor (goddess of joy, music, and motherhood) and worn for protection and happiness.', '**Carnelian** represented the life-giving power of blood and was placed on mummies to protect them in the afterlife.', 'Egyptian jewelry set patterns that would echo for millennia: the use of gold as a divine metal, the combination of colored stones for symbolic meaning, and the belief that jewelry could protect the wearer.'] },
+    { heading: 'Ancient Greece & Rome: The Rise of Gem Cutting (800 BCE – 500 CE)', body: ['The Greeks and Romans took the meaning-making of jewelry and added a new dimension: **craftsmanship as art.** The Greeks began carving gemstones with figurative imagery — intaglios (carved into the stone) and cameos (carved in relief).', '**Amethyst** was worn by Greeks to prevent intoxication — the name comes from *amethystos*, "not drunk."', '**Pearls** were the ultimate status symbol in Rome. Julius Caesar passed a law restricting who could wear them.', 'Roman soldiers wore rings with protective stones — carnelian for courage, jasper for strength — before battle.', 'The practice of wearing birthstones may trace back to this period, when scholars associated specific stones with the twelve months and zodiac signs.'] },
+    { heading: 'The Middle Ages & Renaissance: Healing and Heraldry (500 – 1600 CE)', body: ['Medieval Europeans wore gemstones not just for beauty but as medicine. Lapidaries (stone guides) prescribed specific stones for specific ailments: sapphire for eyesight, garnet for bleeding, emerald for memory.', '**In Islamic civilization**, gemstone jewelry reached extraordinary heights of craftsmanship. Persian and Mughal jewelers created intricate inlay work (jade with rubies, gold with turquoise) that still influences jewelry design today.', '**In Asia**, jade remained the supreme stone. Chinese jade carving reached its peak during the Ming dynasty (1368–1644), producing intricate pendants, beads, and ritual objects that are still treasured today.', 'During the Renaissance, the idea of the "cabinet of curiosities" spread across Europe — collections of natural wonders that included gemstones, fossils, and exotic artifacts. This was the beginning of the scientific study of minerals and crystals.'] },
+    { heading: 'The Victorian Era: Sentimental Jewelry (1837 – 1901)', body: ['The Victorian era saw the rise of "sentimental jewelry" — pieces designed specifically to carry emotional meaning. Queen Victoria herself popularized mourning jewelry (jet, onyx, and hair jewelry) after the death of Prince Albert.', 'Birthstones became standardized in 1912 — the American National Association of Jewelers published the first official birthstone list, cementing the connection between gemstones and personal identity.', 'Victorian jewelry was deeply symbolic: snakes (eternity), hearts (love), anchors (hope), flowers (specific meanings via floriography). Every element of a piece — the stone, the setting, the motif — carried a message.'] },
+    { heading: 'Modern Era: Meaning Returns (1900 – Present)', body: ['The 20th century saw jewelry swing between pure fashion (Art Deco, costume jewelry, minimalism) and deep meaning (New Age crystal healing, spiritual jewelry, cultural revival).', 'Today, we are living in a remarkable moment of convergence. The crystal healing movement — which began in the 1970s and accelerated in the 2000s — has brought ancient stone meanings back into modern fashion.', 'A 2026 crystal bracelet buyer is as likely to choose a stone for its meaning (calm, love, protection) as for its color. The ancient connection between gemstones and meaning — dormant for decades in mainstream fashion — is flowering again.', 'At Nara Charm, we stand at this convergence. Every piece we make carries both the beauty of modern design and the meaning of ancient traditions — the longest human story, told on the wrist.'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 28: 5 Easy Crystal Healing Practices (新鲜内容 · 2026-07-08)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'crystal-healing-for-beginners-5-practices',
+  title: 'Crystal Healing for Beginners: 5 Easy Ways to Start Your Practice Today',
+  description: 'New to crystal healing? Start here. These 5 simple practices — morning intention, crystal stacking, phone charm carry, desk companion, bedtime ritual — will help you build a meaningful crystal practice in minutes a day.',
+  keywords: ['crystal healing for beginners', 'how to start crystal healing', 'crystal practice daily routine', 'crystal mindfulness', 'beginner crystal guide', 'crystal healing how to', 'daily crystal ritual'],
+  category: 'Crystal Meanings',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-08',
+  updatedAt: '2026-07-08',
+  readingTime: '6 min read',
+  relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'obsidian-guard-charm', 'mixed-crystal-bracelet'],
+  relatedArticles: ['healing-crystals-101-beginners-guide', 'best-crystals-for-anxiety', 'clear-quartz-meaning-master-healer'],
+  content: [
+    { heading: 'You Already Have Everything You Need', body: ['Crystal healing does not require a special room, expensive equipment, or hours of meditation. It requires only three things: a stone that speaks to you, the willingness to slow down, and a few moments of your day.', 'Here are five practices — each takes less than 5 minutes — that will help you build a meaningful crystal practice starting today.'] },
+    { heading: '1. Morning Intention (1 minute)', body: ['**When:** Right after waking, before checking your phone.', '**What to do:** Hold your crystal bracelet or stone in your non-dominant hand. Close your eyes. Take three deep breaths. Set one intention for the day: "Today I will stay calm." Or: "Today I will be kind to myself." Or: "Today I will speak my truth."', '**Why it works:** The physical sensation of the stone — its weight, its coolness, its texture — anchors the intention in your body, not just your mind. You remember it not because you wrote it down, but because you felt it.', '**Best stones for:** Amethyst (calm intention), Rose Quartz (loving intention), Citrine (abundance intention).'] },
+    { heading: '2. Crystal Stacking (2 minutes)', body: ['**When:** Getting dressed, choosing your jewelry for the day.', '**What to do:** Choose 2-3 stone bracelets that match your needs for the day. Amethyst on the left wrist (receiving calm). Carnelian on the right wrist (projecting confidence). A cord bracelet with an endless knot for protection.', '**Why it works:** Stacking is not just about how it looks — it is about layering intentions. Each stone adds its energy, and the act of choosing your stack is a daily practice of self-awareness.', '**Try this:** Keep your bracelets visible on your nightstand, not in a drawer. The visual cue makes the morning choice easier.'] },
+    { heading: '3. Phone Charm Carry (always with you)', body: ['**When:** Every time you pick up your phone.', '**What to do:** Attach a crystal phone charm to your phone case. Each time you unlock your phone — dozens of times a day — you see it, touch it, and are reminded of its meaning.', '**Why it works:** Your phone is the object you interact with most in the world. Making it a crystal-carrying object transforms every notification, every scroll, every call into a micro-moment of mindfulness.', '**Best stones for:** Obsidian (protection from information overwhelm), Amethyst (calm during stressful messages), Rose Quartz (kindness in digital communication).', '[Shop phone charms →](/collections/charms)'] },
+    { heading: '4. Desk Companion (all day)', body: ['**When:** Throughout your workday.', '**What to do:** Place a small tumbled stone or crystal cluster on your desk. When you feel stressed, distracted, or frustrated, pick it up. Hold it. Feel its weight. Take one breath. Put it down.', '**Why it works:** The stone becomes a physical "pause button" in your day. Instead of reaching for your phone when you are stuck, you reach for a stone — a micro-break that grounds you rather than distracts you.', '**Best stones for:** Clear quartz (mental clarity), Black obsidian (grounding), Tiger\'s eye (focus and willpower).'] },
+    { heading: '5. Bedtime Release (2 minutes)', body: ['**When:** Just before sleep, in bed.', '**What to do:** Hold your stone over your heart. Take five slow breaths. With each exhale, imagine releasing one thing from the day — a worry, a tension, a thought that is keeping you awake. Place the stone on your nightstand.', '**Why it works:** This practice creates a separation between the day\'s energy and your sleep. The stone absorbs and grounds whatever you release — you do not carry it into your dreams.', '**Best stones for:** Amethyst (peaceful sleep), Lepidolite (calming racing thoughts), Howlite (releasing tension).'] },
+    { heading: 'Start with One Practice', body: ['Do not try all five at once. Pick the one that feels easiest — morning intention, or the phone charm, or the desk companion. Do it for a week. See how it feels.', 'The most important principle in crystal healing is not which stone you choose or which practice you follow — it is **consistency**. A small practice done daily transforms more than a grand practice done once.', 'Find your stone. Find your moment. Let the practice grow.'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 29: Moonstone Meaning (月搜 ~20K)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'moonstone-meaning-intuition-new-beginnings',
+  title: 'Moonstone Meaning: The Stone of Inner Growth, Intuition & New Beginnings',
+  description: 'Discover the meaning and healing properties of moonstone — the luminous stone of intuition, feminine energy, and new beginnings. Learn what moonstone does and how to wear it.',
+  keywords: ['moonstone meaning', 'moonstone healing properties', 'what does moonstone do', 'moonstone crystal', 'moonstone jewelry meaning', 'stone of new beginnings', 'moonstone bracelet', 'feminine energy stone'],
+  category: 'Crystal Meanings',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-09',
+  updatedAt: '2026-07-09',
+  readingTime: '5 min read',
+  relatedProducts: ['mixed-crystal-bracelet'],
+  relatedArticles: ['amethyst-meaning-healing-properties', 'healing-crystals-101-beginners-guide'],
+  content: [
+    { heading: 'What Is Moonstone?', body: ['Moonstone is a gemstone with an ethereal, moon-like glow. Its most prized variety — adularescence — creates a floating blue or white shimmer that moves across the stone as light shifts, like moonlight on water. The effect is called adularescence, named after the variety of moonstone found in the Swiss Adula Alps.', 'The ancient Romans believed moonstone was formed from frozen moonlight. In India, it is a sacred stone associated with the moon god Chandra. In Sri Lanka, where the finest moonstones are mined, it has been treasured for over 2,000 years.'] },
+    { heading: 'Moonstone Meaning: The New Moon Energy', body: ['Moonstone is the stone of **inner growth and new beginnings**. Its core meanings are:', '**Intuition.** Moonstone is believed to heighten your inner knowing — that quiet voice you sometimes ignore. It is especially associated with feminine and lunar cycles.', '**New beginnings.** Just as the moon waxes and wanes, moonstone represents the cyclical nature of life. It is the perfect stone for transitions — a new job, a move, the start of a relationship.', '**Emotional balance.** Moonstone has a gentle, fluid energy that helps you ride emotional waves rather than being overwhelmed by them.', '**Feminine energy.** Across cultures, moonstone is associated with goddess energy, fertility, and the divine feminine.'] },
+    { heading: 'Moonstone Healing Properties', body: ['In crystal healing, moonstone is believed to:', '**Calm emotional extremes.** When emotions swing too high or too low, moonstone is said to bring a steady, tidal rhythm back.', '**Support hormonal balance.** Moonstone is traditionally used for menstrual health, pregnancy, and menopause — times when the body cycles like the moon.', '**Enhance intuition.** Many psychics and energy workers wear moonstone to strengthen their intuitive abilities.', '**Promote restful sleep.** Place moonstone under your pillow for peaceful sleep and vivid, meaningful dreams.'] },
+    { heading: 'Moonstone vs. Opal: What\'s the Difference?', body: ['Moonstone and opal are often confused because both have a milky, luminous appearance. The difference:', '**Moonstone** has adularescence — a floating blue or white shimmer that moves across the surface.', '**Opal** has play-of-color — flashes of multiple rainbow colors that shift as the stone moves.', 'Moonstone is a feldspar mineral; opal is a hydrated silica. Moonstone is generally more durable and easier to care for in everyday jewelry.'] },
+    { heading: 'How to Wear Moonstone', body: ['Moonstone is a stone of the heart and intuition. Wear it:', '**As a pendant** near the heart or throat chakra for emotional balance.', '**On the left wrist** to receive its gentle, intuitive energy.', '**As a ring** on the index finger to enhance intuition and inner knowing.', 'Moonstone pairs beautifully with silver (which enhances its lunar energy) and with amethyst (for spiritual insight) or rose quartz (for emotional healing).'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 30: Hematite Meaning (月搜 ~12K)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'hematite-meaning-grounding-stone',
+  title: 'Hematite Meaning: The Grounding Stone for Focus, Balance & Protection',
+  description: 'Discover the meaning and healing properties of hematite — the metallic gray stone of grounding and mental focus. Learn what hematite does and how to wear it.',
+  keywords: ['hematite meaning', 'hematite healing properties', 'what does hematite do', 'hematite stone', 'hematite bracelet', 'grounding stone', 'hematite protection', 'silver stone meaning'],
+  category: 'Crystal Meanings',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-09',
+  updatedAt: '2026-07-09',
+  readingTime: '4 min read',
+  relatedProducts: ['mixed-crystal-bracelet'],
+  relatedArticles: ['obsidian-meaning-protection-stone', 'tigers-eye-meaning'],
+  content: [
+    { heading: 'What Is Hematite?', body: ['Hematite is an iron oxide mineral with a distinctive metallic gray-black sheen. When polished, it looks like liquid silver — smooth, reflective, and cool to the touch. Its name comes from the Greek *haima*, meaning "blood," because when cut or ground, hematite turns the water red.', 'Hematite has been used for at least 40,000 years. Prehistoric cave painters used red ochre (powdered hematite) for their paintings. Ancient Romans wore hematite amulets for protection in battle. In the Middle Ages, it was believed to stop bleeding and heal blood disorders.'] },
+    { heading: 'Hematite Meaning: The Grounding Stone', body: ['Hematite is one of the most powerful **grounding stones** in crystal healing. Its core meanings:', '**Grounding.** Hematite connects you to the earth\'s energy. It draws excess energy down, helping you feel stable, present, and centered — especially when life feels chaotic.', '**Mental focus.** Hematite is the stone of the mind. It is believed to sharpen concentration, improve memory, and help you think clearly under pressure.', '**Protection.** With its mirror-like surface, hematite is believed to reflect negative energy back to its source. It is like a shield for your aura.', '**Balance.** Hematite balances the root chakra, creating a foundation of stability from which all other chakras can function properly.'] },
+    { heading: 'How to Wear Hematite', body: ['Hematite is heavy — noticeably heavier than most stones of similar size. This weight is part of its grounding effect.', '**Wear on the right wrist** (projecting side) to send its grounding energy outward.', '**Pair with obsidian** for an ultra-protective combination.', '**Pair with tiger\'s eye** for a powerful focus-enhancing stack.', 'Hematite is also one of the few stones that works well mixed with metal — its silver-gray color makes it a natural companion to chain bracelets and metal accent beads.'] },
+    { heading: 'Caring for Hematite', body: ['Hematite is relatively hard but can be brittle. Avoid dropping it on hard surfaces — it can crack or chip.', 'Hematite can also rust if exposed to water for extended periods (it is iron oxide, after all). Remove your hematite bracelet before washing hands or swimming.', 'To polish, rub with a soft dry cloth. The metallic finish can dull over time, but a quick polish restores its mirror shine.'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 31: Dream Catcher Meaning (月搜 ~30K+)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'dream-catcher-meaning-symbolism',
+  title: 'Dream Catcher Meaning: The Story Behind the Web, Feathers & Beads',
+  description: 'What does a dream catcher mean? Discover the true Ojibwe origins of the dream catcher, the symbolism of its web, beads, and feathers, and how this sacred symbol is worn in modern jewelry.',
+  keywords: ['dream catcher meaning', 'dreamcatcher symbol meaning', 'what does a dream catcher do', 'dream catcher history', 'dream catcher jewelry', 'dream catcher necklace', 'ojibwe dream catcher', 'native american dream catcher'],
+  category: 'Symbolism',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-08',
+  updatedAt: '2026-07-08',
+  readingTime: '6 min read',
+  relatedProducts: ['tibetan-amulet-925-bracelet', 'obsidian-guard-charm'],
+  relatedArticles: ['evil-eye-meaning-protection-symbol', 'tibetan-jewelry-symbols-meaning', 'obsidian-meaning-protection-stone'],
+  content: [
+    { heading: 'Where the Dream Catcher Comes From', body: ['The dream catcher (Ojibwe: *asabikeshiinh*, meaning "spider") originated with the Ojibwe people (also known as the Chippewa) of the Great Lakes region in North America. It is not, as some believe, a generic "Native American" symbol — it belongs to a specific culture, with a specific origin story.', 'The story goes that the Spider Woman (Asibikaashi) took care of the children of the Ojibwe nation. As the people spread across the land, it became difficult for her to reach all the children. So the mothers and grandmothers began weaving magical webs — dream catchers — to hang over the sleeping places of their children, to catch harm and let good things through.', 'Today, dream catchers are used by many Native American nations and have also been adopted by non-Native people worldwide. When worn as jewelry, it is important to honor the original meaning of the symbol.'] },
+    { heading: 'What Every Part Means', body: ['**The round frame** represents the circle of life — the sun, the moon, the seasons, and how everything is connected. Traditional frames were made from willow branches, bent while still green and flexible.', '**The web** is woven in a pattern with a hole in the center. The hole is not a mistake — it is the most important part. The web catches the negative dreams, fears, and bad spirits, which burn away in the morning light. Only the good dreams are small enough to slip through the central hole and slide down the feathers to the sleeping person below.', '**The beads** are not decoration — they represent the spider, the weaver of the web. In traditional dream catchers, there is often one bead for every year of the child\'s life.', '**The feathers** create a soft path for the good dreams to travel down to the sleeper. Eagle feathers were traditional, but any feather can carry the meaning.'] },
+    { heading: 'Dream Catchers in Jewelry', body: ['Dream catcher jewelry — earrings, necklaces, phone charms — carries the same protective meaning as the full-sized version. A dream catcher worn on the body keeps the symbol\'s protective energy with you throughout the day, not just while you sleep.', 'A dream catcher pendant is traditionally worn close to the heart, where it can catch negative thoughts before they take root. A dream catcher phone charm brings the symbol\'s protection to the object you interact with most.', 'When choosing dream catcher jewelry, look for well-crafted pieces with genuine materials — wire-wrapped frames with a tight web pattern, real feathers (or well-made simulated ones), and beads that carry meaning.'] },
+    { heading: 'Respecting the Tradition', body: ['The dream catcher is a sacred symbol to the Ojibwe and other Native American nations. If you wear one, wear it with awareness of where it comes from — not as a fashion trend, but as a symbol of protection, connection, and care.', 'Support Native American artisans when you can. Natural materials matter. And remember: the hole in the center is the point. The web is there to filter, not to trap.'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 32: Hamsa Hand Meaning (月搜 ~25K)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'hamsa-hand-meaning-protection-symbol',
+  title: 'Hamsa Hand Meaning: The Ancient Symbol of Protection & Blessing',
+  description: 'Discover the meaning of the Hamsa hand — the ancient Middle Eastern and North African symbol of protection, blessing, and divine feminine power. Learn how to wear it.',
+  keywords: ['hamsa hand meaning', 'hamsa meaning', 'hamsa hand symbol', 'what does the hamsa hand mean', 'hamsa jewelry', 'hamsa necklace', 'hand of fatima meaning', 'hand of miriam meaning', 'evil eye protection'],
+  category: 'Symbolism',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-09',
+  updatedAt: '2026-07-09',
+  readingTime: '5 min read',
+  relatedProducts: ['obsidian-guard-charm', 'turquoise-sky-bracelet'],
+  relatedArticles: ['evil-eye-meaning-protection-symbol', 'tibetan-jewelry-symbols-meaning'],
+  content: [
+    { heading: 'What Is the Hamsa Hand?', body: ['The Hamsa hand (also called the Hand of Fatima in Islam, the Hand of Miriam in Judaism, and the Hand of God in Christianity) is one of the oldest and most widely used protective symbols in the world. It is shaped like an open right hand — usually with an eye in the center of the palm.', 'The word "hamsa" comes from the Semitic root *hamesh* or *khamsa*, meaning "five" — representing the five fingers of the hand. The Hamsa has been found in ancient Mesopotamia (modern Iraq), Carthage (modern Tunisia), and across the Middle East and North Africa for over 3,000 years.'] },
+    { heading: 'Hamsa Hand Meaning Across Cultures', body: ['**In Islam** — the Hand of Fatima, named after the daughter of the Prophet Muhammad. It represents patience, faithfulness, and the five pillars of Islam.', '**In Judaism** — the Hand of Miriam, named after Moses\'s sister. It is a symbol of protection, memory, and the five books of the Torah.', '**In Christianity** — the Hand of God, representing divine protection and blessing.', '**In Middle Eastern folk tradition** — the Hamsa is the most common protection amulet against the evil eye. The open hand says: "No harm can enter here."'] },
+    { heading: 'What Does the Eye in the Palm Mean?', body: ['Many Hamsa hands feature an eye in the center of the palm. This is where the Hamsa and the evil eye (nazar) traditions overlap. The eye in the palm "stares back" at any jealous or harmful gaze, deflecting it. The combination of the protective hand and the watching eye creates a double layer of protection.', 'Hamsa hands can face up or down:', '**Fingers up (most common)** — protects against the evil eye and negative energy.', '**Fingers down** — invites blessings, abundance, and good fortune.', 'Hamsa jewelry often has the fingers facing up for protection — worn facing outward on the body.'] },
+    { heading: 'How to Wear Hamsa Jewelry', body: ['**Hamsa necklaces** are the most popular form — worn at heart level, the hamsa protects the center of your being.', '**Hamsa bracelets** with a small hand charm protect the wrist — the point where your pulse is felt, considered a vulnerable entry point for energy.', '**Hamsa phone charms** bring ancient protection to your most modern device.', 'In many traditions, a hamsa amulet is most powerful when given as a gift rather than bought for oneself. The protective intention of the giver adds to the amulet\'s power.'] },
+    { heading: 'Hamsa and Turquoise: A Natural Pair', body: ['The Hamsa is traditionally made from or adorned with turquoise — a stone with its own long history of protection. The blue-green color is deeply associated with the evil eye amulet (nazar), and many Hamsa hands feature turquoise beads, inlays, or the blue color itself.', 'Wearing a Hamsa with turquoise combines two of the world\'s most powerful protection traditions in one piece. [Shop our Turquoise Sky Bracelet →](/products/turquoise-sky-bracelet)'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 33: Gemstone Color Meanings (月搜 ~15K)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'gemstone-color-meanings',
+  title: 'Gemstone Color Meanings: What Your Favorite Crystal Color Says About You',
+  description: 'The complete guide to gemstone color meanings — purple for spirituality, pink for love, green for abundance, blue for truth. Learn what color crystal matches your energy.',
+  keywords: ['gemstone color meanings', 'crystal color meaning', 'what does my crystal color mean', 'purple stone meaning', 'pink stone meaning', 'green crystal meaning', 'blue gemstone meaning', 'red stone meaning', 'black stone meaning', 'white crystal meaning'],
+  category: 'Styling',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-09',
+  updatedAt: '2026-07-09',
+  readingTime: '6 min read',
+  relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'turquoise-sky-bracelet', 'obsidian-guardian-charm'],
+  relatedArticles: ['healing-crystals-101-beginners-guide', 'chakra-stones-guide', 'how-to-style-beaded-bracelets'],
+  content: [
+    { heading: 'Why Color Matters in Gemstones', body: ['In crystal healing, color is not just appearance — it is information. The color of a stone tells you what energy it carries, which chakra it resonates with, and what it can help you with.', 'This guide covers the most common gemstone colors, what they mean, and which stones in each color are most popular for jewelry.'] },
+    { heading: 'Purple Stones: Spirituality & Calm', body: ['Purple crystals are associated with the **crown and third-eye chakras** — the energy centers of spiritual connection, intuition, and higher consciousness.', '**Amethyst** — The most popular purple stone. Calming, protective, and spiritually uplifting. Read our [full amethyst guide](/blog/amethyst-meaning-healing-properties).', '**Lepidolite** — A lilac stone containing natural lithium. Ultra-calming, especially for anxiety and racing thoughts.', '**Charoite** — Deep, swirled purple. Transformation and spiritual awakening.', 'Purple stones are ideal for meditation, stress relief, and anyone seeking spiritual growth.'] },
+    { heading: 'Pink Stones: Love & Compassion', body: ['Pink crystals resonate with the **heart chakra** — the center of love, compassion, and emotional healing.', '**Rose Quartz** — The ultimate love stone. Self-love, romantic love, universal love. Read our [full rose quartz guide](/blog/rose-quartz-meaning-love-stone).', '**Rhodonite** — Pink with black manganese veins. Emotional healing and forgiveness.', '**Pink Tourmaline** — A rarer, more intense pink. Emotional healing and heart-centered confidence.', 'Pink stones are ideal for heartache, relationship issues, and learning to love yourself.'] },
+    { heading: 'Green Stones: Abundance & Growth', body: ['Green crystals are associated with the **heart chakra** and sometimes the root chakra (darker greens). They represent growth — both material and spiritual.', '**Jade** — The stone of wisdom, luck, and serenity. Revered in Chinese culture for 5,000 years. Read our [full jade guide](/blog/jade-meaning-stone-of-wisdom).', '**Green Aventurine** — The "stone of opportunity." Believed to attract luck and prosperity.', '**Malachite** — Deep green with distinctive banding. Transformation, risk-taking, and emotional healing.', 'Green stones are ideal for career changes, financial abundance, and personal growth.'] },
+    { heading: 'Blue Stones: Truth & Communication', body: ['Blue crystals resonate with the **throat chakra** (communication) and sometimes the **third eye** (intuition).', '**Turquoise** — Protection, communication, sacred connection. Read our [full turquoise guide](/blog/turquoise-meaning-protection-stone).', '**Lapis Lazuli** — Deep royal blue with gold flecks. Truth, inner power, and wisdom. Read our [full lapis lazuli guide](/blog/lapis-lazuli-meaning).', '**Blue Lace Agate** — Pale blue with white banding. Gentle communication and calming emotional expression.', 'Blue stones are ideal for public speaking, honest conversations, and finding your voice.'] },
+    { heading: 'Red & Orange Stones: Energy & Action', body: ['Red and orange crystals resonate with the **root chakra** (red, survival) and **sacral chakra** (orange, creativity).', '**Carnelian** — Fiery orange-red. Motivation, creativity, and courage. Read our [full carnelian guide](/blog/carnelian-meaning-stone-of-motivation).', '**Red Agate / Cinnabar** — Deep red. Protection, vitality, and good fortune. Read our [red stone guide](/blog/red-agate-cinnabar-meaning).', '**Red Jasper** — Opaque red. Stability, endurance, and grounded energy.', 'Red and orange stones are ideal for procrastinators, creatives, and anyone needing a confidence boost.'] },
+    { heading: 'Black & Dark Stones: Protection & Grounding', body: ['Dark crystals resonate with the **root chakra** and are universally associated with protection and grounding.', '**Black Obsidian** — Volcanic glass. The ultimate protection stone. Read our [full obsidian guide](/blog/obsidian-meaning-protection-stone).', '**Hematite** — Metallic gray-black. Grounding and mental focus. Read our [hematite guide](/blog/hematite-meaning-grounding-stone).', '**Black Tourmaline** — Deep black. EMF protection and energetic grounding.', 'Dark stones are ideal for empaths, travelers, and anyone who feels energetically sensitive.'] },
+    { heading: 'White & Clear Stones: Clarity & Amplification', body: ['White and clear crystals are associated with the **crown chakra** and represent purity, clarity, and amplification.', '**Clear Quartz** — The "master healer." Amplifies the energy of any stone near it. Read our [full clear quartz guide](/blog/clear-quartz-meaning-master-healer).', '**Selenite** — A white, fibrous crystal that cleanses other stones and spaces.', '**Moonstone** — Ethereal white-blue glow. Intuition and new beginnings.', 'White and clear stones are essential for any crystal collection — they amplify everything.'] },
+    { heading: 'How to Choose by Color', body: ['The simplest way to choose a crystal: **notice which color you are drawn to today.** Your subconscious often knows what you need before your conscious mind does.', 'If you are drawn to pink, you may need love. If you are drawn to black, you may need protection. If you are drawn to purple, you may need calm.', 'Stacking multiple colors is also powerful — a rose quartz (love) paired with an amethyst (calm) creates a balanced emotional-healing bracelet.', '[Shop our full collection by stone →](/collections)'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 34: Crystal Cleansing Guide (月搜 ~10K)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'complete-crystal-cleansing-guide',
+  title: 'How to Cleanse Crystals: 7 Methods for Cleansing & Recharging Your Stones',
+  description: 'How do you cleanse crystals? This complete guide covers 7 methods — moonlight, sage, water, sound, earth, intention, and other crystals. Learn which method is right for each stone.',
+  keywords: ['how to cleanse crystals', 'crystal cleansing', 'cleanse crystals', 'how to recharge crystals', 'crystal cleansing methods', 'sage crystals', 'moonlight cleansing', 'how to clean crystals', 'how to clear crystals'],
+  category: 'Care Guide',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-10',
+  updatedAt: '2026-07-10',
+  readingTime: '6 min read',
+  relatedProducts: ['amethyst-peace-bracelet', 'clear-quartz-cluster'],
+  relatedArticles: ['beaded-jewelry-care-guide', 'healing-crystals-101-beginners-guide', 'clear-quartz-meaning-master-healer'],
+  content: [
+    { heading: 'Why Cleanse Crystals?', body: ['In crystal healing, stones are believed to absorb, transmute, and carry energy. When you wear a crystal, it absorbs not just your own energy, but the energy of everyone who handles it, every environment it passes through, and every intention you put into it.', 'Over time, this accumulated energy can make the stone feel "heavy" or less effective. Cleansing is the practice of resetting the stone\'s energy — clearing out the old so it can work fresh for you.', 'How often should you cleanse? Daily wear: once a week. Occasional use: once a month. New crystals: always cleanse before first use. After intense emotions or illness: cleanse immediately.'] },
+    { heading: '1. Moonlight Cleansing (Gentle, All Stones)', body: ['The gentlest and most universal method. Place your crystals or jewelry under the full moon overnight. The moon\'s light and energy wash away accumulated negativity without damaging any stone.', '**Best for:** All stones, especially amethyst (which can fade in sunlight), rose quartz, moonstone, and delicate jewelry.', '**Pro tip:** The new moon is for setting intentions; the full moon is for cleansing and recharging. A full moon cleanse is the crystal equivalent of a deep reset.'] },
+    { heading: '2. Sage Smudging (Fast, Protective)', body: ['Pass your crystals through the smoke of burning sage, palo santo, or cedar. The smoke is believed to attach to and carry away stagnant energy.', '**Best for:** Most stones, especially protection stones like obsidian, black tourmaline, and hematite.', '**Caution:** Some stones — especially porous ones like turquoise, howlite, and selenite — can absorb smoke residue over time. For these, keep the stone at a distance from the smoke source and move it through the smoke quickly.'] },
+    { heading: '3. Running Water (Refreshing, Not for All Stones)', body: ['Hold your crystals under cool running water (tap water, or better — a natural stream) for 30-60 seconds. Visualize the water washing away old energy.', '**Best for:** Durable stones like clear quartz, amethyst (briefly), citrine, obsidian, and hematite (briefly).', '**NOT safe for:** Turquoise (porous, absorbs water), selenite (water-soluble), malachite (toxic in water), lapis lazuli (soft, porous), and any stone with metal accents or glued settings. Never soak beaded jewelry — water weakens elastic cord.'] },
+    { heading: '4. Sound Cleansing (Safe for All)', body: ['Use a singing bowl, tuning fork, bell, or even a clear-toned chime near your crystals. The sound vibrations break up stagnant energy without any physical contact.', '**Best for:** All stones, especially delicate pieces and jewelry that cannot get wet or be smudged.', '**Pro tip:** 30-60 seconds of sound near your jewelry is enough. Let the sound fade naturally — do not stop it abruptly.'] },
+    { heading: '5. Earth Cleansing (Deep Reset)', body: ['Bury your crystals in clean soil (not a potted plant — the stone can affect the plant) for 24 hours. The earth\'s natural energy neutralizes and re-grounds the stone.', '**Best for:** Grounding stones like obsidian, hematite, black tourmaline, and smoky quartz. These stones resonate with earth energy and feel "at home" in the soil.', '**NOT safe for:** Soft stones, fragile jewelry, or stones with metal components. Mark the spot so you do not lose your piece.'] },
+    { heading: '6. Rice Cleansing (Quick, Dry)', body: ['Bury your crystals in a bowl of dry brown or white rice for 2-4 hours. Rice is believed to absorb negative energy from the stone. Afterward, dispose of the rice (do not cook or eat it).', '**Best for:** Hard, non-porous stones that need a quick cleanse.', '**Caution:** Small beads or delicate settings can get scratched by rice. Use a soft cloth between the rice and your jewelry for pieces with silver accents.'] },
+    { heading: '7. Crystal Bed Cleansing (Self-Cleaning)', body: ['Place your crystals on a bed of clear quartz clusters, selenite slabs, or amethyst geodes overnight. These stones are "self-cleaning" — they do not absorb negativity but rather transmute and clear the energy of stones placed on top of them.', '**Best for:** All stones and jewelry. This is the safest, most hands-off method.', '**Pro tip:** Keep a selenite slab or clear quartz cluster on your nightstand as a "charging station." Every night, place your bracelet or ring on it for an automatic recharge. No effort required.'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 35: Anniversary & Wedding Crystal Gift Guide (月搜 ~8K)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'anniversary-wedding-crystal-gift-guide',
+  title: 'Crystal Gifts for Couples: The Best Stones for Anniversaries & Weddings',
+  description: 'Looking for the perfect crystal gift for a couple? This guide matches stones to anniversaries and weddings — rose quartz for love, jade for wisdom, turquoise for protection. Find a meaningful gift for the couple who has everything.',
+  keywords: ['anniversary crystal gift', 'wedding crystal gift', 'crystal gift for couple', 'meaningful anniversary gift', 'rose quartz anniversary', 'jade wedding gift', 'crystal jewelry for couples', 'gemstone anniversary gift'],
+  category: 'Gift Guide',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-10',
+  updatedAt: '2026-07-10',
+  readingTime: '5 min read',
+  relatedProducts: ['rose-quartz-bracelet', 'lotus-jade-bracelet', 'turquoise-sky-bracelet', 'amethyst-peace-bracelet'],
+  relatedArticles: ['best-crystal-gift-guide', 'rose-quartz-meaning-love-stone', 'best-jewelry-gifts-for-mom'],
+  content: [
+    { heading: 'Why Crystal Makes the Perfect Couples Gift', body: ['Crystal jewelry is one of the most meaningful gifts you can give a couple — whether for their wedding, anniversary, or milestone. Each stone carries a specific message, and giving it says: "I thought about what you mean to each other, and I chose this intention for you."', 'Unlike traditional anniversary gifts (paper, cotton, leather), a crystal gift is permanent — it will be worn and treasured for years, not stored in a drawer.'] },
+    { heading: 'For a Wedding → Rose Quartz & Clear Quartz', body: ['**Message:** "May your love be pure, grow deep, and shine brightly."', 'Rose quartz represents unconditional love — the foundation of a marriage. Clear quartz amplifies intentions and brings clarity.', '**Gift idea:** A rose quartz bracelet for the partner who nurtures, and a clear quartz or amethyst bracelet for the partner who leads. Two stones, one intention.', '[Shop Rose Quartz Bracelet →](/products/rose-quartz-bracelet)'] },
+    { heading: 'For a 1st Anniversary (Paper) → Jade', body: ['**Message:** "May your love grow stronger with each passing year."', 'Jade is the stone of wisdom and longevity — perfect for the first anniversary, which traditionally represents the "paper" milestone. Jade has been treasured longer than paper has existed, making it a beautiful symbol of a love built to last.', '[Shop Lotus Jade Bracelet →](/products/lotus-jade-bracelet)'] },
+    { heading: 'For a 5th-10th Anniversary → Amethyst', body: ['**Message:** "You have built something beautiful. Here is to many more years of peace together."', 'By the 5th to 10th anniversary, a couple has weathered storms and built a life together. Amethyst honors that journey — representing the calm wisdom that comes from navigating life side by side.', '[Shop Amethyst Peace Bracelet →](/products/amethyst-peace-bracelet)'] },
+    { heading: 'For a 15th+ Anniversary → Turquoise', body: ['**Message:** "You have traveled so far together. May the road ahead be bright."', 'Turquoise, the traveler\'s stone, represents a long journey shared. For couples celebrating 15 years or more, turquoise honors the distance they have traveled together and the protection that has carried them.', '[Shop Turquoise Sky Bracelet →](/products/turquoise-sky-bracelet)'] },
+    { heading: 'For a Long-Distance Couple → Obsidian', body: ['**Message:** "Distance cannot touch what we protect together."', 'Obsidian is the protector\'s stone. For couples separated by distance, a matching obsidian bracelet or charm on each end creates a tangible connection — a shared intention of protection across miles.', '[Shop Obsidian Guard Charm →](/products/obsidian-guard-charm)'] },
+  ],
+},
+
+// ═══════════════════════════════════════════════════════════════
+// 文章 36: Jewelry for Work (月搜 ~8K, 实用内容)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'jewelry-for-work-professional-crystal-guide',
+  title: 'Jewelry for Work: How to Wear Crystal Bracelets in Professional Settings',
+  description: 'Can you wear crystal bracelets at work? Yes — here is how to choose and style professional-looking stone jewelry for the office. Stones for confidence, calm, and focus in professional settings.',
+  keywords: ['jewelry for work', 'crystal bracelet work', 'professional jewelry', 'office jewelry', 'work appropriate jewelry', 'business casual jewelry', 'minimalist crystal jewelry', 'stones for work confidence'],
+  category: 'Styling',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-10',
+  updatedAt: '2026-07-10',
+  readingTime: '5 min read',
+  relatedProducts: ['hematite-bracelet', 'obsidian-guardian-charm', 'amethyst-peace-bracelet', 'mixed-crystal-bracelet'],
+  relatedArticles: ['how-to-style-beaded-bracelets', 'gemstone-color-meanings', 'tigers-eye-meaning'],
+  content: [
+    { heading: 'Yes, You Can Wear Crystals to Work', body: ['The old idea that crystal jewelry is "too spiritual" or "too casual" for the workplace is fading. In 2026, a polished gemstone bracelet reads as intentional, tasteful, and personal — not unprofessional.', 'The key is **how** you wear it. A single, well-chosen stone bracelet can be as professional as a leather watch or a metal bangle. Here is how to choose stones and styles that work in any professional setting.'] },
+    { heading: 'Stones for Confidence → Hematite & Tiger\'s Eye', body: ['**For presentations, meetings, and negotiations:**', '**Hematite** is the ultimate professional stone. Its metallic gray-black finish looks like brushed metal — sophisticated, modern, and completely office-appropriate. It sharpens focus and keeps you grounded under pressure.', '**Tiger\'s eye** has a subtle golden shimmer that catches light without being flashy. It boosts confidence and decision-making without being overpowering.', 'Wear one on your right wrist (the projecting side) before an important meeting for a quiet confidence boost.'] },
+    { heading: 'Stones for Calm → Amethyst & Lepidolite', body: ['**For high-stress work environments:**', '**Amethyst** is subtle enough for the office — its pale to medium purple reads as a tasteful accent color, especially with neutral outfits. Keep you calm during back-to-back meetings and tight deadlines.', '**Lepidolite** is a soft lilac stone with natural calming properties. Its gentle color blends beautifully with silver and looks elegant in minimalist settings.', 'Wear on your left wrist (the receiving side) to absorb calm energy throughout your workday.'] },
+    { heading: 'Stones for Focus → Clear Quartz & Sodalite', body: ['**For deep work days and creative problem-solving:**', '**Clear quartz** is transparent and understated — it barely reads as a "stone" at all. It amplifies mental clarity and focus without drawing attention to itself.', '**Sodalite** is a rich navy blue with white veins — like a professional lapis lazuli. It enhances logical thinking and rational decision-making.', 'A single clear quartz bracelet is the most office-appropriate crystal choice there is. Most colleagues will not even realize it is a crystal — they will just notice you seem more focused.'] },
+    { heading: 'How to Style Crystals for the Office', body: ['**The single-bracelet rule.** One bracelet is enough for most office settings. Choose a stone that matches your goal for the day.', '**Neutral colors work best.** Choose stones in black, white, gray, navy, or soft purple. Save bright carnelian and deep turquoise for weekends.', '**Small beads read as mature.** 6mm beads look more refined and office-appropriate than chunky 12mm beads.', '**Stack with a watch.** A crystal bracelet paired with a classic watch balances "spiritual" with "professional."', '**Let the meaning be private.** You do not need to tell colleagues why you wear your stones. The energy works whether they know about it or not.'] },
+    { heading: 'What to Avoid at Work', body: ['**Avoid loud colors** if your office is conservative. Save bright reds and oranges for after hours.', '**Avoid multiple bracelets that clink.** A stack of 4-5 beaded bracelets can be noisy on a keyboard. One or two is perfect.', '**Avoid dangling charms** on bracelets in hands-on work settings. Phone charms are fine.', '**Know your industry.** Creative fields welcome bolder choices. Law and finance may call for more conservative styling. Let the room guide you.'] },
+  ],
+},
 ];
 
 // ─── 查询函数 ───────────────────────────────────────────────────────────
@@ -923,4 +1199,39 @@ export function getRelatedArticles(slug: string, limit = 3): BlogArticle[] {
     .filter((a) => a.slug !== slug)
     .filter((a) => current.relatedArticles?.includes(a.slug) || a.category === current.category)
     .slice(0, limit);
+}
+
+// ─── 日期辅助函数 ────────────────────────────────────────────────────────
+
+/** 多少天以内的文章算 "New" (新鲜度标记) */
+const DAYS_TO_CONSIDER_NEW = 30;
+
+/** 判断文章是否在新鲜度时间窗口内 */
+export function isNewArticle(article: BlogArticle): boolean {
+  const daysSince = (Date.now() - new Date(article.publishedAt).getTime()) / 86_400_000;
+  return daysSince <= DAYS_TO_CONSIDER_NEW;
+}
+
+/** 取最新 N 篇已发表的文章 (按 publishedAt 降序) */
+export function getRecentBlogArticles(count = 3): BlogArticle[] {
+  return [...BLOG_ARTICLES]
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, count);
+}
+
+/** 格式化日期为 "Jul 8, 2026" 风格 */
+export function formatBlogDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+/** 格式化日期为 "Jul 8" 风格(短格式) */
+export function formatBlogDateShort(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+/** 检查文章是否在近期被更新过 (14天内) */
+export function isRecentlyUpdated(article: BlogArticle): boolean {
+  if (article.publishedAt === article.updatedAt) return false;
+  const daysSince = (Date.now() - new Date(article.updatedAt).getTime()) / 86_400_000;
+  return daysSince <= 14;
 }

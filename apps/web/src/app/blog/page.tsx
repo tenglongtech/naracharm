@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
-import { BLOG_ARTICLES } from '@/lib/blog-data';
+import { BLOG_ARTICLES, isNewArticle, formatBlogDate } from '@/lib/blog-data';
 
 export const metadata: Metadata = {
   title: 'Jewelry Meaning & Crystal Guide | Crystal Meanings, Symbolism & Styling',
@@ -47,7 +47,14 @@ export default function BlogPage() {
                       href={`/blog/${a.slug}`}
                       className="group block rounded-lg border border-border bg-surface p-6 transition-all hover:-translate-y-1 hover:shadow-lg"
                     >
-                      <p className="text-xs uppercase tracking-wider text-gold">{a.readingTime}</p>
+                      <div className="flex items-center gap-3">
+                        <p className="text-xs uppercase tracking-wider text-gold">{a.readingTime}</p>
+                        <span className="text-[10px] text-muted/50">·</span>
+                        <p className="text-[11px] text-muted">{formatBlogDate(a.publishedAt)}</p>
+                        {isNewArticle(a) && (
+                          <span className="ml-auto rounded-full bg-brand/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand">New</span>
+                        )}
+                      </div>
                       <h3 className="mt-2 font-display text-lg group-hover:text-brand">{a.title}</h3>
                       <p className="mt-2 text-sm text-muted">{a.description}</p>
                       <span className="mt-3 inline-block text-sm text-brand group-hover:underline">Read more →</span>
