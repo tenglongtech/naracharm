@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>格蕾丝Grace Studio 笔记提取工具</title>
+<style>
+body { font-family: -apple-system, sans-serif; max-width: 640px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 14px; }
+pre { background: #f4f4f4; padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+.step { background: #e8f5e9; padding: 16px; border-radius: 8px; margin: 16px 0; }
+.note { background: #fff3e0; padding: 16px; border-radius: 8px; margin: 16px 0; }
+.btn { display: inline-block; background: #ff2442; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<h1>🍇 格蕾丝Grace 笔记提取</h1>
+
+<div class="step">
+<h3>📋 操作步骤</h3>
+<ol>
+  <li><strong>在浏览器</strong>打开格蕾丝的主页：
+    <br><a href="https://www.xiaohongshu.com/user/profile/66ec01d00000000009019c22" target="_blank">
+      xiaohongshu.com/user/profile/66ec01d00000000009019c22
+    </a>
+  </li>
+  <li>等页面加载完成，<strong>慢慢滚动</strong>让所有笔记都加载出来</li>
+  <li>按 <code>F12</code> → 点 <strong>Console (控制台)</strong></li>
+  <li>粘贴下面的代码 → 按 <code>Enter</code></li>
+  <li>复制输出的所有链接，发给我</li>
+</ol>
+</div>
+
+<h2>📝 复制以下代码：</h2>
+<pre id="scriptCode">javascript:(async function(){
+  const ids = new Set();
+
+  // 从所有链接提取笔记ID
+  document.querySelectorAll('a[href*="explore/"]').forEach(a => {
+    const m = a.href.match(/explore\/([a-f0-9]{24})/);
+    if (m) ids.add(m[1]);
+  });
+
+  // 尝试调用API获取更多（利用你已登录的cookie）
+  try {
+    const r = await fetch(
+      'https://edith.xiaohongshu.com/api/sns/web/v1/user/notes?' +
+      new URLSearchParams({ user_id: '66ec01d00000000009019c22', num: '30', cursor: '' }),
+      { credentials: 'include' }
+    );
+    const data = await r.json();
+    if (data.data?.items) {
+      data.data.items.forEach(i => {
+        if (i.note_card?.note_id) ids.add(i.note_card.note_id);
+      });
+    }
+  } catch(e) {}
+
+  // 如果上面不行，尝试另一个API
+  if (ids.size < 5) {
+    try {
+      const r2 = await fetch(
+        'https://edith.xiaohongshu.com/api/sns/web/v1/user_posted?' +
+        new URLSearchParams({ user_id: '66ec01d00000000009019c22', count: '30' }),
+        { credentials: 'include' }
+      );
+      const data2 = await r2.json();
+      console.log('API2:', data2);
+    } catch(e) {}
+  }
+
+  // 输出结果
+  const urls = Array.from(ids).map(id => 'https://www.xiaohongshu.com/discovery/item/' + id);
+  console.log('✅ 找到 ' + urls.length + ' 个笔记:\n');
+  urls.forEach((u, i) => console.log((i+1) + '. ' + u));
+  console.log('\n📋 复制下面这行全部内容发给我:\n---');
+  console.log(urls.join('\n'));
+  console.log('---');
+
+  // 自动复制到剪贴板
+  const text = urls.join('\n');
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log('✅ 已自动复制到剪贴板!');
+  } catch(e) {
+    console.log('⚠️ 请手动复制上面的链接');
+  }
+  return urls;
+})();</pre>
+<button onclick="copyScript()" class="btn">📋 复制脚本</button>
+
+<div class="note">
+<h4>⚠️ 如果遇到跨域问题</h4>
+<p>直接复制下面的代码贴到 Console 运行（不要用 bookmarklet 方式）：</p>
+<pre style="font-size:12px">// 直接复制这段到 Console 按回车
+const ids = new Set();
+document.querySelectorAll('a[href*="explore/"]').forEach(a => {
+  const m = a.href.match(/explore\/([a-f0-9]{24})/);
+  if (m) ids.add(m[1]);
+});
+const urls = Array.from(ids).map(id => 'https://www.xiaohongshu.com/discovery/item/' + id);
+console.log('共 ' + urls.length + ' 个笔记:\n' + urls.join('\n'));
+copy(urls.join('\n'));
+console.log('✅ 已复制到剪贴板！');</pre>
+</div>
+
+<script>
+function copyScript() {
+  const text = document.getElementById('scriptCode').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('✅ 脚本已复制！\n\n现在去小红书 → F12 → Console → 粘贴 → Enter');
+  });
+}
+</script>
+
+</body>
+</html>
