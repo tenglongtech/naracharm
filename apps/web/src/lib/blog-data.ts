@@ -1181,6 +1181,206 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     { heading: 'What to Avoid at Work', body: ['**Avoid loud colors** if your office is conservative. Save bright reds and oranges for after hours.', '**Avoid multiple bracelets that clink.** A stack of 4-5 beaded bracelets can be noisy on a keyboard. One or two is perfect.', '**Avoid dangling charms** on bracelets in hands-on work settings. Phone charms are fine.', '**Know your industry.** Creative fields welcome bolder choices. Law and finance may call for more conservative styling. Let the room guide you.'] },
   ],
 },
+// ═══════════════════════════════════════════════════════════════
+// 文章 37: 水晶手串叠戴指南 (中文)
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'crystal-bracelet-stacking-guide',
+  title: '水晶手串叠戴指南: 如何搭配不同颜色和材质',
+  description: '水晶手串叠戴趋势全解析。学习如何搭配紫水晶、粉晶、黄水晶等不同材质和颜色的手串，打造属于你的个性化叠戴风格。',
+  keywords: ['水晶手串叠戴', 'bracelet stacking', 'crystal stacking', '叠戴搭配', '多串叠戴'],
+  category: 'Styling',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-14',
+  updatedAt: '2026-07-14',
+  readingTime: '5 min read',
+  relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'mixed-crystal-bracelet', 'turquoise-sky-bracelet'],
+  relatedArticles: ['how-to-style-beaded-bracelets', 'gemstone-color-meanings'],
+  content: [
+    { heading: '什么是水晶叠戴？', body: ['叠戴（Stacking）是将多条手串同时佩戴在手腕上，打造丰富的层次感和个性化的视觉效果。2025-2026年，叠戴已成为小红书和Instagram上最热门的水晶佩戴方式。', '一条手串是点缀，三条是风格，五条就是宣言。叠戴的魅力在于——每一颗石头都有自己的故事，当它们集合在一起，就成为你个人能量的表达。'] },
+    { heading: '颜色搭配原则', body: ['**同色系叠戴** — 最安全也最优雅。选择同一色系不同深浅的石头：淡紫紫水晶 + 深紫乌拉圭紫 + 紫兔毛，形成从浅到深的渐变效果。', '**撞色叠戴** — 更大胆的选择。紫水晶 + 黄水晶（紫色+黄色是对比色），或粉晶 + 绿幽灵（粉+绿的复古组合）。', '**三色法则** — 新手最推荐的方案。选择三种颜色：主色（40%）、辅色（35%）、点缀色（25%）。例如紫水晶（主）+ 白水晶（辅）+ 黄水晶（点缀）。'] },
+    { heading: '材质混搭技巧', body: ['**水晶 + 金属** — 将纯水晶手串与细金链/银链混搭，增加精致感。一条紫水晶 + 一条极细金链，既有能量感又不失时尚。', '**水晶 + 木质/天然材质** — 沉香木、檀木珠与水晶搭配，增添自然和禅意。特别适合波西米亚风格。', '**水晶 + 编织绳** — 用Macrame编织绳手链搭配水晶手串，轻松打造度假风。'] },
+    { heading: '不同手腕尺寸的叠戴方案', body: ['**细手腕（14-15cm）**：选择6-8mm珠子，叠戴2-3条即可。过大会显得笨重。', '**标准手腕（16-17cm）**：8mm珠子叠戴3-4条效果最佳。可以混合不同尺寸增加层次。', '**粗手腕（18cm+）**：10-12mm珠子叠戴3-5条，展现大胆风格。大珠子配单圈非常出彩。'] },
+    { heading: '日常叠戴推荐组合', body: ['**日常通勤**：紫水晶 + 白水晶 + 海蓝宝 — 冷静、清晰、沟通', '**约会/社交**：粉晶 + 草莓晶 + 月光石 — 爱、喜悦、直觉', '**重要场合**：黄水晶 + 金发晶 + 绿幽灵 — 自信、财富、成长', '**疗愈日**：紫水晶 + 黑碧玺 + 月光石 — 保护、净化、平静'] },
+  ],
+},
+// ═══════════════════════════════════════════════════════════════
+// 文章 38: Tibetan Prayer Beads Meaning
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'tibetan-prayer-beads-mala-meaning',
+  title: 'Tibetan Prayer Beads Meaning: How to Use Mala Beads in Daily Practice',
+  description: 'Discover the meaning of Tibetan prayer beads (mala). Learn how to use 108-bead malas in meditation, their symbolism, and how to wear them as jewelry.',
+  keywords: ['tibetan prayer beads', 'mala beads meaning', '108 beads meaning', 'tibetan mala', 'prayer beads meditation'],
+  category: 'Symbolism',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-14',
+  updatedAt: '2026-07-14',
+  readingTime: '6 min read',
+  relatedProducts: ['tibetan-amulet-925-bracelet', 'mixed-crystal-bracelet'],
+  relatedArticles: ['tibetan-jewelry-symbols-meaning', 'endless-knot-meaning'],
+  content: [
+    { heading: 'What Are Tibetan Prayer Beads?', body: ['Tibetan prayer beads, also called *mala*, are a string of 108 beads used for meditation and prayer in Buddhism. They have been used for over 2,500 years, originating in ancient India and spreading through Tibet, Nepal, and across Asia.', 'The word *mala* means "garland" in Sanskrit. Traditionally, a mala is made of 108 beads, plus one larger "guru bead" from which a small tassel hangs. The beads are typically made from wood, seeds, bone, or gemstones — each material carrying its own meaning.'] },
+    { heading: 'Why 108 Beads?', body: ['The number 108 is sacred in many Eastern traditions. There are 108 earthly desires in Buddhism, 108 names for Hindu deities, and 108 energy lines converging to form the heart chakra.', 'In practice, 108 breaths make a complete meditation cycle. By reciting one mantra per bead, the practitioner completes a full cycle of 108 repetitions — enough to shift the mind from ordinary thinking to a meditative state.'] },
+    { heading: 'How to Use Mala Beads', body: ['**Meditation practice** — Hold the mala in your right hand, drape it over your middle finger, and use your thumb to count each bead. Start at the guru bead and move bead by bead away from you, reciting your mantra with each one.', '**Simple mindfulness** — Even without a formal practice, holding your mala during stressful moments can be grounding. Run the beads through your fingers slowly, focusing on the texture and weight.', '**As jewelry** — Many people wear malas wrapped around the wrist (3-4 loops) or as a necklace. This keeps the beads close to your energy throughout the day.'] },
+    { heading: 'Choosing Your First Mala', body: ['**Sandalwood** — The most traditional material. Its natural fragrance is calming and helps maintain focus during meditation.', '**Crystal malas** — Amethyst for spiritual awareness, rose quartz for self-love, clear quartz for clarity. Each stone adds its own energy to your practice.', '**Bodhi seed** — The most sacred material in Buddhism, said to bring enlightenment. Seeds from the Bodhi tree under which the Buddha attained enlightenment.'] },
+    { heading: 'Caring for Your Mala', body: ['Treat your mala with respect. Keep it clean by wiping with a dry cloth. Avoid water contact — many wooden and seed beads can crack with moisture.', 'When not in use, store your mala in a silk pouch. Traditional practice says to keep your mala in a high, clean place — never on the floor.', 'If a bead breaks, it is seen as a sign that the mala has absorbed negative energy meant for you. Replace the bead or re-string the whole mala, and thank it for its protection.'] },
+  ],
+},
+// ═══════════════════════════════════════════════════════════════
+// 文章 39: Fluorite Meaning
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'fluorite-meaning-healing-properties',
+  title: 'Fluorite Meaning: The Stone of Focus, Clarity & Mental Calm',
+  description: 'Fluorite is the crystal of focus and clarity. Discover fluorite\'s meaning, healing properties, benefits, and how this rainbow stone can help with concentration.',
+  keywords: ['fluorite meaning', 'fluorite healing properties', 'fluorite crystal', 'rainbow fluorite', 'fluorite benefits'],
+  category: 'Crystal Meanings',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-15',
+  updatedAt: '2026-07-15',
+  readingTime: '5 min read',
+  relatedProducts: ['amethyst-peace-bracelet', 'clear-quartz-meaning-master-healer'],
+  relatedArticles: ['clear-quartz-meaning-master-healer', 'amethyst-meaning-healing-properties'],
+  content: [
+    { heading: 'What Is Fluorite?', body: ['Fluorite is a calcium fluoride crystal that forms in cubic and octahedral shapes. What makes fluorite unique is its incredible range of colors — from deep purple and blue to green, yellow, and clear. A single piece can contain multiple bands of color, earning it the name "the most colorful mineral on earth."', 'The word fluorite comes from the Latin *fluere*, meaning "to flow" — referring to its low melting point, which makes it valuable in industrial applications. But to crystal lovers, fluorite is prized for its ability to bring order to chaos, especially mental chaos.'] },
+    { heading: 'Fluorite Meaning & Healing Properties', body: ['**Mental clarity** — Fluorite is primarily known as a "study stone." It organizes scattered thoughts, improves concentration, and helps you absorb complex information. Students, analysts, and anyone doing deep mental work benefit from keeping fluorite nearby.', '**Decision-making** — When you feel pulled in too many directions, fluorite cuts through the noise. It helps you see situations clearly and make decisions with confidence.', '**Emotional balance** — Fluorite brings a sense of stability when emotions are running high. It absorbs and neutralizes stress, creating mental calm in chaotic environments.'] },
+    { heading: 'Green Fluorite vs Purple Fluorite', body: ['**Green fluorite** is the stone of emotional healing. It clears old patterns, releases emotional baggage, and creates space for growth. It is especially helpful during transitions — new jobs, moves, or ending relationships.', '**Purple fluorite** enhances spiritual awareness and psychic protection. It strengthens intuition and guards against psychic overwhelm. Its energy is similar to amethyst but with a sharper, more focused quality.'] },
+    { heading: 'How to Use Fluorite', body: ['**At your desk** — Keep a fluorite crystal or bracelet on your workspace to improve focus. When you feel distracted, hold it for a moment.', '**During study** — Place fluorite on your notes or textbook. Its energy is said to help information "stick" in your mind.', '**Wear it** — A fluorite bracelet keeps its energy in your aura all day. Wear it on your left wrist (the receiving side) for continuous mental clarity.', '**Meditation** — Hold fluorite in your receiving hand during meditation. Focus on your third eye (between your eyebrows) and imagine a clear purple light washing away mental fog.'] },
+  ],
+},
+// ═══════════════════════════════════════════════════════════════
+// 文章 40: How to Start a Crystal Collection
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'how-to-start-a-crystal-collection',
+  title: 'How to Start a Crystal Collection: A Beginner\'s Starter Guide',
+  description: 'Want to start a crystal collection but don\'t know where to begin? This guide covers the 5 essential starter crystals, how to choose them, and how to build your collection.',
+  keywords: ['start a crystal collection', 'crystals for beginners', 'beginner crystal guide', 'which crystals to buy first', 'crystal starter kit'],
+  category: 'Crystal Meanings',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-15',
+  updatedAt: '2026-07-15',
+  readingTime: '7 min read',
+  relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'clear-quartz-meaning-master-healer', 'mixed-crystal-bracelet'],
+  relatedArticles: ['healing-crystals-101-beginners-guide', 'best-crystal-gift-guide'],
+  content: [
+    { heading: 'Why Start a Crystal Collection?', body: ['Crystals have been collected for thousands of years not just for their beauty, but for their energy. Whether you are drawn to their colors, their meanings, or simply the way they feel in your hand, starting a crystal collection is a deeply personal journey.', 'The best part? You do not need a huge budget or special knowledge to begin. A meaningful collection can start with a single stone that calls to you.'] },
+    { heading: 'The 5 Essential Starter Crystals', body: ['**Clear Quartz** — The master healer. It amplifies energy and intention, and works well with every other crystal. If you only buy one crystal, make it clear quartz.', '**Amethyst** — The stone of calm and protection. Its beautiful purple color makes it one of the most popular crystals for beginners. It helps with sleep, stress, and spiritual awareness.', '**Rose Quartz** — The stone of unconditional love. It opens the heart and teaches self-compassion. A gentle, forgiving stone that is perfect for emotional healing.', '**Black Tourmaline** — The ultimate protection stone. It absorbs negative energy and electromagnetic radiation. Essential for anyone sensitive to their environment.', '**Citrine** — The stone of abundance and joy. Its warm yellow color brings optimism and prosperity. A natural mood-lifter.'] },
+    { heading: 'How to Choose Your First Crystals', body: ['**Follow your intuition** — The best way to choose a crystal is to see which one you are drawn to. Your intuition knows what energy you need before your conscious mind does.', '**Consider your intention** — Are you looking for calm? Focus? Love? Protection? Choose a stone that matches your current need.', '**Start with one or two** — You do not need a huge collection to begin. A single bracelet or small tumbled stone is enough to start your practice.', '**Buy from trusted sources** — Look for sellers who are transparent about where their stones come from. Natural, un-dyed crystals carry the strongest energy.'] },
+    { heading: 'Growing Your Collection', body: ['Once you have your starter stones, you can build your collection slowly and intentionally. Add crystals that address new intentions as they arise.', '**By color** — Build around a color theme. A "purple collection" might include amethyst, lepidolite, sugilite, and purple fluorite.', '**By chakra** — Collect one stone for each of the seven chakras: root (red jasper), sacral (carnelian), solar plexus (citrine), heart (rose quartz), throat (lapis lazuli), third eye (amethyst), crown (clear quartz).', '**By intention** — Protection collection: black tourmaline, obsidian, hematite. Love collection: rose quartz, rhodonite, green aventurine. Abundance collection: citrine, pyrite, green jade.'] },
+  ],
+},
+// ═══════════════════════════════════════════════════════════════
+// 文章 41: Selenite Meaning
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'selenite-meaning-purification-stone',
+  title: 'Selenite Meaning: The Stone of Purification & Divine Light',
+  description: 'Selenite is the ultimate purification crystal. Learn selenite\'s meaning, its cleansing properties, how to use it to clear negative energy, and the best ways to incorporate it into your space.',
+  keywords: ['selenite meaning', 'selenite healing properties', 'selenite crystal', 'how to use selenite', 'selenite cleansing'],
+  category: 'Crystal Meanings',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-15',
+  updatedAt: '2026-07-15',
+  readingTime: '5 min read',
+  relatedProducts: ['amethyst-peace-bracelet', 'clear-quartz-meaning-master-healer'],
+  relatedArticles: ['complete-crystal-cleansing-guide', 'healing-crystals-101-beginners-guide'],
+  content: [
+    { heading: 'What Is Selenite?', body: ['Selenite is a crystalline form of gypsum, named after the Greek goddess of the moon, Selene, because of its moon-like glow. It forms in long, translucent columns that seem to glow from within — a quality that has made it one of the most beloved crystals for spiritual work.', 'Unlike most crystals, selenite has a hardness of only 2 on the Mohs scale — it is so soft you can scratch it with your fingernail. But its physical softness belies its powerful spiritual properties. Selenite does not need to be cleansed — it is itself a cleansing stone.'] },
+    { heading: 'Selenite Meaning & Healing Properties', body: ['**Purification** — Selenite is the ultimate cleansing crystal. It clears stagnant or negative energy from other stones, from your space, and from your aura. It never needs to be cleansed itself — it is always at its full power.', '**Connection to higher consciousness** — Selenite is associated with the crown chakra (the energy center at the top of your head). It facilitates meditation, deep spiritual connection, and access to higher wisdom.', '**Mental clarity** — When your mind feels foggy or you cannot think straight, selenite cuts through the mental static. It brings a calm, clear, luminous quality to your thoughts.'] },
+    { heading: 'How to Cleanse Crystals with Selenite', body: ['This is what makes selenite truly special: it can cleanse other crystals. Place your crystals on a selenite charging plate or slab overnight, and they will emerge energetically refreshed.', 'Selenite works with pure white light energy. Unlike water or salt cleansing methods, selenite is safe for all crystals — including soft stones, fragile pieces, and water-soluble crystals. It is the gentlest and most effective cleansing method.', 'For best results, leave your crystals on a selenite plate for at least 2-3 hours, or overnight during a full moon. Intend that the selenite is clearing all stagnant energy from the stones.'] },
+    { heading: 'Wearing and Using Selenite', body: ['**In your space** — Place selenite towers or wands in the corners of a room to create a clean, protected space. Selenite lamps make beautiful nightlights that double as energy purifiers.', '**On your body** — Selenite wands are used in energy healing to clear the aura. Gently pass a selenite wand over your body, from head to feet, to clear any stuck energy.', '**Near electronics** — Place a small selenite piece near your computer or WiFi router. Selenite is believed to neutralize electromagnetic stress from electronic devices.', '**In meditation** — Hold a selenite wand pointing upward to connect with higher consciousness. Its high-vibration energy facilitates deep meditative states.'] },
+  ],
+},
+// ═══════════════════════════════════════════════════════════════
+// 文章 42: 2026 Jewelry Trends
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: '2026-jewelry-trends-beaded-crystal',
+  title: '2026 Jewelry Trends: What\'s In for Beaded & Crystal Jewelry',
+  description: 'The top 2026 jewelry trends for beaded and crystal jewelry. From phone charms to stacked bracelets and statement earrings — discover what\'s trending this year.',
+  keywords: ['2026 jewelry trends', 'crystal jewelry trends', 'beaded jewelry 2026', 'jewelry trends this year', 'what jewelry is trending'],
+  category: 'Styling',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-16',
+  updatedAt: '2026-07-16',
+  readingTime: '5 min read',
+  relatedProducts: ['obsidian-guard-charm', 'cinnabar-cord-charm', 'tai-silk-cord-phone-charm', 'mixed-crystal-bracelet'],
+  relatedArticles: ['phone-charm-trend-2026', 'how-to-style-beaded-bracelets', 'gemstone-color-meanings'],
+  content: [
+    { heading: 'Phone Charms Are Mainstream', body: ['What started as a Y2K throwback has become a full-blown jewelry category. Phone charms — small ornaments attached to your phone case — are the defining accessory of 2026.', 'Crystal phone charms are especially popular. They combine the personal meaning of healing stones with the playful energy of phone accessories. A single obsidian or rose quartz charm transforms your phone into a talisman.', 'Watch for phone charms with: natural stone beads, braided cords, silver or brass accents, and detachable clasps that let you swap charms between bags and phones.'] },
+    { heading: 'Bracelet Stacking Evolves', body: ['The single-bracelet look is officially over. 2026 is about curated stacks — 3 to 5 bracelets worn together, mixing crystals, metals, and cords.', 'The key is intentionality. A haphazard stack looks messy; a carefully chosen combination tells a story. Mix by color family (all cool tones) or by intention (all protection stones like obsidian, hematite, and black tourmaline).', 'Bead sizes are trending smaller — 6-8mm beads allow for more bracelets per wrist without bulk. Two crystal bracelets + a thin gold chain + a beaded cord is the "perfect stack" formula.'] },
+    { heading: 'Statement Earrings Return', body: ['After years of minimalist studs, 2026 sees the return of bold, statement earrings. Miao silver filigree drop earrings, oversized hoops with stone charms, and dangly crystal earrings are leading the way.', 'The look is intentional and artisanal — handmade, one-of-a-kind pieces that you cannot find on fast fashion sites. Hand-crafted filigree, textured silver, and natural stone drops are the key elements.', 'Matching sets (earrings + bracelet) are also trending. Coordinating pieces in the same stone or metal create a polished, put-together look.'] },
+    { heading: 'Earthy & Natural Takes Over', body: ['The 2026 aesthetic moves away from high-polish, high-shine jewelry toward matte, textured, natural finishes. Raw stone beads, matte silver, waxed cotton cords, and wooden accents are replacing glossy finishes.', 'This shift aligns with the broader cultural move toward authenticity and sustainability. Customers want jewelry that feels real — not mass-produced. They want to see the natural variations in stones, the slight asymmetry of handmade work, the marks of human hands.', 'Brown, terracotta, sage green, and deep plum are the color palette of 2026. These earthy tones pair beautifully with crystal beads and complement both casual and professional wardrobes.'] },
+  ],
+},
+// ═══════════════════════════════════════════════════════════════
+// 文章 43: Labradorite Meaning
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'labradorite-meaning-magic-stone',
+  title: 'Labradorite Meaning: The Stone of Magic, Transformation & Protection',
+  description: 'Labradorite is the stone of magic and transformation. Explore labradorite\'s meaning, its iridescent beauty, healing properties, and why it\'s beloved by crystal enthusiasts worldwide.',
+  keywords: ['labradorite meaning', 'labradorite healing properties', 'labradorite crystal', 'labradorite benefits', 'labradorite magic'],
+  category: 'Crystal Meanings',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-16',
+  updatedAt: '2026-07-16',
+  readingTime: '5 min read',
+  relatedProducts: ['obsidian-guard-charm', 'mixed-crystal-bracelet', 'amethyst-peace-bracelet'],
+  relatedArticles: ['moonstone-meaning-intuition-new-beginnings', 'hematite-meaning-grounding-stone'],
+  content: [
+    { heading: 'What Is Labradorite?', body: ['Labradorite is a feldspar mineral first discovered in Labrador, Canada, in the 1770s. Its most extraordinary feature is *labradorescence* — a metallic, iridescent flash of blue, green, gold, and purple that appears when light hits the stone at certain angles.', 'This phenomenon is caused by light reflecting off internal layers within the stone. No two pieces of labradorite flash the same way — making each stone truly one of a kind. The Inuit believed the Northern Lights were once trapped inside labradorite, and that a brave warrior freed most of the light, leaving only a little behind in the stone.'] },
+    { heading: 'Labradorite Meaning & Healing Properties', body: ['**Protection** — Labradorite creates a protective shield around the aura, preventing energy leaks and psychic attacks. It is one of the most effective stones for energetic protection.', '**Transformation** — Labradorite is the stone of change. It supports you through major life transitions by revealing your inner strength. If you are going through a career change, move, or relationship shift, labradorite helps you navigate with courage.', '**Intuition** — Labradorite awakens psychic abilities and strengthens intuition. It helps you trust your inner knowing, especially when external circumstances are uncertain.'] },
+    { heading: 'The Labradorite Flash: What the Colors Mean', body: ['**Blue flash** — Communication and truth. A blue-flashing labradorite supports clear, honest expression.', '**Green flash** — Heart healing and emotional growth. Green flashes indicate the stone is working on heart-centered issues.', '**Gold/copper flash** — Confidence and personal power. Gold flashes energize the solar plexus chakra.', '**Purple flash** — Spiritual awareness and psychic development. Purple connects to the third eye and crown chakras.', '**Multi-color flash** — All-round transformation. A labradorite with multiple colors is a powerful stone for deep, comprehensive change.'] },
+    { heading: 'How to Use Labradorite', body: ['**Wear it daily** — Labradorite is most effective when worn against the skin. A labradorite bracelet keeps its protective energy in your aura throughout the day.', '**During meditation** — Hold a labradorite palm stone during meditation to deepen your spiritual practice. Focus on the flashes of light and let them guide your inner vision.', '**In your space** — Place labradorite near your front door to protect your home. In your workspace, it guards against negative energy from difficult conversations or challenging projects.', '**During travel** — Labradorite is an excellent travel stone. It protects against accidents and helps you stay grounded when navigating unfamiliar environments.'] },
+  ],
+},
+// ═══════════════════════════════════════════════════════════════
+// 文章 44: How to Gift Crystal Jewelry
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'how-to-gift-crystal-jewelry',
+  title: 'How to Gift Crystal Jewelry: Etiquette, Meanings & Presentation Tips',
+  description: 'The complete guide to gifting crystal jewelry. Learn which stones to gift for different occasions, how to present them meaningfully, and the etiquette of giving healing crystals.',
+  keywords: ['gift crystal jewelry', 'crystal gifts', 'meaningful jewelry gifts', 'crystal gift guide', 'gift giving etiquette'],
+  category: 'Gift Guide',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-16',
+  updatedAt: '2026-07-16',
+  readingTime: '6 min read',
+  relatedProducts: ['rose-quartz-bracelet', 'amethyst-peace-bracelet', 'lotus-jade-bracelet', 'turquoise-sky-bracelet'],
+  relatedArticles: ['best-crystal-gift-guide', 'best-jewelry-gifts-for-mom', 'anniversary-wedding-crystal-gift-guide'],
+  content: [
+    { heading: 'Why Crystal Jewelry Makes the Perfect Gift', body: ['Crystal jewelry is more than an accessory — it is a wish, a blessing, a piece of protection that the recipient carries with them every day. Unlike conventional jewelry, a crystal piece carries intentional meaning that makes the gift deeply personal.', 'The market for crystal and healing stone jewelry has grown over 280% in recent years. But more importantly, recipients consistently report feeling that a gifted crystal bracelet or necklace carries more emotional weight than ordinary jewelry.'] },
+    { heading: 'Which Crystal to Gift for Each Occasion', body: ['**Birthday** — Citrine for joy and abundance (November), amethyst for spiritual growth (February), rose quartz for love (May). You can also choose by the recipient\'s need rather than birth month.', '**Wedding/Anniversary** — Rose quartz (unconditional love), moonstone (new beginnings), jade (luck and longevity). A pair of matching bracelets makes a beautiful couples gift.', '**Housewarming** — Black tourmaline or obsidian for protection, citrine for prosperity. Both stones carry the energy of a safe, abundant home.', '**Graduation** — Amethyst for wisdom and clarity, clear quartz for amplified focus, fluorite for organized thinking. Perfect for a new chapter.', '**Sympathy/healing** — Amethyst (peace), rose quartz (comfort), selenite (purification). Choose gentle, calming stones that offer solace without being prescriptive.'] },
+    { heading: 'Gift Presentation Ideas', body: ['**Include a meaning card** — Write down the properties of the stone you chose. A short note like "Amethyst for calm and clarity — thinking of you" adds deep meaning.', '**Use a keepsake box** — Crystal jewelry should arrive in a box worthy of its meaning. Our pieces come in natural kraft boxes with story cards.', '**Pair with a cleansing ritual** — Include a small selenite stick for cleansing. Explain briefly how to cleanse and charge the stone. This makes the gift interactive and educational.', '**Gift sets** — Bracelet + matching phone charm, or necklace + bracelet, makes a more substantial gift. The combination feels curated and thoughtful.'] },
+    { heading: 'Etiquette of Gifting Crystals', body: ['**Do not gift without intention** — A crystal given casually loses its power. Take a moment before gifting to hold the piece and set an intention for the recipient.', '**Respect the recipient\'s beliefs** — Not everyone believes in crystal energy. Frame the gift around beauty and meaning: "I thought of you when I saw this piece."', '**Crystals can be gifted to anyone** — Men, women, children, friends, family, colleagues. A simple black obsidian phone charm or a hematite bracelet suits any style.', '**You can gift to yourself** — Buying your own crystal jewelry is a powerful act of self-love. Choose what calls to you.'] },
+  ],
+},
+// ═══════════════════════════════════════════════════════════════
+// 文章 45: Amazonite Meaning
+// ═══════════════════════════════════════════════════════════════
+{
+  slug: 'amazonite-meaning-courage-truth',
+  title: 'Amazonite Meaning: The Stone of Courage, Truth & Soothing Energy',
+  description: 'Amazonite is the stone of courage and authentic expression. Discover amazonite\'s meaning, its soothing turquoise-green energy, and how to wear it for communication and confidence.',
+  keywords: ['amazonite meaning', 'amazonite healing properties', 'amazonite crystal', 'amazonite benefits', 'amazonite stone'],
+  category: 'Crystal Meanings',
+  author: 'Nara Charm',
+  publishedAt: '2026-07-17',
+  updatedAt: '2026-07-17',
+  readingTime: '5 min read',
+  relatedProducts: ['turquoise-sky-bracelet', 'mixed-crystal-bracelet'],
+  relatedArticles: ['turquoise-meaning-protection-stone', 'lapis-lazuli-meaning'],
+  content: [
+    { heading: 'What Is Amazonite?', body: ['Amazonite is a green to blue-green variety of microcline feldspar, named after the Amazon River. Its color typically ranges from pale seafoam green to deep turquoise, often with white or grey veining that gives it a natural, organic look.', 'Ancient legends say Amazonite was used by the mythical Amazon warrior women — they wore it on their shields and armor for courage and protection. While the geological reality is that Amazonite deposits are found in Russia, the United States, and Madagascar (not the Amazon), the name and the mythology stuck.'] },
+    { heading: 'Amazonite Meaning & Healing Properties', body: ['**Courageous communication** — Amazonite is primarily a stone of truth. It helps you speak your authentic truth with grace and confidence, without aggression or hesitation.', '**Soothing energy** — Amazonite has a naturally cooling, calming frequency. It works like a balm for the nervous system — softening harsh emotions, cooling heated arguments, and smoothing rough transitions.', '**Harmony** — Amazonite brings conflicting energies into alignment. It is excellent for relationships, teams, and any situation where different perspectives need to find common ground.'] },
+    { heading: 'Amazonite vs Turquoise', body: ['Amazonite and turquoise are often confused due to their similar blue-green color. But they are distinctly different stones with different properties.', '**Color** — Turquoise is typically a brighter, more solid blue-green. Amazonite has a softer, more translucent quality with characteristic white veining.', '**Hardness** — Turquoise (5-6 Mohs) is harder than amazonite (6-6.5 Mohs). Amazonite is more durable for daily wear.', '**Energy** — Both stones support communication, but turquoise is more protective while amazonite is more soothing. Turquoise guards; amazonite comforts.'] },
+    { heading: 'How to Use Amazonite', body: ['**Wear as a bracelet** — Amazonite on the wrist keeps its soothing energy in your aura. Wear it during difficult conversations, presentations, or any time you need to speak with courage.', '**Meditation** — Hold amazonite during meditation focused on the throat chakra. Imagine the cooling turquoise energy clearing any blocks in your ability to speak your truth.', '**At work** — Keep amazonite on your desk to create a calm, harmonious workspace. It is especially helpful in open-plan offices or high-conflict environments.', '**In relationships** — Place amazonite in shared spaces to promote honest, kind communication between partners, family members, or roommates.'] },
+  ],
+},
 ];
 
 // ─── 查询函数 ───────────────────────────────────────────────────────────

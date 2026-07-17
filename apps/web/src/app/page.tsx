@@ -193,6 +193,38 @@ export default async function HomePage() {
       </section>
 
       {/* ────────────────────────────────────────────
+          6. 用户评价 Customer Reviews
+      ──────────────────────────────────────────── */}
+      <section className="border-t border-border bg-surface">
+        <div className="mx-auto max-w-7xl px-4 py-14 md:py-20">
+          <p className="text-center text-xs uppercase tracking-[0.3em] text-brand">Real Stories</p>
+          <h2 className="mt-3 text-center font-display text-3xl md:text-4xl">What Our Customers Say</h2>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {[
+              { text: "Wearing this rose quartz bracelet has honestly shifted my mindset. I feel more calm and centered throughout the day.", name: "Emma R.", product: "Rose Quartz Bracelet", rating: 5 },
+              { text: "The amethyst has such a deep, rich purple. Beautiful quality. I've been wearing it every day since it arrived.", name: "Liu W.", product: "Amethyst Peace Bracelet", rating: 5 },
+              { text: "Bought the turquoise bracelet as a gift and my friend absolutely loved it. The matrix patterns are stunning.", name: "Sarah K.", product: "Turquoise Sky Bracelet", rating: 5 },
+            ].map((t, i) => (
+              <div key={i} className="rounded-lg border border-border bg-bg p-6 flex flex-col">
+                <div className="text-gold text-lg">{'★'.repeat(t.rating)}{'☆'.repeat(5 - t.rating)}</div>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-ink/85 italic">&ldquo;{t.text}&rdquo;</p>
+                <div className="mt-4 flex items-center gap-2 pt-4 border-t border-border">
+                  <div className="h-8 w-8 rounded-full bg-gold/20 flex items-center justify-center text-xs font-medium text-gold">{t.name[0]}</div>
+                  <div>
+                    <p className="text-sm font-medium">{t.name}</p>
+                    <p className="text-xs text-muted">{t.product}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <a href="/collections" className="inline-block rounded-md border border-ink px-8 py-3 text-sm font-medium transition-colors hover:bg-ink hover:text-bg">Write a Review →</a>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────────────────────────────
           7. Stories in Every Piece (故事卡) ⭐ 品牌灵魂
       ──────────────────────────────────────────── */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:py-24">

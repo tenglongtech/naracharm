@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
 import { ProductTile, type ProductCard } from '@/components/product-tile';
 import { AddToCartForm } from '@/components/add-to-cart-form';
+import ReviewsSection from '@/components/reviews-section';
 import { getProductBySlug, getActiveProducts } from '@/lib/storefront';
 
 /**
@@ -309,21 +310,8 @@ export default async function ProductPage({ params }: Params) {
           </div>
         </section>
 
-        {/* 评价 */}
-        <section className="border-y border-border bg-surface">
-          <div className="mx-auto max-w-4xl px-4 py-14 md:py-16">
-            <div className="flex flex-col items-center gap-3 text-center">
-              <h2 className="font-display text-3xl">What Customers Say</h2>
-              <p className="text-lg text-gold">★★★★★</p>
-              <p className="text-sm text-muted">Reviews coming soon</p>
-            </div>
-            <div className="mt-10 rounded-lg border border-border bg-bg p-8 text-center text-sm text-muted">
-              ✦ Be the first to share your experience with this piece.
-              <br />
-              <span className="text-xs">Reviews open once the first order ships.</span>
-            </div>
-          </div>
-        </section>
+        {/* 评价 — 来自数据库的实时评价 */}
+        <ReviewsSection productId={product.id} />
 
         {/* 相关推荐 */}
         <section className="mx-auto max-w-7xl px-4 py-14 md:py-16">

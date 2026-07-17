@@ -414,7 +414,7 @@ export const blogComments = pgTable(
     email: text('email'),
     text: text('text').notNull(),
     isApproved: boolean('is_approved').default(false).notNull(),
-    parentId: uuid('parent_id').references((): typeof blogComments.$inferSelect => blogComments.id, { onDelete: 'cascade' }),
+    parentId: uuid('parent_id'),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   },
   (t) => ({

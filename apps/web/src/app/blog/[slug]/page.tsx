@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
 import { BLOG_ARTICLES, getArticleBySlug, getRelatedArticles, isNewArticle, isRecentlyUpdated, formatBlogDate } from '@/lib/blog-data';
 import { ProductTile, type ProductCard } from '@/components/product-tile';
+import CommentsSection from '@/components/comments-section';
 import { getActiveProducts } from '@/lib/storefront';
 
 export const dynamic = 'force-dynamic';
@@ -191,6 +192,9 @@ export default async function BlogArticlePage({ params }: Params) {
             </div>
           </section>
         )}
+
+        {/* 评论区 */}
+        <CommentsSection slug={slug} />
       </main>
       <SiteFooter />
     </>
