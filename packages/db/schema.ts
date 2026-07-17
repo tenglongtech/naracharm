@@ -375,6 +375,55 @@ export const abandonedCarts = pgTable('abandoned_carts', {
 });
 
 // ---------------------------------------------------------------------------
+// Product Reviews —— 用户评价
+// ---------------------------------------------------------------------------
+
+export const productReviews = pgTable(
+  'product_reviews',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    productId: uuid('product_id')
+      .references(() => products.id, { onDelete: 'cascade' })
+      .notNull(),
+    customerId: uuid('customer_id').references(() => customers.id),
+    authorName: text('author_name').notNull(),
+    rating: integer('rating').notNull().default(5), // 1-5
+    title: text('title'),
+    text: text('text').notNull(),
+    isVerifiedPurchase: boolean('is_verified_purchase').default(false).notNull(),
+    isFeatured: boolean('is_featured').default(false).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => ({
+    productIdx: index('reviews_product_idx').on(t.productId),
+    featuredIdx: index('reviews_featured_idx').on(t.isFeatured),
+  }),
+);
+
+// ---------------------------------------------------------------------------
+// Blog Comments —— 博客文章评论
+// ---------------------------------------------------------------------------
+
+export const blogComments = pgTable(
+  'blog_comments',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    articleSlug: text('article_slug').notNull(),
+    authorName: text('author_name').notNull(),
+    email: text('email'),
+    text: text('text').notNull(),
+    isApproved: boolean('is_approved').default(false).notNull(),
+    parentId: uuid('parent_id').references((): typeof blogComments.$inferSelect => blogComments.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => ({
+    articleIdx: index('comments_article_idx').on(t.articleSlug),
+    approvedIdx: index('comments_approved_idx').on(t.isApproved),
+  }),
+);
+
+// ---------------------------------------------------------------------------
 // Relations
 // ---------------------------------------------------------------------------
 
@@ -467,9 +516,27 @@ export const verifications = pgTable('verification', {
   updatedAt: timestamp('updated_at', { withTimezone: true }),
 });
 
+export const reviewsRelations = relations(productReviews, ({ one }) => ({
+  product: one(products, {
+    fields: [productReviews.productId],
+    references: [products.id],
+  }),
+}));
+
+export const commentsRelations = relations(blogComments, ({ one }) => ({
+  parent: one(blogComments, {
+    fields: [blogComments.parentId],
+    references: [blogComments.id],
+  }),
+}));
+
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
 export type ProductVariant = typeof productVariants.$inferSelect;
 export type Order = typeof orders.$inferSelect;
 export type OrderLine = typeof orderLines.$inferSelect;
 export type Customer = typeof customers.$inferSelect;
+export type ProductReview = typeof productReviews.$inferSelect;
+export type NewProductReview = typeof productReviews.$inferInsert;
+export type BlogComment = typeof blogComments.$inferSelect;
+export type NewBlogComment = typeof blogComments.$inferInsert;
