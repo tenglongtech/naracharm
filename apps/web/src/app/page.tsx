@@ -5,6 +5,7 @@ import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
 import { ProductTile, type ProductCard } from '@/components/product-tile';
 import { getActiveProducts, getAllCollections } from '@/lib/storefront';
 import { getRecentBlogArticles, isNewArticle, formatBlogDate, formatBlogDateShort } from '@/lib/blog-data';
+import NewsletterSection from '@/components/newsletter-section';
 
 /**
  * Nara Charm 首页
@@ -224,6 +225,27 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ─── New Arrivals ────────────────────────── */}
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-7xl px-4 py-14 md:py-20">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-brand">Fresh from the workshop</p>
+              <h2 className="mt-2 font-display text-3xl md:text-4xl">New Arrivals</h2>
+            </div>
+            <Link href="/collections" className="hidden text-sm text-brand hover:underline md:block">View all →</Link>
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-5 md:grid-cols-4 lg:gap-6">
+            {allProducts.slice(0, 4).map(toCard).map((p) => (
+              <ProductTile key={p.slug} product={p} />
+            ))}
+          </div>
+          <div className="mt-6 text-center md:hidden">
+            <Link href="/collections" className="text-sm text-brand hover:underline">View all →</Link>
+          </div>
+        </div>
+      </section>
+
       {/* ────────────────────────────────────────────
           7. Stories in Every Piece (故事卡) ⭐ 品牌灵魂
       ──────────────────────────────────────────── */}
@@ -289,6 +311,8 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      <NewsletterSection />
 
       {/* ────────────────────────────────────────────
           9. 4 步工艺流程 How It's Made
