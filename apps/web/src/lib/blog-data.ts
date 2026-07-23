@@ -1501,6 +1501,294 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       { heading: 'Trust Your Intuition: The Best Guide', body: ['After all the guides, tests, and color charts, the most important tool for reading crystal properties is your own intuition. Crystal lovers across traditions agree on one thing: the stone you are drawn to is the stone you need.', '**How to practice crystal intuition:** Visit a crystal shop or browse our collection online. Notice which stones catch your eye first — not the ones you "should" like, but the ones you actually feel pulled toward. That pull is your intuition.', '**When you hold a crystal, notice:** Does it feel warm or cool? Heavy or light? Does it make you feel calm, energized, or grounded? Your physical and emotional response to a stone is valid information about whether it is right for you.', '**The paradox of knowledge:** The more you learn about crystals, the more you may second-guess your intuition. "This stone is supposed to be good for love, but I feel drawn to it for focus." Trust your experience over the guidebook. You may discover a personal connection that no reference chart can describe.', '**Final advice:** Read the guides, learn the meanings, check the authenticity — but at the end of the day, wear what calls to you. The best crystal is the one you actually want to wear, because you will wear it more, think about it more, and derive more meaning from it. That consistent, intentional engagement is what makes crystals work.'] },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 51: How to Clean Your Crystal Jewelry (2026-07-22)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'how-to-clean-crystal-jewelry-safe-methods',
+    title: 'How to Clean Your Crystal Jewelry: Safe Methods for Every Stone Type',
+    description: 'Learn safe methods to clean crystal jewelry by stone type. From dry cloth care for soft stones to gentle rinses for hard stones, plus what to avoid and a 2-minute daily routine.',
+    keywords: ['how to clean crystal jewelry', 'clean crystal bracelet', 'crystal jewelry care', 'cleaning gemstones safely', 'stone care guide', 'how to clean natural stones', 'crystal cleaning methods'],
+    category: 'Care Guide',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-22',
+    updatedAt: '2026-07-22',
+    readingTime: '5 min read',
+    relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'turquoise-sky-bracelet'],
+    relatedArticles: ['complete-crystal-cleansing-guide', 'beaded-jewelry-care-guide'],
+    content: [
+      {
+        heading: 'Why Cleaning Crystals Matters',
+        body: [
+          'Over time, your crystal jewelry accumulates more than just dust. Natural oils from your skin, lotions, environmental pollutants, and even the energetic residue of the people and places you encounter all build up on the surface of your stones.',
+          'Regular cleaning serves two purposes: it keeps your crystals looking their best — maintaining their natural luster and color — and in crystal healing traditions, it clears the accumulated energy so the stone can work at its full potential.',
+          'A clean crystal is a happy crystal. But not all stones can be cleaned the same way.',
+        ],
+      },
+      {
+        heading: 'Safe Methods by Stone Hardness',
+        body: [
+          'The most important factor in choosing a cleaning method is your stone\'s hardness on the Mohs scale. Here\'s how to clean each category safely:',
+          '**Soft stones (Mohs 1–5)** — Turquoise, lapis lazuli, selenite, howlite, opal. These stones are porous and easily damaged. **Dry cloth only.** Wipe gently with a soft, lint-free cloth after each wear. No water, no soap, no soaking. For porous stones, even brief contact with water can cause discoloration over time.',
+          '**Medium stones (Mohs 5–7)** — Amethyst, rose quartz, jade, obsidian, aventurine, carnelian. **Mild soap and water.** Use lukewarm water with a tiny drop of mild dish soap. Dip a soft cloth in the solution, wring it out thoroughly so it is just damp, and wipe each bead individually. Dry immediately with a clean soft cloth.',
+          '**Hard stones (Mohs 7–10)** — Clear quartz, citrine, garnet, tourmaline. **Gentle rinse.** You can briefly rinse these stones under cool running water, then dry thoroughly. Avoid hot water, which can cause thermal shock and crack the stone.',
+          '**When in doubt, use a dry cloth.** A gentle wipe is always safe for any stone.',
+        ],
+      },
+      {
+        heading: 'What to Avoid',
+        body: [
+          'Just as important as knowing what to do is knowing what NOT to do:',
+          '**Avoid ultrasonic cleaners for fragile stones.** Ultrasonic vibrations can crack porous or included stones like turquoise, lapis lazuli, opal, and emerald. Safe only for diamonds, rubies, and sapphires.',
+          '**Avoid salt water for porous stones.** Salt is abrasive and can scratch soft stones. Salt water can also corrode silver accents. Never soak crystal jewelry in salt water — even for "energetic cleansing."',
+          '**Avoid direct sunlight for amethyst and rose quartz.** Prolonged UV exposure will fade the color of amethyst (from purple to pale yellow) and can dull rose quartz over time. Dry your stones in the shade or indoors.',
+          '**Avoid harsh chemicals.** Bleach, ammonia, acetone, and alcohol can permanently damage natural stones. Stick to plain water or mild soap.',
+          '**Avoid soaking elastic bracelets.** Water weakens the elastic cord. Never submerge a beaded bracelet in water. If you need to clean it, use a damp cloth on the beads individually.',
+        ],
+      },
+      {
+        heading: 'A Quick 2-Minute Daily Clean Routine',
+        body: [
+          'Consistency beats intensity. A daily 2-minute routine will keep your crystal jewelry looking beautiful and energetically fresh:',
+          '1. **After removing** your bracelet or necklace, wipe each bead with a soft, dry cloth (10 seconds).',
+          '2. **For silver accents**, buff gently with a silver polishing cloth (20 seconds).',
+          '3. **Set an intention** while you clean. Crystal healers believe that caring for your stones reinforces your connection to them (30 seconds).',
+          '4. **Store properly** — in a soft pouch or separate compartment, away from direct sunlight and moisture (10 seconds).',
+          'That is it. One minute of care each evening, and your crystals will stay beautiful for years.',
+          'For a deeper cleanse, do a monthly full-moon recharge — place your jewelry on a windowsill where moonlight reaches it overnight. Moonlight is safe for all stones and works as an energetic reset.',
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 52: Aquamarine Meaning (2026-07-22)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'aquamarine-meaning-courage-calm',
+    title: 'Aquamarine Meaning: The Stone of Courage, Calm & Clear Communication',
+    description: 'Discover the meaning of aquamarine — the blue-green beryl of courage, calm communication, and emotional balance. Learn how it compares to turquoise and amazonite, and how to wear it.',
+    keywords: ['aquamarine meaning', 'aquamarine healing properties', 'aquamarine stone', 'aquamarine vs turquoise', 'march birthstone', 'aquamarine bracelet', 'blue-green crystal meaning'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-22',
+    updatedAt: '2026-07-22',
+    readingTime: '5 min read',
+    relatedProducts: ['turquoise-sky-bracelet', 'mixed-crystal-bracelet'],
+    relatedArticles: ['turquoise-meaning-protection-stone', 'lapis-lazuli-meaning'],
+    content: [
+      {
+        heading: 'What Is Aquamarine?',
+        body: [
+          'Aquamarine is a blue-green variety of the mineral beryl, named after the Latin *aqua marina* — "seawater." Its cool, translucent color ranges from pale ice blue to a deeper teal, always evoking the clarity and depth of the ocean.',
+          'It is the March birthstone and has been treasured since ancient times. Roman fishermen wore aquamarine amulets for safe passage across the sea. Medieval Europeans believed it could calm waves and protect sailors. Today, it is prized for its serene beauty and its association with courage, calm, and clear communication.',
+          'Aquamarine is a relatively hard stone (7.5–8 on the Mohs scale), making it durable enough for daily wear in rings, bracelets, and necklaces.',
+        ],
+      },
+      {
+        heading: 'Aquamarine Meaning & Healing Properties',
+        body: [
+          'Aquamarine\'s meaning is deeply tied to its ocean-like appearance. Its core properties include:',
+          '**Calm courage.** Aquamarine is the stone of courage — but not the loud, aggressive kind. It gives you the strength to speak your truth calmly, to face difficult conversations with grace, and to navigate emotional storms without losing your center.',
+          '**Clear communication.** Aquamarine resonates with the throat chakra, making it a powerful stone for honest, thoughtful self-expression. It is excellent for public speakers, writers, and anyone who needs to articulate complex ideas with clarity.',
+          '**Emotional balance.** Like the calm surface of a deep ocean, aquamarine is believed to soothe turbulent emotions, reduce anxiety, and bring a sense of peaceful perspective. It is a stone for finding stillness within yourself.',
+          '**Protection during travel.** Following its ancient association with sea travel, aquamarine is considered a protective stone for any journey — whether across the ocean or across town.',
+        ],
+      },
+      {
+        heading: 'How to Wear Aquamarine',
+        body: [
+          '**Aquamarine bracelets** are ideal for daily wear, keeping the stone\'s calming energy close throughout the day — especially helpful for stressful work environments or big presentations.',
+          '**Aquamarine statement pieces** (larger pendants or rings) are excellent for important conversations — job interviews, difficult talks, or public speaking. The stone\'s cool blue tones are believed to soothe your nerves and sharpen your words.',
+          '**Mixing with silver:** Aquamarine pairs beautifully with sterling silver, which echoes the stone\'s cool, watery tones. A silver-accented aquamarine bracelet is both elegant and meaningful.',
+        ],
+      },
+      {
+        heading: 'Aquamarine vs. Turquoise vs. Amazonite',
+        body: [
+          'Blue-green stones are easily confused. Here is how to tell them apart:',
+          '**Aquamarine** is translucent blue-green beryl, ranging from pale ice blue to deeper teal. It has a glassy, transparent appearance. Hardness: 7.5–8.',
+          '**Turquoise** is opaque, usually with dark matrix veins running through it. Its color is a more solid, chalky blue-green. Hardness: 5–6. More porous and requires gentler care.',
+          '**Amazonite** is a translucent to opaque feldspar, typically a brighter, more minty green with white striations or mottling. Hardness: 6–6.5. It sits between the other two in both color and durability.',
+          'If your stone is translucent and icy blue, it is aquamarine. If it is opaque with dark veins, it is turquoise. If it is a bright mint green with white streaks, it is amazonite.',
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 53: Crystal Jewelry with Evening Wear (2026-07-22)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'crystal-jewelry-evening-wear-guide',
+    title: 'How to Wear Crystal Jewelry with Evening Wear: Dinner, Events & Special Occasions',
+    description: 'Style crystal jewelry for evening events — dinners, parties, and special occasions. Learn which stones sparkle best, how to make a statement, and how to pair stones with metals.',
+    keywords: ['crystal jewelry evening wear', 'how to wear crystal jewelry for events', 'evening jewelry styling', 'crystal jewelry for dinner', 'statement crystal jewelry', 'gemstone evening accessories', 'natural stone jewelry formal'],
+    category: 'Styling',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-22',
+    updatedAt: '2026-07-22',
+    readingTime: '5 min read',
+    relatedProducts: ['amethyst-peace-bracelet', 'obsidian-guard-charm', 'turquoise-sky-bracelet', 'caravan-fusion-necklace'],
+    relatedArticles: ['how-to-style-beaded-bracelets', 'gemstone-color-meanings'],
+    content: [
+      {
+        heading: 'Why Crystals Work for Evening',
+        body: [
+          'Natural gemstones have something that synthetic jewelry struggles to replicate: real depth. Under candlelight, dim restaurant lighting, or event hall chandeliers, genuine crystals catch the light differently from every angle. Their natural inclusions, color variations, and facets create a subtle, organic sparkle that feels far more sophisticated than rhinestones.',
+          'Crystal jewelry also carries meaning. When you walk into a dinner party wearing amethyst for calm confidence or turquoise for protection, you are wearing more than an accessory — you are carrying an intention. And that intention changes how you carry yourself.',
+        ],
+      },
+      {
+        heading: 'Best Evening Stones',
+        body: [
+          'Not all crystals are evening stones. Some are too subtle for low light. Here are the best choices for after-dark occasions:',
+          '**Deep amethyst** — Rich purple is naturally regal and dramatic. Amethyst beads catch the light beautifully and look stunning against black, navy, or dark green evening wear.',
+          '**Turquoise** — The blue-green stands out vividly against neutral or dark fabrics. Its opaque, matrix-rich surface has a unique visual texture that reads as exotic and sophisticated.',
+          '**Labradorite** — Labradorite is the ultimate evening stone. Its flash of iridescent blue, green, and gold (called labradorescence) appears to glow from within, especially in dim lighting. It is nature\'s sequin.',
+          '**Black obsidian** — For a sleek, minimalist look, black obsidian delivers drama through contrast. A single obsidian bracelet or charm against bare skin or a black dress creates an elegant, understated statement.',
+          '**Rose quartz** — For softer, romantic events, rose quartz\'s gentle pink adds warmth without competing with your outfit. It works beautifully for date nights and intimate dinners.',
+        ],
+      },
+      {
+        heading: 'Statement Piece + Minimalist Rest',
+        body: [
+          'The golden rule of evening crystal styling: choose one piece to shine and let everything else support it.',
+          '**With a statement necklace** (like our Caravan Fusion Necklace), keep bracelets minimal — one simple bracelet or none at all. Let the necklace be the center of attention.',
+          '**With a statement bracelet stack**, skip the necklace. Choose 2–3 coordinating crystals on one wrist and leave the other wrist bare. A stacked amethyst and obsidian combo is striking against a cocktail dress.',
+          '**With crystal earrings**, let them be the focus. Choose small, complementary pieces elsewhere.',
+          '**The exception:** A full crystal set (necklace + bracelet + earrings in the same stone) can work for very formal occasions, but keep the pieces themselves small and delicate to avoid looking heavy.',
+        ],
+      },
+      {
+        heading: 'Pairing with Metals',
+        body: [
+          'Metal choices can make or break your evening crystal look:',
+          '**Silver with cool stones.** Amethyst, turquoise, labradorite, and aquamarine all look their best with silver, white gold, or platinum. The cool metal tones harmonize with the stones\' blue-purple color spectrum.',
+          '**Brass or gold with warm stones.** Rose quartz, carnelian, citrine, and amber pair beautifully with brass, gold, or bronze. The warm metal tones bring out the pink, orange, and gold hues in the stones.',
+          '**Mixed metals.** If your crystal bracelet already has silver accents (like our Nara Charm pieces with Miao silver), lean into silver. Adding a third metal can look chaotic — stick to one metal tone for a polished evening look.',
+          '**Pro tip:** If your outfit has metal details (buttons, zippers, clutch hardware), match your jewelry metal to those details for a cohesive look.',
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 54: Black Onyx Meaning (2026-07-23)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'black-onyx-meaning-strength-protection',
+    title: 'Black Onyx Meaning: The Stone of Strength, Protection & Self-Mastery',
+    description: 'Discover the meaning of black onyx — the stone of strength, self-discipline, and protection. Learn how onyx compares to obsidian and black tourmaline, and how to wear it for resilience.',
+    keywords: ['black onyx meaning', 'onyx healing properties', 'black onyx stone', 'onyx vs obsidian', 'onyx meaning protection', 'black onyx bracelet', 'stone of strength'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-23',
+    updatedAt: '2026-07-23',
+    readingTime: '5 min read',
+    relatedProducts: ['obsidian-guard-charm', 'obsidian-guardian-charm'],
+    relatedArticles: ['obsidian-meaning-protection-stone', 'hematite-meaning-grounding-stone'],
+    content: [
+      {
+        heading: 'What Is Black Onyx?',
+        body: [
+          'Black onyx is a variety of banded chalcedony — a type of quartz with microscopic crystals that give it a smooth, waxy luster. Its defining characteristic is its deep, uniform black color, often with thin white or gray bands running through it.',
+          'The name "onyx" comes from the Greek word *onyx* meaning "claw" or "fingernail" — Greek mythology tells of Cupid trimming Venus\'s fingernails while she slept, and the clippings falling to earth, turned into stone by the Fates.',
+          'Onyx has been carved into cameos, intaglios, and seals since ancient times. The Romans prized it for engraved gemstones, and it became a symbol of discipline, focus, and self-control. Today, black onyx is valued as a stone of strength, protection, and self-mastery.',
+        ],
+      },
+      {
+        heading: 'Black Onyx Meaning & Properties',
+        body: [
+          'Black onyx is associated with three core qualities:',
+          '**Strength.** Onyx is the stone of inner strength — not physical power, but the quiet, steady kind that helps you hold your ground during difficult times. It is the stone of endurance, resilience, and the refusal to give up.',
+          '**Self-discipline.** Historically, onyx was worn by Roman soldiers and orators as a symbol of self-control. It is believed to help you stay focused on long-term goals, resist temptation, and maintain discipline in the face of distraction.',
+          '**Protection.** Like other black stones, onyx is considered a protective talisman. It is believed to absorb and transform negative energy, helping the wearer stay centered in challenging environments.',
+          '**Grounding.** Onyx is a deeply grounding stone, connecting you to the earth\'s stabilizing energy. It helps prevent the scattered, unfocused feeling that can come from stress or overwhelm.',
+        ],
+      },
+      {
+        heading: 'Onyx vs. Obsidian vs. Black Tourmaline',
+        body: [
+          'All three stones are black and protective, but they serve different purposes. Here is how to choose:',
+          '**Black onyx** is the stone of self-discipline and inner strength. Choose it when you need focus, willpower, and the determination to see something through. It is the stone of personal mastery — ideal for goal-setting, studying, or recovering from setbacks.',
+          '**Black obsidian** is the stone of truth and shadow work. Choose it when you need to confront uncomfortable truths, release emotional blockages, or create an energetic shield against difficult people. Obsidian is more intense and confrontational than onyx.',
+          '**Black tourmaline** is the ultimate grounding and EMF protection stone. Choose it for everyday environmental protection — especially if you work with electronics or in high-stress environments. It is gentler than obsidian but more protective than onyx in a general sense.',
+          '**Can\'t decide?** Wear onyx for inner strength, obsidian for energetic protection, and tourmaline for grounding. Or consider owning all three — each serves a different need for different days.',
+        ],
+      },
+      {
+        heading: 'How to Wear Black Onyx',
+        body: [
+          'Black onyx is versatile and pairs well with most outfits and metals:',
+          '**Right wrist for projecting strength.** In crystal healing, the right wrist is the "giving" or projecting side. Wear onyx on your right wrist when you need to project strength, authority, and confidence — at work, during negotiations, or in challenging social situations.',
+          '**At work for authority.** Black onyx is the perfect office stone. Its sleek, professional look pairs well with business attire, and its energy of focus and discipline supports productivity and leadership.',
+          '**During tough times for resilience.** Wear onyx during periods of stress, grief, or transition. Its steady, grounding energy is like an anchor — it will help you stay centered while the storm passes around you.',
+          '**Paired with silver or gold.** Onyx works with any metal. Silver keeps the look cool and professional; gold adds warmth for a more evening-appropriate feel.',
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 文章 55: Lapis Lazuli Complete Guide (2026-07-23)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: 'lapis-lazuli-jewelry-complete-guide',
+    title: 'Lapis Lazuli Jewelry: The Complete Guide to the Royal Blue Stone',
+    description: 'Complete guide to lapis lazuli jewelry. Learn how to spot quality lapis, best jewelry styles, and how to care for this soft, royal blue stone with gold pyrite flecks.',
+    keywords: ['lapis lazuli jewelry', 'lapis lazuli quality', 'how to spot real lapis lazuli', 'lapis lazuli bracelet', 'lapis lazuli care', 'royal blue stone', 'lapis lazuli guide'],
+    category: 'Crystal Meanings',
+    author: 'Nara Charm',
+    publishedAt: '2026-07-23',
+    updatedAt: '2026-07-23',
+    readingTime: '5 min read',
+    relatedProducts: ['obsidian-guard-charm', 'mixed-crystal-bracelet', 'lotus-jade-bracelet'],
+    relatedArticles: ['lapis-lazuli-meaning', 'how-to-style-beaded-bracelets'],
+    content: [
+      {
+        heading: 'What Makes Lapis Lazuli So Special?',
+        body: [
+          'Lapis lazuli has been one of the most treasured gemstones for over 6,000 years. Its deep, celestial blue — flecked with golden pyrite (fool\'s gold) — has made it a symbol of royalty, wisdom, and spiritual power across civilizations.',
+          'Ancient Egyptians prized lapis above gold. Cleopatra used powdered lapis as eyeshadow. King Tutankhamun\'s death mask is inlaid with lapis lazuli. In medieval Europe, lapis was ground into ultramarine — the most expensive pigment in the world, reserved for painting the robes of the Virgin Mary.',
+          'Lapis is not a single mineral but a rock composed primarily of lazurite (the blue mineral), with calcite (white veins) and pyrite (gold flecks). The interplay of deep blue, gold, and white is what makes lapis so distinctive — and so easy to imitate poorly.',
+        ],
+      },
+      {
+        heading: 'How to Spot Quality Lapis Lazuli',
+        body: [
+          'Not all lapis is created equal. The quality of lapis lazuli is graded by three factors: color, pyrite content, and calcite content.',
+          '**Top grade:** Deep, intense royal blue with small, well-distributed gold pyrite flecks. The pyrite adds sparkle and confirms authenticity. Minimal or no visible white calcite.',
+          '**Medium grade:** Good blue color with moderate pyrite. Some white calcite veins are present but not dominant. This is what most commercial lapis jewelry uses.',
+          '**Lower grade:** Washed-out or grayish blue. Heavy white calcite (looks like "snow" on the surface). Little to no pyrite. Often dyed to enhance the color — look for color pooling in cracks, a sign of dye.',
+          '**Red flag:** If your "lapis" has uniform color with absolutely no pyrite or calcite, it is likely dyed howlite or sodalite, not genuine lapis lazuli.',
+        ],
+      },
+      {
+        heading: 'Best Jewelry Styles for Lapis Lazuli',
+        body: [
+          'Lapis lazuli\'s deep blue pairs beautifully with silver, and its softness (5–6 on Mohs scale) makes it best suited for certain jewelry styles:',
+          '**Beaded bracelets** are ideal for lapis. The beads allow the stone\'s natural variation — deep blue, gold flecks, and slight white veining — to shine. A lapis beaded bracelet is a timeless piece that works with both casual and formal wear.',
+          '**Silver-wrapped pendants** protect the stone while showcasing it. The contrast between the bright silver and the deep blue lapis is striking. Look for designs that allow light to hit the pyrite flecks.',
+          '**Lapis earrings** are elegant for evening wear. The stone\'s blue complements both warm and cool skin tones.',
+          '**Lapis phone charms** are a modern way to carry the stone\'s royal energy with you everywhere. The phone charm format is especially practical for lapis since it minimizes contact with skin oils and chemicals.',
+        ],
+      },
+      {
+        heading: 'Caring for Lapis Lazuli',
+        body: [
+          'Lapis lazuli is a relatively soft, porous stone. It requires careful handling:',
+          '**Avoid water.** Lapis is porous and can absorb liquids, which may dull its color or cause staining. Remove lapis jewelry before washing your hands, showering, or swimming.',
+          '**Avoid chemicals.** Cleaners, acetone, alcohol, perfumes, and hairspray can all damage lapis. Apply lotions and sprays before putting on your lapis jewelry.',
+          '**Avoid sunlight.** Prolonged UV exposure can fade lapis\'s deep blue color over time. Store it in a dark pouch.',
+          '**Store separately.** Lapis is soft enough (Mohs 5–6) that it can be scratched by harder stones like amethyst or clear quartz. Keep it in its own soft pouch or a separate compartment.',
+          '**Clean gently.** Wipe with a soft, dry cloth only. Never use ultrasonic cleaners, steam, or abrasive polishes on lapis lazuli.',
+          'With proper care, lapis lazuli jewelry can last a lifetime — its deep blue will only grow more meaningful as you wear it.',
+        ],
+      },
+    ],
+  },
 ];
 
 // ─── 查询函数 ───────────────────────────────────────────────────────────

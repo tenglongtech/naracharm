@@ -51,6 +51,18 @@ async function seed() {
     { slug: 'caravan-fusion-necklace', authorName: 'Hannah J.', rating: 5, title: 'Got so many compliments', text: 'Wore this to a dinner party and got so many compliments. The colors are vibrant and the design is unique. Love it!', isVerifiedPurchase: false },
     { slug: 'amethyst-calm-bracelet', authorName: 'Clara D.', rating: 5, title: 'Perfect amethyst', text: 'The amethyst beads are a beautiful deep purple. The bracelet is well-made and comfortable. Exactly what I wanted.', isVerifiedPurchase: true },
     { slug: 'rose-quartz-tenderness-bracelet', authorName: 'Isabella M.', rating: 5, title: 'Soft and beautiful', text: 'The soft pink of this rose quartz is absolutely lovely. It goes with everything and the tenderness of the name matches the energy perfectly.', isVerifiedPurchase: true },
+
+    // 追加评价 — 热销产品 + 新产品
+    { slug: 'amethyst-peace-bracelet', authorName: 'Grace W.', rating: 5, title: 'Perfect gift', text: 'Bought this for my best friend\'s birthday and she absolutely adores it. The purple is even richer in person. She hasn\'t taken it off since!', isVerifiedPurchase: true },
+    { slug: 'amethyst-peace-bracelet', authorName: 'Daniel L.', rating: 4, title: 'Lovely color', text: 'The amethyst has a beautiful deep lavender hue. Very comfortable to wear and the silver accents are well-finished. Great value for the quality.', isVerifiedPurchase: true },
+    { slug: 'rose-quartz-bracelet', authorName: 'Karen M.', rating: 5, title: 'Bought as a set with my daughter', text: 'We each got one and wear them every day. The soft pink is so feminine and the quality is wonderful. Such a sweet mother-daughter bonding piece.', isVerifiedPurchase: true },
+    { slug: 'turquoise-sky-bracelet', authorName: 'Jessica H.', rating: 5, title: 'The blue is incredible', text: 'The turquoise has the most amazing robin\'s egg blue color I\'ve ever seen. The matrix patterns are so unique — no two beads are the same. Stunning quality!', isVerifiedPurchase: true },
+    { slug: 'obsidian-guard-charm', authorName: 'Tom R.', rating: 5, title: 'My third one', text: 'This is my third obsidian guard charm — I keep buying them as gifts for friends. Everyone loves them. The deep black shine and compact size are perfect.', isVerifiedPurchase: true },
+    { slug: 'obsidian-guard-charm', authorName: 'Julia S.', rating: 4, title: 'Nice quality', text: 'Well-made phone charm with a nice weight to it. The obsidian beads are polished beautifully. Would have liked it just slightly larger, but still very happy.', isVerifiedPurchase: true },
+    { slug: 'mixed-crystal-bracelet', authorName: 'Amy T.', rating: 5, title: 'Daily wear for months', text: 'I\'ve been wearing this every single day for months and it still looks brand new. The mix of crystals goes with every outfit. Best purchase I\'ve made!', isVerifiedPurchase: true },
+    { slug: 'lotus-jade-bracelet', authorName: 'Anika D.', rating: 5, title: 'Elegant and meaningful gift', text: 'Gave this to my sister for her birthday and she cried! The jade is such a rich green and the lotus symbolizes so much. A truly special gift.', isVerifiedPurchase: true },
+    { slug: 'tibetan-amulet-925-bracelet', authorName: 'Ryan K.', rating: 5, title: 'Worth every penny', text: 'The 925 silver amulet is even more detailed than the photos show. Hand-chased patterns are incredible. Feels substantial and authentic. Highly recommend!', isVerifiedPurchase: true },
+    { slug: 'miao-filigree-drop-earrings', authorName: 'Catherine B.', rating: 5, title: 'Delicate and beautiful', text: 'The filigree work is so intricate — you can tell these are handmade with care. They catch the light perfectly and go with both casual and formal outfits.', isVerifiedPurchase: true },
   ];
 
   // 插入评价
@@ -80,6 +92,13 @@ async function seed() {
     { slug: 'healing-crystals-101-beginners-guide', authorName: 'Marcus J.', text: 'Great beginner\'s guide. Would love to see more about how to choose crystals for specific intentions. The chakra connection section was really eye-opening.' },
     { slug: 'how-to-style-beaded-bracelets', authorName: 'Olivia N.', text: 'The stacking tips are exactly what I needed! I was nervous about mixing too many colors but the color wheel advice was spot on. My stack looks amazing now!' },
     { slug: 'evil-eye-meaning-protection-symbol', authorName: 'Amir K.', text: 'Always wondered about the evil eye meaning. Thanks for explaining both the cultural significance and how it\'s worn today. Super interesting read.' },
+
+    // 追加博客评论
+    { slug: 'labradorite-meaning-magic-stone', authorName: 'Zara N.', text: 'Just bought a labradorite bracelet after reading this. Amazing energy!' },
+    { slug: 'aventurine-meaning-luck-opportunity', authorName: 'Owen P.', text: 'Perfect timing for this article. I needed some luck!' },
+    { slug: 'crystal-bracelet-stacking-guide', authorName: 'Mia S.', text: 'Can you stack 3 bracelets of different sizes?' },
+    { slug: 'summer-jewelry-styling-crystals', authorName: 'Elena V.', text: 'Love the summer tips! My turquoise has been perfect for beach days.' },
+    { slug: 'black-onyx-meaning-strength-protection', authorName: 'Nina D.', text: 'Exactly what I needed to read. Onyx is my new go-to stone.' },
   ];
   let commentCount = 0;
   for (const c of blogCommentData) {
