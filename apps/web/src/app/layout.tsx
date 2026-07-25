@@ -134,22 +134,11 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
         <AntdProvider>{children}</AntdProvider>
-        <div
-          id="CF_S"
-          data-tk='{"token": "a0534061ecd0452ca0d5678c1d63579f"}'
-        />
         <script
-          id="cf-init"
-          dangerouslySetInnerHTML={{
-            __html: `
-(function(){var d=document;
-var s=d.createElement("script");s.defer=true;
-s.src="https://static.cloudflareinsights.com/beacon.min.js";
-s.setAttribute("data-cf-beacon",d.getElementById("CF_S").getAttribute("data-tk"));
-d.body.appendChild(s);})();
-`,
-          }}
-        />
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "a0534061ecd0452ca0d5678c1d63579f"}'
+        ></script>
       </body>
     </html>
   );
