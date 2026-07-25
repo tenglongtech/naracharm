@@ -132,10 +132,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <script
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "a0534061ecd0452ca0d5678c1d63579f"}'
-        ></script>
+          id="cf-init"
+          dangerouslySetInnerHTML={{
+            __html: "(function(){var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{\"token\": \"a0534061ecd0452ca0d5678c1d63579f\"}');document.head.appendChild(s);})()",
+          }}
+        />
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
         <AntdProvider>{children}</AntdProvider>
