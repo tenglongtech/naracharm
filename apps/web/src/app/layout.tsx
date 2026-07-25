@@ -135,7 +135,7 @@ export default function RootLayout({
           defer
           src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "a0534061ecd0452ca0d5678c1d63579f"}'
-        />
+        ></script>
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
         <AntdProvider>{children}</AntdProvider>
