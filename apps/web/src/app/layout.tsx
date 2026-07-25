@@ -134,6 +134,14 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
         <AntdProvider>{children}</AntdProvider>
+        <script
+          id="cf-script"
+          data-cf-beacon='{"token": "a0534061ecd0452ca0d5678c1d63579f"}'
+          dangerouslySetInnerHTML={{
+            __html:
+              'var s=document.createElement("script");s.defer=true;s.src="https://static.cloudflareinsights.com/beacon.min.js";s.setAttribute("data-cf-beacon",document.getElementById("cf-script").getAttribute("data-cf-beacon"));document.body.appendChild(s);',
+          }}
+        />
       </body>
     </html>
   );
