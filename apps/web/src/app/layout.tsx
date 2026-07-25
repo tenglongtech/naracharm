@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Fraunces } from 'next/font/google';
+import Script from 'next/script';
 import '@/styles/globals.css';
 import { AntdProvider } from '@/components/antd-provider';
 
@@ -128,13 +129,14 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <script
-          type="module"
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "a0534061ecd0452ca0d5678c1d63579f"}'
-        />
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
+        {/* Cloudflare Web Analytics */}
+        <Script
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "a0534061ecd0452ca0d5678c1d63579f"}'
+          strategy="afterInteractive"
+        />
         <AntdProvider>{children}</AntdProvider>
       </body>
     </html>
