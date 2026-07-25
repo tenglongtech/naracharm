@@ -87,6 +87,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'cf-beacon': '{"token": "a0534061ecd0452ca0d5678c1d63579f"}',
+  },
 };
 
 export const viewport: Viewport = {
@@ -121,18 +124,12 @@ const organizationJsonLd = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const cfScript = `{"token": "a0534061ecd0452ca0d5678c1d63579f"}`;
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <script
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon={cfScript}
         />
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
