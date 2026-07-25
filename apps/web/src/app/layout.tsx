@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Fraunces } from 'next/font/google';
-import Script from 'next/script';
 import '@/styles/globals.css';
 import { AntdProvider } from '@/components/antd-provider';
 
@@ -132,11 +131,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
         <AntdProvider>{children}</AntdProvider>
-        <Script
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "a0534061ecd0452ca0d5678c1d63579f"}'
-          strategy="afterInteractive"
-        />
+        <div dangerouslySetInnerHTML={{ __html: '<!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon=\'{"token": "a0534061ecd0452ca0d5678c1d63579f"}\'></script><!-- End Cloudflare Web Analytics -->' }} />
       </body>
     </html>
   );
