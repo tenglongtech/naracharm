@@ -87,9 +87,7 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  other: {
-    'cf-beacon': '{"token": "a0534061ecd0452ca0d5678c1d63579f"}',
-  },
+  other: {},
 };
 
 export const viewport: Viewport = {
@@ -132,10 +130,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <script
-          id="cf-init"
-          dangerouslySetInnerHTML={{
-            __html: "(function(){var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{\"token\": \"a0534061ecd0452ca0d5678c1d63579f\"}');document.head.appendChild(s);})()",
-          }}
+          id="plausible-init"
+          defer
+          data-domain="naracharm.com"
+          src="https://analytics.naralab.org/js/script.js"
         />
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
