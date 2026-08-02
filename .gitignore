@@ -44,3 +44,6 @@ assets/moodboard/*
 # drizzle
 drizzle/meta/_journal.json.bak
 .vercel
+
+# 第三方 clone（不跟踪）
+video/XHS-Downloader/
