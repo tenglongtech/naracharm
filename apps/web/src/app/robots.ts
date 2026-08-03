@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 
+export const dynamic = 'force-static';
+
 /**
  * robots.txt · 部署时自动生成 /robots.txt
  * 允许全站抓取,仅 /admin /api /account 私有区屏蔽

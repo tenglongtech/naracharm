@@ -30,6 +30,11 @@ const ITEMS = [
   { name: 'Thai Silk Phone Charm', variant: 'Emerald · Thai', qty: 2, price: '$56.00' },
 ];
 
+export async function generateStaticParams() {
+  // 静态导出需要固定参数; 实际订单数据由后端 API 按需提供
+  return [{ id: 'demo' }];
+}
+
 export default async function OrderPage({ params }: Params) {
   const { id } = await params;
   // Phase 3: const order = await getOrderById(id); if (!order) notFound();

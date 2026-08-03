@@ -7,7 +7,6 @@ import { ProductTile, type ProductCard } from '@/components/product-tile';
 import CommentsSection from '@/components/comments-section';
 import { getActiveProducts } from '@/lib/storefront';
 
-export const dynamic = 'force-dynamic';
 
 type Params = { params: Promise<{ slug: string }> };
 

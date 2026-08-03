@@ -1,8 +1,9 @@
-export const dynamic = "force-dynamic";
 import type { MetadataRoute } from 'next';
 import { getActiveProducts, getAllCollections } from '@/lib/storefront';
 import { STORIES } from '@/lib/stories-data';
 import { BLOG_ARTICLES } from '@/lib/blog-data';
+
+export const dynamic = 'force-static';
 
 /**
  * Sitemap · Next.js 16 原生,部署时自动生成 /sitemap.xml

@@ -1,10 +1,11 @@
 import { ImageResponse } from 'next/og';
 
+export const dynamic = 'force-static';
+
 /**
  * 默认 OG 图 · 1200×630,品牌色 + 莲花 logo + 标语
  * 社交分享 (Facebook / Twitter / LinkedIn) 时展示
  */
-export const runtime = 'edge';
 export const alt = 'Nara Charm — Jewelry with Spirit';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';

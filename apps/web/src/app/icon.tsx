@@ -1,9 +1,10 @@
 import { ImageResponse } from 'next/og';
 
+export const dynamic = 'force-static';
+
 /**
  * Favicon · 32×32 莲花 logo (动态生成,无需额外图片资源)
  */
-export const runtime = 'edge';
 export const size = { width: 32, height: 32 };
 export const contentType = 'image/png';
 
