@@ -250,8 +250,19 @@ export default async function ProductPage({ params }: Params) {
               </div>
             )}
 
-            {/* 数量 + 加购 (server action) */}
-            <AddToCartForm productId={product.id} maxStock={product.stock} />
+            {/* 数量 + 加购 (localStorage) */}
+            <AddToCartForm
+              productId={product.id}
+              productSlug={product.slug}
+              productName={product.name}
+              variantId={product.id}
+              variantName={product.heritage || 'Standard'}
+              sku={product.slug}
+              unitPriceCents={product.basePriceCents}
+              image={product.primaryImage}
+              heritage={product.heritage}
+              maxStock={product.stock}
+            />
 
             {/* 心愿单 + 立即购买 */}
             <div className="mt-3 flex gap-3">

@@ -1,26 +1,42 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from '@stripe/react-stripe-js';
 import { FormField, Input, Button } from '@/components/ui';
+import { getLocalCart, subscribeToCart } from '@/lib/cart-local';
+import { API_URL } from '@/lib/api';
 import type { CartView } from '@/lib/cart-types';
 
 /**
- * 结账表单 (client)
- * - 接收 server 拉好的 cart 作为 prop
- * - 填地址 → 创建 Stripe session → 嵌入 Embedded Checkout
+ * 结账表单 (client, localStorage 购物车)
+ * - 从 localStorage 读 cart
+ * - 空购物车 → 客户端跳转 /cart
+ * - 填地址 → 提交 cart lines 到后端 API → 创建 Stripe session → Embedded Checkout
  * - 测试卡: 4242 4242 4242 4242
  */
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder');
 
-export function CheckoutForm({ cart }: { cart: CartView }) {
+export function CheckoutForm() {
   const router = useRouter();
+  const [cart, setCart] = useState<CartView | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCart(getLocalCart());
+    return subscribeToCart(setCart);
+  }, []);
+
+  // 空购物车 → 跳回 /cart
+  useEffect(() => {
+    if (cart && cart.lines.length === 0) {
+      router.replace('/cart');
+    }
+  }, [cart, router]);
 
   // 优惠码状态
   const [promoInput, setPromoInput] = useState('');
@@ -34,15 +50,15 @@ export function CheckoutForm({ cart }: { cart: CartView }) {
   } | null>(null);
 
   const discountCents = promoResult?.valid ? (promoResult.discountCents || 0) : 0;
-  const adjustedShipping = promoResult?.valid && promoResult.freeShipping ? 0 : cart.shippingCents;
-  const adjustedTotal = Math.max(0, cart.totalCents - discountCents - (cart.shippingCents - adjustedShipping));
+  const adjustedShipping = promoResult?.valid && promoResult.freeShipping ? 0 : (cart?.shippingCents ?? 0);
+  const adjustedTotal = Math.max(0, (cart?.totalCents ?? 0) - discountCents - ((cart?.shippingCents ?? 0) - adjustedShipping));
 
   const handleApplyPromo = async () => {
-    if (!promoInput.trim()) return;
+    if (!promoInput.trim() || !cart) return;
     setPromoChecking(true);
     setPromoResult(null);
     try {
-      const res = await fetch('/api/discount/validate', {
+      const res = await fetch(`${API_URL}/api/discount/validate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: promoInput, subtotalCents: cart.subtotalCents }),
@@ -58,16 +74,23 @@ export function CheckoutForm({ cart }: { cart: CartView }) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!cart || cart.lines.length === 0) return;
     setError('');
     setLoading(true);
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
     try {
-      const res = await fetch('/api/checkout', {
+      const res = await fetch(`${API_URL}/api/checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
+          lines: cart.lines.map((l) => ({
+            variantId: l.variantId,
+            sku: l.sku,
+            quantity: l.quantity,
+            unitPriceCents: l.unitPriceCents,
+          })),
           ...(promoResult?.valid ? { discountCode: promoResult.code } : {}),
         }),
       });
@@ -82,6 +105,10 @@ export function CheckoutForm({ cart }: { cart: CartView }) {
       setLoading(false);
     }
   };
+
+  if (!cart) {
+    return <div className="py-12 text-center text-muted">Loading…</div>;
+  }
 
   if (clientSecret) {
     return (

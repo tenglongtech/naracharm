@@ -1,17 +1,37 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
-import { addToCart } from '@/lib/cart-actions';
+import { useState } from 'react';
+import { addToLocalCart } from '@/lib/cart-local';
 
 /**
  * PDP 加购按钮 (client)
- * 数量调整 + 提交 → server action → router.refresh() → 顶部 cart badge 更新
+ * 数量调整 + 写入 localStorage 购物车 → header 徽标自动更新
  */
-export function AddToCartForm({ productId, maxStock }: { productId: string; maxStock: number }) {
-  const router = useRouter();
+export function AddToCartForm({
+  productId,
+  productSlug,
+  productName,
+  variantId,
+  variantName,
+  sku,
+  unitPriceCents,
+  image,
+  heritage,
+  maxStock,
+}: {
+  productId: string;
+  productSlug: string;
+  productName: string;
+  variantId: string;
+  variantName: string | null;
+  sku: string;
+  unitPriceCents: number;
+  image: string | null;
+  heritage: string | null;
+  maxStock: number;
+}) {
   const [qty, setQty] = useState(1);
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
@@ -22,16 +42,28 @@ export function AddToCartForm({ productId, maxStock }: { productId: string; maxS
     if (outOfStock) return;
     setError(null);
     setSuccess(false);
-    startTransition(async () => {
-      try {
-        await addToCart({ productId, quantity: qty });
-        setSuccess(true);
-        router.refresh();
-        setTimeout(() => setSuccess(false), 2500);
-      } catch (e: any) {
-        setError(e.message || 'Could not add to cart');
-      }
-    });
+    setPending(true);
+    try {
+      addToLocalCart({
+        productId,
+        productSlug,
+        productName,
+        variantId,
+        variantName,
+        sku,
+        unitPriceCents,
+        image,
+        heritage,
+        stock: maxStock,
+        quantity: qty,
+      });
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 2500);
+    } catch (err: any) {
+      setError(err.message || 'Could not add to cart');
+    } finally {
+      setPending(false);
+    }
   };
 
   return (

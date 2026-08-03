@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { CartIcon } from './cart-icon';
 import { LotusMark } from './lotus-mark';
+import { subscribeToCart, getLocalCart } from '@/lib/cart-local';
 
 const NAV_LINKS = [
   { href: '/collections', label: 'Collections' },
@@ -15,9 +16,16 @@ const NAV_LINKS = [
   { href: '/gift-guide', label: 'Gift Guide' },
 ];
 
-export function SiteHeaderClient({ cartCount }: { cartCount: number }) {
+export function SiteHeaderClient() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const pathname = usePathname();
+
+  // 购物车数量来自 localStorage (client-only, 避免 SSR 不匹配)
+  useEffect(() => {
+    setCartCount(getLocalCart().itemCount);
+    return subscribeToCart((cart) => setCartCount(cart.itemCount));
+  }, []);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { SiteHeaderClient } from './site-chrome-client';
-import { getCart } from '@/lib/cart-actions';
 import { LotusMark } from './lotus-mark';
 import { siteConfig } from '@/lib/site-config';
 
@@ -10,17 +9,11 @@ const socialConfig = siteConfig.social;
 export { LotusMark };
 
 /**
- * 全站 Header (server) — 拉购物车数量,注入 client header
+ * 全站 Header (静态,无 DB 依赖)
+ * 购物车徽标由 client 组件从 localStorage 读取。
  */
-export async function SiteHeader() {
-  let count = 0;
-  try {
-    const cart = await getCart();
-    count = cart.itemCount;
-  } catch {
-    // DB 未就绪时 fallback 0
-  }
-  return <SiteHeaderClient cartCount={count} />;
+export function SiteHeader() {
+  return <SiteHeaderClient />;
 }
 
 /** 全站 Footer (server, 纯静态) */

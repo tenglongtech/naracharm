@@ -1,52 +1,30 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { Button, ButtonLink } from '@/components/ui';
-import { updateLineQuantity, removeLine } from '@/lib/cart-actions';
+import {
+  getLocalCart, updateLocalLineQuantity, removeLocalLine, subscribeToCart,
+} from '@/lib/cart-local';
 import type { CartView } from '@/lib/cart-types';
 
 /**
- * 购物车 (client, server actions 驱动)
- * 数据由父级 server component 传入,所有变更走 server action + router.refresh()
+ * 购物车 (client, localStorage 驱动)
+ * 数据从 localStorage 读取,变更后 emit → 订阅组件自动更新
  */
-export function CartContents({ initialCart }: { initialCart: CartView }) {
-  const router = useRouter();
-  const [cart, setCart] = useState<CartView>(initialCart);
-  const [pending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
+export function CartContents() {
+  const [cart, setCart] = useState<CartView | null>(null);
+  const [pending, setPending] = useState(false);
 
-  const refresh = () => {
-    router.refresh();
-  };
+  useEffect(() => {
+    setCart(getLocalCart());
+    return subscribeToCart(setCart);
+  }, []);
 
-  const onUpdate = (lineId: string, nextQty: number) => {
-    setError(null);
-    startTransition(async () => {
-      try {
-        const updated = await updateLineQuantity({ lineId, quantity: nextQty });
-        setCart(updated);
-      } catch (e: any) {
-        setError(e.message || 'Update failed');
-        refresh();
-      }
-    });
-  };
-
-  const onRemove = (lineId: string) => {
-    setError(null);
-    startTransition(async () => {
-      try {
-        const updated = await removeLine({ lineId });
-        setCart(updated);
-      } catch (e: any) {
-        setError(e.message || 'Remove failed');
-        refresh();
-      }
-    });
-  };
+  if (!cart) {
+    return <div className="py-12 text-center text-muted">Loading…</div>;
+  }
 
   if (cart.lines.length === 0) {
     return (
@@ -59,6 +37,24 @@ export function CartContents({ initialCart }: { initialCart: CartView }) {
       </div>
     );
   }
+
+  const onUpdate = (lineId: string, nextQty: number) => {
+    setPending(true);
+    try {
+      setCart(updateLocalLineQuantity(lineId, nextQty));
+    } finally {
+      setPending(false);
+    }
+  };
+
+  const onRemove = (lineId: string) => {
+    setPending(true);
+    try {
+      setCart(removeLocalLine(lineId));
+    } finally {
+      setPending(false);
+    }
+  };
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
@@ -76,12 +72,6 @@ export function CartContents({ initialCart }: { initialCart: CartView }) {
         ) : (
           <div className="mt-4 rounded-md bg-gold/15 px-4 py-3 text-sm text-ink">
             🎉 You&apos;ve unlocked free shipping!
-          </div>
-        )}
-
-        {error && (
-          <div className="mt-4 rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
           </div>
         )}
 
@@ -116,7 +106,7 @@ export function CartContents({ initialCart }: { initialCart: CartView }) {
                     >
                       {it.productName}
                     </Link>
-                    {it.variantName && it.variantName !== 'Default' && (
+                    {it.variantName && it.variantName !== 'Standard' && (
                       <p className="text-xs text-muted">{it.variantName}</p>
                     )}
                   </div>
