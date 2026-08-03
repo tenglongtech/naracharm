@@ -1,0 +1,506 @@
+{
+  "cc27a82a-962b-4436-a91e-8e5bec712a2f": [
+    {
+      "id": "2de5746d-97e4-4938-9bff-82058770f6fb",
+      "productId": "cc27a82a-962b-4436-a91e-8e5bec712a2f",
+      "authorName": "Emily C.",
+      "rating": 5,
+      "title": "Even more beautiful in person",
+      "text": "The deep purple is stunning. I reach for this bracelet every morning. It goes with everything and the quality is remarkable.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:46.873Z"
+    },
+    {
+      "id": "022bf2f2-1422-4a21-ac8c-220c23b50151",
+      "productId": "cc27a82a-962b-4436-a91e-8e5bec712a2f",
+      "authorName": "Maya T.",
+      "rating": 4,
+      "title": "Lovely piece",
+      "text": "Bought this for my sister who loves amethyst. She wears it daily and says it brings her calm. The silver accents are a nice touch.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:47.655Z"
+    },
+    {
+      "id": "a1bb7336-563a-4bef-ba30-e96b9563e6d6",
+      "productId": "cc27a82a-962b-4436-a91e-8e5bec712a2f",
+      "authorName": "Grace W.",
+      "rating": 5,
+      "title": "Perfect gift",
+      "text": "Bought this for my best friend's birthday and she absolutely adores it. The purple is even richer in person. She hasn't taken it off since!",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:06.947Z"
+    },
+    {
+      "id": "8d46326c-f295-44bf-af70-70df42ef9d33",
+      "productId": "cc27a82a-962b-4436-a91e-8e5bec712a2f",
+      "authorName": "Daniel L.",
+      "rating": 4,
+      "title": "Lovely color",
+      "text": "The amethyst has a beautiful deep lavender hue. Very comfortable to wear and the silver accents are well-finished. Great value for the quality.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:07.638Z"
+    }
+  ],
+  "68f70e38-97eb-452f-8182-b189d7a518f3": [
+    {
+      "id": "ecac460f-1280-48ad-bfc1-53161f4b3fe1",
+      "productId": "68f70e38-97eb-452f-8182-b189d7a518f3",
+      "authorName": "Jessica L.",
+      "rating": 5,
+      "title": "My new favorite accessory",
+      "text": "The pink is so delicate and pretty. Perfect for layering with other bracelets. I've gotten so many compliments!",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:27:48.345Z"
+    },
+    {
+      "id": "edbbd3ef-3f73-4714-8d37-6efda1c9aa0c",
+      "productId": "68f70e38-97eb-452f-8182-b189d7a518f3",
+      "authorName": "Lin W.",
+      "rating": 5,
+      "title": "Beautiful quality",
+      "text": "The strawberry quartz catches the light beautifully. Fast shipping and came in a lovely little box with a story card.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:49.033Z"
+    }
+  ],
+  "0416b553-e925-48f5-a880-94d85cc72eca": [
+    {
+      "id": "146bfa80-e5ea-41cb-9ade-1d5bed2dc6be",
+      "productId": "0416b553-e925-48f5-a880-94d85cc72eca",
+      "authorName": "Emma R.",
+      "rating": 5,
+      "title": "A daily reminder of self-love",
+      "text": "Wearing this daily has honestly shifted my mindset. I feel more calm and centered throughout the day. The soft pink is beautiful.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:49.722Z"
+    },
+    {
+      "id": "db839fa9-3e1a-4bdc-8e4d-e0403677d228",
+      "productId": "0416b553-e925-48f5-a880-94d85cc72eca",
+      "authorName": "Sophie K.",
+      "rating": 4,
+      "title": "Very happy with this purchase",
+      "text": "The rose quartz has a lovely soft color. It fits well and the size is perfect for stacking with other bracelets.",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:27:50.411Z"
+    },
+    {
+      "id": "f2d1ae5d-fcb2-4fe3-97f6-78a69026cf36",
+      "productId": "0416b553-e925-48f5-a880-94d85cc72eca",
+      "authorName": "Karen M.",
+      "rating": 5,
+      "title": "Bought as a set with my daughter",
+      "text": "We each got one and wear them every day. The soft pink is so feminine and the quality is wonderful. Such a sweet mother-daughter bonding piece.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:08.326Z"
+    }
+  ],
+  "c505013a-c50a-4f2a-9941-cad2e90efc75": [
+    {
+      "id": "d8626787-178c-4d26-85dd-1f8994840884",
+      "productId": "c505013a-c50a-4f2a-9941-cad2e90efc75",
+      "authorName": "Alex P.",
+      "rating": 5,
+      "title": "Looks great on my phone!",
+      "text": "Perfect size — not too bulky. The obsidian beads have a beautiful deep black shine. Got so many compliments at work.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:51.102Z"
+    },
+    {
+      "id": "54b006a9-118b-41ca-94b7-99e8660bb7c4",
+      "productId": "c505013a-c50a-4f2a-9941-cad2e90efc75",
+      "authorName": "Tom R.",
+      "rating": 5,
+      "title": "My third one",
+      "text": "This is my third obsidian guard charm — I keep buying them as gifts for friends. Everyone loves them. The deep black shine and compact size are perfect.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:09.885Z"
+    },
+    {
+      "id": "444dfff0-cd79-4e23-9fa7-3c9a6c450f80",
+      "productId": "c505013a-c50a-4f2a-9941-cad2e90efc75",
+      "authorName": "Julia S.",
+      "rating": 4,
+      "title": "Nice quality",
+      "text": "Well-made phone charm with a nice weight to it. The obsidian beads are polished beautifully. Would have liked it just slightly larger, but still very happy.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:10.584Z"
+    }
+  ],
+  "b35dd379-48d4-4695-8f14-0e310a534803": [
+    {
+      "id": "8f1f8735-df8a-40fa-ac1d-cdee603ac8b1",
+      "productId": "b35dd379-48d4-4695-8f14-0e310a534803",
+      "authorName": "Nina H.",
+      "rating": 5,
+      "title": "Love the mix of colors",
+      "text": "This bracelet goes with everything! The mix of crystals means it matches any outfit. Such beautiful quality.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:51.790Z"
+    },
+    {
+      "id": "8d19f8a0-76b8-4b53-803f-fc4b9864866d",
+      "productId": "b35dd379-48d4-4695-8f14-0e310a534803",
+      "authorName": "Rachel D.",
+      "rating": 4,
+      "title": "Beautiful and versatile",
+      "text": "The different crystals are well-chosen. It's become my everyday bracelet. Would recommend!",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:27:52.480Z"
+    },
+    {
+      "id": "22e9a33c-e515-4582-962b-83d17b8aebcd",
+      "productId": "b35dd379-48d4-4695-8f14-0e310a534803",
+      "authorName": "Amy T.",
+      "rating": 5,
+      "title": "Daily wear for months",
+      "text": "I've been wearing this every single day for months and it still looks brand new. The mix of crystals goes with every outfit. Best purchase I've made!",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:11.275Z"
+    }
+  ],
+  "8bc8ea13-9b05-4f3f-9ff3-c22a9d16bf36": [
+    {
+      "id": "a9a2a65a-e685-4d1d-b6f1-d31f26941fab",
+      "productId": "8bc8ea13-9b05-4f3f-9ff3-c22a9d16bf36",
+      "authorName": "Priya S.",
+      "rating": 5,
+      "title": "The jade is stunning",
+      "text": "The jade is such a beautiful shade of green. Feels very special and meaningful. The lotus accent is gorgeous.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:53.169Z"
+    },
+    {
+      "id": "52945a2a-c14a-42b7-b563-d06c8d254b29",
+      "productId": "8bc8ea13-9b05-4f3f-9ff3-c22a9d16bf36",
+      "authorName": "Yuki M.",
+      "rating": 5,
+      "title": "Elegant and meaningful",
+      "text": "I bought this as a gift for my mother and she absolutely loves it. The packaging made it feel extra special.",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:27:53.857Z"
+    },
+    {
+      "id": "2d23aaf5-2c4e-4bc5-b2f3-ea0deccad3e4",
+      "productId": "8bc8ea13-9b05-4f3f-9ff3-c22a9d16bf36",
+      "authorName": "Anika D.",
+      "rating": 5,
+      "title": "Elegant and meaningful gift",
+      "text": "Gave this to my sister for her birthday and she cried! The jade is such a rich green and the lotus symbolizes so much. A truly special gift.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:11.964Z"
+    }
+  ],
+  "b707a719-acd2-46e7-b631-25dd08c8cacd": [
+    {
+      "id": "d4d7f95b-61cf-484f-90f0-087c4705292c",
+      "productId": "b707a719-acd2-46e7-b631-25dd08c8cacd",
+      "authorName": "Mia Z.",
+      "rating": 4,
+      "title": "Unique design",
+      "text": "The red beads are gorgeous and the cord is well-made. Looks lovely on my bag. Very unique design, high quality.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:54.545Z"
+    }
+  ],
+  "384a33bf-a5fa-422d-85cb-0739b658fe81": [
+    {
+      "id": "daab669a-20cb-4d68-a1f7-03e5a7c1c354",
+      "productId": "384a33bf-a5fa-422d-85cb-0739b658fe81",
+      "authorName": "Sarah K.",
+      "rating": 5,
+      "title": "A piece of sky on my wrist",
+      "text": "The turquoise has amazing matrix patterns. Really well-made and the color is exactly as pictured — that beautiful robin's egg blue.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:55.234Z"
+    },
+    {
+      "id": "142370cf-313c-40e6-b541-b8b0d6c3f201",
+      "productId": "384a33bf-a5fa-422d-85cb-0739b658fe81",
+      "authorName": "Amanda G.",
+      "rating": 5,
+      "title": "Absolutely love it",
+      "text": "Bought the turquoise bracelet as a gift and my friend absolutely loved it. The matrix patterns are stunning.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:55.924Z"
+    },
+    {
+      "id": "5cc56f4b-555c-46d3-b661-22058f02e60f",
+      "productId": "384a33bf-a5fa-422d-85cb-0739b658fe81",
+      "authorName": "Jessica H.",
+      "rating": 5,
+      "title": "The blue is incredible",
+      "text": "The turquoise has the most amazing robin's egg blue color I've ever seen. The matrix patterns are so unique — no two beads are the same. Stunning quality!",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:09.196Z"
+    }
+  ],
+  "5ea02159-294a-47f5-bd10-c828c9ee187c": [
+    {
+      "id": "8961f2ce-7aab-421c-940f-130f6ca32f4c",
+      "productId": "5ea02159-294a-47f5-bd10-c828c9ee187c",
+      "authorName": "David K.",
+      "rating": 5,
+      "title": "Stunning craftsmanship",
+      "text": "The silver work is incredible. Every detail on this bracelet is hand-chased with such precision. It feels like wearing a piece of art.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:56.613Z"
+    },
+    {
+      "id": "baa24dbe-736d-496e-86f4-7aefcf9c0f5c",
+      "productId": "5ea02159-294a-47f5-bd10-c828c9ee187c",
+      "authorName": "Priya M.",
+      "rating": 4,
+      "title": "Beautiful piece",
+      "text": "Really beautiful bracelet. The amulet design is unique and the quality is excellent. Fits perfectly.",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:27:57.302Z"
+    },
+    {
+      "id": "59b3ce4c-88d8-4f86-9408-e7fb4342f82f",
+      "productId": "5ea02159-294a-47f5-bd10-c828c9ee187c",
+      "authorName": "Ryan K.",
+      "rating": 5,
+      "title": "Worth every penny",
+      "text": "The 925 silver amulet is even more detailed than the photos show. Hand-chased patterns are incredible. Feels substantial and authentic. Highly recommend!",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:12.652Z"
+    }
+  ],
+  "cd2c98af-5f0d-4f9c-ba1c-ad39343e05e0": [
+    {
+      "id": "aa8d3949-9bf9-4864-8f0f-5007ac797492",
+      "productId": "cd2c98af-5f0d-4f9c-ba1c-ad39343e05e0",
+      "authorName": "Liam T.",
+      "rating": 5,
+      "title": "Love the adjustable knot",
+      "text": "The sliding knot makes it so easy to adjust. I wear it every day and it hasn't frayed at all. Simple, elegant, and meaningful.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:57.989Z"
+    },
+    {
+      "id": "d696ead5-11b9-44e0-9adc-c9c9050aa941",
+      "productId": "cd2c98af-5f0d-4f9c-ba1c-ad39343e05e0",
+      "authorName": "Sofia R.",
+      "rating": 4,
+      "title": "Simple and elegant",
+      "text": "Love the simplicity of this bracelet. The knot is well-made and the cord is comfortable. Perfect for daily wear.",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:27:58.681Z"
+    }
+  ],
+  "3e7fbd5b-a2e3-4ee8-a2bf-6d2bb4645d87": [
+    {
+      "id": "64e34b19-d727-44f8-b007-2e93bd3002ba",
+      "productId": "3e7fbd5b-a2e3-4ee8-a2bf-6d2bb4645d87",
+      "authorName": "Zoe L.",
+      "rating": 5,
+      "title": "So delicate!",
+      "text": "These earrings are even more beautiful in person. The filigree work is so intricate and delicate. They catch the light beautifully.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:27:59.370Z"
+    },
+    {
+      "id": "ae3edffa-cb19-4621-aa44-56070cf19f17",
+      "productId": "3e7fbd5b-a2e3-4ee8-a2bf-6d2bb4645d87",
+      "authorName": "Nora W.",
+      "rating": 5,
+      "title": "Get compliments everywhere",
+      "text": "I've received so many compliments on these earrings. The craftsmanship is stunning and they go with everything.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:00.059Z"
+    },
+    {
+      "id": "d52aef13-f88a-494c-867a-5de235f92adc",
+      "productId": "3e7fbd5b-a2e3-4ee8-a2bf-6d2bb4645d87",
+      "authorName": "Catherine B.",
+      "rating": 5,
+      "title": "Delicate and beautiful",
+      "text": "The filigree work is so intricate — you can tell these are handmade with care. They catch the light perfectly and go with both casual and formal outfits.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:13.341Z"
+    }
+  ],
+  "c459407d-03ed-4657-aacb-17bc893ddab4": [
+    {
+      "id": "a89656ef-f581-4d63-ab0f-8863683d4f47",
+      "productId": "c459407d-03ed-4657-aacb-17bc893ddab4",
+      "authorName": "Wei C.",
+      "rating": 5,
+      "title": "The jade is gorgeous",
+      "text": "The jade has such a beautiful deep green color. The lotus pendant design is elegant and meaningful. I wear it every day.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:00.747Z"
+    },
+    {
+      "id": "bb16c25f-8cef-4088-a1fc-a2e9691ae861",
+      "productId": "c459407d-03ed-4657-aacb-17bc893ddab4",
+      "authorName": "Kate M.",
+      "rating": 4,
+      "title": "Beautiful pendant",
+      "text": "Lovely pendant with a nice weight to it. The jade has beautiful natural variations. The silk cord is comfortable.",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:28:01.437Z"
+    }
+  ],
+  "922b1e8c-ea48-4eb9-88f7-6b3d34b248fc": [
+    {
+      "id": "e4143c24-ce7f-4e87-ab09-91dad4a298d0",
+      "productId": "922b1e8c-ea48-4eb9-88f7-6b3d34b248fc",
+      "authorName": "Yuna H.",
+      "rating": 5,
+      "title": "Perfect phone accessory",
+      "text": "This silk phone charm is gorgeous. The colors are vibrant and the silk feels so luxurious. Perfect for dressing up my phone.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:02.125Z"
+    },
+    {
+      "id": "5018e207-71a1-43b6-8b58-27d40ed5f716",
+      "productId": "922b1e8c-ea48-4eb9-88f7-6b3d34b248fc",
+      "authorName": "Aria P.",
+      "rating": 5,
+      "title": "The silk is so soft!",
+      "text": "I love how soft the silk is! The colors are even prettier in person. It dangles beautifully from my phone case.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:02.814Z"
+    }
+  ],
+  "42af6a13-88f0-43bf-8437-e36f2c42f810": [
+    {
+      "id": "9fb45dc4-3e59-4254-bd09-cb51661ad273",
+      "productId": "42af6a13-88f0-43bf-8437-e36f2c42f810",
+      "authorName": "Tenzin D.",
+      "rating": 5,
+      "title": "My lucky bracelet",
+      "text": "I wear this red cord every day. The knot is beautifully tied and the meaning behind it is so special. Feels like my lucky charm.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:03.502Z"
+    }
+  ],
+  "aea7e48d-2d76-4923-86e6-4f8bd0819cbb": [
+    {
+      "id": "710c6254-3c80-4af5-aa7a-4b13373ebc2a",
+      "productId": "aea7e48d-2d76-4923-86e6-4f8bd0819cbb",
+      "authorName": "Mike R.",
+      "rating": 4,
+      "title": "Good quality",
+      "text": "Solid phone charm. The obsidian beads have a nice polish and the cord seems durable. Great for protection on the go.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:04.191Z"
+    }
+  ],
+  "27c5ab4a-5102-41fa-af8b-ef4d257b0d6c": [
+    {
+      "id": "40dae98e-bcef-466f-80f4-08ff537306b4",
+      "productId": "27c5ab4a-5102-41fa-af8b-ef4d257b0d6c",
+      "authorName": "Elena S.",
+      "rating": 5,
+      "title": "Stunning fusion piece",
+      "text": "This necklace is a true conversation starter. The mix of turquoise, red agate, and silver is stunning. Feels like wearing a piece of history.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:04.880Z"
+    },
+    {
+      "id": "ad7b541c-9dcc-4c8c-9f05-960791e73260",
+      "productId": "27c5ab4a-5102-41fa-af8b-ef4d257b0d6c",
+      "authorName": "Hannah J.",
+      "rating": 5,
+      "title": "Got so many compliments",
+      "text": "Wore this to a dinner party and got so many compliments. The colors are vibrant and the design is unique. Love it!",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:28:05.569Z"
+    }
+  ],
+  "3fc86ef0-327e-42fe-9ca6-8a0fea4b49aa": [
+    {
+      "id": "ec50d637-00fa-46cc-8d97-7fb5ab1b4888",
+      "productId": "3fc86ef0-327e-42fe-9ca6-8a0fea4b49aa",
+      "authorName": "Clara D.",
+      "rating": 5,
+      "title": "Perfect amethyst",
+      "text": "The amethyst beads are a beautiful deep purple. The bracelet is well-made and comfortable. Exactly what I wanted.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:28:06.258Z"
+    }
+  ],
+  "a904e1cf-ae9a-4a27-8a4f-b4ab8487b798": [
+    {
+      "id": "f549115a-7005-40f3-958d-a332b48f6d30",
+      "productId": "a904e1cf-ae9a-4a27-8a4f-b4ab8487b798",
+      "authorName": "Grace L.",
+      "rating": 5,
+      "title": "Gorgeous amethyst earrings",
+      "text": "The purple drops are so rich and vibrant. They catch the light beautifully and the silver is high quality. I get compliments every time I wear them.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:32:30.980Z"
+    },
+    {
+      "id": "496acf3c-72c3-42fb-bbb7-b4d1e1fecfb0",
+      "productId": "a904e1cf-ae9a-4a27-8a4f-b4ab8487b798",
+      "authorName": "Hannah B.",
+      "rating": 5,
+      "title": "Perfect gift for my mom",
+      "text": "Bought these for my mother's birthday and she adored them. Elegant, well-made, and the amethyst is a beautiful deep color.",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:32:31.699Z"
+    }
+  ],
+  "3d7d70d1-00dd-48b6-b8b7-4f0d9828b853": [
+    {
+      "id": "a0c3ae62-c4b7-4bdb-867b-2cae697707b6",
+      "productId": "3d7d70d1-00dd-48b6-b8b7-4f0d9828b853",
+      "authorName": "Tom W.",
+      "rating": 5,
+      "title": "Love the golden glow",
+      "text": "The citrine has a warm, sunny glow that brightens any outfit. Wearing it as my prosperity reminder. Great quality beads.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:32:32.420Z"
+    },
+    {
+      "id": "4984f2f0-cca6-4620-95a3-25647d6e7217",
+      "productId": "3d7d70d1-00dd-48b6-b8b7-4f0d9828b853",
+      "authorName": "Isabelle F.",
+      "rating": 4,
+      "title": "Beautiful and bright",
+      "text": "Lovely citrine bracelet, the golden color is exactly as pictured. Sizing is comfortable and it layers well.",
+      "isVerifiedPurchase": false,
+      "createdAt": "2026-08-01T19:32:33.139Z"
+    }
+  ],
+  "d7d786e3-ad2b-4630-b575-a8ab55feaefb": [
+    {
+      "id": "2fb39d33-0fee-4cfd-9509-62f37fab713f",
+      "productId": "d7d786e3-ad2b-4630-b575-a8ab55feaefb",
+      "authorName": "Kevin C.",
+      "rating": 4,
+      "title": "Nice value",
+      "text": "Great turquoise look at an accessible price. The color is even and the beads are smooth. Perfect everyday bracelet.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:32:33.858Z"
+    }
+  ],
+  "98b97101-d654-4923-906b-0282fc8676cf": [
+    {
+      "id": "f1503281-20f3-4676-88e4-308d36454a21",
+      "productId": "98b97101-d654-4923-906b-0282fc8676cf",
+      "authorName": "James R.",
+      "rating": 5,
+      "title": "Solid and grounding",
+      "text": "Matte black hematite looks great on men. It's substantial but not flashy. I wear it daily for grounding and focus.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:32:34.573Z"
+    }
+  ],
+  "903d3772-5540-4fbb-ad35-d883ec99ad4d": [
+    {
+      "id": "02b724a6-a34e-487a-938f-17311b4acea0",
+      "productId": "903d3772-5540-4fbb-ad35-d883ec99ad4d",
+      "authorName": "Olivia T.",
+      "rating": 5,
+      "title": "Unique and beautiful",
+      "text": "The green and pink mix is so unique. Everyone asks about it. Feels calming and grounding to wear.",
+      "isVerifiedPurchase": true,
+      "createdAt": "2026-08-01T19:32:35.290Z"
+    }
+  ]
+}

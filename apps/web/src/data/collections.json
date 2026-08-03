@@ -1,0 +1,74 @@
+[
+  {
+    "id": "326ec2af-30aa-45ac-bc5d-e36de099a087",
+    "slug": "crystal",
+    "name": "Crystal Collection",
+    "heritage": "tibetan",
+    "description": "Natural stones, each carrying a meaning older than memory.",
+    "isFeatured": true,
+    "productCount": 0
+  },
+  {
+    "id": "b729f9c6-58b4-41ee-b661-3768d7b94708",
+    "slug": "tibetan-silver",
+    "name": "Tibetan Silver",
+    "heritage": "tibetan",
+    "description": "Hand-hammered amulets and turquoise-set pieces, in the workshops of Lhasa.",
+    "isFeatured": true,
+    "productCount": 0
+  },
+  {
+    "id": "66ac4006-2572-46fd-a575-48d6df7101c1",
+    "slug": "charms",
+    "name": "Phone Charms",
+    "heritage": "fusion",
+    "description": "Small charms of stone and cord, that follow you everywhere.",
+    "isFeatured": true,
+    "productCount": 0
+  },
+  {
+    "id": "d095d1b9-e516-4c11-bb02-d2f3a7bac6ab",
+    "slug": "mongolian-steppe",
+    "name": "Mongolian Steppe",
+    "heritage": "mongol",
+    "description": "Hand-braided cords, sliding knots, and protective stones for the road.",
+    "isFeatured": true,
+    "productCount": 0
+  },
+  {
+    "id": "f4939134-d6ac-4272-9c7d-e91883dee762",
+    "slug": "southwest-filigree",
+    "name": "Southwest Filigree",
+    "heritage": "southwest",
+    "description": "Miao silversmith filigree — hair-thin silver wires, hand-coiled into living shapes.",
+    "isFeatured": true,
+    "productCount": 0
+  },
+  {
+    "id": "39a0beee-e2b8-46b9-9442-5fc52f43420f",
+    "slug": "han-jade",
+    "name": "Han Jade",
+    "heritage": "han",
+    "description": "Jade pendants and cord-knot pieces — the quiet, restrained language of the literati.",
+    "isFeatured": true,
+    "productCount": 0
+  },
+  {
+    "id": "36c062e3-72a3-4b74-a086-28dd96025a64",
+    "slug": "tai-silk",
+    "name": "Thai Silk",
+    "heritage": "tai",
+    "description": "Hand-woven silk cords and phone charms, carrying the slow light of the tropics.",
+    "isFeatured": true,
+    "productCount": 0
+  },
+  {
+    "id": "d880b351-8042-4ab2-84b4-5299722c06af",
+    "slug": "caravan-fusion",
+    "name": "Caravan Fusion",
+    "heritage": "fusion",
+    "description": "Where roots meet — silver, silk, and turquoise from the caravan roads of the Silk Road.",
+    "isFeatured": true,
+    "productCount": 0
+  }
+]
