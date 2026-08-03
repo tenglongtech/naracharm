@@ -2,7 +2,7 @@
 
 > 状态：方案已确认，待开发执行
 > 日期：2026-08-03
-> 目标：把 naracharm 从 SSR+数据库 改造成「前端静态（Cloudflare Pages）+ 后端 API（RackNerd 服务器）」
+> 目标：把 naracharm 从 SSR+数据库 改造成「前端静态（Cloudflare Pages）+ 后端 API（Contabo 服务器）」
 
 ---
 
@@ -11,14 +11,14 @@
 | 角色 | 职责 |
 |------|------|
 | **本地开发 agent** | 执行第一步~第五步（改代码、切数据源、配置、动态功能改造） |
-| **运维（Claude 主会话）** | 执行第六步~第七步（后端部署 RackNerd、前端部署 Cloudflare Pages）、最终验收 |
+| **运维（Claude 主会话）** | 执行第六步~第七步（后端部署 Contabo、前端部署 Cloudflare Pages）、最终验收 |
 
 > 开发 agent 只需要把代码改好并提交 git；**部署由运维统一操作**。
 
 ## 🎯 目标架构
 
 ```
-Cloudflare Pages (纯静态)                     RackNerd 服务器 (后端 API + 数据库)
+Cloudflare Pages (纯静态)                     Contabo 服务器 (后端 API + 数据库)
 ├── 首页/产品/合集/博客/内容页                  ├── checkout API (Stripe)
 ├── products/[slug] 静态生成                  ├── stripe-webhook
 ├── collections/[slug] 静态生成                ├── auth (Better Auth)
@@ -30,8 +30,8 @@ Cloudflare Pages (纯静态)                     RackNerd 服务器 (后端 API 
 
 ### 已确认决策
 - **购物车**：前端 **localStorage** 实现，结账时一次性提交订单到后端 API
-- **后端**：API + 数据库**全迁 RackNerd**（169.58.107.188），自建 Postgres（脱离 Neon）
-- **前端**：Cloudflare Pages（Git 自动部署）；**后端**：RackNerd Docker
+- **后端**：API + 数据库**全迁 Contabo**（169.58.107.188），自建 Postgres（脱离 Neon）
+- **前端**：Cloudflare Pages（Git 自动部署）；**后端**：Contabo Docker
 
 ---
 
@@ -133,18 +133,18 @@ app/api/discount/validate
 
 ---
 
-## 🖥️ 第六步：后端 API 部署（RackNerd）— 运维执行
+## 🖥️ 第六步：后端 API 部署（Contabo）— 运维执行
 
 > ⏳ 本步骤由**运维（Claude 主会话）**执行，开发 agent 只需确保代码支持。
 
 1. API routes 抽成独立 Node/Next standalone 服务
-2. **数据库**：在 RackNerd 自建 **Postgres**（Docker），迁移 Neon 数据
+2. **数据库**：在 Contabo 自建 **Postgres**（Docker），迁移 Neon 数据
 3. Docker Compose 部署 + Caddy 反代
 4. 环境变量（DATABASE_URL、STRIPE keys、AUTH_SECRET 等）放服务器 .env
 
 服务器信息：
 ```
-RackNerd: 169.58.107.188
+Contabo: 169.58.107.188
 登录: ssh -i ~/.ssh/id_ed25519_server root@169.58.107.188
 ```
 
