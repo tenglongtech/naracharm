@@ -1,0 +1,34 @@
+# 依赖
+node_modules
+**/node_modules
+
+# 构建产物
+.next
+**/.next
+out
+**/out
+apps/web/.next/standalone
+
+# git / 环境
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+**/.env.local
+**/.env.production
+**/.env.vercel
+**/.env.development
+
+# 本地 / 临时
+.DS_Store
+backups/
+docs/
+video/
+*.log
+*.pid
+.vercel
+
+# 数据库快照等大文件
+*.dump
+*.sql
