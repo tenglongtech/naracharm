@@ -34,15 +34,25 @@ export const auth = betterAuth({
     // google: { clientId: ..., clientSecret: ... },
   },
   plugins: [nextCookies()],
-  // 本地开发: 确认 base URL
+  // 跨域: 后端 (api.naracharm.com) 服务,前端 (naracharm.com) 调用
   baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:37000',
   trustedOrigins: [
     process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:37000',
+    'https://naracharm.com',
+    'https://www.naracharm.com',
     // 本地开发接受 localhost 所有端口 (生产可移除)
     ...(process.env.NODE_ENV !== 'production'
       ? ['http://localhost:37000', 'http://localhost:37001', 'http://localhost', 'http://naracharm.test', 'https://naracharm.test']
       : []),
   ],
+  advanced: {
+    // 跨子域共享登录 cookie (.naracharm.com)
+    cookiePrefix: 'nara_auth',
+    defaultCookieAttributes: {
+      sameSite: 'lax',
+      ...(process.env.COOKIE_DOMAIN ? { domain: process.env.COOKIE_DOMAIN } : {}),
+    },
+  },
 });
 
 export type Session = typeof auth.$Infer.Session;
