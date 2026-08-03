@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { STATIC_COMMENTS } from '@/lib/storefront-data';
+import { API_URL } from '@/lib/api';
 
 type Comment = {
   id: string;
@@ -30,10 +32,16 @@ export default function CommentsSection({ slug }: { slug: string }) {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`/api/comments?articleSlug=${encodeURIComponent(slug)}`)
+    // 静态兜底: 先渲染构建时已审核的评论
+    const staticComments = (STATIC_COMMENTS[slug] ?? []) as Comment[];
+    if (staticComments.length > 0) {
+      setComments(staticComments);
+    }
+    // 再尝试拉后端最新评论; 不可达时保持静态数据
+    fetch(`${API_URL}/api/comments?articleSlug=${encodeURIComponent(slug)}`)
       .then((r) => r.json())
       .then((data) => {
-        setComments(data.comments ?? []);
+        if (data.comments?.length) setComments(data.comments);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -47,7 +55,7 @@ export default function CommentsSection({ slug }: { slug: string }) {
     setError('');
 
     try {
-      const res = await fetch('/api/comments', {
+      const res = await fetch(`${API_URL}/api/comments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

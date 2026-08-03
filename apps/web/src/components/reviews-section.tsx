@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { STATIC_REVIEWS } from '@/lib/storefront-data';
+import { API_URL } from '@/lib/api';
 
 type Review = {
   id: string;
@@ -82,7 +84,7 @@ function ReviewForm({
     setSubmitting(true);
     setError('');
     try {
-      const res = await fetch('/api/reviews', {
+      const res = await fetch(`${API_URL}/api/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -157,10 +159,23 @@ export default function ReviewsSection({
 
   const loadReviews = () => {
     setLoading(true);
-    fetch(`/api/reviews?productId=${encodeURIComponent(productId)}`)
+    // 静态兜底: 先从构建时导出的已审核评价渲染
+    const staticReviews = (STATIC_REVIEWS[productId] ?? []) as Review[];
+    if (staticReviews.length > 0) {
+      const avg = staticReviews.reduce((s, r) => s + r.rating, 0) / staticReviews.length;
+      setData({
+        reviews: staticReviews,
+        averageRating: Math.round(avg * 10) / 10,
+        totalReviews: staticReviews.length,
+      });
+    }
+    // 尝试拉取后端最新评价; 后端不可达时静默降级到静态数据
+    fetch(`${API_URL}/api/reviews?productId=${encodeURIComponent(productId)}`)
       .then((r) => r.json())
-      .then((d) => {
-        setData(d);
+      .then((d: ApiResponse) => {
+        if (d?.reviews?.length) {
+          setData(d);
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));

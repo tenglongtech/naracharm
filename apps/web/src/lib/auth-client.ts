@@ -2,12 +2,16 @@
 
 import { createAuthClient } from 'better-auth/client';
 import { useState, useEffect, useCallback } from 'react';
+import { API_URL } from './api';
 
 /**
  * Better Auth 客户端 + React hook
  * 前端通过这个调登录/注册/登出/获取会话
+ * baseURL 指向独立后端 (Contabo),生产时 API_URL=https://api.naracharm.com
  */
-export const authClient = createAuthClient();
+export const authClient = createAuthClient(
+  API_URL ? { baseURL: API_URL } : {},
+);
 
 export function useSession() {
   const [session, setSession] = useState<Awaited<ReturnType<typeof authClient.getSession>> | null>(null);
