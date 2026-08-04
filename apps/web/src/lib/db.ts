@@ -1,13 +1,13 @@
 /**
- * 数据库连接 (Neon serverless + Drizzle)
+ * 数据库连接 (postgres-js + Drizzle)
  *
- * 生产环境 (Vercel): 用 @neondatabase/serverless (HTTP 驱动,适配 serverless)
- * 本地开发: 同样可用 (Neon 云数据库) 或回退到 postgres.js (本地 PG)
+ * 用 postgres.js 驱动 (兼容本地 Postgres / Neon / Contabo Postgres)
+ * 池化连接: max 10
  *
  * DATABASE_URL 决定连哪个库。
  */
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
+import postgres from 'postgres';
+import { drizzle } from 'drizzle-orm/postgres-js';
 import * as schema from '@jewelry/db';
 
 declare global {
@@ -21,7 +21,7 @@ function createDb() {
     console.warn('⚠️ DATABASE_URL 未设置 — 数据库功能不可用');
     return null as any;
   }
-  const sql = neon(connectionString);
+  const sql = postgres(connectionString, { max: 10 });
   return drizzle({ client: sql, schema });
 }
 

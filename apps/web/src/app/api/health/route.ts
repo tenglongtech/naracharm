@@ -7,9 +7,11 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   let dbStatus: 'up' | 'down' = 'up';
   try {
-    const { db } = await import('@/lib/db');
-    if (!db) throw new Error('no db');
-    await db.execute?.(/* sql */ `SELECT 1`);
+    // postgres-js 驱动直接探测连接
+    const { default: postgres } = await import('postgres');
+    const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
+    await sql`SELECT 1`;
+    await sql.end();
   } catch {
     dbStatus = 'down';
   }
