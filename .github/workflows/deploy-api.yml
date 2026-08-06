@@ -21,11 +21,12 @@ jobs:
 
       - name: Package source
         run: |
+          # 打包到 workspace 目录（scp-action 只认这里）
           tar --exclude='node_modules' --exclude='.next' --exclude='.git' --exclude='out' \
-            -czf /tmp/naracharm-src.tar.gz \
+            -czf naracharm-src.tar.gz \
             package.json pnpm-workspace.yaml pnpm-lock.yaml \
             apps/web packages/db
-          ls -la /tmp/naracharm-src.tar.gz
+          ls -la naracharm-src.tar.gz
 
       - name: Upload source to Contabo
         uses: appleboy/scp-action@v0.1.7
@@ -33,7 +34,7 @@ jobs:
           host: 169.58.107.188
           username: root
           key: ${{ secrets.CONTOBO_SSH_KEY }}
-          source: /tmp/naracharm-src.tar.gz
+          source: naracharm-src.tar.gz
           target: /opt/naracharm/src
 
       - name: Build & Restart on Contabo
