@@ -1,3 +1,4 @@
+import { siteConfig } from '@/lib/site-config';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Fraunces } from 'next/font/google';
 import '@/styles/globals.css';
@@ -15,7 +16,7 @@ const fraunces = Fraunces({
   display: 'swap',
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+const SITE_URL = siteConfig.url;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -50,9 +51,6 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Nara Charm' }],
   creator: 'Nara Charm',
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -105,16 +103,11 @@ const organizationJsonLd = {
   logo: `${SITE_URL}/icon`,
   description:
     'Handmade heritage jewelry — Tibetan silver, Miao filigree, Mongolian knots, Han jade, Thai silk. Jewelry with spirit, stories in every piece.',
-  sameAs: [
-    'https://instagram.com/naracharm',
-    'https://tiktok.com/@naracharm',
-    'https://youtube.com/@naracharm',
-    'https://pinterest.com/naracharm',
-  ],
+  sameAs: Object.entries(siteConfig.social).filter(([, handle]) => Boolean(handle)).map(([network, handle]) => `https://${network === 'youtube' ? 'youtube.com/@' : network === 'tiktok' ? 'tiktok.com/@' : `${network}.com/`}${handle.replace(/^@/, '')}`),
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'Customer Service',
-    email: 'support@naracharm.com',
+    email: siteConfig.company.supportEmail,
     availableLanguage: 'English',
   },
 };

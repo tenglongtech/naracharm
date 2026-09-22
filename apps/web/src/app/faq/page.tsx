@@ -1,3 +1,4 @@
+import { siteConfig } from '@/lib/site-config';
 import type { Metadata } from 'next';
 import { LegalPage } from '@/components/legal-page';
 
@@ -71,7 +72,7 @@ const FAQ_DATA: { heading: string; items: { q: string; a: string }[] }[] = [
 ];
 
 export default function FaqPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const siteUrl = siteConfig.url;
 
   // 拍平所有 Q/A → JSON-LD
   const allItems = FAQ_DATA.flatMap((s) => s.items);

@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import { editorialArt } from '@/lib/editorial-art';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
@@ -47,6 +49,7 @@ export default function BlogPage() {
                       href={`/blog/${a.slug}`}
                       className="group block rounded-lg border border-border bg-surface p-6 transition-all hover:-translate-y-1 hover:shadow-lg"
                     >
+                      {editorialArt(a) && <div className="relative mb-5 aspect-[3/2] overflow-hidden rounded-md"><Image src={editorialArt(a).src} alt={editorialArt(a).alt} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" /></div>}
                       <div className="flex items-center gap-3">
                         <p className="text-xs uppercase tracking-wider text-gold">{a.readingTime}</p>
                         <span className="text-[10px] text-muted/50">·</span>

@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import { siteConfig } from '@/lib/site-config';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
@@ -105,7 +107,7 @@ export default async function GiftGuidePage() {
     };
   };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const siteUrl = siteConfig.url;
   const pageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -122,6 +124,7 @@ export default async function GiftGuidePage() {
       />
       <SiteHeader />
       <main id="main">
+        <figure className="mx-auto max-w-5xl px-4 pt-10"><div className="relative aspect-[3/2] max-h-[480px] overflow-hidden rounded-lg"><Image src="/editorial/gifting.webp" alt="Illustrative jewelry gift scene with a blank note and ribbon" fill sizes="(max-width: 768px) 100vw, 1000px" className="object-cover" /></div><figcaption className="mt-2 text-xs text-muted">Gift inspiration · Illustrative styling and packaging.</figcaption></figure>
         <section className="border-b border-border bg-ink text-bg">
           <div className="mx-auto max-w-4xl px-4 py-16 text-center md:py-24">
             <p className="text-xs uppercase tracking-[0.3em] text-gold">Made for your journey</p>

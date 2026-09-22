@@ -16,7 +16,7 @@ export type ProductCard = {
 export function ProductTile({ product }: { product: ProductCard }) {
   return (
     <Link href={`/products/${product.slug}`} className="group block transition-transform duration-300 hover:-translate-y-1">
-      <div className="relative aspect-square overflow-hidden rounded-md bg-surface shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-surface shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
         {product.image ? (
           <Image
             src={product.image}
@@ -34,11 +34,12 @@ export function ProductTile({ product }: { product: ProductCard }) {
           </span>
         )}
       </div>
-      <p className="mt-3 text-xs uppercase tracking-wider text-gold">{product.heritage}</p>
+      {product.image?.startsWith('/products/redesigned/') && <p className="mt-2 text-[10px] text-muted">Design illustration</p>}
+      <p className="mt-3 text-[10px] uppercase tracking-[0.15em] text-muted">{product.heritage}</p>
       <h3 className="mt-1 font-display text-base leading-snug group-hover:text-brand">
         {product.name}
       </h3>
-      <div className="mt-1 flex items-center gap-2 text-sm tabular-nums">
+      <div className="mt-2 flex flex-wrap items-center gap-2 text-sm tabular-nums">
         <span>{product.price}</span>
         {product.compareAt && (
           <span className="text-muted line-through">{product.compareAt}</span>

@@ -1,3 +1,4 @@
+import { siteConfig } from '@/lib/site-config';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -52,7 +53,7 @@ export default async function StoryDetailPage({ params }: Params) {
     })
     .filter(Boolean) as ProductCard[];
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const siteUrl = siteConfig.url;
 
   // Article JSON-LD (Google 搜索 article rich result 资格)
   const articleJsonLd = {

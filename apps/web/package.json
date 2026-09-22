@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "build:static": "sh -c 'mkdir -p /tmp/naracharm-excluded && mv src/app/api /tmp/naracharm-excluded/api 2>/dev/null || true; mv src/app/admin /tmp/naracharm-excluded/admin 2>/dev/null || true; mv src/app/admin-test /tmp/naracharm-excluded/admin-test 2>/dev/null || true; BUILD_TARGET=static next build; ec=$?; mv /tmp/naracharm-excluded/api src/app/api 2>/dev/null || true; mv /tmp/naracharm-excluded/admin src/app/admin 2>/dev/null || true; mv /tmp/naracharm-excluded/admin-test src/app/admin-test 2>/dev/null || true; exit $ec'",
-    "lint": "next lint",
+    "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "export-storefront": "tsx ../../scripts/export-storefront.ts",
     "db:generate": "drizzle-kit generate",
@@ -18,7 +18,8 @@
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx ../../scripts/seed.ts",
     "db:seed:placeholder": "tsx ../../scripts/seed-placeholders.ts",
-    "gen:placeholders": "node ../../scripts/generate-placeholders.mjs"
+    "gen:placeholders": "node ../../scripts/generate-placeholders.mjs",
+    "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^2.1.2",

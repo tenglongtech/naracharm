@@ -10,6 +10,7 @@ import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
 
 export const metadata: Metadata = {
   title: 'About Us',
+  alternates: { canonical: '/about' },
   description:
     'Nara Charm was born from a belief that jewelry should carry meaning. Handmade heritage jewelry from Tibet, Thailand, Mongolia, China and the Southwest.',
   openGraph: { title: 'About Nara Charm', description: 'Handmade heritage jewelry with a story in every piece.' },

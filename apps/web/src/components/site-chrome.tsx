@@ -41,6 +41,7 @@ export function SiteFooter() {
         <div>
           <h3 className="font-display text-sm uppercase tracking-wider text-gold">Shop</h3>
           <ul className="mt-4 space-y-2 text-sm text-bg/75">
+            <li><Link href="/shop" className="hover:text-bg">Shop All Jewelry</Link></li>
             <li><Link href="/collections" className="hover:text-bg">All Collections</Link></li>
             <li><Link href="/best-sellers" className="hover:text-bg">Best Sellers</Link></li>
             <li><Link href="/collections/phone-charms" className="hover:text-bg">Phone Charms</Link></li>
@@ -53,7 +54,7 @@ export function SiteFooter() {
         <div>
           <h3 className="font-display text-sm uppercase tracking-wider text-gold">About</h3>
           <ul className="mt-4 space-y-2 text-sm text-bg/75">
-            <li><Link href="/blog" className="hover:text-bg">Crystal Guide & Meanings</Link></li>
+            <li><Link href="/blog" className="hover:text-bg">The Nara Journal</Link></li>
             <li><Link href="/our-craft" className="hover:text-bg">Our Craft</Link></li>
             <li><Link href="/stories" className="hover:text-bg">Stories</Link></li>
             <li><Link href="/about" className="hover:text-bg">About Us</Link></li>
@@ -63,28 +64,9 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h3 className="font-display text-sm uppercase tracking-wider text-gold">Join the Journey</h3>
-          <p className="mt-4 text-sm text-bg/75">
-            New stories, early drops, and 10% off your first charm.
-          </p>
-          <form className="mt-4">
-            <label htmlFor="footer-email" className="sr-only">Email address</label>
-            <div className="flex gap-2">
-              <input
-                id="footer-email"
-                type="email"
-                required
-                placeholder="your@email.com"
-                className="flex-1 rounded-md border border-bg/30 bg-bg/10 px-3 py-2.5 text-sm text-bg placeholder:text-bg/40 focus:border-gold focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="rounded-md bg-brand px-4 py-2.5 text-sm font-medium text-bg hover:bg-brand/90"
-              >
-                →
-              </button>
-            </div>
-          </form>
+          <h3 className="font-display text-sm uppercase tracking-wider text-gold">A little guidance</h3>
+          <p className="mt-4 text-sm leading-7 text-bg/75">Questions about fit, materials or your order? We’re here to help you choose with care.</p>
+          <Link href="/contact" className="mt-5 inline-flex min-h-11 items-center border-b border-gold text-sm text-gold">Get in touch ↗</Link>
           <div className="mt-5 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[11px] text-bg/55">
             <Link href="/faq" className="hover:text-bg">FAQ</Link>
             <Link href="/contact" className="hover:text-bg">Contact</Link>

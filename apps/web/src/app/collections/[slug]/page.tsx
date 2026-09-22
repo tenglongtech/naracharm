@@ -1,3 +1,4 @@
+import { siteConfig } from '@/lib/site-config';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -96,7 +97,7 @@ export default async function CollectionPage({ params }: Params) {
   const n = narrative;
 
   // Collection + ItemList JSON-LD
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const siteUrl = siteConfig.url;
   const collectionJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',

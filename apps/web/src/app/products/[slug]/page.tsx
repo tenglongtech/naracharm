@@ -1,4 +1,6 @@
+import { siteConfig } from '@/lib/site-config';
 import Link from 'next/link';
+import { productSchema } from '@/lib/seo';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -23,7 +25,7 @@ function toCard(p: Awaited<ReturnType<typeof getActiveProducts>>[number]): Produ
     heritage: p.heritage ?? 'Handmade',
     price: `$${(p.basePriceCents / 100).toFixed(0)}`,
     compareAt: p.compareAtPriceCents ? `$${(p.compareAtPriceCents / 100).toFixed(0)}` : null,
-    tag: p.compareAtPriceCents ? 'Sale' : null,
+    tag: p.availability === 'preview' ? 'Design preview' : p.compareAtPriceCents ? 'Sale' : null,
     image: p.primaryImage ?? undefined,
   };
 }
@@ -65,26 +67,10 @@ export default async function ProductPage({ params }: Params) {
     : '';
 
   // SEO 结构化数据 (Product JSON-LD) - Google 购物搜索优化
-  const productJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    description: product.description || product.subtitle || undefined,
-    image: product.images.map((i) => `${process.env.NEXT_PUBLIC_SITE_URL}${i}`),
-    sku: product.slug,
-    brand: { '@type': 'Brand', name: 'Nara Charm' },
-    category: product.category,
-    offers: {
-      '@type': 'Offer',
-      price: (product.basePriceCents / 100).toFixed(2),
-      priceCurrency: 'USD',
-      availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/products/${product.slug}`,
-    },
-  };
+  const productJsonLd = productSchema(product);
 
   // Breadcrumb JSON-LD (Google 面包屑富片段)
-  const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const SITE = siteConfig.url;
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -98,29 +84,19 @@ export default async function ProductPage({ params }: Params) {
     ],
   };
 
-  const materials = product.materials ?? [];
-  const specs = [
-    `Bead size: 8mm`,
-    product.category === 'phone-charm' ? 'Length: 18cm' : 'Stretch fit',
-    'Unisex design',
-    'Handmade — slight variation is natural',
-  ];
+  const materials = product.materials?.length ? product.materials : ['Final materials are being confirmed.'];
+  const specs = ['Refer to the listed materials for this piece.', 'Natural materials may vary in color and pattern.'];
   const care = product.careNotes
     ? product.careNotes.split(/[。\n]/).filter(Boolean)
     : ['Avoid prolonged water contact', 'Clean with soft cloth', 'Store away from direct sunlight'];
   const storyParagraphs = product.craftStory ? product.craftStory.split(/\n\n+/).filter(Boolean) : [];
-  const sizes = product.category === 'bracelet'
-    ? ['Small (15cm)', 'Medium (17cm)', 'Large (19cm)']
-    : product.category === 'necklace'
-    ? ['16 in', '18 in', '20 in']
-    : ['One size'];
 
   return (
     <>
-      <script
+      {product.availability !== 'preview' && <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
-      />
+      />}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
@@ -144,7 +120,7 @@ export default async function ProductPage({ params }: Params) {
         <section className="mx-auto grid max-w-7xl gap-10 px-4 py-10 md:grid-cols-[55fr_45fr] md:py-14">
           {/* 图片区 */}
           <div className="flex flex-col gap-3">
-            <div className="relative aspect-square overflow-hidden rounded-lg bg-surface">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-surface">
               {product.images[0] ? (
                 <Image
                   src={product.images[0]}
@@ -166,19 +142,8 @@ export default async function ProductPage({ params }: Params) {
                 </span>
               )}
             </div>
-            <div className="grid grid-cols-4 gap-3">
-              {product.images.slice(0, 4).map((img, i) => (
-                <div key={i} className="relative aspect-square overflow-hidden rounded-md bg-surface ring-1 ring-border hover:ring-brand">
-                  <Image
-                    src={img}
-                    alt={`${product.name} view ${i + 1}`}
-                    fill
-                    sizes="15vw"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
+            {product.imageKind === 'illustration' && <p className="text-xs leading-6 text-muted">AI-generated design illustration based on the written description; not a photograph of the finished item. Confirm the physical details before ordering.</p>}
+
           </div>
 
           {/* 信息区 */}
@@ -188,7 +153,7 @@ export default async function ProductPage({ params }: Params) {
 
             {/* 价格 */}
             <div className="mt-4 flex items-center gap-3 text-xl tabular-nums">
-              <span>{price}</span>
+              <span>{product.availability === 'preview' && <span className="mr-2 text-xs text-muted">Planned price</span>}{price}</span>
               {compareAt && (
                 <span className="text-base text-muted line-through">{compareAt}</span>
               )}
@@ -199,58 +164,15 @@ export default async function ProductPage({ params }: Params) {
               )}
             </div>
 
-            {/* 评分 (占位) */}
-            <div className="mt-3 flex items-center gap-2 text-sm text-muted">
-              <span className="text-gold">★★★★★</span>
-              <span>Handmade · Ready to ship</span>
+            <p className="mt-4 text-sm text-brand">{product.availability === 'preview' ? 'New design · Availability being confirmed' : product.stock > 0 ? 'Available to order' : 'Currently sold out'}</p>
+            <p className="mt-5 leading-relaxed text-muted">{product.description || product.subtitle}</p>
+            <div className="mt-6 rounded-lg border border-border bg-surface p-5 text-sm leading-relaxed">
+              <p className="font-medium">A thoughtful fit starts here.</p>
+              <p className="mt-2 text-muted">Check the materials below and <Link href="/size-guide" className="underline">see how to measure</Link>. For exact dimensions or fit advice, <Link href="/contact" className="underline">ask us about this piece</Link> before ordering.</p>
             </div>
 
-            <p className="mt-5 leading-relaxed text-muted">{product.description || product.subtitle}</p>
-
-            {/* 变体选择: 颜色 */}
-            {product.category !== 'phone-charm' && (
-              <div className="mt-6">
-                <p className="text-sm font-medium">
-                  Color: <span className="text-muted">{product.heritage || 'Natural'}</span>
-                </p>
-                <div className="mt-2 flex gap-2">
-                  {['#8B6FA8', '#B08D57'].map((c) => (
-                    <button
-                      key={c}
-                      type="button"
-                      aria-label={`Color ${c}`}
-                      style={{ backgroundColor: c }}
-                      className="h-8 w-8 rounded-full ring-2 ring-transparent ring-offset-2 ring-offset-bg hover:ring-brand"
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* 变体选择: 尺寸 */}
-            {sizes.length > 0 && (
-              <div className="mt-5">
-                <p className="text-sm font-medium">Size</p>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {sizes.map((s, i) => (
-                    <button
-                      key={s}
-                      type="button"
-                      className={`rounded-md border px-4 py-2 text-sm transition-colors ${
-                        i === 0
-                          ? 'border-ink bg-ink text-bg'
-                          : 'border-border hover:border-ink'
-                      }`}
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* 数量 + 加购 (localStorage) */}
-            <AddToCartForm
+            {product.availability === 'preview' ? <div className="mt-7 rounded-lg border border-border p-5"><p className="text-sm leading-6 text-muted">This design is now part of our Studio Edit. Final materials, dimensions and supply are being confirmed; it is not available to order yet.</p><Link href="/contact" className="shop-button mt-4">Ask about this design ↗</Link></div> : <AddToCartForm
               productId={product.id}
               productSlug={product.slug}
               productName={product.name}
@@ -261,25 +183,17 @@ export default async function ProductPage({ params }: Params) {
               image={product.primaryImage}
               heritage={product.heritage}
               maxStock={product.stock}
-            />
+            />}
 
-            {/* 心愿单 + 立即购买 */}
-            <div className="mt-3 flex gap-3">
-              <button type="button" className="flex-1 rounded-md border border-ink px-6 py-3 text-sm font-medium transition-colors hover:bg-ink hover:text-bg">
-                ♡ Add to Wishlist
-              </button>
-              <button type="button" className="flex-1 rounded-md border border-ink px-6 py-3 text-sm font-medium transition-colors hover:bg-ink hover:text-bg">
-                Buy It Now
-              </button>
-            </div>
+            <div className="mt-4 flex flex-wrap gap-5 text-sm text-brand"><Link href="/shipping" className="underline">Delivery details</Link><Link href="/returns" className="underline">Return policy</Link><Link href="/shop" className="underline">Keep exploring</Link></div>
 
             {/* 信任徽章 */}
-            <ul className="mt-7 space-y-2 text-sm text-muted">
+            {product.availability !== 'preview' && <ul className="mt-7 space-y-2 text-sm text-muted">
               <li>✦ Free worldwide shipping over $120</li>
               <li>✦ 30-day easy returns</li>
               <li>✦ Arrives in a keepsake box with story card</li>
               <li>✦ Handmade by skilled artisans</li>
-            </ul>
+            </ul>}
           </div>
         </section>
 
@@ -287,7 +201,7 @@ export default async function ProductPage({ params }: Params) {
         <section className="bg-surface">
           <div className="mx-auto max-w-4xl px-4 py-14 md:py-20">
             <p className="text-center text-xs uppercase tracking-[0.3em] text-brand">The Craft Story</p>
-            <h2 className="mt-3 text-center font-display text-3xl md:text-4xl">The Story Behind {product.name}</h2>
+            <h2 className="mt-3 text-center font-display text-3xl md:text-4xl">{product.availability === 'preview' ? 'The Design Behind' : 'The Story Behind'} {product.name}</h2>
             <div className="mt-7 space-y-5 leading-relaxed text-ink/85 md:text-lg">
               {storyParagraphs.length > 0 ? storyParagraphs.map((para, i) => (
                 <p key={i}>{para}</p>
@@ -299,7 +213,7 @@ export default async function ProductPage({ params }: Params) {
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               {[
                 `Origin: ${product.heritage || 'Handmade'}`,
-                'Craft: Hand-strung',
+
                 `Made for: ${product.category}`,
                 'Carried with meaning',
               ].map((layer) => (

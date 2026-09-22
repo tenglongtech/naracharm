@@ -8,11 +8,11 @@ import { LotusMark } from './lotus-mark';
 import { subscribeToCart, getLocalCart } from '@/lib/cart-local';
 
 const NAV_LINKS = [
+  { href: '/shop', label: 'Shop All' },
   { href: '/collections', label: 'Collections' },
-  { href: '/best-sellers', label: 'Best Sellers' },
   { href: '/stories', label: 'Stories' },
   { href: '/our-craft', label: 'Craftsmanship' },
-  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Journal' },
   { href: '/gift-guide', label: 'Gift Guide' },
 ];
 
@@ -31,6 +31,7 @@ export function SiteHeaderClient() {
 
   return (
     <>
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-bg focus:p-4">Skip to content</a>
       {/* 公告栏 */}
       <div className="bg-ink text-bg">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 text-[11px] tracking-wide md:text-xs">
@@ -48,7 +49,8 @@ export function SiteHeaderClient() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
-            className="-ml-2 p-2 md:hidden"
+            aria-controls="mobile-navigation"
+            className="-ml-2 p-2 lg:hidden"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               {menuOpen ? (
@@ -73,7 +75,7 @@ export function SiteHeaderClient() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-7 text-sm md:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-5 text-sm lg:flex" aria-label="Primary">
             {NAV_LINKS.map((l) => (
               <Link
                 key={l.href}
@@ -90,15 +92,15 @@ export function SiteHeaderClient() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
-            <Link href="/search" aria-label="Search" className="hover:text-brand">🔍</Link>
-            <Link href="/account" aria-label="Account" className="hover:text-brand">👤</Link>
+          <div className="flex items-center gap-1">
+            <Link href="/search" aria-label="Search" className="flex min-h-11 min-w-11 items-center justify-center hover:text-brand"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg></Link>
+            <Link href="/account" aria-label="Account" className="flex min-h-11 min-w-11 items-center justify-center hover:text-brand"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></Link>
             <CartIcon count={cartCount} />
           </div>
         </div>
 
         {menuOpen && (
-          <div className="border-t border-border bg-bg md:hidden">
+          <div id="mobile-navigation" className="border-t border-border bg-bg lg:hidden">
             <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2" aria-label="Mobile">
               {NAV_LINKS.map((l) => (
                 <Link

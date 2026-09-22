@@ -27,6 +27,8 @@ export type StorefrontProduct = {
   primaryImage: string | null;
   images: string[];
   stock: number;
+  availability?: 'preview';
+  imageKind?: 'illustration';
   seoTitle: string | null;
   seoDescription: string | null;
 };

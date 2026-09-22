@@ -7,9 +7,9 @@
  */
 @theme {
   /* 色彩 —— 温暖复古调 (以首页设计稿为准) */
-  --color-brand: #c4745a; /* Terracotta 砖红 - 主品牌色 */
-  --color-accent: #c4745a; /* 同 brand,主强调色 */
-  --color-gold: #d4af37; /* Gold 金 - 点缀 */
+  --color-brand: #9a503b; /* Terracotta 砖红 - 主品牌色 */
+  --color-accent: #9a503b; /* 同 brand,主强调色 */
+  --color-gold: #c2a46c; /* Gold 金 - 点缀 */
   --color-ink: #3a2e2b; /* Espresso 深棕 - 主文字/深色区块底 */
   --color-muted: #6b4f47; /* Cocoa 中棕 - 次要文字 */
   --color-bg: #faf7f1; /* Cream 奶白 - 主背景 */
@@ -17,8 +17,8 @@
   --color-border: #e8dfd0; /* 浅边线 */
 
   /* 字体 */
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
 
   /* 圆角 —— 偏小,传达匠人克制感 */
   --radius-sm: 2px;
@@ -62,3 +62,13 @@ h3,
     transition-duration: 0.01ms !important;
   }
 }
+
+@layer components {
+  .eyebrow { @apply text-[10px] font-medium uppercase tracking-[0.22em] text-brand; }
+  .section-wrap { @apply mx-auto max-w-7xl px-5 py-14 md:px-8 md:py-20; }
+  .section-heading { @apply flex flex-wrap items-end justify-between gap-5; }
+  .section-title { @apply mt-4 font-display text-3xl leading-tight tracking-tight md:text-4xl; }
+  .shop-button { @apply inline-flex min-h-12 w-fit items-center justify-center gap-8 rounded-sm bg-brand px-6 py-4 text-sm font-medium text-bg transition-colors hover:bg-ink; }
+}
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
+html { scroll-padding-top: 100px; }

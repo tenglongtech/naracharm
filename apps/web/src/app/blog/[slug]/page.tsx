@@ -1,3 +1,6 @@
+import Image from 'next/image';
+import { editorialArt } from '@/lib/editorial-art';
+import { siteConfig } from '@/lib/site-config';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -27,6 +30,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       modifiedTime: article.updatedAt,
       authors: [article.author],
       tags: article.keywords.slice(0, 5),
+      ...(editorialArt(article) ? { images: [editorialArt(article).src] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
@@ -45,6 +49,7 @@ export default async function BlogArticlePage({ params }: Params) {
   const article = getArticleBySlug(slug);
   if (!article) notFound();
 
+  const artwork = editorialArt(article);
   const allProducts = await getActiveProducts();
   const relatedProducts: ProductCard[] = article.relatedProducts
     .map((s) => allProducts.find((p) => p.slug === s))
@@ -66,17 +71,18 @@ export default async function BlogArticlePage({ params }: Params) {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: article.title,
+    ...(artwork ? { image: `${siteConfig.url}${artwork.src}` } : {}),
     description: article.description,
     author: { '@type': 'Organization', name: article.author },
     publisher: {
       '@type': 'Organization',
       name: 'Nara Charm',
-      logo: { '@type': 'ImageObject', url: `${process.env.NEXT_PUBLIC_SITE_URL}/icon` },
+      logo: { '@type': 'ImageObject', url: `${siteConfig.url}/icon` },
     },
     datePublished: article.publishedAt,
     dateModified: article.updatedAt,
     keywords: article.keywords.join(', '),
-    mainEntityOfPage: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`,
+    mainEntityOfPage: `${siteConfig.url}/blog/${slug}`,
   };
 
   return (
@@ -118,6 +124,7 @@ export default async function BlogArticlePage({ params }: Params) {
           </div>
         </article>
 
+        {artwork && <figure className="mx-auto mb-12 max-w-4xl px-4"><div className="relative aspect-[3/2] overflow-hidden rounded-lg bg-surface"><Image src={artwork.src} alt={artwork.alt} fill sizes="(max-width: 768px) 100vw, 900px" className="object-cover" /></div><figcaption className="mt-3 text-xs text-muted">Editorial illustration · A visual guide to {article.category.toLowerCase()}.</figcaption></figure>}
         {/* 文章内容 */}
         <section className="mx-auto max-w-3xl px-4 pb-12">
           {article.content.map((section, i) => (

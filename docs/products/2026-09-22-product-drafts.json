@@ -1,0 +1,104 @@
+[
+  {
+    "slug": "quiet-tide-cord-bracelet",
+    "name": "Quiet Tide Cord Bracelet",
+    "category": "bracelet",
+    "status": "draft",
+    "description": "A pared-back cord bracelet concept for everyday layering.",
+    "price": null,
+    "stock": null,
+    "materials": null,
+    "images": [],
+    "publicationRequirements": [
+      "Approved physical sample and photos",
+      "Verified dimensions, materials and care instructions",
+      "Confirmed price, inventory and fulfillment",
+      "Reviewed product description and SEO"
+    ]
+  },
+  {
+    "slug": "warm-light-pendant",
+    "name": "Warm Light Pendant",
+    "category": "necklace",
+    "status": "draft",
+    "description": "A small pendant concept built around a warm, understated color palette.",
+    "price": null,
+    "stock": null,
+    "materials": null,
+    "images": [],
+    "publicationRequirements": [
+      "Approved physical sample and photos",
+      "Verified dimensions, materials and care instructions",
+      "Confirmed price, inventory and fulfillment",
+      "Reviewed product description and SEO"
+    ]
+  },
+  {
+    "slug": "petal-study-drops",
+    "name": "Petal Study Drops",
+    "category": "earrings",
+    "status": "draft",
+    "description": "A lightweight-looking floral silhouette to explore with a maker; final weight is unverified.",
+    "price": null,
+    "stock": null,
+    "materials": null,
+    "images": [],
+    "publicationRequirements": [
+      "Approved physical sample and photos",
+      "Verified dimensions, materials and care instructions",
+      "Confirmed price, inventory and fulfillment",
+      "Reviewed product description and SEO"
+    ]
+  },
+  {
+    "slug": "everyday-color-phone-charm",
+    "name": "Everyday Color Phone Charm",
+    "category": "phone-charm",
+    "status": "draft",
+    "description": "A color-focused accessory concept; attachment compatibility needs verification.",
+    "price": null,
+    "stock": null,
+    "materials": null,
+    "images": [],
+    "publicationRequirements": [
+      "Approved physical sample and photos",
+      "Verified dimensions, materials and care instructions",
+      "Confirmed price, inventory and fulfillment",
+      "Reviewed product description and SEO"
+    ]
+  },
+  {
+    "slug": "shared-path-bracelet-pair",
+    "name": "Shared Path Bracelet Pair",
+    "category": "bracelet",
+    "status": "draft",
+    "description": "A coordinated pair concept for gifting; each piece needs its own final specifications.",
+    "price": null,
+    "stock": null,
+    "materials": null,
+    "images": [],
+    "publicationRequirements": [
+      "Approved physical sample and photos",
+      "Verified dimensions, materials and care instructions",
+      "Confirmed price, inventory and fulfillment",
+      "Reviewed product description and SEO"
+    ]
+  },
+  {
+    "slug": "evening-thread-necklace",
+    "name": "Evening Thread Necklace",
+    "category": "necklace",
+    "status": "draft",
+    "description": "A fine-profile necklace concept for layering; length and construction remain unverified.",
+    "price": null,
+    "stock": null,
+    "materials": null,
+    "images": [],
+    "publicationRequirements": [
+      "Approved physical sample and photos",
+      "Verified dimensions, materials and care instructions",
+      "Confirmed price, inventory and fulfillment",
+      "Reviewed product description and SEO"
+    ]
+  }
+]

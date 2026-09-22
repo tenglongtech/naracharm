@@ -1,3 +1,4 @@
+import { siteConfig } from '@/lib/site-config';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
@@ -115,7 +116,7 @@ const PRINCIPLES = [
 ];
 
 export default function OurCraftPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const siteUrl = siteConfig.url;
   const pageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',

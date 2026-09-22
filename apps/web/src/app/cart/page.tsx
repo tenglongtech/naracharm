@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { CartContents } from '@/components/cart-contents';
 
-export const metadata: Metadata = { title: 'Shopping Cart' };
+export const metadata: Metadata = { title: 'Shopping Cart', robots: { index: false, follow: true } };
 
 export default function CartPage() {
   return (

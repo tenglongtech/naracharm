@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { LegalPage } from '@/components/legal-page';
 
 /** /size-guide - 尺码/测量指南 */
-export const metadata: Metadata = { title: 'Size Guide' };
+export const metadata: Metadata = { title: 'Jewelry Size Guide: Bracelets & Necklaces', description: 'Learn how to measure your wrist, compare necklace lengths and check product dimensions before choosing your jewelry.', alternates: { canonical: '/size-guide' } };
 
 export default function SizeGuidePage() {
   return (

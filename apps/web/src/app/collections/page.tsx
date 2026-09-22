@@ -1,3 +1,4 @@
+import { siteConfig } from '@/lib/site-config';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
@@ -17,7 +18,7 @@ export default async function CollectionsIndexPage() {
   const coverFor = (slug: string) => products.find((p) => p.collectionSlug === slug)?.primaryImage;
 
   // BreadcrumbList + CollectionPage JSON-LD
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const siteUrl = siteConfig.url;
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

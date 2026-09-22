@@ -1,3 +1,4 @@
+import { resolveSiteUrl } from './site-url';
 /**
  * 站点配置 (从环境变量读取)
  *
@@ -7,7 +8,7 @@
 
 export const siteConfig = {
   brand: process.env.NEXT_PUBLIC_BRAND_NAME || 'Nara Charm',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com',
+  url: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL, process.env.NODE_ENV),
   slogan: 'Jewelry with Spirit · Stories in Every Piece',
 
   company: {

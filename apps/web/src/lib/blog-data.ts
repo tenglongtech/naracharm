@@ -25,6 +25,162 @@ export type BlogArticle = {
 };
 
 export const BLOG_ARTICLES: BlogArticle[] = [
+{
+  "slug": "how-to-layer-necklaces-and-bracelets",
+  "title": "How to Layer Jewelry: A Simple Guide to Color, Balance & Fit",
+  "description": "Build an everyday jewelry combination with a focal piece, a shared color and comfortable spacing. Simple ideas for necklaces and bracelet stacks.",
+  "keywords": [
+    "how to layer jewelry"
+  ],
+  "category": "Styling",
+  "author": "Nara Charm",
+  "publishedAt": "2026-09-22",
+  "updatedAt": "2026-09-22",
+  "readingTime": "3 min read",
+  "relatedProducts": [
+    "tibetan-amulet-925-bracelet",
+    "mongolian-road-knot-cord",
+    "han-jade-lotus-pendant"
+  ],
+  "relatedArticles": [
+    "choose-a-meaningful-jewelry-gift",
+    "everyday-jewelry-care-storage"
+  ],
+  "content": [
+    {
+      "heading": "Start with one piece you love",
+      "body": [
+        "Choose one necklace or bracelet as the focal point. It might be the most colorful piece you own, a pendant with personal meaning or the bracelet you reach for every morning. Put it on before adding anything else.",
+        "Build around a detail already in that piece: a cord color, a bead shape or a metal tone. Repeating one detail makes different designs feel connected without turning them into a matching set."
+      ]
+    },
+    {
+      "heading": "Give each necklace some space",
+      "body": [
+        "Try a shorter, simpler necklace beside a longer pendant. Check the actual lengths in the product information; a photograph cannot tell you where a necklace will sit on your body. If dimensions are not listed, ask before ordering.",
+        "Look at the combination with the neckline you plan to wear. Move, bend and turn your head. Chains that repeatedly catch each other may be better worn separately."
+      ]
+    },
+    {
+      "heading": "Keep a bracelet stack comfortable",
+      "body": [
+        "Start with two bracelets rather than filling your wrist. Pair a finer cord with a more substantial beaded design, then check that neither presses into your skin when you type or bend your wrist.",
+        "Leave extra room if stacking several pieces. A close-fitting bracelet may feel tighter beside other bracelets, and heavy metal edges can rub softer beads. Separate pieces that knock against each other."
+      ]
+    },
+    {
+      "heading": "Make the combination yours",
+      "body": [
+        "For a quiet look, repeat one color in different textures. For more contrast, set a colorful bracelet beside a plain cord. These are starting points, not rules: the combination should feel comfortable and suit the clothes you actually wear.",
+        "Before putting jewelry away, separate the layers so chains and cords do not tangle. Explore our bracelet and necklace collections, and use the size guide to check your fit."
+      ]
+    }
+  ]
+},
+{
+  "slug": "choose-a-meaningful-jewelry-gift",
+  "title": "How to Choose a Meaningful Jewelry Gift",
+  "description": "Choose a jewelry gift around personal style, fit and a shared memory. A practical checklist for bracelets, necklaces, earrings and phone charms.",
+  "keywords": [
+    "how to choose a meaningful jewelry gift"
+  ],
+  "category": "Gift Guide",
+  "author": "Nara Charm",
+  "publishedAt": "2026-09-22",
+  "updatedAt": "2026-09-22",
+  "readingTime": "3 min read",
+  "relatedProducts": [
+    "tibetan-amulet-925-bracelet",
+    "mongolian-road-knot-cord",
+    "han-jade-lotus-pendant"
+  ],
+  "relatedArticles": [
+    "how-to-layer-necklaces-and-bracelets",
+    "everyday-jewelry-care-storage"
+  ],
+  "content": [
+    {
+      "heading": "Begin with what they already wear",
+      "body": [
+        "Notice the pieces the recipient wears often. Are they fine or bold, colorful or neutral? Do they prefer a bracelet to a necklace? These everyday choices are more useful than guessing from a trend.",
+        "A shared memory can guide your choice: a color from a trip, a small detail that recalls home, or a shape they love. You do not need to assign a universal meaning to a stone to make a gift personal."
+      ]
+    },
+    {
+      "heading": "Check the details that photographs cannot show",
+      "body": [
+        "Confirm dimensions, materials and fastening style before buying. For earrings, check whether the recipient has pierced ears and which closures they find comfortable. For necklaces, compare the stated length with one they already like.",
+        "Do not assume a piece is adjustable or suitable for sensitive skin. Read the specific material information and contact us if it leaves a question unanswered. Material preferences matter more than a broad label such as “silver-colored.”"
+      ]
+    },
+    {
+      "heading": "Plan for arrival and the possibility of a return",
+      "body": [
+        "Read the current shipping information for the destination and leave room for transit and customs. A delivery estimate is not a guarantee for a birthday or anniversary. Contact us before ordering if timing is essential.",
+        "Read the return policy and its conditions, especially for a gift. Keep the order information so you can help the recipient if they need support."
+      ]
+    },
+    {
+      "heading": "Add your own words",
+      "body": [
+        "Write a short note about why you chose the piece. A sentence about a shared day or a quality you appreciate can carry more meaning than a long explanation of symbolism.",
+        "Browse by the recipient’s preferred category, narrow the choice by their favorite color and check the practical details before checkout. Our gift guide and product pages are useful places to begin."
+      ]
+    }
+  ]
+},
+{
+  "slug": "everyday-jewelry-care-storage",
+  "title": "Everyday Jewelry Care: Wearing, Cleaning & Storage",
+  "description": "A gentle routine for mixed-material jewelry: read the care notes, avoid unnecessary moisture, separate pieces and store them without tangles.",
+  "keywords": [
+    "everyday jewelry care"
+  ],
+  "category": "Care Guide",
+  "author": "Nara Charm",
+  "publishedAt": "2026-09-22",
+  "updatedAt": "2026-09-22",
+  "readingTime": "3 min read",
+  "relatedProducts": [
+    "tibetan-amulet-925-bracelet",
+    "mongolian-road-knot-cord",
+    "han-jade-lotus-pendant"
+  ],
+  "relatedArticles": [
+    "how-to-layer-necklaces-and-bracelets",
+    "choose-a-meaningful-jewelry-gift"
+  ],
+  "content": [
+    {
+      "heading": "Read the care notes for your piece first",
+      "body": [
+        "Jewelry can combine metal, stone, cord and other materials. A cleaning method suitable for one part may damage another, so begin with the instructions on the individual product page.",
+        "If the materials or care instructions are unclear, ask before using a cleaner. Do not assume every natural stone, plated finish or cord can be treated in the same way."
+      ]
+    },
+    {
+      "heading": "Keep the routine gentle",
+      "body": [
+        "Put jewelry on after applying cosmetics, perfume or lotion, once your skin is dry. Remove pieces before swimming, showering or activities where they may snag, be pulled or be exposed to cleaning products.",
+        "After wearing, gently wipe the piece with a soft, dry cloth. Avoid soaking mixed-material jewelry or using abrasive products unless the specific care instructions recommend it."
+      ]
+    },
+    {
+      "heading": "Store pieces separately",
+      "body": [
+        "Fasten necklaces before storing them and give chains enough space to avoid knots. Keep earrings together and separate metal edges from softer surfaces that could scratch.",
+        "Use a clean, dry pouch or divided compartment. Avoid leaving jewelry in a damp bathroom or in direct sunlight, and do not stretch elastic or cord around a storage stand."
+      ]
+    },
+    {
+      "heading": "Pause when something feels different",
+      "body": [
+        "Check clasps, cords and connections before wearing. If a cord is fraying or a setting feels loose, stop wearing the piece and ask about the next step instead of pulling or tightening it with tools.",
+        "Keep the product name and order details available when contacting support. A description of the issue helps us understand the piece and provide appropriate guidance."
+      ]
+    }
+  ]
+},
   // ═══════════════════════════════════════════════════════════════
   // 文章 1: Amethyst Meaning (月搜 ~30K+)
   // ═══════════════════════════════════════════════════════════════

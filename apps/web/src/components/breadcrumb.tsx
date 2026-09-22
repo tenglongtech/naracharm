@@ -1,3 +1,4 @@
+import { siteConfig } from '@/lib/site-config';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
@@ -11,7 +12,7 @@ export type BreadcrumbItem = { label: string; href?: string };
  *   最后一项不需要 href (当前页)
  */
 export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com';
+  const siteUrl = siteConfig.url;
 
   // 拼装 JSON-LD (强制第一个为 Home)
   const fullItems: BreadcrumbItem[] = items[0]?.href === '/' ? items : [{ label: 'Home', href: '/' }, ...items];
