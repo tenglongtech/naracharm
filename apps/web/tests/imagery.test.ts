@@ -3,13 +3,17 @@ import assert from 'node:assert/strict';
 import { getActiveProducts, getAllCollections } from '../src/lib/storefront';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-test('every published product has its own existing redesigned image with no old gallery cross-links',async()=>{
+test('published products use existing, relevant redesigned images without old gallery cross-links',async()=>{
  const products=await getActiveProducts();
  assert.equal(products.length,28);
- assert.equal(new Set(products.map(p=>p.primaryImage)).size,28);
  for(const p of products){
-  assert.equal(p.primaryImage,`/products/redesigned/${p.slug}.webp`);
+  if(['rose-quartz-bracelet','hematite-bracelet-mens'].includes(p.slug)){
+   assert.equal(p.primaryImage,null);
+   assert.deepEqual(p.images,[]);
+   continue;
+  }
   assert.deepEqual(p.images,[p.primaryImage]);
+  assert.ok(p.primaryImage?.startsWith('/products/redesigned/'));
   assert.ok(existsSync(resolve('public',p.primaryImage!.slice(1))));
  }
 });

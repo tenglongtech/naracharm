@@ -100,5 +100,77 @@
     "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-773fd4e6-a589-410a-99bd-dbe342937c1b.png",
     "destination": "editorial/care.webp",
     "prompt": "Nara Charm premium editorial scene: care, ivory linen and limestone, natural side light, no text or logos. Illustrative jewelry scene."
+  },
+  {
+    "slug": "mongolian-road-knot-cord",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-f90d91be-ed06-44f7-aac0-5cbcc394670f.png",
+    "destination": "products/redesigned/mongolian-road-knot-cord.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "miao-filigree-drop-earrings",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-6ba69bb9-b90c-4828-8e8b-c399ce9eb990.png",
+    "destination": "products/redesigned/miao-filigree-drop-earrings.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "strawberry-quartz-bracelet",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-65dab37e-e446-4fc7-987a-8d1faf138b01.png",
+    "destination": "products/redesigned/strawberry-quartz-bracelet.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "caravan-fusion-necklace",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-7e247fca-fd62-489e-bc0b-b9bea7860cee.png",
+    "destination": "products/redesigned/caravan-fusion-necklace.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "hadas-knot-red-cord",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-2bf0efb1-7625-4d49-9fb5-fb590511d329.png",
+    "destination": "products/redesigned/hadas-knot-red-cord.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "tai-silk-cord-phone-charm",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-18c8972a-4005-4fe7-b6a0-02776e521bb2.png",
+    "destination": "products/redesigned/tai-silk-cord-phone-charm.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "han-jade-lotus-pendant",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-d487fa4c-9475-48f1-9bc8-31981a611a44.png",
+    "destination": "products/redesigned/han-jade-lotus-pendant.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "lotus-jade-bracelet",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-4f3ea469-f3d9-40ba-b723-0bb22127360f.png",
+    "destination": "products/redesigned/lotus-jade-bracelet.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "obsidian-guardian-charm",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-ef6f8d7b-b7c0-428d-97c1-1128966ee266.png",
+    "destination": "products/redesigned/obsidian-guardian-charm.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "mixed-crystal-bracelet",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-0fe22d38-db70-4026-9574-a19a60dd8b76.png",
+    "destination": "products/redesigned/mixed-crystal-bracelet.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "amethyst-peace-bracelet",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-69d2128f-834b-4e25-be1c-48e739dad3b1.png",
+    "destination": "products/redesigned/amethyst-peace-bracelet.webp",
+    "prompt": "Specification-based illustrative jewelry concept; visually audited for matching item type and material."
+  },
+  {
+    "slug": "obsidian-guard-charm",
+    "source": "/Users/matt/.codex/generated_images/01a0c7e8-bc15-7ac1-ad90-41d20e36ddc4/exec-1be0a876-0a97-437d-9718-68f507e6c579.png",
+    "destination": "products/redesigned/obsidian-guard-charm.webp",
+    "prompt": "Specification-based illustrative black obsidian phone charm with braided cord and silver accent; visually audited."
   }
 ]

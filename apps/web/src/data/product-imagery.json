@@ -56,9 +56,9 @@
     "imageKind": "illustration"
   },
   "amethyst-calm-bracelet": {
-    "primaryImage": "/products/redesigned/amethyst-calm-bracelet.webp",
+    "primaryImage": "/products/redesigned/amethyst-peace-bracelet.webp",
     "images": [
-      "/products/redesigned/amethyst-calm-bracelet.webp"
+      "/products/redesigned/amethyst-peace-bracelet.webp"
     ],
     "imageKind": "illustration"
   },
@@ -77,11 +77,8 @@
     "imageKind": "illustration"
   },
   "rose-quartz-bracelet": {
-    "primaryImage": "/products/redesigned/rose-quartz-bracelet.webp",
-    "images": [
-      "/products/redesigned/rose-quartz-bracelet.webp"
-    ],
-    "imageKind": "illustration"
+    "primaryImage": null,
+    "images": []
   },
   "obsidian-guard-charm": {
     "primaryImage": "/products/redesigned/obsidian-guard-charm.webp",
@@ -140,11 +137,8 @@
     "imageKind": "illustration"
   },
   "hematite-bracelet-mens": {
-    "primaryImage": "/products/redesigned/hematite-bracelet-mens.webp",
-    "images": [
-      "/products/redesigned/hematite-bracelet-mens.webp"
-    ],
-    "imageKind": "illustration"
+    "primaryImage": null,
+    "images": []
   },
   "unakite-bracelet-balance": {
     "primaryImage": "/products/redesigned/unakite-bracelet-balance.webp",

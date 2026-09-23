@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { LotusMark } from './lotus-mark';
 
 /** 示例产品类型 (Phase 2 用 Drizzle schema 的 Product/Variant 类型替换) */
 export type ProductCard = {
@@ -26,7 +27,7 @@ export function ProductTile({ product }: { product: ProductCard }) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-xs text-muted/40">[product image]</div>
+          <div className="flex h-full flex-col items-center justify-center gap-3 text-muted/50"><LotusMark className="h-12 w-12" /><span className="text-xs uppercase tracking-wider">Image coming soon</span></div>
         )}
         {product.tag && (
           <span className="absolute left-2 top-2 rounded-sm bg-brand px-2 py-0.5 text-[10px] font-medium text-bg">
