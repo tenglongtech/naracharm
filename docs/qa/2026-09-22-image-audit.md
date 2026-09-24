@@ -41,10 +41,10 @@
 | Hada Knot Red Cord | /products/p06.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
 | Obsidian Guardian Charm | /products/p09.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
 | Caravan Fusion Necklace | /products/p10.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
-| Amethyst Calm Bracelet | /products/p11.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
-| Amethyst Peace Bracelet | /products/p01.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
+| Amethyst Calm Bracelet | /products/p11.jpg | 使用符合紫晶与银色隔珠描述的设计示意，与 Amethyst Peace 共用；移除旧相册错配 |
+| Amethyst Peace Bracelet | /products/p01.jpg | 按文字规格重做；移除旧相册错配 |
 | Strawberry Quartz Bracelet | /products/p02.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
-| Rose Quartz Bracelet | /products/p03.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
+| Rose Quartz Bracelet | /products/p03.jpg | 旧图为金色耳饰；当前隐藏图片并显示待补图状态，等待粉晶专属示意图 |
 | Obsidian Guard Phone Charm | /products/p04.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
 | Mixed Crystal Bracelet | /products/p06.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
 | Lotus Jade Bracelet | /products/p09.jpg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
@@ -53,7 +53,7 @@
 | Amethyst Drop Earrings | /products/placeholder-01.svg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
 | Citrine Abundance Bracelet | /products/placeholder-01.svg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
 | Howlite Turquoise Bracelet | /products/placeholder-01.svg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
-| Hematite Men's Bracelet | /products/placeholder-01.svg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
+| Hematite Men's Bracelet | /products/placeholder-01.svg | 生成图与“matte”描述不符；当前隐藏图片并显示待补图状态 |
 | Unakite Balance Bracelet | /products/placeholder-01.svg | 按该款文字规格独立重做；移除旧相册错配；新图路径按商品 slug 唯一绑定 |
 
 ## 字节完全相同的图片
