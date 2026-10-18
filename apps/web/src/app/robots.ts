@@ -16,6 +16,11 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/admin', '/admin/', '/api', '/account', '/cart', '/checkout', '/order', '/login', '/register', '/forgot-password'],
       },
+      {
+        userAgent: ['GPTBot', 'PerplexityBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended'],
+        allow: ['/', '/llms.txt', '/blog', '/products', '/collections', '/stories', '/our-craft'],
+        disallow: ['/admin', '/api', '/account', '/cart', '/checkout'],
+      },
     ],
     sitemap: `${base}/sitemap.xml`,
     host: base,

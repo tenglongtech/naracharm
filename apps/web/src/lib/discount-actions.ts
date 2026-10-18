@@ -27,7 +27,7 @@ export type DiscountValidation = {
 export async function validateDiscountCode(code: string, subtotalCents: number): Promise<DiscountValidation> {
   const trimmed = code.trim().toUpperCase();
   if (!trimmed) {
-    return { valid: false, error: '请输入优惠码' };
+    return { valid: false, error: 'Please enter a discount code' };
   }
 
   const [discount] = await db
@@ -37,28 +37,28 @@ export async function validateDiscountCode(code: string, subtotalCents: number):
     .limit(1);
 
   if (!discount) {
-    return { valid: false, error: '优惠码不存在或已失效' };
+    return { valid: false, error: 'Discount code is invalid or has expired' };
   }
 
-  // 检查有效期
+  // Check validity dates
   const now = new Date();
   if (discount.startsAt && discount.startsAt > now) {
-    return { valid: false, error: '优惠码尚未开始' };
+    return { valid: false, error: 'Discount code is not active yet' };
   }
   if (discount.endsAt && discount.endsAt < now) {
-    return { valid: false, error: '优惠码已过期' };
+    return { valid: false, error: 'Discount code has expired' };
   }
 
-  // 检查使用次数
+  // Check usage limits
   if (discount.usageLimit && discount.usedCount >= discount.usageLimit) {
-    return { valid: false, error: '优惠码已达使用上限' };
+    return { valid: false, error: 'Discount code has reached its usage limit' };
   }
 
-  // 检查最低消费
+  // Check minimum order subtotal
   if (discount.minSubtotalCents && subtotalCents < discount.minSubtotalCents) {
     return {
       valid: false,
-      error: `需满 $${(discount.minSubtotalCents / 100).toFixed(2)} 才可使用`,
+      error: `Order must be at least $${(discount.minSubtotalCents / 100).toFixed(2)} to use this code`,
     };
   }
 

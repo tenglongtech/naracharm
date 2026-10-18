@@ -71,8 +71,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${base}/blog/${a.slug}`,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
-    lastModified: new Date(a.updatedAt),
+    lastModified: new Date(a.updatedAt || a.publishedAt),
   }));
 
-  return [...staticPages, ...storyEntries, ...blogEntries, ...collectionEntries, ...productEntries];
+  // 使用 Map 按 URL 去重，确保给 Google 提交的 Sitemap 100% 唯一无冗余
+  const sitemapMap = new Map<string, MetadataRoute.Sitemap[number]>();
+  for (const item of [...staticPages, ...storyEntries, ...blogEntries, ...collectionEntries, ...productEntries]) {
+    if (!sitemapMap.has(item.url)) {
+      sitemapMap.set(item.url, {
+        ...item,
+        lastModified: item.lastModified || new Date(),
+      });
+    }
+  }
+
+  return Array.from(sitemapMap.values());
 }

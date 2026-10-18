@@ -105,7 +105,7 @@ export const STORIES: Story[] = [
     publishedAt: '2026-06-02',
     body: [
       'In the East, jade has been treasured above gold for thousands of years. Not for its flash — jade has no flash — but for its quiet. The literati, the scholar-painters of the Song and Ming dynasties, kept jade on their desks not because it was precious, but because it was company. A stone that did not interrupt.',
-      'A jade pendant does not announce itself. It sits at the collarbone, beneath the collar, where only the wearer feels its weight. Over the years the stone warms to the body and the body warms to the stone. There is a Chinese saying: 人养玉, 玉养人 — the person nurtures the jade, and the jade nurtures the person back.',
+      'A jade pendant does not announce itself. It sits at the collarbone, beneath the collar, where only the wearer feels its weight. Over the years the stone warms to the body and the body warms to the stone. There is an ancient saying: the person nurtures the jade, and the jade nurtures the person in return.',
       'The lotus is what the literati called the most honest flower. It grows from mud. It does not pretend otherwise. In a world that asks you to be hard, the lotus is permission to stay soft — to keep your roots where they are, and your face toward the sun.',
     ],
     closing:

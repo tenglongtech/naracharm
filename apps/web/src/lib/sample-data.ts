@@ -357,10 +357,10 @@ export const COLLECTIONS: Collection[] = [
       'You do not have to believe in the power of stones to wear them. But there is a kind of meaning that comes from choosing a stone, knowing what it has meant to others, and carrying it with you.',
     ],
     symbols: [
-      { name: 'Amethyst 紫水晶', meaning: 'The stone of calm — worn to quiet a busy, loud mind.' },
-      { name: 'Rose Quartz 粉水晶', meaning: 'The stone of unconditional love — for tenderness, toward others and self.' },
-      { name: 'Turquoise 绿松石', meaning: 'A piece of fallen sky — protective, sacred, given at birth.' },
-      { name: 'Jade 玉', meaning: 'The stone of wisdom — slow, deep, patient, treasured above gold.' },
+      { name: 'Amethyst', meaning: 'The stone of calm — worn to quiet a busy, loud mind.' },
+      { name: 'Rose Quartz', meaning: 'The stone of unconditional love — for tenderness, toward others and self.' },
+      { name: 'Turquoise', meaning: 'A piece of fallen sky — protective, sacred, given at birth.' },
+      { name: 'Jade', meaning: 'The stone of wisdom — slow, deep, patient, treasured above gold.' },
     ],
     materials: [
       { name: 'Natural Crystal Beads', origin: 'Graded by eye', desc: 'Genuine stones — amethyst, quartz, turquoise, jade. No two beads alike.' },
@@ -386,9 +386,9 @@ export const COLLECTIONS: Collection[] = [
       'A phone charm is a small thing. But a hundred times a day, your phone lights up — and now, each time, a small piece of old meaning lights up with it.',
     ],
     symbols: [
-      { name: 'Obsidian 黑曜石', meaning: 'The protective stone — worn since the Stone Age to guard against bad days.' },
-      { name: 'Red Cord 红绳', meaning: 'Across Asia, red is the color of blessing, protection, and good fortune.' },
-      { name: 'The Knot 绳结', meaning: 'Each hand-tied knot is a small act of patience and devotion.' },
+      { name: 'Obsidian', meaning: 'The protective stone — worn since the Stone Age to guard against bad days.' },
+      { name: 'Red Cord', meaning: 'Across Asia, red is the color of blessing, protection, and good fortune.' },
+      { name: 'The Knot', meaning: 'Each hand-tied knot is a small act of patience and devotion.' },
     ],
     materials: [
       { name: 'Natural Stone Beads', origin: 'Hand-selected', desc: 'Obsidian, turquoise, and cinnabar-red stones.' },

@@ -66,7 +66,7 @@ export function CheckoutForm() {
       const data = await res.json();
       setPromoResult(data);
     } catch {
-      setPromoResult({ valid: false, error: '验证失败,请重试' });
+      setPromoResult({ valid: false, error: 'Verification failed, please try again' });
     } finally {
       setPromoChecking(false);
     }
@@ -96,7 +96,7 @@ export function CheckoutForm() {
       });
       const data = await res.json();
       if (!res.ok || !data.clientSecret) {
-        throw new Error(data.error || '创建支付会话失败');
+        throw new Error(data.error || 'Failed to create payment session');
       }
       setClientSecret(data.clientSecret);
     } catch (err: any) {
@@ -115,7 +115,7 @@ export function CheckoutForm() {
       <div className="rounded-lg border border-border bg-surface p-6">
         <h2 className="mb-4 font-display text-xl">Complete Your Payment</h2>
         <p className="mb-4 text-sm text-muted">
-          测试卡号: <code className="rounded bg-bg px-1.5 py-0.5">4242 4242 4242 4242</code> · 任意未来日期 · 任意 CVC
+          Test Card: <code className="rounded bg-bg px-1.5 py-0.5">4242 4242 4242 4242</code> · Any future date · Any CVC
         </p>
         <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
           <EmbeddedCheckout />
@@ -157,7 +157,7 @@ export function CheckoutForm() {
             <span className="text-muted">3.</span> Payment
           </h2>
           <p className="mt-2 text-sm text-muted">
-            点击「Place Order」后跳转至 Stripe 安全的支付页面,支持 Visa / Mastercard / Amex / PayPal / Apple Pay。
+            Clicking &quot;Place Order&quot; redirects to Stripe&apos;s encrypted checkout, supporting Visa, Mastercard, Amex, PayPal, and Apple Pay.
           </p>
         </section>
       </div>
@@ -233,7 +233,7 @@ export function CheckoutForm() {
           <p className="mt-2 text-center text-xs text-brand">
             {error}
             <br />
-            <span className="text-muted">(Stripe 测试密钥未配置时无法创建支付会话)</span>
+            <span className="text-muted">(Payment session unavailable if Stripe test keys are unconfigured)</span>
           </p>
         )}
         <p className="mt-3 text-center text-xs text-muted">

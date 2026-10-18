@@ -8,7 +8,7 @@ import { validateDiscountCode } from '@/lib/discount-actions';
  */
 export async function POST(req: NextRequest) {
   const { code, subtotalCents } = await req.json();
-  if (!code) return NextResponse.json({ valid: false, error: '缺少优惠码' }, { status: 400 });
+  if (!code) return NextResponse.json({ valid: false, error: 'Discount code is required' }, { status: 400 });
   const result = await validateDiscountCode(code, subtotalCents || 0);
   return NextResponse.json(result);
 }

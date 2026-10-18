@@ -15,7 +15,24 @@ export default async function HomePage() {
   const featured = [...products].sort((a,b)=>Number(b.isFeatured)-Number(a.isFeatured)).slice(0,8);
   const hero = featured.find(p=>p.primaryImage);
   const articles = getRecentBlogArticles(3);
-  return <><SiteHeader /><main id="main">
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Nara Charm',
+    url: siteConfig.url,
+    description: 'Handmade heritage jewelry — bracelets, necklaces, earrings and phone charms carrying cultural stories.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${siteConfig.url}/search?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} /><SiteHeader /><main id="main">
     <section className="relative border-b border-border">
       <div className="mx-auto grid max-w-7xl lg:grid-cols-[0.95fr_1.05fr]">
         <div className="flex flex-col justify-center px-5 py-9 md:px-8 md:py-20 lg:pr-14">

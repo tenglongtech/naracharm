@@ -37,10 +37,10 @@ const NARRATIVES: Record<string, Narrative> = {
       'You do not have to believe in the power of stones to wear them. But there is a kind of meaning that comes from choosing a stone, knowing what it has meant to others, and carrying it with you.',
     ],
     symbols: [
-      { name: 'Amethyst 紫水晶', meaning: 'The stone of calm — worn to quiet a busy, loud mind.' },
-      { name: 'Rose Quartz 粉水晶', meaning: 'The stone of unconditional love — for tenderness, toward others and self.' },
-      { name: 'Turquoise 绿松石', meaning: 'A piece of fallen sky — protective, sacred, given at birth.' },
-      { name: 'Jade 玉', meaning: 'The stone of wisdom — slow, deep, patient, treasured above gold.' },
+      { name: 'Amethyst', meaning: 'The stone of calm — worn to quiet a busy, loud mind.' },
+      { name: 'Rose Quartz', meaning: 'The stone of unconditional love — for tenderness, toward others and self.' },
+      { name: 'Turquoise', meaning: 'A piece of fallen sky — protective, sacred, given at birth.' },
+      { name: 'Jade', meaning: 'The stone of wisdom — slow, deep, patient, treasured above gold.' },
     ],
     materials: [
       { name: 'Natural Crystal Beads', origin: 'Graded by eye', desc: 'Genuine stones — amethyst, quartz, turquoise. No two beads alike.' },
@@ -64,9 +64,9 @@ const NARRATIVES: Record<string, Narrative> = {
       'A phone charm is a small thing. But a hundred times a day, your phone lights up — and now, each time, a small piece of old meaning lights up with it.',
     ],
     symbols: [
-      { name: 'Obsidian 黑曜石', meaning: 'The protective stone — worn since the Stone Age to guard against bad days.' },
-      { name: 'Red Cord 红绳', meaning: 'Across Asia, red is the color of blessing, protection, and good fortune.' },
-      { name: 'The Knot 绳结', meaning: 'Each hand-tied knot is a small act of patience and devotion.' },
+      { name: 'Black Obsidian', meaning: 'The protective stone — worn since the Stone Age to guard against bad days.' },
+      { name: 'Red Cord', meaning: 'Across Asia, red is the color of blessing, protection, and good fortune.' },
+      { name: 'The Knot', meaning: 'Each hand-tied knot is a small act of patience and devotion.' },
     ],
     materials: [
       { name: 'Natural Stone Beads', origin: 'Hand-selected', desc: 'Obsidian, turquoise, and cinnabar-red stones.' },
@@ -90,9 +90,9 @@ const NARRATIVES: Record<string, Narrative> = {
       'This collection brings that craft down from the plateau. Each piece carries the weight of where it came from.',
     ],
     symbols: [
-      { name: 'Lotus 莲花', meaning: 'Purity rising from mud — staying clean in an unclean world.' },
-      { name: 'Endless Knot 无尽结', meaning: 'The interdependence of all things; a blessing without beginning or end.' },
-      { name: 'Turquoise 绿松石', meaning: 'A piece of the sky. Protective, sacred, given at birth.' },
+      { name: 'Lotus Blossom', meaning: 'Purity rising from mud — staying clean in an unclean world.' },
+      { name: 'Endless Knot', meaning: 'The interdependence of all things; a blessing without beginning or end.' },
+      { name: 'Turquoise', meaning: 'A piece of the sky. Protective, sacred, given at birth.' },
     ],
     materials: [
       { name: 'Tibetan Silver', origin: 'Hand-chased', desc: 'Patterns struck by hand with chisel and hammer.' },
@@ -116,9 +116,9 @@ const NARRATIVES: Record<string, Narrative> = {
       'For anyone who carries the spirit of the open road, even in a city far from any grassland.',
     ],
     symbols: [
-      { name: 'Endless Knot 蒙古结', meaning: 'A living blessing — never tied shut, because it must stay alive to travel.' },
-      { name: 'Red Cord 红绳', meaning: 'Tied by mothers for travelers — a silent count of days until return.' },
-      { name: 'Obsidian 黑曜石', meaning: 'Protection for the journey — the dark stone that guards the road.' },
+      { name: 'Mongolian Endless Knot', meaning: 'A living blessing — never tied shut, because it must stay alive to travel.' },
+      { name: 'Red Cord', meaning: 'Tied by mothers for travelers — a silent count of days until return.' },
+      { name: 'Black Obsidian', meaning: 'Protection for the journey — the dark stone that guards the road.' },
     ],
     materials: [
       { name: 'Waxed Cord', origin: 'Hand-braided', desc: 'Traditional Mongolian knotting, each crossing deliberate.' },
@@ -142,7 +142,7 @@ const NARRATIVES: Record<string, Narrative> = {
       'To wear it is to carry a craft that has survived by being passed, hand to hand, mother to daughter, for centuries.',
     ],
     symbols: [
-      { name: 'Filigree 银丝', meaning: 'Silver drawn finer than hair — a technique that takes a lifetime to master.' },
+      { name: 'Silver Filigree', meaning: 'Silver drawn finer than hair — a technique that takes a lifetime to master.' },
       { name: 'Dragon & Flower', meaning: 'Traditional Miao motifs, each carrying a clan story.' },
       { name: 'Silver as Lineage', meaning: 'For the Miao, silver is family history worn on the body.' },
     ],
@@ -167,9 +167,9 @@ const NARRATIVES: Record<string, Narrative> = {
       'Together, they are a quiet argument for depth — that the truest beauty reveals itself slowly, over a lifetime.',
     ],
     symbols: [
-      { name: 'Jade 玉', meaning: 'Wisdom, patience, and integrity — the stone treasured above gold.' },
-      { name: 'Lotus 莲花', meaning: 'Purity and awakening — the oldest symbol of rising clear of the mud.' },
-      { name: 'Restraint 留白', meaning: 'The art of what is left unsaid — the Han aesthetic of meaningful space.' },
+      { name: 'Jade', meaning: 'Wisdom, patience, and integrity — the stone treasured above gold.' },
+      { name: 'Lotus Blossom', meaning: 'Purity and awakening — the oldest symbol of rising clear of the mud.' },
+      { name: 'Quiet Restraint', meaning: 'The art of what is left unsaid — the Han aesthetic of meaningful space.' },
     ],
     materials: [
       { name: 'Jade & Jade-Tone Stone', origin: 'Hand-selected', desc: 'Genuine jade and natural stones in the jade palette.' },
@@ -193,9 +193,9 @@ const NARRATIVES: Record<string, Narrative> = {
       'In a world that moves too fast, these pieces are an argument for slowness. For making things by hand. For letting light take its time.',
     ],
     symbols: [
-      { name: 'Thai Silk 泰丝', meaning: 'Light made tangible — a river of thread, woven slowly by hand.' },
-      { name: 'Lotus 莲花', meaning: 'Shared across Buddhist Asia — purity, awakening, rising clear of the mud.' },
-      { name: 'Gold Tone 金色', meaning: 'Fortune and illumination — the color of temple roofs at dawn.' },
+      { name: 'Thai Silk', meaning: 'Light made tangible — a river of thread, woven slowly by hand.' },
+      { name: 'Lotus Blossom', meaning: 'Shared across Buddhist Asia — purity, awakening, rising clear of the mud.' },
+      { name: 'Temple Gold Tone', meaning: 'Fortune and illumination — the color of temple roofs at dawn.' },
     ],
     materials: [
       { name: 'Thai Silk', origin: 'Hand-loomed in the north', desc: 'Naturally iridescent — different colors in different light.' },
@@ -219,8 +219,8 @@ const NARRATIVES: Record<string, Narrative> = {
     ],
     symbols: [
       { name: 'The Crossroads', meaning: 'Where crafts and cultures met, traded, and became something new.' },
-      { name: 'Caravan 商队', meaning: 'The travelers who carried technique across thousands of miles.' },
-      { name: 'River 河流', meaning: 'The natural bridge — things flow downstream, and meet.' },
+      { name: 'The Caravan', meaning: 'The travelers who carried technique across thousands of miles.' },
+      { name: 'The River', meaning: 'The natural bridge — things flow downstream, and meet.' },
     ],
     materials: [
       { name: 'Mixed Heritage', origin: 'Two or more traditions', desc: 'Each material chosen for the craft it represents.' },

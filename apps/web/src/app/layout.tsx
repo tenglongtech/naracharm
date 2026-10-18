@@ -101,6 +101,7 @@ const organizationJsonLd = {
   name: 'Nara Charm',
   url: SITE_URL,
   logo: `${SITE_URL}/icon`,
+  slogan: siteConfig.slogan,
   description:
     'Handmade heritage jewelry — Tibetan silver, Miao filigree, Mongolian knots, Han jade, Thai silk. Jewelry with spirit, stories in every piece.',
   sameAs: Object.entries(siteConfig.social).filter(([, handle]) => Boolean(handle)).map(([network, handle]) => `https://${network === 'youtube' ? 'youtube.com/@' : network === 'tiktok' ? 'tiktok.com/@' : `${network}.com/`}${handle.replace(/^@/, '')}`),
@@ -109,6 +110,19 @@ const organizationJsonLd = {
     contactType: 'Customer Service',
     email: siteConfig.company.supportEmail,
     availableLanguage: 'English',
+  },
+  knowsAbout: [
+    'Handmade Jewelry',
+    'Tibetan Silver',
+    'Miao Filigree',
+    'Natural Gemstones',
+    'Silk Road Heritage',
+    'Healing Crystals',
+    'Artisan Craftsmanship',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: siteConfig.company.address,
   },
 };
 

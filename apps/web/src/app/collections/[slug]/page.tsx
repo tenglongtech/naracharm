@@ -31,12 +31,28 @@ function toCard(p: Awaited<ReturnType<typeof getProductsByCollection>>[number]):
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const collection = await getCollectionBySlug(slug);
-  if (collection) return { title: collection.name, description: collection.description || undefined };
+  if (collection) return {
+    title: `${collection.name} Collection | Handmade Artisan Jewelry`,
+    description: collection.description || `Explore authentic handcrafted ${collection.name} jewelry pieces rooted in traditional craftsmanship.`,
+    alternates: { canonical: `/collections/${slug}` },
+    openGraph: {
+      title: `${collection.name} Collection | Nara Charm`,
+      description: collection.description || undefined,
+      url: `/collections/${slug}`,
+      type: 'website',
+    },
+  };
   const category = CATEGORIES.find((c) => c.slug === slug);
   if (category) return {
     title: category.seoTitle,
     description: category.seoDescription,
     alternates: { canonical: `/collections/${slug}` },
+    openGraph: {
+      title: category.seoTitle,
+      description: category.seoDescription,
+      url: `/collections/${slug}`,
+      type: 'website',
+    },
   };
   return { title: 'Collection not found' };
 }
@@ -55,8 +71,30 @@ export default async function CollectionPage({ params }: Params) {
   // 品类视图
   if (cat && !collection) {
     const products = (await getProductsByCategory(cat.slug)).map(toCard);
+    const siteUrl = siteConfig.url;
+    const categoryJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: cat.name,
+      description: cat.seoDescription,
+      url: `${siteUrl}/collections/${slug}`,
+      mainEntity: {
+        '@type': 'ItemList',
+        numberOfItems: products.length,
+        itemListElement: products.slice(0, 10).map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          url: `${siteUrl}/products/${p.slug}`,
+          name: p.name,
+        })),
+      },
+    };
     return (
       <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
+        />
         <SiteHeader />
         <main id="main">
           <section className="border-b border-border bg-ink text-bg">

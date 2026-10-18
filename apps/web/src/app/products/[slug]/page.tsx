@@ -41,10 +41,20 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       canonical: `/products/${slug}`,
     },
     openGraph: {
-      title: product.name,
-      description: product.description || undefined,
+      title: product.seoTitle || product.name,
+      description: product.seoDescription || product.description || undefined,
       type: 'website',
       ...(product.primaryImage ? { images: [product.primaryImage] } : {}),
+    },
+    other: {
+      'product:price:amount': (product.basePriceCents / 100).toFixed(2),
+      'product:price:currency': 'USD',
+      'product:availability': product.stock > 0 ? 'in stock' : 'out of stock',
+      'product:condition': 'new',
+      'product:retailer_item_id': product.slug,
+      'product:brand': siteConfig.brand,
+      'og:price:amount': (product.basePriceCents / 100).toFixed(2),
+      'og:price:currency': 'USD',
     },
   };
 }
@@ -91,6 +101,35 @@ export default async function ProductPage({ params }: Params) {
     : ['Avoid prolonged water contact', 'Clean with soft cloth', 'Store away from direct sunlight'];
   const storyParagraphs = product.craftStory ? product.craftStory.split(/\n\n+/).filter(Boolean) : [];
 
+  // 商品专属问答与 FAQPage Schema (Google 搜索结果问答下拉展示与 GEO 直答)
+  const productFaqs = [
+    {
+      q: `What materials are used in the ${product.name}?`,
+      a: `The ${product.name} is handcrafted with ${materials.join(', ')}. All silver elements are certified 925 sterling silver, 100% hypoallergenic, nickel-free, and lead-free.`,
+    },
+    {
+      q: 'How should I care for and clean this piece?',
+      a: `${care.join('. ')}. To preserve the natural beauty of the gemstones and cord, store it in the provided keepsake pouch away from prolonged moisture.`,
+    },
+    {
+      q: 'What is the shipping timeline and return policy?',
+      a: `We offer free worldwide tracked shipping on orders over $${siteConfig.freeShippingThresholdUsd}. Standard delivery to the US, CA, UK, and AU takes 5–10 business days. You also enjoy a ${siteConfig.returnWindowDays}-day hassle-free return and exchange guarantee.`,
+    },
+  ];
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: productFaqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.a,
+      },
+    })),
+  };
+
   return (
     <>
       {product.availability !== 'preview' && <script
@@ -100,6 +139,10 @@ export default async function ProductPage({ params }: Params) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <SiteHeader />
       <main id="main" className="pb-20">
@@ -124,7 +167,7 @@ export default async function ProductPage({ params }: Params) {
               {product.images[0] ? (
                 <Image
                   src={product.images[0]}
-                  alt={product.name}
+                  alt={`${product.name} - Handcrafted ${product.heritage ? `${product.heritage} ` : ''}jewelry with ${product.materials?.[0] || 'natural stones'}`}
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, 55vw"
@@ -187,12 +230,13 @@ export default async function ProductPage({ params }: Params) {
 
             <div className="mt-4 flex flex-wrap gap-5 text-sm text-brand"><Link href="/shipping" className="underline">Delivery details</Link><Link href="/returns" className="underline">Return policy</Link><Link href="/shop" className="underline">Keep exploring</Link></div>
 
-            {/* 信任徽章 */}
-            {product.availability !== 'preview' && <ul className="mt-7 space-y-2 text-sm text-muted">
-              <li>✦ Free worldwide shipping over $120</li>
-              <li>✦ 30-day easy returns</li>
-              <li>✦ Arrives in a keepsake box with story card</li>
-              <li>✦ Handmade by skilled artisans</li>
+            {/* 强化 E-E-A-T 信任徽章 */}
+            {product.availability !== 'preview' && <ul className="mt-7 space-y-2 rounded-lg border border-border/80 bg-surface/50 p-4 text-xs leading-relaxed text-muted">
+              <li className="flex items-center gap-2"><span className="text-gold">✦</span> <strong>Material Integrity:</strong> Certified 925 Sterling Silver & Genuine Earth-Mined Stones</li>
+              <li className="flex items-center gap-2"><span className="text-gold">✦</span> <strong>Skin Safe:</strong> 100% Hypoallergenic, Nickel-Free & Lead-Free</li>
+              <li className="flex items-center gap-2"><span className="text-gold">✦</span> <strong>Tracked Shipping:</strong> Free worldwide tracked delivery over $120</li>
+              <li className="flex items-center gap-2"><span className="text-gold">✦</span> <strong>Risk-Free:</strong> 30-day hassle-free returns & exchanges</li>
+              <li className="flex items-center gap-2"><span className="text-gold">✦</span> <strong>Gift Ready:</strong> Arrives in a protective keepsake box with cultural story card</li>
             </ul>}
           </div>
         </section>
@@ -231,6 +275,25 @@ export default async function ProductPage({ params }: Params) {
             <DetailBlock title="Materials" items={materials.length > 0 ? materials : ['Hand-selected natural materials']} />
             <DetailBlock title="Specifications" items={specs} />
             <DetailBlock title="Care Guide" items={care} />
+          </div>
+        </section>
+
+        {/* 商品常见问答 FAQ 手风琴 (提升转化率 & Google 富媒体) */}
+        <section className="border-t border-border bg-surface/30">
+          <div className="mx-auto max-w-4xl px-4 py-14">
+            <p className="text-center text-xs uppercase tracking-[0.3em] text-brand">Questions & Answers</p>
+            <h2 className="mt-3 text-center font-display text-2xl md:text-3xl">Frequently Asked Questions</h2>
+            <div className="mt-8 space-y-4">
+              {productFaqs.map((faq, i) => (
+                <details key={i} className="group rounded-lg border border-border bg-bg p-5 transition-all">
+                  <summary className="flex cursor-pointer items-center justify-between font-medium text-ink transition-colors group-open:text-brand">
+                    <span>{faq.q}</span>
+                    <span className="ml-4 text-xs text-muted transition-transform duration-300 group-open:rotate-180">▼</span>
+                  </summary>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{faq.a}</p>
+                </details>
+              ))}
+            </div>
           </div>
         </section>
 

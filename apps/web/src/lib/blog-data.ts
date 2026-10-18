@@ -64,15 +64,15 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     {
       "heading": "Keep a bracelet stack comfortable",
       "body": [
-        "Start with two bracelets rather than filling your wrist. Pair a finer cord with a more substantial beaded design, then check that neither presses into your skin when you type or bend your wrist.",
+        "Start with two bracelets rather than filling your wrist. Pair a finer cord like our [Mongolian Road Knot Cord](/products/mongolian-road-knot-cord) with a more substantial design like the [Tibetan Amulet 925 Bracelet](/products/tibetan-amulet-925-bracelet), then check that neither presses into your skin when you type or bend your wrist.",
         "Leave extra room if stacking several pieces. A close-fitting bracelet may feel tighter beside other bracelets, and heavy metal edges can rub softer beads. Separate pieces that knock against each other."
       ]
     },
     {
       "heading": "Make the combination yours",
       "body": [
-        "For a quiet look, repeat one color in different textures. For more contrast, set a colorful bracelet beside a plain cord. These are starting points, not rules: the combination should feel comfortable and suit the clothes you actually wear.",
-        "Before putting jewelry away, separate the layers so chains and cords do not tangle. Explore our bracelet and necklace collections, and use the size guide to check your fit."
+        "For a quiet look, repeat one color in different textures. For more contrast, set a colorful stone bracelet beside a plain cord. These are starting points, not rules: the combination should feel comfortable and suit the clothes you actually wear.",
+        "Before putting jewelry away, separate the layers so chains and cords do not tangle. Explore our [handmade bracelet collection](/collections/bracelets) and [crystal necklaces](/collections/necklaces), and use our [size guide](/size-guide) to ensure a comfortable fit."
       ]
     }
   ]
@@ -202,7 +202,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
         body: [
           'Amethyst is a violet variety of quartz, prized for thousands of years for its beauty and its believed spiritual properties. Its color ranges from pale lavender to deep purple, caused by natural irradiation of iron within the crystal.',
           'The name "amethyst" comes from the ancient Greek word *amethystos*, meaning "not intoxicated." The Greeks believed the stone could prevent drunkenness — a myth that speaks to amethyst\'s oldest and most enduring association: clarity of mind.',
-          'Today, amethyst is one of the most popular healing crystals in the world, worn as bracelets, necklaces, and rings by people drawn to its calming energy and beautiful purple hue.',
+          'Today, amethyst is one of the most popular healing crystals in the world, worn as [handmade amethyst bracelets](/products/amethyst-peace-bracelet) and [crystal jewelry](/collections/bracelets) by people drawn to its calming energy and beautiful purple hue.',
         ],
       },
       {
@@ -280,7 +280,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     publishedAt: '2026-06-30',
     updatedAt: '2026-06-30',
     readingTime: '5 min read',
-    relatedProducts: ['rose-quartz-bracelet', 'rose-quartz-tenderness-bracelet'],
+    relatedProducts: ['rose-quartz-bracelet', 'strawberry-quartz-bracelet'],
     relatedArticles: ['amethyst-meaning-healing-properties', 'turquoise-meaning-protection-stone'],
     content: [
       {
@@ -622,7 +622,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     relatedProducts: ['han-jade-lotus-pendant', 'lotus-jade-bracelet'],
     relatedArticles: ['amethyst-meaning-healing-properties', 'tibetan-jewelry-symbols-meaning'],
     content: [
-      { heading: 'What Is Jade?', body: ['Jade is actually two different minerals sold under one name: **nephrite** (the traditional Chinese jade, ranging from creamy white to deep green) and **jadeite** (rarer, found in more colors including lavender and black). Both are extremely tough — jade is harder to break than steel, which is why it has been carved into tools and ornaments for over 7,000 years.', 'In Chinese, jade is called *yu* (玉) — a word that also means "precious," "pure," and "noble." The two concepts are inseparable: jade is not just a stone in Chinese culture, it is a moral and spiritual ideal.'] },
+      { heading: 'What Is Jade?', body: ['Jade is actually two different minerals sold under one name: **nephrite** (the traditional Chinese jade, ranging from creamy white to deep green) and **jadeite** (rarer, found in more colors including lavender and black). Both are extremely tough — jade is harder to break than steel, which is why it has been carved into tools and ornaments for over 7,000 years.', 'In Chinese philosophy, jade is called *yu* — a word that also means "precious," "pure," and "noble." The two concepts are inseparable: jade is not just a stone in Chinese culture, it is a moral and spiritual ideal.'] },
       { heading: 'Jade Meaning in Chinese Culture', body: ['In China, jade has been the most revered stone for over 5,000 years. Confucius compared jade to virtue itself:', '> *"Its smoothness suggests benevolence; its brightness, intelligence; its transparency, honesty; its resilience, justice..."*', 'Jade represents:', '**Wisdom.** Jade is the stone of the scholar — worn by poets, philosophers, and emperors who valued depth over flash.', '**Good fortune.** Jade has long been associated with luck, prosperity, and longevity in Chinese culture.', '**Purity.** The translucent, cool surface of jade symbolizes a pure heart and clear intentions.', '**Immortality.** In ancient China, jade was sometimes placed in the mouths of the deceased, believed to preserve the body and guide the soul.'] },
       { heading: 'Jade Healing Properties', body: ['In crystal healing, jade is believed to offer:', '**Emotional balance.** Jade has a remarkably soothing energy — not as gentle as rose quartz, but deeper and more grounding. It promotes serenity and emotional stability.', '**Good luck.** Jade is one of the most popular "lucky stones" in the world, believed to attract prosperity and opportunity.', '**Longevity.** In traditional Chinese medicine, jade is associated with the kidneys and is believed to support vitality and long life.', '**Heart healing.** Like rose quartz, jade is associated with the heart chakra, but where rose quartz is about love, jade is about wisdom in matters of the heart.'] },
       { heading: 'Real Jade vs. Fake Jade', body: ['Because jade is so prized, the market is full of imitations. Here\'s how to tell real jade:', '**Weight.** Real jade is dense and feels heavier than expected for its size. If it feels light, it may be glass or plastic.', '**Temperature.** Real jade is cool to the touch and takes time to warm up in your hand. Fakes warm quickly.', '**Color variation.** Real jade has subtle color variations and natural inclusions. Perfectly uniform color often means dyed or synthetic.', '**Price.** Real jadeite is expensive. If the price seems too good to be true, it probably is.', 'At Nara Charm, we use jade-tone natural stones that capture the aesthetic and meaning of jade at an accessible price. [Shop our Han Jade Lotus Pendant →](/products/han-jade-lotus-pendant)'] },
@@ -771,7 +771,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     relatedProducts: ['miao-filigree-drop-earrings'],
     relatedArticles: ['tibetan-jewelry-symbols-meaning', 'how-to-style-beaded-bracelets'],
     content: [
-      { heading: 'Who Are the Miao?', body: ['The Miao (苗族) are an ethnic minority living in the mountainous regions of southwest China — primarily Guizhou, Hunan, and Yunnan provinces. They are one of China\'s 55 recognized minority groups, with a population of about 9 million.', 'For the Miao, silver is not just decoration — it is identity. A Miao bride may wear 10-15 kilograms of silver jewelry at her wedding, representing her family\'s wealth, history, and blessings. Silver is inheritance, adornment, and spiritual protection, all at once.'] },
+      { heading: 'Who Are the Miao?', body: ['The Miao are an indigenous artisan culture living in the mountainous regions of southwest China — primarily Guizhou, Hunan, and Yunnan provinces, with a celebrated heritage spanning thousands of years.', 'For the Miao, silver is not just decoration — it is identity. A Miao bride may wear 10-15 kilograms of silver jewelry at her wedding, representing her family\'s wealth, history, and blessings. Silver is inheritance, adornment, and spiritual protection, all at once.'] },
       { heading: 'What Is Miao Filigree?', body: ['Miao filigree is a metalworking technique where silver is drawn into wire finer than a human hair, then coiled, twisted, and soldered into intricate forms — flowers, dragons, butterflies, and geometric patterns.', 'The process is painstaking:', '1. Silver is melted and drawn through progressively smaller holes in a drawplate until it becomes hair-thin wire.', '2. The wire is coiled around a template to create shapes — petals, leaves, spirals.', '3. Each tiny element is individually soldered into place with a blowtorch and borax flux.', '4. The finished piece is polished, sometimes "antiqued" with a chemical wash to darken the recesses.', 'A single pair of filigree earrings can take a craftsman 2-3 days to complete.'] },
       { heading: 'Why Miao Silver Matters', body: ['Miao silver filigree is more than a craft — it is a living link to a culture that has maintained its identity for thousands of years. Each piece carries:', '**Family history.** Miao silver is passed down through generations. A daughter inherits her mother\'s silver, adding her own pieces over time.', '**Spiritual protection.** In Miao belief, silver wards off evil spirits. Babies are given silver bracelets shortly after birth.', '**Cultural identity.** The patterns on Miao silver are not random — they are clan symbols, historical records, and stories told in metal.'] },
       { heading: 'How to Identify Quality Filigree', body: ['True hand-made filigree has telltale signs:', '**Tiny variations.** Each coil and spiral is slightly different — machine-made pieces are perfectly uniform.', '**Delicate movement.** The finest filigree "trembles" when you move — the thin wire elements have a slight, living flexibility.', '**Weight.** Real silver filigree has substance. If it feels too light, it may be silver-plated base metal.', '**Detail.** Look closely: you should see individual wire coils, not a solid cast surface.', '[Shop our Miao Filigree Drop Earrings →](/products/miao-filigree-drop-earrings)'] },
@@ -1057,7 +1057,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     content: [
       { heading: 'Why Red?', body: ['In many Asian cultures — Chinese, Tibetan, Mongolian, Indian — red is not just a color. It is the color of **life, blessing, protection, and good fortune**. Red threads are tied around wrists for protection. Red envelopes are given for luck. Brides wear red for prosperity.', 'So it is no surprise that red stones — red agate, cinnabar, carnelian, red jasper — carry some of the most powerful symbolic meanings in Asian jewelry traditions.'] },
       { heading: 'Red Agate Meaning', body: ['Red agate is a variety of chalcedony with warm, translucent red-to-orange bands. In Chinese and Tibetan traditions, red agate is:', '**A protective stone.** Red agate is believed to ward off evil and protect the wearer from harm — especially the harm caused by envy or jealousy.', '**A stone of vitality.** Red agate\'s warm energy is associated with blood, life force, and physical stamina.', '**A grounding stone.** Like the root chakra it connects to, red agate provides stability and emotional balance.', 'In Tibetan jewelry, red agate is often combined with turquoise — red representing earth and life, turquoise representing sky and spirit.'] },
-      { heading: 'Cinnabar Meaning', body: ['Cinnabar (赤砂) is a deep red mineral that has been used in Chinese art and jewelry for over 8,000 years. In Chinese culture, cinnabar represents:', '**Imperial power.** Cinnabar red was the color of Chinese emperors — reserved for the highest authority.', '**Blessing and good fortune.** Cinnabar objects were given as gifts to bring luck, prosperity, and long life.', '**Spiritual protection.** In Taoist tradition, cinnabar was associated with immortality and spiritual transformation.'] },
+      { heading: 'Cinnabar Meaning', body: ['Cinnabar is a deep red mineral that has been used in Chinese art and jewelry for over 8,000 years. In Chinese culture, cinnabar represents:', '**Imperial power.** Cinnabar red was the color of Chinese emperors — reserved for the highest authority.', '**Blessing and good fortune.** Cinnabar objects were given as gifts to bring luck, prosperity, and long life.', '**Spiritual protection.** In Taoist tradition, cinnabar was associated with immortality and spiritual transformation.'] },
       { heading: 'The Red Thread Tradition', body: ['Across Asia, the practice of tying a red thread around the wrist is one of the most ancient forms of protective jewelry:', '**In Tibetan Buddhism**, red threads are blessed by lamas and tied around the wrists of the faithful for protection and good fortune.', '**In Chinese tradition**, red threads are tied by elders for children and travelers, often during the New Year.', '**In Hindu tradition**, red threads (kalawa) are tied during religious ceremonies for blessing and protection.', 'Our red cord phone charms and bracelets carry this ancient tradition into the modern world. [Shop red cord charms →](/products/cinnabar-cord-charm)'] },
     ],
   },
@@ -1276,7 +1276,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   publishedAt: '2026-07-10',
   updatedAt: '2026-07-10',
   readingTime: '6 min read',
-  relatedProducts: ['amethyst-peace-bracelet', 'clear-quartz-cluster'],
+  relatedProducts: ['amethyst-peace-bracelet', 'mixed-crystal-bracelet'],
   relatedArticles: ['beaded-jewelry-care-guide', 'healing-crystals-101-beginners-guide', 'clear-quartz-meaning-master-healer'],
   content: [
     { heading: 'Why Cleanse Crystals?', body: ['In crystal healing, stones are believed to absorb, transmute, and carry energy. When you wear a crystal, it absorbs not just your own energy, but the energy of everyone who handles it, every environment it passes through, and every intention you put into it.', 'Over time, this accumulated energy can make the stone feel "heavy" or less effective. Cleansing is the practice of resetting the stone\'s energy — clearing out the old so it can work fresh for you.', 'How often should you cleanse? Daily wear: once a week. Occasional use: once a month. New crystals: always cleanse before first use. After intense emotions or illness: cleanse immediately.'] },
@@ -1328,7 +1328,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   publishedAt: '2026-07-10',
   updatedAt: '2026-07-10',
   readingTime: '5 min read',
-  relatedProducts: ['hematite-bracelet', 'obsidian-guardian-charm', 'amethyst-peace-bracelet', 'mixed-crystal-bracelet'],
+  relatedProducts: ['hematite-bracelet-mens', 'obsidian-guardian-charm', 'amethyst-peace-bracelet', 'mixed-crystal-bracelet'],
   relatedArticles: ['how-to-style-beaded-bracelets', 'gemstone-color-meanings', 'tigers-eye-meaning'],
   content: [
     { heading: 'Yes, You Can Wear Crystals to Work', body: ['The old idea that crystal jewelry is "too spiritual" or "too casual" for the workplace is fading. In 2026, a polished gemstone bracelet reads as intentional, tasteful, and personal — not unprofessional.', 'The key is **how** you wear it. A single, well-chosen stone bracelet can be as professional as a leather watch or a metal bangle. Here is how to choose stones and styles that work in any professional setting.'] },
@@ -1340,13 +1340,13 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   ],
 },
 // ═══════════════════════════════════════════════════════════════
-// 文章 37: 水晶手串叠戴指南 (中文)
+// Article 37: Crystal Bracelet Stacking Guide
 // ═══════════════════════════════════════════════════════════════
 {
   slug: 'crystal-bracelet-stacking-guide',
-  title: '水晶手串叠戴指南: 如何搭配不同颜色和材质',
-  description: '水晶手串叠戴趋势全解析。学习如何搭配紫水晶、粉晶、黄水晶等不同材质和颜色的手串，打造属于你的个性化叠戴风格。',
-  keywords: ['水晶手串叠戴', 'bracelet stacking', 'crystal stacking', '叠戴搭配', '多串叠戴'],
+  title: 'Crystal Bracelet Stacking Guide: How to Layer Colors, Sizes & Healing Stones',
+  description: 'Master the art of crystal bracelet stacking. Learn the 60-30-10 color rule, bead size balancing (6mm to 10mm), metal layering tips, and curated intention wrist stacks for daily wear.',
+  keywords: ['crystal bracelet stacking', 'how to stack beaded bracelets', 'layering crystal bracelets', 'crystal wrist stack', 'bracelet stacking guide'],
   category: 'Styling',
   author: 'Nara Charm',
   publishedAt: '2026-07-14',
@@ -1355,11 +1355,11 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'mixed-crystal-bracelet', 'turquoise-sky-bracelet'],
   relatedArticles: ['how-to-style-beaded-bracelets', 'gemstone-color-meanings'],
   content: [
-    { heading: '什么是水晶叠戴？', body: ['叠戴（Stacking）是将多条手串同时佩戴在手腕上，打造丰富的层次感和个性化的视觉效果。2025-2026年，叠戴已成为小红书和Instagram上最热门的水晶佩戴方式。', '一条手串是点缀，三条是风格，五条就是宣言。叠戴的魅力在于——每一颗石头都有自己的故事，当它们集合在一起，就成为你个人能量的表达。'] },
-    { heading: '颜色搭配原则', body: ['**同色系叠戴** — 最安全也最优雅。选择同一色系不同深浅的石头：淡紫紫水晶 + 深紫乌拉圭紫 + 紫兔毛，形成从浅到深的渐变效果。', '**撞色叠戴** — 更大胆的选择。紫水晶 + 黄水晶（紫色+黄色是对比色），或粉晶 + 绿幽灵（粉+绿的复古组合）。', '**三色法则** — 新手最推荐的方案。选择三种颜色：主色（40%）、辅色（35%）、点缀色（25%）。例如紫水晶（主）+ 白水晶（辅）+ 黄水晶（点缀）。'] },
-    { heading: '材质混搭技巧', body: ['**水晶 + 金属** — 将纯水晶手串与细金链/银链混搭，增加精致感。一条紫水晶 + 一条极细金链，既有能量感又不失时尚。', '**水晶 + 木质/天然材质** — 沉香木、檀木珠与水晶搭配，增添自然和禅意。特别适合波西米亚风格。', '**水晶 + 编织绳** — 用Macrame编织绳手链搭配水晶手串，轻松打造度假风。'] },
-    { heading: '不同手腕尺寸的叠戴方案', body: ['**细手腕（14-15cm）**：选择6-8mm珠子，叠戴2-3条即可。过大会显得笨重。', '**标准手腕（16-17cm）**：8mm珠子叠戴3-4条效果最佳。可以混合不同尺寸增加层次。', '**粗手腕（18cm+）**：10-12mm珠子叠戴3-5条，展现大胆风格。大珠子配单圈非常出彩。'] },
-    { heading: '日常叠戴推荐组合', body: ['**日常通勤**：紫水晶 + 白水晶 + 海蓝宝 — 冷静、清晰、沟通', '**约会/社交**：粉晶 + 草莓晶 + 月光石 — 爱、喜悦、直觉', '**重要场合**：黄水晶 + 金发晶 + 绿幽灵 — 自信、财富、成长', '**疗愈日**：紫水晶 + 黑碧玺 + 月光石 — 保护、净化、平静'] },
+    { heading: 'What Is Crystal Bracelet Stacking?', body: ['Stacking is the art of wearing multiple beaded bracelets together on one wrist to create rich visual depth, tonal contrast, and intentional energy. In 2026, curated wrist stacks have become the defining personal jewelry statement.', 'One bracelet is an accent; three bracelets create an intentional rhythm; five bracelets make an unforgettable signature statement. The beauty of a crystal stack lies in curating stones that tell a personal story while complementing your daily wardrobe and energy.'] },
+    { heading: 'The 3 Core Color Harmony Rules', body: ['**Monochromatic Gradient** — The most effortless and elegant approach. Select stones within the same color family in varying saturations: light lavender amethyst, deep royal purple Uruguay amethyst, and phantom quartz create a soothing ombre effect across the wrist.', '**High-Contrast Dynamic** — Pair complementary color wheel opposites for bold vitality. Combine the calming violet of the [Amethyst Peace Bracelet](/products/amethyst-peace-bracelet) with the radiant golden sparkle of citrine, or balance delicate pink [Rose Quartz Bracelet](/products/rose-quartz-bracelet) with earthy forest green jade.', '**The 60-30-10 Palette Rule** — The gold-standard styling formula recommended by our studio stylists. Select three balanced tones: a Dominant Base (60%, such as clear quartz or matte hematite), a Secondary Core color (30%, such as deep lapis or amethyst), and an Accent Pop (10%, such as turquoise or 925 sterling silver beads).'] },
+    { heading: 'Mixing Bead Sizes & Textures', body: ['**Bead Diameter Hierarchy** — Avoid stacking five identical 8mm bracelets, which can look bulky. Instead, mix a prominent 10mm focal bracelet with 6mm or 7mm accent bands and an ultra-fine 2mm silver spacer chain for effortless visual balance.', '**Gemstones + Artisan Metals** — Break up continuous mineral beads with polished or hammered metal elements. Pairing genuine 925 sterling silver charms alongside raw gemstones elevates casual beads into high-end artisan jewelry.', '**Minerals + Hand-Knotted Cords** — Contrast smooth spherical stones with textured Tibetan macramé cord wraps or braided silk cords for a bohemian, worldly aesthetic.'] },
+    { heading: 'Stacking by Wrist Size & Proportion', body: ['**Petite Wrists (5.5" – 6.0" / 14–15cm)**: Choose 6mm to 7mm beads and keep stacks to 2–3 pieces maximum to maintain lightness and graceful movement.', '**Medium Wrists (6.5" – 7.0" / 16–17cm)**: The most versatile sizing canvas. Stack 3–4 bracelets combining 8mm stones with 6mm spacers and a delicate chain.', '**Larger Wrists (7.5"+ / 18cm+)**: Command presence with 10mm to 12mm statement beads layered with 8mm complementary stones and bold artisan cuffs.'] },
+    { heading: 'Curated Daily Stacking Recipes', body: ['**The Focused Workday Stack**: [Amethyst Peace Bracelet](/products/amethyst-peace-bracelet) + Clear Quartz + Aquamarine — for calm focus, cognitive clarity, and articulate communication.', '**The Heart Opening & Romance Stack**: [Rose Quartz Bracelet](/products/rose-quartz-bracelet) + Moonstone + Strawberry Quartz — for warmth, tender self-compassion, and joyful relationships.', '**The Grounded Protection Stack**: Obsidian + Hematite + [Turquoise Sky Bracelet](/products/turquoise-sky-bracelet) — for shielding against digital fatigue and steady emotional resilience.', '**The Abundance & Vitality Stack**: [Mixed Crystal Bead Bracelet](/products/mixed-crystal-bracelet) + Citrine + Green Aventurine — for boundless optimism, confidence, and inspired creative momentum.'] },
   ],
 },
 // ═══════════════════════════════════════════════════════════════
@@ -1398,7 +1398,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   publishedAt: '2026-07-15',
   updatedAt: '2026-07-15',
   readingTime: '5 min read',
-  relatedProducts: ['amethyst-peace-bracelet', 'clear-quartz-meaning-master-healer'],
+  relatedProducts: ['amethyst-peace-bracelet', 'unakite-bracelet-balance'],
   relatedArticles: ['clear-quartz-meaning-master-healer', 'amethyst-meaning-healing-properties'],
   content: [
     { heading: 'What Is Fluorite?', body: ['Fluorite is a calcium fluoride crystal that forms in cubic and octahedral shapes. What makes fluorite unique is its incredible range of colors — from deep purple and blue to green, yellow, and clear. A single piece can contain multiple bands of color, earning it the name "the most colorful mineral on earth."', 'The word fluorite comes from the Latin *fluere*, meaning "to flow" — referring to its low melting point, which makes it valuable in industrial applications. But to crystal lovers, fluorite is prized for its ability to bring order to chaos, especially mental chaos.'] },
@@ -1420,7 +1420,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   publishedAt: '2026-07-15',
   updatedAt: '2026-07-15',
   readingTime: '7 min read',
-  relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'clear-quartz-meaning-master-healer', 'mixed-crystal-bracelet'],
+  relatedProducts: ['amethyst-peace-bracelet', 'rose-quartz-bracelet', 'turquoise-sky-bracelet', 'mixed-crystal-bracelet'],
   relatedArticles: ['healing-crystals-101-beginners-guide', 'best-crystal-gift-guide'],
   content: [
     { heading: 'Why Start a Crystal Collection?', body: ['Crystals have been collected for thousands of years not just for their beauty, but for their energy. Whether you are drawn to their colors, their meanings, or simply the way they feel in your hand, starting a crystal collection is a deeply personal journey.', 'The best part? You do not need a huge budget or special knowledge to begin. A meaningful collection can start with a single stone that calls to you.'] },
@@ -1442,7 +1442,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   publishedAt: '2026-07-15',
   updatedAt: '2026-07-15',
   readingTime: '5 min read',
-  relatedProducts: ['amethyst-peace-bracelet', 'clear-quartz-meaning-master-healer'],
+  relatedProducts: ['amethyst-peace-bracelet', 'mixed-crystal-bracelet'],
   relatedArticles: ['complete-crystal-cleansing-guide', 'healing-crystals-101-beginners-guide'],
   content: [
     { heading: 'What Is Selenite?', body: ['Selenite is a crystalline form of gypsum, named after the Greek goddess of the moon, Selene, because of its moon-like glow. It forms in long, translucent columns that seem to glow from within — a quality that has made it one of the most beloved crystals for spiritual work.', 'Unlike most crystals, selenite has a hardness of only 2 on the Mohs scale — it is so soft you can scratch it with your fingernail. But its physical softness belies its powerful spiritual properties. Selenite does not need to be cleansed — it is itself a cleansing stone.'] },
@@ -2076,7 +2076,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     publishedAt: '2026-07-25',
     updatedAt: '2026-07-25',
     readingTime: '5 min read',
-    relatedProducts: ['rose-quartz-bracelet', 'rose-quartz-tenderness-bracelet', 'mixed-crystal-bracelet'],
+    relatedProducts: ['rose-quartz-bracelet', 'strawberry-quartz-bracelet', 'mixed-crystal-bracelet'],
     relatedArticles: ['rose-quartz-meaning-love-stone', 'gemstone-color-meanings', 'how-to-choose-bracelet-by-personality'],
     content: [
       {
@@ -2188,7 +2188,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     publishedAt: '2026-07-26',
     updatedAt: '2026-07-26',
     readingTime: '5 min read',
-    relatedProducts: ['citrine-meaning-merchants-stone', 'carnelian-meaning-stone-of-motivation', 'tigers-eye-meaning', 'caravan-fusion-necklace'],
+    relatedProducts: ['citrine-bracelet-abundance', 'caravan-fusion-necklace', 'mixed-crystal-bracelet', 'amethyst-peace-bracelet'],
     relatedArticles: ['summer-jewelry-styling-crystals', 'citrine-meaning-merchants-stone', 'carnelian-meaning-stone-of-motivation'],
     content: [
       {

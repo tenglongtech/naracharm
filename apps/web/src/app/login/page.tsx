@@ -25,7 +25,7 @@ export default function LoginPage() {
     const result = await signIn(email, password);
     setLoading(false);
     if (result.error) {
-      setError(result.error.message || '登录失败,请检查邮箱和密码');
+      setError(result.error.message || 'Login failed, please verify your email and password');
     } else {
       router.push('/account');
       router.refresh();

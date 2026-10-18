@@ -51,9 +51,17 @@ export async function getProductsByCollection(collectionSlug: string): Promise<S
 }
 
 // ─── 按品类查产品 ─────────────────────────────────────────────────────────
+const CATEGORY_MAP: Record<string, string> = {
+  'bracelets': 'bracelet',
+  'necklaces': 'necklace',
+  'phone-charms': 'phone-charm',
+  'earrings': 'earrings',
+};
+
 export async function getProductsByCategory(category: string): Promise<StorefrontProduct[]> {
   const all = await getActiveProducts();
-  return all.filter((p) => p.category === category);
+  const normalized = CATEGORY_MAP[category] || category.replace(/s$/, '');
+  return all.filter((p) => p.category === normalized || p.category === category);
 }
 
 // ─── 查所有系列 ──────────────────────────────────────────────────────────
