@@ -27,7 +27,7 @@ export function SiteFooter() {
             <span className="font-display text-2xl">Nara Charm</span>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-bg/70">
-            Handmade heritage jewelry, shipped worldwide.
+            Heritage-inspired jewelry with international delivery.
             Every piece carries a story.
           </p>
           <div className="mt-4 flex gap-3 text-lg">
@@ -41,40 +41,43 @@ export function SiteFooter() {
         <div>
           <h3 className="font-display text-sm uppercase tracking-wider text-gold">Shop</h3>
           <ul className="mt-4 space-y-2 text-sm text-bg/75">
-            <li><Link href="/shop" className="hover:text-bg">Shop All Jewelry</Link></li>
-            <li><Link href="/collections" className="hover:text-bg">All Collections</Link></li>
-            <li><Link href="/best-sellers" className="hover:text-bg">Best Sellers</Link></li>
-            <li><Link href="/collections/phone-charms" className="hover:text-bg">Phone Charms</Link></li>
-            <li><Link href="/collections/necklaces" className="hover:text-bg">Necklaces</Link></li>
-            <li><Link href="/collections/bracelets" className="hover:text-bg">Bracelets</Link></li>
-            <li><Link href="/collections/earrings" className="hover:text-bg">Earrings</Link></li>
+            <li><Link prefetch={false} href="/shop" className="hover:text-bg">Shop All Jewelry</Link></li>
+            <li><Link prefetch={false} href="/collections" className="hover:text-bg">All Collections</Link></li>
+            <li><Link prefetch={false} href="/studio" className="hover:text-bg">Studio Collections</Link></li>
+            <li><Link prefetch={false} href="/best-sellers" className="hover:text-bg">Featured Jewelry</Link></li>
+            <li><Link prefetch={false} href="/collections/phone-charms" className="hover:text-bg">Phone Charms</Link></li>
+            <li><Link prefetch={false} href="/collections/necklaces" className="hover:text-bg">Necklaces</Link></li>
+            <li><Link prefetch={false} href="/collections/bracelets" className="hover:text-bg">Bracelets</Link></li>
+            <li><Link prefetch={false} href="/collections/earrings" className="hover:text-bg">Earrings</Link></li>
           </ul>
         </div>
 
         <div>
           <h3 className="font-display text-sm uppercase tracking-wider text-gold">About</h3>
           <ul className="mt-4 space-y-2 text-sm text-bg/75">
-            <li><Link href="/blog" className="hover:text-bg">The Nara Journal</Link></li>
-            <li><Link href="/our-craft" className="hover:text-bg">Our Craft</Link></li>
-            <li><Link href="/stories" className="hover:text-bg">Stories</Link></li>
-            <li><Link href="/about" className="hover:text-bg">About Us</Link></li>
-            <li><Link href="/gift-guide" className="hover:text-bg">Gift Guide</Link></li>
-            <li><Link href="/wholesale" className="hover:text-bg">Wholesale</Link></li>
+            <li><Link prefetch={false} href="/blog" className="hover:text-bg">The Nara Journal</Link></li>
+            <li><Link prefetch={false} href="/our-craft" className="hover:text-bg">Our Craft</Link></li>
+            <li><Link prefetch={false} href="/stories" className="hover:text-bg">Stories</Link></li>
+            <li><Link prefetch={false} href="/about" className="hover:text-bg">About Us</Link></li>
+            <li><Link prefetch={false} href="/gift-guide" className="hover:text-bg">Gift Guide</Link></li>
+            <li><Link prefetch={false} href="/wholesale" className="hover:text-bg">Wholesale</Link></li>
+            <li><Link prefetch={false} href="/stockists" className="hover:text-bg">Stockists</Link></li>
           </ul>
         </div>
 
         <div>
           <h3 className="font-display text-sm uppercase tracking-wider text-gold">A little guidance</h3>
           <p className="mt-4 text-sm leading-7 text-bg/75">Questions about fit, materials or your order? We’re here to help you choose with care.</p>
-          <Link href="/contact" className="mt-5 inline-flex min-h-11 items-center border-b border-gold text-sm text-gold">Get in touch ↗</Link>
+          <Link prefetch={false} href="/contact" className="mt-5 inline-flex min-h-11 items-center border-b border-gold text-sm text-gold">Get in touch ↗</Link>
           <div className="mt-5 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[11px] text-bg/55">
-            <Link href="/faq" className="hover:text-bg">FAQ</Link>
-            <Link href="/contact" className="hover:text-bg">Contact</Link>
-            <Link href="/size-guide" className="hover:text-bg">Size Guide</Link>
-            <Link href="/shipping" className="hover:text-bg">Shipping</Link>
-            <Link href="/returns" className="hover:text-bg">Returns</Link>
-            <Link href="/privacy" className="hover:text-bg">Privacy</Link>
-            <Link href="/terms" className="hover:text-bg">Terms</Link>
+            <Link prefetch={false} href="/faq" className="hover:text-bg">FAQ</Link>
+            <Link prefetch={false} href="/contact" className="hover:text-bg">Contact</Link>
+            <Link prefetch={false} href="/size-guide" className="hover:text-bg">Size Guide</Link>
+            <Link prefetch={false} href="/shipping" className="hover:text-bg">Shipping</Link>
+            <Link prefetch={false} href="/order-status" className="hover:text-bg">Track an order</Link>
+            <Link prefetch={false} href="/returns" className="hover:text-bg">Returns</Link>
+            <Link prefetch={false} href="/privacy" className="hover:text-bg">Privacy</Link>
+            <Link prefetch={false} href="/terms" className="hover:text-bg">Terms</Link>
           </div>
         </div>
       </div>

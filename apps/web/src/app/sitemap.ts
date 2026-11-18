@@ -1,89 +1,54 @@
-import { siteConfig } from '@/lib/site-config';
 import type { MetadataRoute } from 'next';
+import { absoluteUrl } from '@/lib/seo';
 import { getActiveProducts, getAllCollections } from '@/lib/storefront';
 import { CATEGORIES } from '@/lib/categories';
+import { CATEGORY_EDITORIAL } from '@/lib/category-editorial';
+import { getStudioCover, STUDIO_SERIES } from '@/lib/studio-designs';
 import { STORIES } from '@/lib/stories-data';
-import { BLOG_ARTICLES } from '@/lib/blog-data';
+import { BLOG_ARTICLES, isPublishedGuide } from '@/lib/blog-data';
+import { JOURNAL_TOPICS } from '@/lib/journal-topics';
+import { searchableProductPhotos } from '@/lib/product-media';
 
 export const dynamic = 'force-static';
 
-/**
- * Sitemap · Next.js 16 原生,部署时自动生成 /sitemap.xml
- * 包含: 静态页 + 全部 in-stock 商品 + 全部 collection + 全部 story
- */
+const publicPages = [
+  '/', '/shop', '/collections', '/best-sellers', '/studio', '/stories', '/blog',
+  '/our-craft', '/gift-guide', '/about', '/size-guide', '/shipping', '/returns',
+  '/faq', '/contact', '/wholesale', '/stockists',
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = siteConfig.url;
+  const [products, collections] = await Promise.all([getActiveProducts(), getAllCollections()]);
+  const urls = new Set([
+    ...publicPages,
+    ...CATEGORIES.map(({ slug }) => `/collections/${slug}`),
+    ...collections.map(({ slug }) => `/collections/${slug}`),
+    ...JOURNAL_TOPICS.map(({ slug }) => `/blog/topic/${slug}`),
+  ]);
+  const collectionImages = new Map(CATEGORIES.map(({ slug }) => [`/collections/${slug}`, [CATEGORY_EDITORIAL[slug].image.src]]));
+  for (const { slug } of STUDIO_SERIES) {
+    const designs = products.filter((item) => item.collectionSlug === slug);
+    const cover = getStudioCover(slug, designs);
+    if (!cover) continue;
+    const additional = designs.flatMap(({ slug: designSlug, primaryImage }) =>
+      designSlug !== cover.lead.slug && primaryImage ? [primaryImage] : []);
+    collectionImages.set(`/collections/${slug}`, [cover.src, ...additional]);
+  }
 
-
-  // 静态页 (核心转化路径 + 内容页)
-  const staticPages: MetadataRoute.Sitemap = [
-    { url: `${base}/shop`, changeFrequency: 'weekly', priority: 0.9 },
-    ...CATEGORIES.map(c => ({ url: `${base}/collections/${c.slug}`, changeFrequency: 'weekly' as const, priority: 0.8 })),
-    { url: `${base}/`, changeFrequency: 'weekly', priority: 1.0 },
-    { url: `${base}/collections`, changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${base}/best-sellers`, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${base}/stories`, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${base}/blog`, changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${base}/our-craft`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${base}/gift-guide`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${base}/about`, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${base}/size-guide`, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${base}/shipping`, changeFrequency: 'monthly', priority: 0.4 },
-    { url: `${base}/returns`, changeFrequency: 'monthly', priority: 0.4 },
-    { url: `${base}/faq`, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${base}/contact`, changeFrequency: 'yearly', priority: 0.4 },
+  return [
+    ...Array.from(urls, (url) => {
+      const images = collectionImages.get(url)?.map(absoluteUrl);
+      return { url: absoluteUrl(url), ...(images?.length ? { images } : {}) };
+    }),
+    ...products.filter((product) => product.availability !== 'preview').map((product) => {
+      const images = searchableProductPhotos(product).map(absoluteUrl);
+      return {
+        url: absoluteUrl(`/products/${product.slug}`),
+        ...(product.updatedAt ? { lastModified: product.updatedAt } : {}),
+        ...(images.length ? { images } : {}),
+      };
+    }),
+    ...STORIES.map(({ slug, updatedAt }) => ({ url: absoluteUrl(`/stories/${slug}`), lastModified: updatedAt })),
+    ...BLOG_ARTICLES.filter(isPublishedGuide).map(({ slug, updatedAt }) => ({ url: absoluteUrl(`/blog/${slug}`), lastModified: updatedAt })),
   ];
-
-  // Story 详情页
-  const storyEntries: MetadataRoute.Sitemap = STORIES.map((s) => ({
-    url: `${base}/stories/${s.slug}`,
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-    lastModified: new Date(s.publishedAt),
-  }));
-
-  // 动态: 商品
-  let productEntries: MetadataRoute.Sitemap = [];
-  let collectionEntries: MetadataRoute.Sitemap = [];
-  try {
-    const [products, collections] = await Promise.all([
-      getActiveProducts(),
-      getAllCollections(),
-    ]);
-    productEntries = products.map((p) => ({
-      url: `${base}/products/${p.slug}`,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-
-    }));
-    collectionEntries = collections.map((c) => ({
-      url: `${base}/collections/${c.slug}`,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-
-    }));
-  } catch (e) {
-    console.warn('sitemap: 数据库未就绪,跳过动态条目', e);
-  }
-
-  // 博客文章
-  const blogEntries: MetadataRoute.Sitemap = BLOG_ARTICLES.map((a) => ({
-    url: `${base}/blog/${a.slug}`,
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-    lastModified: new Date(a.updatedAt || a.publishedAt),
-  }));
-
-  // 使用 Map 按 URL 去重，确保给 Google 提交的 Sitemap 100% 唯一无冗余
-  const sitemapMap = new Map<string, MetadataRoute.Sitemap[number]>();
-  for (const item of [...staticPages, ...storyEntries, ...blogEntries, ...collectionEntries, ...productEntries]) {
-    if (!sitemapMap.has(item.url)) {
-      sitemapMap.set(item.url, {
-        ...item,
-        lastModified: item.lastModified || new Date(),
-      });
-    }
-  }
-
-  return Array.from(sitemapMap.values());
 }

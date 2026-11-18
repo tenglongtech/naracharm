@@ -1,72 +1,110 @@
-import Image from 'next/image';
-import { editorialArt } from '@/lib/editorial-art';
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
-import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
-import { BLOG_ARTICLES, isNewArticle, formatBlogDate } from '@/lib/blog-data';
+import Image from '@/components/storefront-image';
+import { SiteHeader, SiteFooter } from '@/components/site-chrome';
+import { getArticleBySlug, getArticlesByCategory, isPublishedGuide } from '@/lib/blog-data';
+import { editorialArt } from '@/lib/editorial-art';
+import { JOURNAL_TOPICS } from '@/lib/journal-topics';
+import { absoluteUrl, serializeJsonLd } from '@/lib/seo';
+import styles from './journal-index.module.css';
 
-export const metadata: Metadata = {
-  title: 'Jewelry Meaning & Crystal Guide | Crystal Meanings, Symbolism & Styling',
-  description: 'Explore crystal meanings, Tibetan jewelry symbolism, beaded bracelet styling tips, and gemstone care guides. Learn what amethyst, rose quartz, turquoise & more mean.',
-  alternates: { canonical: '/blog' },
-  openGraph: {
-    title: 'Jewelry Meaning & Crystal Guide | Nara Charm',
-    description: 'Crystal meanings, Tibetan symbolism, styling tips & care guides. Learn the stories behind your stones.',
-    type: 'website',
-  },
-};
+const lead = getArticleBySlug('how-to-layer-necklaces-and-bracelets');
+const leadArt = lead && editorialArt(lead);
+
+const startingGuides = [
+  { slug: 'bracelet-size-guide-how-to-measure', label: 'Measure your wrist' },
+  { slug: 'everyday-jewelry-care-storage', label: 'Care for everyday jewelry' },
+  { slug: 'choose-a-meaningful-jewelry-gift', label: 'Choose a jewelry gift' },
+].filter(({ slug }) => {
+  const article = getArticleBySlug(slug);
+  return article && isPublishedGuide(article);
+});
+
+export const metadata = pageMetadata({
+  title: 'The Nara Journal | Jewelry Guides and Ideas',
+  description: 'Find practical jewelry guides for checking fit, layering pieces, caring for stone and cord, and choosing gifts.',
+  path: '/blog',
+  image: leadArt ? { url: leadArt.src, alt: leadArt.alt } : undefined,
+});
 
 export default function BlogPage() {
-  const categories = [...new Set(BLOG_ARTICLES.map((a) => a.category))];
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'The Nara Journal',
+    url: absoluteUrl('/blog'),
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: JOURNAL_TOPICS.map(({ slug, title }, index) => ({
+        '@type': 'ListItem', position: index + 1, name: title, url: absoluteUrl(`/blog/topic/${slug}`),
+      })),
+    },
+  };
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }} />
       <SiteHeader />
-      <main id="main">
-        {/* Hero */}
-        <section className="border-b border-border bg-ink text-bg">
-          <div className="mx-auto max-w-4xl px-4 py-16 text-center md:py-24">
-            <LotusMark className="mx-auto h-10 w-10 text-gold" />
-            <h1 className="mt-4 font-display text-4xl md:text-5xl">Jewelry Meaning & Crystal Guide</h1>
-            <p className="mx-auto mt-4 max-w-xl text-bg/80">
-              Every stone has a story. Explore crystal meanings, ancient symbolism, styling tips, and care guides —
-              and discover what your jewelry means.
-            </p>
-          </div>
-        </section>
-
-        {/* 按分类展示文章 */}
-        <section className="mx-auto max-w-5xl px-4 py-16">
-          {categories.map((cat) => {
-            const articles = BLOG_ARTICLES.filter((a) => a.category === cat);
-            return (
-              <div key={cat} className="mb-12">
-                <h2 className="font-display text-2xl text-brand">{cat}</h2>
-                <div className="mt-4 grid gap-5 md:grid-cols-2">
-                  {articles.map((a) => (
-                    <Link
-                      key={a.slug}
-                      href={`/blog/${a.slug}`}
-                      className="group block rounded-lg border border-border bg-surface p-6 transition-all hover:-translate-y-1 hover:shadow-lg"
-                    >
-                      {editorialArt(a) && <div className="relative mb-5 aspect-[3/2] overflow-hidden rounded-md"><Image src={editorialArt(a).src} alt={editorialArt(a).alt} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" /></div>}
-                      <div className="flex items-center gap-3">
-                        <p className="text-xs uppercase tracking-wider text-gold">{a.readingTime}</p>
-                        <span className="text-[10px] text-muted/50">·</span>
-                        <p className="text-[11px] text-muted">{formatBlogDate(a.publishedAt)}</p>
-                        {isNewArticle(a) && (
-                          <span className="ml-auto rounded-full bg-brand/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand">New</span>
-                        )}
-                      </div>
-                      <h3 className="mt-2 font-display text-lg group-hover:text-brand">{a.title}</h3>
-                      <p className="mt-2 text-sm text-muted">{a.description}</p>
-                      <span className="mt-3 inline-block text-sm text-brand group-hover:underline">Read more →</span>
-                    </Link>
+      <main id="main" className={styles.index}>
+        <header className={styles.hero}>
+          <div className={`${styles.shell} ${styles.spread}`}>
+            <div className={styles.intro}>
+              <h1>The Nara <em>Journal.</em></h1>
+              <p>Practical guides to fit, care and wearing jewelry, with a closer look at the materials and motifs behind each piece.</p>
+              <Link className={styles.topicJump} href="#journal-topics">Browse topics <span aria-hidden="true">↓</span></Link>
+              <nav aria-label="Common jewelry questions" className={styles.quickLinks}>
+                <ul>
+                  {startingGuides.map(({ slug, label }) => (
+                    <li key={slug}><Link href={`/blog/${slug}`}>{label} <span aria-hidden="true">↗</span></Link></li>
                   ))}
-                </div>
-              </div>
-            );
-          })}
+                </ul>
+              </nav>
+            </div>
+            {lead && isPublishedGuide(lead) && (
+              <article className={styles.lead}>
+                <Link href={`/blog/${lead.slug}`}>
+                  {leadArt && (
+                    <div className={styles.leadImage}>
+                      <Image src={leadArt.src} alt="" fill preload sizes="(max-width: 799px) 90vw, (max-width: 1439px) 50vw, 728px" />
+                      <span>Editorial illustration</span>
+                    </div>
+                  )}
+                  <div className={styles.leadCopy}>
+                    <p>{lead.category} <span aria-hidden="true">·</span> {lead.readingTime}</p>
+                    <h2>{lead.title}</h2>
+                    <span aria-hidden="true">↗</span>
+                  </div>
+                </Link>
+              </article>
+            )}
+          </div>
+        </header>
+
+        <section id="journal-topics" className={`${styles.shell} ${styles.topics}`} aria-labelledby="topics-title">
+          <h2 id="topics-title">Browse by topic</h2>
+          <ul className={styles.topicList}>
+            {JOURNAL_TOPICS.map((topic) => {
+              const guides = getArticlesByCategory(topic.category);
+              const featured = guides.find(({ slug }) => slug === topic.featured && slug !== lead?.slug);
+              return (
+                <li key={topic.slug} className={styles.topic} style={{ backgroundColor: topic.backdrop }}>
+                  <Link href={`/blog/topic/${topic.slug}`} className={styles.topicLink}>
+                    <div className={styles.topicImage}>
+                      <Image src={topic.cover.src} alt="" fill sizes="(max-width: 479px) 31vw, (max-width: 1439px) 16vw, 175px" />
+                    </div>
+                    <div className={styles.topicCopy}>
+                      <h3>{topic.title}</h3>
+                      <p>{topic.description}</p>
+                      <span>{guides.length} {guides.length === 1 ? 'guide' : 'guides'}</span>
+                    </div>
+                    <span aria-hidden="true">↗</span>
+                  </Link>
+                  {featured && <Link href={`/blog/${featured.slug}`} className={styles.topicGuide}>{featured.title} <span aria-hidden="true">↗</span></Link>}
+                </li>
+              );
+            })}
+          </ul>
+          <p className={styles.topicCaption}>Topic images are editorial illustrations.</p>
         </section>
       </main>
       <SiteFooter />

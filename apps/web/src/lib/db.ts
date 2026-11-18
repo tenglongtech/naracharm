@@ -7,7 +7,7 @@
  * DATABASE_URL 决定连哪个库。
  */
 import postgres from 'postgres';
-import { drizzle } from 'drizzle-orm/postgres-js';
+import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import * as schema from '@jewelry/db';
 
 declare global {
@@ -31,4 +31,4 @@ if (process.env.NODE_ENV !== 'production') {
   globalThis.__db = db;
 }
 
-export type DB = typeof db;
+export type DB = PostgresJsDatabase<typeof schema>;

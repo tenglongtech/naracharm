@@ -31,13 +31,16 @@ export default function RegisterPage() {
       return;
     }
 
-    const result = await signUp(`${firstName} ${lastName}`.trim(), email, password);
-    setLoading(false);
-    if (result.error) {
-      setError(result.error.message || 'Registration failed');
-    } else {
-      router.push('/account');
-      router.refresh();
+    try {
+      const name = `${firstName} ${lastName}`.trim();
+      if (!name) throw new Error('Enter your name.');
+      const result = await signUp(name, email, password);
+      if (result.error) throw new Error(result.error.message || 'Could not create your account.');
+      router.replace('/account');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Could not create your account. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,7 +49,7 @@ export default function RegisterPage() {
       <SiteHeader />
       <AuthLayout
         title="Create Your Account"
-        subtitle="Join to track orders, save favorites, and get 10% off your first charm."
+        subtitle="Create an account to see orders you place while signed in."
         footer={
           <>
             Already have an account?{' '}
@@ -55,7 +58,7 @@ export default function RegisterPage() {
         }
       >
         {error && (
-          <div className="mb-4 rounded-md border border-brand/30 bg-brand/10 px-4 py-2.5 text-sm text-brand">
+          <div role="alert" className="mb-4 rounded-md border border-brand/30 bg-brand/10 px-4 py-2.5 text-sm text-brand">
             {error}
           </div>
         )}

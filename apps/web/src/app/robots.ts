@@ -5,7 +5,8 @@ export const dynamic = 'force-static';
 
 /**
  * robots.txt · 部署时自动生成 /robots.txt
- * 允许全站抓取,仅 /admin /api /account 私有区屏蔽
+ * 公开工具页面可被抓取，让搜索引擎读取 HTML 的 noindex。
+ * 后台与 API 继续屏蔽爬虫。
  */
 export default function robots(): MetadataRoute.Robots {
   const base = siteConfig.url;
@@ -14,7 +15,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin', '/admin/', '/api', '/account', '/cart', '/checkout', '/order', '/login', '/register', '/forgot-password'],
+        disallow: ['/admin', '/api'],
       },
       {
         userAgent: ['GPTBot', 'PerplexityBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended'],

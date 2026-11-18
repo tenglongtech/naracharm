@@ -1,13 +1,11 @@
 'use client';
 
-import { useServerInsertedHTML } from 'next/navigation';
-import React, { useState } from 'react';
 import { ConfigProvider } from 'antd';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 /**
  * antd SSR 样式 Registry
- * 包裹整个 app,解决 antd CSS-in-JS 在 Next.js App Router 下的首屏样式注入问题
+ * 后台页面使用此组件注入 antd 首屏样式。
  * 参考: https://ant.design/docs/react/use-with-next-js
  */
 

@@ -1,51 +1,48 @@
+import { isExternalProductImage } from '@/lib/product-media';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from '@/components/storefront-image';
 import { LotusMark } from './lotus-mark';
+import { DesignPalette } from './design-palette';
 
-/** 示例产品类型 (Phase 2 用 Drizzle schema 的 Product/Variant 类型替换) */
 export type ProductCard = {
   slug: string;
   name: string;
   heritage: string;
-  price: string;
+  price: string | null;
   compareAt?: string | null;
   tag?: string | null;
   image?: string;
+  isPreview?: boolean;
+  isIllustration?: boolean;
+  palette?: readonly [string, string, string];
 };
 
-/** 商品卡片 - 首页 Best Sellers / 系列页 / 相关推荐 复用 */
-export function ProductTile({ product }: { product: ProductCard }) {
+export function ProductTile({
+  product, sizes = '(max-width: 767px) 47vw, (max-width: 1392px) 24vw, 320px', heading: Heading = 'h3',
+}: { product: ProductCard; sizes?: string; heading?: 'h3' | 'h4' }) {
+  const hasVisual = product.image || product.palette;
   return (
-    <Link href={`/products/${product.slug}`} className="group block transition-transform duration-300 hover:-translate-y-1">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-surface shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
+    <Link href={`/products/${product.slug}`} prefetch={false} className="group block min-w-0">
+      <div className={`relative overflow-hidden rounded-sm bg-surface ${product.palette && !product.image ? 'aspect-[4/1]' : 'aspect-square'}`}>
         {product.image ? (
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 50vw, 25vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          <Image src={product.image} unoptimized={isExternalProductImage(product.image)} alt={`${product.name}${product.isIllustration ? ' design illustration' : ''}`} fill sizes={sizes} className="object-cover transition-transform duration-500 group-hover:scale-105" />
+        ) : product.palette ? (
+          <DesignPalette palette={product.palette} />
         ) : (
-          <div className="flex h-full flex-col items-center justify-center gap-3 text-muted/50"><LotusMark className="h-12 w-12" /><span className="text-xs uppercase tracking-wider">Image coming soon</span></div>
+          <div className="flex h-full items-center justify-center text-muted/40"><LotusMark className="h-12 w-12" /></div>
         )}
-        {product.tag && (
-          <span className="absolute left-2 top-2 rounded-sm bg-brand px-2 py-0.5 text-[10px] font-medium text-bg">
-            {product.tag}
-          </span>
+        {product.tag && product.image && (
+          <span className="absolute left-2 top-2 rounded-sm bg-bg px-2 py-1 text-[10px] font-medium text-brand">{product.tag}</span>
         )}
       </div>
-      {product.image?.startsWith('/products/redesigned/') && <p className="mt-2 text-[10px] text-muted">Design illustration</p>}
-      <p className="mt-3 text-[10px] uppercase tracking-[0.15em] text-muted">{product.heritage}</p>
-      <h3 className="mt-1 font-display text-base leading-snug group-hover:text-brand">
-        {product.name}
-      </h3>
-      <div className="mt-2 flex flex-wrap items-center gap-2 text-sm tabular-nums">
-        <span>{product.price}</span>
-        {product.compareAt && (
-          <span className="text-muted line-through">{product.compareAt}</span>
-        )}
+      <p className="mt-3 text-xs text-muted">{product.heritage}</p>
+      <Heading className="mt-1 font-display text-lg leading-snug group-hover:text-brand">{product.name}</Heading>
+      <div className="mt-2 flex flex-wrap items-center gap-x-2 text-sm tabular-nums">
+        {product.price && <span>{product.isPreview ? 'Planned ' : ''}{product.price}</span>}
+        {product.compareAt && <span className="text-muted line-through">{product.compareAt}</span>}
+        {!product.image && (product.tag || !hasVisual) && <span className="text-xs text-muted">{product.tag ?? 'Photo pending'}</span>}
       </div>
+      {product.isIllustration && <p className="mt-1 text-xs text-muted">Design illustration</p>}
     </Link>
   );
 }

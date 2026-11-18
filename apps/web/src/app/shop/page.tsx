@@ -1,11 +1,43 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { ProductCatalog } from '@/components/product-catalog';
-import { getActiveProducts } from '@/lib/storefront';
+import { getActiveProducts, getAllCollections } from '@/lib/storefront';
+import { catalogEntry } from '@/lib/catalog';
 import { CATEGORIES } from '@/lib/categories';
-export const metadata: Metadata = { title: 'Shop Handmade Jewelry & Phone Charms', description: 'Find your everyday piece. Explore bracelets, necklaces, earrings and phone charms by material, category and price at Nara Charm.', alternates: { canonical: '/shop' } };
+import styles from '../catalog-page.module.css';
+
+export const metadata = pageMetadata({
+  title: 'Shop Bracelets, Necklaces, Earrings & Phone Charms',
+  description: 'Find jewelry and phone charms by collection, category, material and availability. Explore Nara Charm’s current pieces and new studio designs.',
+  path: '/shop',
+  image: { url: '/editorial/nara-collection-still-life.webp', alt: 'Illustrative jewelry still life with red beads, an engraved silver bead and linen' },
+});
+
 export default async function ShopPage() {
-  const products = await getActiveProducts();
-  return <><SiteHeader /><main id="main" className="mx-auto max-w-7xl px-5 py-12 md:py-20"><p className="eyebrow">The jewelry edit</p><h1 className="mt-4 font-display text-5xl md:text-7xl">Find a piece of you.</h1><p className="mt-5 max-w-xl leading-relaxed text-muted">A touch of color. A meaningful detail. Something to make the everyday feel a little more yours.</p><nav aria-label="Shop by category" className="my-8 flex flex-wrap gap-3">{CATEGORIES.map(c=><Link key={c.slug} href={`/collections/${c.slug}`} className="rounded-full border border-border px-5 py-3 text-sm hover:border-brand">{c.name} ↗</Link>)}</nav><ProductCatalog products={products} /></main><SiteFooter /></>;
+  const [products, collections] = await Promise.all([getActiveProducts(), getAllCollections()]);
+  return (
+    <>
+      <SiteHeader />
+      <main id="main" className={styles.page}>
+        <header className={styles.intro}>
+          <div className={styles.shell}>
+            <div className={styles.heading}>
+              <h1>Shop jewelry</h1>
+              <p>Find pieces ready to order, or explore new designs in the studio.</p>
+            </div>
+            <nav aria-label="Shop by category" className={styles.categories}>
+              {CATEGORIES.map(({ slug, name }) => (
+                <Link prefetch={false} key={slug} href={`/collections/${slug}`}>{name} <span aria-hidden="true">↗</span></Link>
+              ))}
+            </nav>
+          </div>
+        </header>
+        <div className={`${styles.shell} ${styles.catalog}`}>
+          <ProductCatalog products={products.map(catalogEntry)} collections={collections.map(({ slug, name }) => ({ slug, name }))} />
+        </div>
+      </main>
+      <SiteFooter />
+    </>
+  );
 }

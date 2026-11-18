@@ -49,8 +49,9 @@
     "imageKind": "illustration"
   },
   "caravan-fusion-necklace": {
-    "primaryImage": "/products/redesigned/caravan-fusion-necklace.webp",
+    "primaryImage": "/products/redesigned/caravan-fusion-necklace-slate.webp",
     "images": [
+      "/products/redesigned/caravan-fusion-necklace-slate.webp",
       "/products/redesigned/caravan-fusion-necklace.webp"
     ],
     "imageKind": "illustration"
@@ -77,8 +78,11 @@
     "imageKind": "illustration"
   },
   "rose-quartz-bracelet": {
-    "primaryImage": null,
-    "images": []
+    "primaryImage": "/products/redesigned/rose-quartz-bracelet.webp",
+    "images": [
+      "/products/redesigned/rose-quartz-bracelet.webp"
+    ],
+    "imageKind": "illustration"
   },
   "obsidian-guard-charm": {
     "primaryImage": "/products/redesigned/obsidian-guard-charm.webp",
@@ -137,8 +141,11 @@
     "imageKind": "illustration"
   },
   "hematite-bracelet-mens": {
-    "primaryImage": null,
-    "images": []
+    "primaryImage": "/products/redesigned/hematite-bracelet-mens.webp",
+    "images": [
+      "/products/redesigned/hematite-bracelet-mens.webp"
+    ],
+    "imageKind": "illustration"
   },
   "unakite-bracelet-balance": {
     "primaryImage": "/products/redesigned/unakite-bracelet-balance.webp",

@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/page-metadata';
 import { LegalPage } from '@/components/legal-page';
 import { siteConfig } from '@/lib/site-config';
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: 'Privacy Policy',
   description: 'How Nara Charm collects, uses, and protects your personal data. GDPR and CCPA compliant. Your data is never sold.',
-  alternates: { canonical: '/privacy' },
-};
+  path: '/privacy',
+});
 
 /** /privacy - 隐私政策 */
 export default function PrivacyPage() {

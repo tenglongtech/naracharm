@@ -9,24 +9,25 @@ export function ShippingUpdateEmail({
   carrier,
   trackingNumber,
   trackingUrl,
+  orderStatusUrl,
 }: {
   orderNumber: string;
   customerName?: string;
   carrier: string;
   trackingNumber: string;
   trackingUrl?: string;
+  orderStatusUrl?: string;
 }) {
   return (
     <Html>
       <Head />
-      <Preview>Your order {orderNumber} is on the way 📦</Preview>
+      <Preview>Shipping update for order {orderNumber}</Preview>
       <Body style={body}>
         <Container style={container}>
-          <Heading style={h1}>🪷 Nara Charm</Heading>
+          <Heading style={h1}>Nara Charm</Heading>
           <Text style={text}>Hi {customerName || 'there'},</Text>
           <Text style={text}>
-            Good news — your order <strong>{orderNumber}</strong> is on its way.
-            Each piece was made by hand, and now it's traveling to find you.
+            A package for order <strong>{orderNumber}</strong> is on its way.
           </Text>
 
           <Section style={{ marginTop: 24, marginBottom: 24, backgroundColor: '#f3ede2', padding: 20, borderRadius: 6 }}>
@@ -46,10 +47,8 @@ export function ShippingUpdateEmail({
             )}
           </Section>
 
-          <Text style={{ ...text, fontSize: 13, color: '#6b6358' }}>
-            Estimated delivery: 7–15 business days from today.
-            Thank you for carrying our story with you.
-          </Text>
+          {orderStatusUrl && <Button href={orderStatusUrl} style={button}>View all shipments</Button>}
+          <Text style={{ ...text, fontSize: 13, color: '#6b6358' }}>Check the carrier’s tracking information for the latest delivery estimate.</Text>
 
           <Hr />
           <Text style={{ ...text, fontSize: 12, color: '#6b6358' }}>

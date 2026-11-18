@@ -1,59 +1,75 @@
-import type { Metadata } from 'next';
-import { LegalPage } from '@/components/legal-page';
+import { pageMetadata } from '@/lib/page-metadata';
+import { OrderPolicyPage } from '@/components/order-policy-page';
+import styles from '@/components/order-policy.module.css';
 import { siteConfig } from '@/lib/site-config';
+import {
+  freeShippingFromLabel, shippingCountryCodes, shippingPreparationDays, shippingRegions, shippingTransitDays, standardShippingLabel,
+} from '@/lib/store-policies';
+import { shippingPolicySchema } from '@/lib/store-policy-schema';
 
-export const metadata: Metadata = {
-  title: 'Shipping Policy',
-  description: 'Handmade and shipped worldwide from our studio. Free shipping over $120. Delivery in 7–15 business days with tracking.',
-  alternates: { canonical: '/shipping' },
-};
+export const metadata = pageMetadata({
+  title: 'Shipping and Delivery',
+  description: 'Check Nara Charm’s ' + shippingCountryCodes.length + ' shipping destinations, delivery estimates and standard rates. Free standard shipping from ' + freeShippingFromLabel + '.',
+  path: '/shipping',
+});
 
-/** /shipping - 运输政策 */
 export default function ShippingPage() {
-  const c = siteConfig.company;
+  const support = siteConfig.company.supportEmail;
+
   return (
-    <LegalPage
-      title="Shipping"
-      updated="June 2026"
-      intro="Every Nara Charm piece is handmade and shipped worldwide from our studio. Here is what to expect."
-      sections={[
-        {
-          heading: 'Processing Time',
-          body: [
-            'Each piece is made to order by hand. Please allow 1–3 business days for crafting before shipment.',
-            'During launches and holidays, processing may take up to 5 business days. We will always notify you of any delay.',
-          ],
-        },
-        {
-          heading: 'Shipping Methods & Times',
-          body: [
-            'Standard International (4PX / tracked): 7–15 business days to most destinations. Free on orders over $120.',
-            'Express (DHL / FedEx): 3–5 business days. Available at checkout for an additional fee, recommended for orders over $150.',
-            'All shipments include a tracking number, emailed to you once your order ships.',
-          ],
-        },
-        {
-          heading: 'Shipping Rates',
-          body: [
-            'Orders under $120: a flat rate based on your region ($4.90–$8.90) is shown at checkout.',
-            'Orders of $120 and above: free standard shipping worldwide.',
-          ],
-        },
-        {
-          heading: 'Customs & Duties',
-          body: [
-            'Orders to the United States: items valued under $800 are generally free of import duties (de minimis).',
-            'Orders to the EU and UK: VAT and any customs fees may apply and are the responsibility of the recipient.',
-            'We declare the true value of all shipments. We cannot mark orders as gifts.',
-          ],
-        },
-        {
-          heading: 'Where We Ship',
-          body: [
-            `We ship worldwide. If your country is not available at checkout, contact us at ${c.contactEmail} and we will do our best to help.`,
-          ],
-        },
-      ]}
-    />
+    <OrderPolicyPage
+      path="/shipping"
+      title="Shipping & delivery"
+      intro="Check where we deliver, how much shipping costs and when to expect your order."
+      updated="November 2026"
+      schema={shippingPolicySchema()}
+    >
+      <div className={styles.overview}>
+        <section id="standard" aria-labelledby="rates">
+          <h2 id="rates">Standard shipping</h2>
+          <dl className={styles.metrics}>
+            <div><dt>Orders below {freeShippingFromLabel}</dt><dd>{standardShippingLabel}</dd></div>
+            <div><dt>Orders of {freeShippingFromLabel} or more</dt><dd>Free</dd></div>
+          </dl>
+          <p>Rates are in USD and based on your merchandise subtotal before discounts.</p>
+        </section>
+
+        <section aria-labelledby="delivery-timing">
+          <h2 id="delivery-timing">Delivery estimates</h2>
+          <dl className={styles.metrics}>
+            <div><dt>Business days to prepare your order</dt><dd>{shippingPreparationDays.min}–{shippingPreparationDays.max}</dd></div>
+            <div><dt>Business days in transit</dt><dd>{shippingTransitDays.min}–{shippingTransitDays.max}</dd></div>
+          </dl>
+          <p>Carrier delays and customs processing can affect delivery.</p>
+        </section>
+      </div>
+
+      <section className={styles.section} aria-labelledby="destinations">
+        <h2 id="destinations">Where we deliver</h2>
+        <p>Standard delivery is available to these {shippingCountryCodes.length} destinations.</p>
+        <ul className={styles.regions}>
+          {shippingRegions.map((region) => (
+            <li key={region.name}>
+              <h3>{region.name}</h3>
+              <ul className={region.name === 'Europe' ? styles.countries : undefined}>
+                {region.countries.map((country) => <li key={country.code}>{country.name}</li>)}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <div className={styles.details}>
+        <section className={styles.section} aria-labelledby="tracking">
+          <h2 id="tracking">Track your order</h2>
+          <p>We email tracking details when your order ships. Include your order number if you contact us about a shipment.</p>
+          <a href={'mailto:' + support} className={styles.contactLink}>Email order support <span aria-hidden="true">↗</span></a>
+        </section>
+        <section className={styles.section} aria-labelledby="customs">
+          <h2 id="customs">Customs and duties</h2>
+          <p>Import taxes, duties or carrier handling fees may apply. Check with your destination’s customs authority for current rules. We declare the actual shipment value.</p>
+        </section>
+      </div>
+    </OrderPolicyPage>
   );
 }

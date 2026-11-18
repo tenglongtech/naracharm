@@ -2,7 +2,12 @@
  * Cart types & constants (无 'use server', 客户端可安全 import)
  */
 
-export const FREE_SHIPPING_THRESHOLD_CENTS = 12000; // $120
+export { FREE_SHIPPING_THRESHOLD_CENTS, STANDARD_SHIPPING_CENTS, standardShippingCents } from './store-policies';
+export const MAX_CART_LINE_QUANTITY = 99;
+
+export function cartLineQuantityLimit(stock: number) {
+  return Math.min(stock, MAX_CART_LINE_QUANTITY);
+}
 
 export type CartLineView = {
   lineId: string;

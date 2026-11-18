@@ -1,59 +1,48 @@
-/**
- * 品类定义 (静态)
- * 用于 collections/[slug] 的品类筛选视图 + collections 总览页的品类入口
- */
+import type { StorefrontProduct } from './storefront';
+
+/** Labels and search metadata for the category browse pages. */
 export type CategorySlug = 'phone-charms' | 'necklaces' | 'bracelets' | 'earrings';
 
 export type Category = {
   slug: CategorySlug;
+  productType: StorefrontProduct['category'];
   name: string;
-  icon: string;
-  desc: string;
   heroSubtitle: string;
   seoTitle: string;
   seoDescription: string;
-  seoKeywords: string[];
 };
 
 export const CATEGORIES: Category[] = [
   {
     slug: 'phone-charms',
+    productType: 'phone-charm',
     name: 'Phone Charms',
-    icon: '📱',
-    desc: 'Stone & cord charms',
-    heroSubtitle: 'Handmade phone charms with natural stones, beads, and protective cords. Beaded wrist straps, crystal phone charms, and ethnic phone lanyards.',
-    seoTitle: 'Handmade Phone Charms | Beaded, Crystal & Stone Phone Charms',
-    seoDescription: 'Shop handmade phone charms with natural stones, beaded wrist straps, and Tibetan protection cords. Crystal phone charms, evil eye phone lanyards, and boho phone charms. Free shipping over $120.',
-    seoKeywords: ['phone charm', 'beaded phone charm', 'phone charm strap', 'crystal phone charm', 'phone lanyard', 'phone wrist strap', 'ethnic phone charm'],
+    heroSubtitle: 'Braided loops, polished beads and small charms for phone cases with an attachment point.',
+    seoTitle: 'Beaded & Braided Phone Charms',
+    seoDescription: 'Shop beaded and braided phone charms from Nara Charm. Explore dark stone beads, warm red cords and small silver details.',
   },
   {
     slug: 'necklaces',
+    productType: 'necklace',
     name: 'Necklaces',
-    icon: '📿',
-    desc: 'Beaded & pendant',
-    heroSubtitle: 'Handmade beaded necklaces, crystal pendants, and Tibetan silver chains. Natural stone necklaces with meaning.',
-    seoTitle: 'Handmade Necklaces | Crystal, Beaded & Tibetan Silver Necklaces',
-    seoDescription: 'Shop handmade crystal necklaces, beaded stone necklaces, Tibetan silver pendants, and jade necklaces. Natural gemstone necklaces with meaning. Free shipping over $120.',
-    seoKeywords: ['crystal necklace', 'beaded necklace', 'tibetan silver necklace', 'jade pendant', 'natural stone necklace', 'gemstone necklace', 'charm necklace'],
+    heroSubtitle: 'Openwork pendants, softly colored stones and fine cord to wear at the neckline.',
+    seoTitle: 'Pendants & Stone Necklaces',
+    seoDescription: 'Shop necklaces from Nara Charm, including carved lotus and turquoise pendants with woven and adjustable cords.',
   },
   {
     slug: 'bracelets',
+    productType: 'bracelet',
     name: 'Bracelets',
-    icon: '⭕',
-    desc: 'Stretch & cord',
-    heroSubtitle: 'Handmade beaded bracelets, natural stone stretch bracelets, and Tibetan protection cords. Healing crystals with meaning.',
-    seoTitle: 'Handmade Beaded Bracelets | Crystal, Stone & Tibetan Bracelets',
-    seoDescription: 'Shop handmade beaded bracelets, amethyst healing bracelets, rose quartz love bracelets, turquoise protection bracelets, and Tibetan silver cuffs. Natural stone stretch bracelets. Free shipping over $120.',
-    seoKeywords: ['beaded bracelet', 'crystal bracelet', 'natural stone bracelet', 'amethyst bracelet', 'rose quartz bracelet', 'turquoise bracelet', 'tibetan bracelet', 'healing bracelet', 'stretch bracelet', 'boho bracelet'],
+    heroSubtitle: 'Rounded stone beads, braided cords and small silver details, from single strands to pieces to layer.',
+    seoTitle: 'Beaded & Braided Cord Bracelets',
+    seoDescription: 'Shop beaded and cord bracelets from Nara Charm. Browse amethyst, rose quartz, turquoise and adjustable braided styles.',
   },
   {
     slug: 'earrings',
+    productType: 'earrings',
     name: 'Earrings',
-    icon: '👂',
-    desc: 'Studs & drops',
-    heroSubtitle: 'Handmade silver earrings, Miao filigree drops, and natural stone studs. Delicate details with heritage craft.',
-    seoTitle: 'Handmade Earrings | Silver, Filigree & Stone Earrings',
-    seoDescription: 'Shop handmade silver earrings, Miao filigree drop earrings, natural stone studs, and Tibetan silver earrings. Hypoallergenic, handcrafted. Free shipping over $120.',
-    seoKeywords: ['handmade earrings', 'silver earrings', 'filigree earrings', 'stone earrings', 'tibetan earrings', 'boho earrings', 'stud earrings', 'drop earrings'],
+    heroSubtitle: 'Fine silver outlines and softly colored stone drops that leave room for light to show through.',
+    seoTitle: 'Silver Openwork & Stone Drop Earrings',
+    seoDescription: 'Explore Nara Charm earrings, from silver filigree flowers to amethyst drops on slender earwires.',
   },
 ];

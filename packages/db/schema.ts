@@ -195,6 +195,7 @@ export const productImages = pgTable(
     altText: text('alt_text'),
     sortOrder: integer('sort_order').default(0).notNull(),
     isPrimary: boolean('is_primary').default(false).notNull(),
+    isProductPhoto: boolean('is_product_photo').default(false).notNull(),
   },
   (t) => ({
     productIdx: index('product_images_product_idx').on(t.productId),
@@ -296,6 +297,7 @@ export const orders = pgTable(
     id: uuid('id').defaultRandom().primaryKey(),
     number: text('number').notNull().unique(), // SS-10001
     customerId: uuid('customer_id').references(() => customers.id),
+    accountUserId: text('account_user_id').references(() => users.id, { onDelete: 'set null' }),
     email: text('email').notNull(),
     status: orderStatus('status').default('pending').notNull(),
     paymentStatus: paymentStatus('payment_status').default('unpaid').notNull(),
@@ -321,6 +323,7 @@ export const orders = pgTable(
   },
   (t) => ({
     customerIdx: index('orders_customer_idx').on(t.customerId),
+    accountCreatedIdx: index('orders_account_created_idx').on(t.accountUserId, t.createdAt, t.id),
     statusIdx: index('orders_status_idx').on(t.status),
     emailIdx: index('orders_email_idx').on(t.email),
   }),

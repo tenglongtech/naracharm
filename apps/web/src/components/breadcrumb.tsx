@@ -42,7 +42,7 @@ export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
                 {i > 0 && <li aria-hidden="true">/</li>}
                 <li>
                   {item.href && !isLast ? (
-                    <Link href={item.href} className="hover:text-brand">
+                    <Link prefetch={false} href={item.href} className="hover:text-brand">
                       {item.label}
                     </Link>
                   ) : (

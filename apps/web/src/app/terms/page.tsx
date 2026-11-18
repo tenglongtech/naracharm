@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/page-metadata';
 import { LegalPage } from '@/components/legal-page';
 import { siteConfig } from '@/lib/site-config';
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: 'Terms of Service',
   description: 'The terms governing your use of Nara Charm and your purchases. Handmade products, pricing, orders, shipping, and returns.',
-  alternates: { canonical: '/terms' },
-};
+  path: '/terms',
+});
 
 /** /terms - 服务条款 */
 export default function TermsPage() {
@@ -45,7 +45,7 @@ export default function TermsPage() {
           heading: 'Orders & Payment',
           body: [
             'When you place an order, you receive an email confirmation. An order is not accepted until we send a shipping confirmation.',
-            'Payment is processed securely by Stripe. We accept major credit cards, Apple Pay, Google Pay, and PayPal.',
+            'Payment is processed by Stripe. Checkout displays the payment methods available for your order.',
           ],
         },
         {

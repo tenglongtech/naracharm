@@ -1,27 +1,19 @@
-# Nara Charm (naracharm.com)
+# Nara Charm
 
-> Nara Charm is an independent artisan jewelry house dedicated to handmade heritage and ethnic fusion jewelry. Every piece carries living cultural stories from the Himalayan plateau, Miao silverwork, and natural healing stones.
+> Nara Charm is a heritage-inspired jewelry studio with bracelets, necklaces, earrings and phone charms. The studio section presents new design previews and their visual references.
 
-## Core Collections & Categories
-- [Handmade Bracelets](https://naracharm.com/collections/bracelets): Hand-hammered Tibetan silver amulets, hand-braided cords, and crystal bracelets.
-- [Necklaces & Pendants](https://naracharm.com/collections/necklaces): Heritage amulets, hand-carved jade pendants, and ethnic silver chokers.
-- [Earrings](https://naracharm.com/collections/earrings): Miao filigree silver earrings, natural turquoise drops, and dangle earrings.
-- [Phone Charms](https://naracharm.com/collections/phone-charms): Bohemian natural gemstone and beaded protective phone charms.
-- [Tibetan Silver Collection](https://naracharm.com/collections/tibetan-silver): Hand-hammered 925 silver and genuine turquoise jewelry rooted in Tibetan folklore.
-- [Miao Filigree Collection](https://naracharm.com/collections/miao-filigree): Intricate woven silver jewelry handcrafted with historical filigree techniques.
+## Shop and design
 
-## Cultural Heritage & Craftsmanship
-- [Our Craft & Standards](https://naracharm.com/our-craft): Authentic materials (925 sterling silver, untreated natural stones, silk cords), zero mass-production, direct artisan partnerships.
-- [Cultural Stories](https://naracharm.com/stories): Immersive essays tracing the cultural origin, symbolic meaning, and artisan background of each piece.
-- [Jewelry Meanings & Styling Guides](https://naracharm.com/blog): Comprehensive educational guides on gemstone healing meanings, crystal bracelet stacking rules, cleansing rituals, and Tibetan iconography.
-- [Size & Fitting Guide](https://naracharm.com/size-guide): Wrist and neck measurement guide for handmade bracelets and pendants.
+- [Shop jewelry](https://naracharm.com/shop): The catalog with category, collection and availability filters.
+- [Collections](https://naracharm.com/collections): Shop collections, product categories and studio collections.
+- [Inside the studio](https://naracharm.com/studio): Design previews and collection notes.
+- [Our craft](https://naracharm.com/our-craft): The design details behind wirework, braided cords and layered shapes.
 
-## Customer Care & Guarantee
-- [Shipping Policy](https://naracharm.com/shipping): Free worldwide standard shipping on orders over $120. Tracked delivery in 5–10 business days to US, UK, CA, and AU.
-- [30-Day Returns](https://naracharm.com/returns): 30-day hassle-free return and exchange policy for unworn jewelry in original packaging.
-- [Frequently Asked Questions](https://naracharm.com/faq): Care instructions, material authenticity, sizing, and order tracking.
-- [Contact Customer Care](https://naracharm.com/contact): Reach our customer care team at hello@naracharm.com.
+## Guides and service
 
-## Full Context & Complete Catalog
-- [Complete Brand & Product Knowledge Base](https://naracharm.com/llms-full.txt): Comprehensive technical specifications, materials breakdown, and full SKU catalog for deep LLM retrieval.
-
+- [The Nara Journal](https://naracharm.com/blog): Guides to materials, fit, care, styling, gifts, motifs and stone colors.
+- [Jewelry size guide](https://naracharm.com/size-guide): How to measure for a bracelet or necklace.
+- [Shipping](https://naracharm.com/shipping): Current rates, delivery estimates and destination information.
+- [Returns](https://naracharm.com/returns): Return conditions and instructions.
+- [Contact](https://naracharm.com/contact): Ask about a specific product, design or order.
+- [Sitemap](https://naracharm.com/sitemap.xml): Canonical public pages.

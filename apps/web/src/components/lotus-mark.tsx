@@ -1,12 +1,14 @@
 /**
  * Lotus mark SVG (纯静态, server/client 都能用)
  */
-export function LotusMark({ className = '' }: { className?: string }) {
+export function LotusMark({ className = '', size, stroke = 'currentColor' }: { className?: string; size?: number; stroke?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke={stroke}
+      width={size}
+      height={size}
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"

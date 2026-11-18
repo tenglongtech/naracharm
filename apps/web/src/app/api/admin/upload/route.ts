@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
+import { requireAdmin } from '@/lib/auth';
 
 /**
  * POST /api/admin/upload
@@ -8,25 +9,9 @@ import path from 'path';
  * body: multipart/form-data, field "file"
  */
 export async function POST(req: NextRequest) {
-  // ── 权限校验 ──
-  let isAdmin = false;
   try {
-    const { headers } = await import('next/headers');
-    const h = await headers();
-    const { auth } = await import('@/lib/auth');
-    const session = await auth.api.getSession({ headers: h });
-    if (session?.user) {
-      // Better Auth session 可能不含 role,回库查
-      const { db } = await import('@/lib/db');
-      const { users } = await import('@jewelry/db');
-      const { eq } = await import('drizzle-orm');
-      const [u] = await db.select().from(users).where(eq(users.id, session.user.id)).limit(1);
-      isAdmin = u?.role === 'admin';
-    }
-  } catch (e: any) {
-    console.error('[upload] auth error:', e?.message);
-  }
-  if (!isAdmin) {
+    await requireAdmin();
+  } catch {
     return NextResponse.json({ error: '未授权,需要管理员登录' }, { status: 401 });
   }
 

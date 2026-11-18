@@ -1,4 +1,5 @@
-import { Body, Container, Head, Heading, Hr, Html, Preview, Section, Text } from '@react-email/components';
+import { Body, Button, Container, Head, Heading, Hr, Html, Preview, Section, Text } from '@react-email/components';
+import { shippingPreparationDays, shippingTransitDays } from '@/lib/store-policies';
 
 /**
  * 订单确认邮件
@@ -11,12 +12,22 @@ export function OrderConfirmationEmail({
   customerName,
   items,
   totalCents,
+  subtotalCents,
+  shippingCents,
+  discountCents,
+  taxCents,
+  orderStatusUrl,
   currency = 'usd',
 }: {
   orderNumber: string;
   customerName?: string;
   items: { name: string; quantity: number; priceCents: number }[];
   totalCents: number;
+  subtotalCents: number;
+  shippingCents: number;
+  discountCents: number;
+  taxCents: number;
+  orderStatusUrl?: string;
   currency?: string;
 }) {
   return (
@@ -25,11 +36,10 @@ export function OrderConfirmationEmail({
       <Preview>Thank you for your order — {orderNumber}</Preview>
       <Body style={body}>
         <Container style={container}>
-          <Heading style={h1}>🪷 Nara Charm</Heading>
+          <Heading style={h1}>Nara Charm</Heading>
           <Text style={text}>Hi {customerName || 'there'},</Text>
           <Text style={text}>
-            Thank you for your order. Every piece carries a story, and we're handcrafting yours now.
-            We'll email you again with tracking once it ships.
+            Thank you for your order. We’ve confirmed your payment and will prepare your jewelry for delivery.
           </Text>
 
           <Section style={{ marginTop: 24 }}>
@@ -41,20 +51,27 @@ export function OrderConfirmationEmail({
                   {it.quantity}× {it.name}
                 </span>
                 <span style={tabular}>
-                  ${(it.priceCents / 100).toFixed(2)}
+                  ${(it.priceCents * it.quantity / 100).toFixed(2)}
                 </span>
               </div>
             ))}
             <Hr />
+            <Text style={row}>Subtotal ${(subtotalCents / 100).toFixed(2)}</Text>
+            {discountCents > 0 && <Text style={row}>Discount −${(discountCents / 100).toFixed(2)}</Text>}
+            <Text style={row}>Shipping {shippingCents === 0 ? 'Free' : '$' + (shippingCents / 100).toFixed(2)}</Text>
+            {taxCents > 0 && <Text style={row}>Tax ${(taxCents / 100).toFixed(2)}</Text>}
             <div style={{ ...row, display: 'flex', justifyContent: 'space-between', fontWeight: 600 }}>
               <span>Total</span>
               <span style={tabular}>${(totalCents / 100).toFixed(2)} {currency.toUpperCase()}</span>
             </div>
           </Section>
 
+          {orderStatusUrl && <Button href={orderStatusUrl} style={{
+            backgroundColor: '#873e34', color: '#fff9ef', padding: '12px 18px', marginTop: 16, fontSize: 14,
+          }}>Track your order</Button>}
+
           <Text style={{ ...text, marginTop: 24, fontSize: 13, color: '#6b6358' }}>
-            Processing: 1–3 business days · Shipping: 7–15 business days worldwide.
-            Questions? Reply to this email.
+            Allow {shippingPreparationDays.min}–{shippingPreparationDays.max} business days for preparation and typically another {shippingTransitDays.min}–{shippingTransitDays.max} business days in transit. Questions? Reply to this email.
           </Text>
 
           <Hr />

@@ -19,7 +19,13 @@ COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
 COPY apps/web/package.json apps/web/package.json
 COPY packages/db/package.json packages/db/package.json
 
-RUN pnpm install --frozen-lockfile --filter web... 2>/dev/null || pnpm install --filter web...
+RUN pnpm install --frozen-lockfile --filter web...
+
+FROM deps AS migrator
+COPY apps/web/drizzle ./apps/web/drizzle
+COPY apps/web/scripts/migrate-release.mjs ./apps/web/scripts/migrate-release.mjs
+WORKDIR /app/apps/web
+CMD ["node", "scripts/migrate-release.mjs"]
 
 # ─── Stage 2: 构建 ──────────────────────────────────────────
 FROM node:22-alpine AS builder
@@ -32,11 +38,13 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
 COPY --from=deps /app/packages/db/node_modules ./packages/db/node_modules
 
-COPY . .
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY apps/web ./apps/web
+COPY packages/db ./packages/db
 
 # 构建 standalone (BUILD_TARGET 不设为 static)
 ENV BUILD_TARGET=backend
-RUN pnpm --filter web build
+RUN pnpm --filter web exec next build --webpack
 
 # ─── Stage 3: 运行 ──────────────────────────────────────────
 FROM node:22-alpine AS runner
@@ -54,7 +62,6 @@ COPY --from=builder /app/apps/web/public ./apps/web/public
 # standalone 结构: server.js 在 standalone 根, 需在 apps/web 下找 static
 # 所以运行目录调整:
 WORKDIR /app/apps/web
-COPY --from=builder /app/apps/web/.next/standalone/apps/web/server.js ./server.js
 
 EXPOSE 37001
 

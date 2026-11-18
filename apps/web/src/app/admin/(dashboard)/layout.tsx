@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getSession } from '@/lib/auth';
+import { requireAdmin } from '@/lib/auth';
 import { AdminShell } from '@/components/admin-shell';
 
 /**
@@ -19,14 +19,16 @@ export const metadata: Metadata = {
     },
   },
 };
+export const dynamic = 'force-dynamic';
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const session = await getSession();
+  const session = await requireAdmin().catch((error: unknown) => {
+    if (error instanceof Error && error.message === 'UNAUTHORIZED') redirect('/admin/login');
+    if (error instanceof Error && error.message === 'FORBIDDEN') return null;
+    throw error;
+  });
 
   if (!session) {
-    redirect('/admin/login');
-  }
-
-  if ((session.user as { role?: string }).role !== 'admin') {
     return (
       <div style={{ padding: 80, textAlign: 'center', fontFamily: 'Inter, sans-serif' }}>
         <h2>无权限访问</h2>

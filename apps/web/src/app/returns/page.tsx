@@ -1,58 +1,67 @@
-import type { Metadata } from 'next';
-import { LegalPage } from '@/components/legal-page';
+import { pageMetadata } from '@/lib/page-metadata';
+import { OrderPolicyPage } from '@/components/order-policy-page';
+import styles from '@/components/order-policy.module.css';
 import { siteConfig } from '@/lib/site-config';
+import { DAMAGE_REPORT_DAYS, REFUND_PROCESSING_DAYS, RETURN_WINDOW_DAYS } from '@/lib/store-policies';
+import { returnsPolicySchema } from '@/lib/store-policy-schema';
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: 'Returns & Exchanges',
-  description: '30-day returns on unworn items. Free replacement for damaged or defective pieces. See our full return policy.',
-  alternates: { canonical: '/returns' },
-};
+  description: 'See how to request a return within ' + RETURN_WINDOW_DAYS + ' days for eligible jewelry, report damage and check refund and shipping terms.',
+  path: '/returns',
+});
 
-/** /returns - 退换货政策 (30 天) */
 export default function ReturnsPage() {
-  const c = siteConfig.company;
+  const { contactEmail, returnAddress } = siteConfig.company;
+
   return (
-    <LegalPage
-      title="Returns & Exchanges"
+    <OrderPolicyPage
+      path="/returns"
+      title="Returns & exchanges"
+      intro="Check whether your piece is eligible and what to include in a return request."
       updated="June 2026"
-      intro="We want you to love your Nara Charm. If something is not right, we are here to help."
-      sections={[
-        {
-          heading: '30-Day Return Window',
-          body: [
-            'You may return any unworn, undamaged item within 30 days of delivery for a full refund of the product price.',
-            'Original shipping charges are non-refundable, except in the case of a defect or our error.',
-          ],
-        },
-        {
-          heading: 'How to Start a Return',
-          body: [
-            `Email ${c.contactEmail} with your order number and the reason for return.`,
-            `We will reply with a return address (${c.returnAddress}) and instructions. Return shipping is paid by the customer, unless the item is defective or we made a mistake.`,
-            'Returns are processed to our warehouse. Once we receive and inspect your item, your refund is issued within 5 business days to the original payment method.',
-          ],
-        },
-        {
-          heading: 'Exchanges',
-          body: [
-            'To exchange for a different size or color, the fastest way is to return the original item for a refund and place a new order.',
-            'Contact us if you need help holding stock for an exchange.',
-          ],
-        },
-        {
-          heading: 'Damaged or Defective Items',
-          body: [
-            'If your item arrives damaged or defective, contact us within 7 days with a photo. We will send a free replacement or issue a full refund (including shipping), with no need to return the original.',
-          ],
-        },
-        {
-          heading: 'Non-Returnable Items',
-          body: [
-            'For hygiene reasons, earrings cannot be returned unless defective.',
-            'Custom or personalized pieces are final sale.',
-          ],
-        },
-      ]}
-    />
+      schema={returnsPolicySchema()}
+    >
+      <div className={styles.overview}>
+        <section aria-labelledby="eligible-returns">
+          <h2 id="eligible-returns">Eligible returns</h2>
+          <dl className={styles.metrics}>
+            <div><dt>From delivery to request an eligible return</dt><dd>{RETURN_WINDOW_DAYS} days</dd></div>
+            <div><dt>To report damage on arrival</dt><dd>{DAMAGE_REPORT_DAYS} days</dd></div>
+          </dl>
+          <p>Unworn, undamaged items are eligible for a refund of the product price, subject to the exceptions below.</p>
+        </section>
+        <section aria-labelledby="return-request">
+          <h2 id="return-request">Request a return</h2>
+          <ol className={styles.steps}>
+            <li>Email us with your order number and the reason for your return.</li>
+            <li>Wait for the return address in {returnAddress} and mailing instructions.</li>
+            <li>After we receive and inspect your item, we issue the refund to your original payment method within {REFUND_PROCESSING_DAYS} business days.</li>
+          </ol>
+          <a href={'mailto:' + contactEmail + '?subject=Nara%20Charm%20return%20request'} className={styles.contactLink}>Email a return request <span aria-hidden="true">↗</span></a>
+        </section>
+      </div>
+
+      <div className={styles.details}>
+        <section className={styles.section} aria-labelledby="return-exceptions">
+          <h2 id="return-exceptions">Exceptions and shipping</h2>
+          <ul className={styles.bullets}>
+            <li>For hygiene reasons, earrings can only be returned if defective under this store policy.</li>
+            <li>Custom or personalized pieces are final sale under this store policy.</li>
+            <li>For standard returns, you pay return postage. We cover shipping if the item is defective or we made a mistake. Original shipping charges are refunded in those cases.</li>
+          </ul>
+          <p>Any statutory consumer rights that apply to your purchase remain available.</p>
+        </section>
+        <section className={styles.section} aria-labelledby="damage">
+          <h2 id="damage">Damage or defects</h2>
+          <p>If your piece arrives damaged or defective, email us a photo within {DAMAGE_REPORT_DAYS} days. We can arrange a free replacement or a full refund, including shipping, by email.</p>
+        </section>
+      </div>
+
+      <section className={styles.section} aria-labelledby="exchanges">
+        <h2 id="exchanges">Exchanges</h2>
+        <p>To change the size or color of an eligible item, you can return it for a refund and order the other option. Contact us if you need help holding stock.</p>
+      </section>
+    </OrderPolicyPage>
   );
 }

@@ -1,3 +1,8 @@
 import type { Metadata } from 'next';
+import { AntdProvider } from '@/components/antd-provider';
+
 export const metadata: Metadata = { robots: { index: false, follow: false } };
-export default function UtilityLayout({ children }: { children: React.ReactNode }) { return children; }
+
+export default function AdminTestLayout({ children }: { children: React.ReactNode }) {
+  return <AntdProvider>{children}</AntdProvider>;
+}

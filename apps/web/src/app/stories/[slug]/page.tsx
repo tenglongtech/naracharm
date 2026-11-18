@@ -7,6 +7,8 @@ import { Breadcrumb } from '@/components/breadcrumb';
 import { ProductTile, type ProductCard } from '@/components/product-tile';
 import { STORIES, getStoryBySlug } from '@/lib/stories-data';
 import { getActiveProducts } from '@/lib/storefront';
+import { productCard } from '@/lib/catalog';
+import { pageMetadata, productShareImage } from '@/lib/page-metadata';
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -18,17 +20,15 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const story = getStoryBySlug(slug);
   if (!story) return { title: 'Story not found' };
-  return {
+  const lead = (await getActiveProducts()).find((product) =>
+    product.primaryImage && story.relatedProducts.some(({ slug: related }) => related === product.slug));
+  return pageMetadata({
     title: `${story.title} — ${story.heritage}`,
     description: story.excerpt,
-    alternates: { canonical: `/stories/${story.slug}` },
-    openGraph: {
-      title: story.title,
-      description: story.excerpt,
-      url: `/stories/${story.slug}`,
-      type: 'article',
-    },
-  };
+    path: `/stories/${story.slug}`,
+    image: productShareImage(lead),
+    article: { publishedTime: story.publishedAt, modifiedTime: story.updatedAt },
+  });
 }
 
 export default async function StoryDetailPage({ params }: Params) {
@@ -41,15 +41,7 @@ export default async function StoryDetailPage({ params }: Params) {
     .map((rp) => {
       const p = allProducts.find((x) => x.slug === rp.slug);
       if (!p) return null;
-      return {
-        slug: p.slug,
-        name: p.name,
-        heritage: p.heritage ?? 'Handmade',
-        price: `$${(p.basePriceCents / 100).toFixed(0)}`,
-        compareAt: p.compareAtPriceCents ? `$${(p.compareAtPriceCents / 100).toFixed(0)}` : null,
-        tag: p.compareAtPriceCents ? 'Sale' : p.isFeatured ? 'Featured' : null,
-        image: p.primaryImage ?? undefined,
-      };
+      return productCard(p);
     })
     .filter(Boolean) as ProductCard[];
 
@@ -62,7 +54,7 @@ export default async function StoryDetailPage({ params }: Params) {
     headline: story.title,
     description: story.excerpt,
     datePublished: story.publishedAt,
-    dateModified: story.publishedAt,
+    dateModified: story.updatedAt,
     author: { '@type': 'Organization', name: 'Nara Charm', url: siteUrl },
     publisher: {
       '@type': 'Organization',
@@ -130,6 +122,9 @@ export default async function StoryDetailPage({ params }: Params) {
             <p className="mt-10 font-display text-lg italic text-brand">
               {story.closing}
             </p>
+            <Link href={`/collections/${story.relatedCollection.slug}`} className="mt-6 inline-block text-sm text-brand underline underline-offset-4">
+              Explore {story.relatedCollection.name} ↗
+            </Link>
           </div>
 
           {/* Related products */}

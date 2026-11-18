@@ -2,20 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Button, ButtonLink } from '@/components/ui';
+import Image from '@/components/storefront-image';
+import { ButtonLink } from '@/components/ui';
 import {
   getLocalCart, updateLocalLineQuantity, removeLocalLine, subscribeToCart,
 } from '@/lib/cart-local';
-import type { CartView } from '@/lib/cart-types';
+import { cartLineQuantityLimit, type CartView } from '@/lib/cart-types';
+import { isExternalProductImage } from '@/lib/product-media';
+import { freeShippingFromLabel } from '@/lib/store-policies';
 
-/**
- * 购物车 (client, localStorage 驱动)
- * 数据从 localStorage 读取,变更后 emit → 订阅组件自动更新
- */
+function price(cents: number) {
+  return '$' + (cents / 100).toFixed(2);
+}
+
 export function CartContents() {
   const [cart, setCart] = useState<CartView | null>(null);
-  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     setCart(getLocalCart());
@@ -23,166 +24,120 @@ export function CartContents() {
   }, []);
 
   if (!cart) {
-    return <div className="py-12 text-center text-muted">Loading…</div>;
+    return <p role="status" className="py-10 text-sm text-muted">Loading your cart…</p>;
   }
 
   if (cart.lines.length === 0) {
     return (
-      <div className="rounded-lg border border-border bg-surface p-12 text-center">
-        <p className="font-display text-xl">Your cart is empty</p>
-        <p className="mt-2 text-sm text-muted">Every piece carries a story — find yours.</p>
-        <div className="mt-6">
-          <ButtonLink href="/collections">Start Shopping</ButtonLink>
+      <section aria-labelledby="cart-empty" className="border-y border-border bg-surface px-6 py-12 md:p-12">
+        <h2 id="cart-empty" className="font-display text-2xl">Your cart is empty</h2>
+        <div className="mt-5 flex flex-wrap items-center gap-4">
+          <ButtonLink href="/shop" className="min-h-11">Shop jewelry</ButtonLink>
+          <Link href="/gift-guide" className="inline-flex min-h-11 items-center text-sm text-brand underline underline-offset-4">Browse gifts</Link>
         </div>
-      </div>
+      </section>
     );
   }
 
-  const onUpdate = (lineId: string, nextQty: number) => {
-    setPending(true);
-    try {
-      setCart(updateLocalLineQuantity(lineId, nextQty));
-    } finally {
-      setPending(false);
-    }
-  };
-
-  const onRemove = (lineId: string) => {
-    setPending(true);
-    try {
-      setCart(removeLocalLine(lineId));
-    } finally {
-      setPending(false);
-    }
-  };
-
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
       <div>
-        <h1 className="font-display text-3xl">Your Cart</h1>
-        <p className="mt-1 text-sm text-muted">
-          {cart.itemCount} item{cart.itemCount > 1 ? 's' : ''}
+        <p className="text-sm text-muted" role="status">{cart.itemCount} {cart.itemCount === 1 ? 'item' : 'items'}</p>
+        <p className="mt-3 border-y border-border bg-surface px-4 py-3 text-sm leading-6 text-ink" role="status">
+          {cart.toFreeShippingCents > 0
+            ? <>Add <strong>{price(cart.toFreeShippingCents)}</strong> in jewelry to reach free standard shipping at {freeShippingFromLabel}.</>
+            : 'Your subtotal qualifies for free standard shipping.'}
+          {' '}<Link href="/shipping" className="text-brand underline underline-offset-4">Delivery destinations</Link>
         </p>
 
-        {/* 免运费进度 */}
-        {cart.toFreeShippingCents > 0 ? (
-          <div className="mt-4 rounded-md bg-brand/10 px-4 py-3 text-sm text-brand">
-            Add <strong>${(cart.toFreeShippingCents / 100).toFixed(2)}</strong> more to qualify for free shipping.
-          </div>
-        ) : (
-          <div className="mt-4 rounded-md bg-gold/15 px-4 py-3 text-sm text-ink">
-            🎉 You&apos;ve unlocked free shipping!
-          </div>
-        )}
-
-        <ul className="mt-6 divide-y divide-border">
-          {cart.lines.map((it) => (
-            <li key={it.lineId} className="flex gap-4 py-5">
-              <Link
-                href={`/products/${it.productSlug}`}
-                className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md bg-surface"
-              >
-                {it.image ? (
+        <ul aria-label="Cart items" className="mt-4 divide-y divide-border border-b border-border">
+          {cart.lines.map((item) => (
+            <li key={item.lineId} className="grid grid-cols-[clamp(4.2rem,20vw,6rem)_minmax(0,1fr)] gap-3 py-5 sm:gap-5">
+              <div className="relative aspect-square overflow-hidden bg-surface">
+                {item.image ? (
                   <Image
-                    src={it.image}
-                    alt={it.productName}
+                    src={item.image}
+                    unoptimized={isExternalProductImage(item.image)}
+                    alt=""
                     fill
-                    sizes="96px"
+                    sizes="(max-width: 480px) 20vw, 96px"
                     className="object-cover"
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-[10px] text-muted/40">
-                    [img]
-                  </div>
+                  <span className="grid h-full place-content-center px-2 text-center text-xs text-muted">Photo pending</span>
                 )}
-              </Link>
-              <div className="flex flex-1 flex-col">
-                <div className="flex justify-between gap-3">
-                  <div>
-                    <p className="text-xs uppercase tracking-wider text-gold">{it.heritage || 'Handmade'}</p>
-                    <Link
-                      href={`/products/${it.productSlug}`}
-                      className="font-display text-base hover:text-brand"
-                    >
-                      {it.productName}
-                    </Link>
-                    {it.variantName && it.variantName !== 'Standard' && (
-                      <p className="text-xs text-muted">{it.variantName}</p>
-                    )}
-                  </div>
-                  <p className="text-sm tabular-nums">${(it.lineTotalCents / 100).toFixed(2)}</p>
+              </div>
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <h2 className="max-w-full font-display text-lg leading-tight sm:text-xl">
+                    <Link href={`/products/${item.productSlug}`} className="hover:text-brand">{item.productName}</Link>
+                  </h2>
+                  <p className="text-sm tabular-nums">{price(item.lineTotalCents)}</p>
                 </div>
-                <div className="mt-auto flex items-center justify-between pt-3">
-                  <div className="flex items-center rounded-md border border-border">
+                {item.variantName && !/^(default|standard)$/i.test(item.variantName) && (
+                  <p className="mt-1 text-xs text-muted">{item.variantName}</p>
+                )}
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+                  <div className="flex items-center border border-border">
                     <button
                       type="button"
-                      onClick={() => onUpdate(it.lineId, it.quantity - 1)}
-                      disabled={pending || it.quantity <= 1}
-                      aria-label={`Decrease ${it.productName} quantity`}
-                      className="px-3 py-1.5 text-muted hover:text-ink disabled:opacity-50"
+                      onClick={() => updateLocalLineQuantity(item.lineId, item.quantity - 1)}
+                      disabled={item.quantity <= 1}
+                      aria-label={`Decrease ${item.productName} quantity`}
+                      className="h-11 w-11 text-muted hover:bg-surface hover:text-ink disabled:opacity-50"
                     >
                       −
                     </button>
-                    <span className="w-8 text-center text-sm tabular-nums">{it.quantity}</span>
+                    <span className="w-7 text-center text-sm tabular-nums">{item.quantity}</span>
                     <button
                       type="button"
-                      onClick={() => onUpdate(it.lineId, it.quantity + 1)}
-                      disabled={pending || it.quantity >= it.stock}
-                      aria-label={`Increase ${it.productName} quantity`}
-                      className="px-3 py-1.5 text-muted hover:text-ink disabled:opacity-50"
+                      onClick={() => updateLocalLineQuantity(item.lineId, item.quantity + 1)}
+                      disabled={item.quantity >= cartLineQuantityLimit(item.stock)}
+                      aria-label={`Increase ${item.productName} quantity`}
+                      className="h-11 w-11 text-muted hover:bg-surface hover:text-ink disabled:opacity-50"
                     >
                       +
                     </button>
                   </div>
                   <button
                     type="button"
-                    onClick={() => onRemove(it.lineId)}
-                    disabled={pending}
-                    className="text-xs text-muted underline hover:text-brand"
+                    onClick={() => removeLocalLine(item.lineId)}
+                    aria-label={`Remove ${item.productName}`}
+                    className="min-h-11 text-xs text-muted underline underline-offset-4 hover:text-brand"
                   >
                     Remove
                   </button>
                 </div>
-                {it.quantity >= it.stock && (
-                  <p className="mt-1 text-[11px] text-amber-700">Max stock reached</p>
+                {item.quantity >= cartLineQuantityLimit(item.stock) && (
+                  <p className="mt-1 text-xs text-muted">Quantity limit reached</p>
                 )}
               </div>
             </li>
           ))}
         </ul>
-
-        <Link href="/collections" className="mt-4 inline-block text-sm text-brand hover:underline">
-          ← Continue shopping
+        <Link href="/shop" className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm text-brand underline underline-offset-4">
+          <span aria-hidden="true">←</span> Continue shopping
         </Link>
       </div>
 
-      <aside className="h-fit rounded-lg border border-border bg-surface p-6 lg:sticky lg:top-28">
-        <h2 className="font-display text-xl">Order Summary</h2>
-        <dl className="mt-4 space-y-2 text-sm">
-          <div className="flex justify-between">
+      <aside className="h-fit border border-border bg-surface p-5 lg:sticky lg:top-28 lg:p-6" aria-labelledby="cart-summary">
+        <h2 id="cart-summary" className="font-display text-2xl">Order summary</h2>
+        <dl className="mt-5 space-y-3 text-sm">
+          <div className="flex justify-between gap-3">
             <dt className="text-muted">Subtotal</dt>
-            <dd className="tabular-nums">${(cart.subtotalCents / 100).toFixed(2)}</dd>
+            <dd className="tabular-nums">{price(cart.subtotalCents)}</dd>
           </div>
-          <div className="flex justify-between">
-            <dt className="text-muted">Shipping</dt>
-            <dd className="tabular-nums">
-              {cart.shippingCents === 0 ? 'Free' : `$${(cart.shippingCents / 100).toFixed(2)}`}
-            </dd>
+          <div className="flex justify-between gap-3">
+            <dt className="text-muted">Estimated shipping</dt>
+            <dd className="tabular-nums">{cart.shippingCents === 0 ? 'Free' : price(cart.shippingCents)}</dd>
           </div>
-          <div className="mt-3 flex justify-between border-t border-border pt-3 font-display text-lg">
-            <dt>Total</dt>
-            <dd className="tabular-nums">${(cart.totalCents / 100).toFixed(2)}</dd>
+          <div className="flex justify-between gap-3 border-t border-border pt-3 font-display text-lg">
+            <dt>Estimated total</dt>
+            <dd className="tabular-nums">{price(cart.totalCents)} <span className="text-xs">USD</span></dd>
           </div>
         </dl>
-        <Link href="/checkout" className="mt-5 block">
-          <Button className="w-full" disabled={pending}>
-            Proceed to Checkout
-          </Button>
-        </Link>
-        <p className="mt-3 text-center text-xs text-muted">🔒 Secure checkout · Taxes calculated at checkout</p>
-        <div className="mt-4 flex justify-center gap-2 text-xs text-muted">
-          Visa · Mastercard · Amex · PayPal · Apple Pay
-        </div>
+        <ButtonLink href="/checkout" className="mt-5 min-h-12 w-full">Continue to checkout</ButtonLink>
+        <p className="mt-3 text-xs leading-5 text-muted">Review your delivery address and available payment methods in secure Stripe Checkout.</p>
       </aside>
     </div>
   );

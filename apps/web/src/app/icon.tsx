@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og';
+import { LotusMark } from '@/components/lotus-mark';
 
 export const dynamic = 'force-static';
 
@@ -19,11 +20,9 @@ export default async function Icon() {
           alignItems: 'center',
           justifyContent: 'center',
           background: '#FAF7F1',
-          fontSize: 24,
-          color: '#C4745A',
         }}
       >
-        🪷
+        <LotusMark size={26} stroke="#9a503b" />
       </div>
     ),
     { ...size }

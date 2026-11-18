@@ -1,54 +1,37 @@
 import { siteConfig } from '@/lib/site-config';
 import type { Metadata, Viewport } from 'next';
-import { Inter, Fraunces } from 'next/font/google';
+import localFont from 'next/font/local';
 import '@/styles/globals.css';
-import { AntdProvider } from '@/components/antd-provider';
+import { serializeJsonLd, storeOrganization } from '@/lib/seo';
+import { freeShippingFromLabel } from '@/lib/store-policies';
+import { StorefrontAnalytics } from '@/components/storefront-analytics';
 
-const inter = Inter({
-  subsets: ['latin'],
+const inter = localFont({
+  src: './fonts/inter-latin.woff2',
+  weight: '100 900',
   variable: '--font-inter',
   display: 'swap',
 });
 
-const fraunces = Fraunces({
-  subsets: ['latin'],
+const fraunces = localFont({
+  src: './fonts/fraunces-latin.woff2',
+  weight: '100 900',
   variable: '--font-fraunces',
   display: 'swap',
 });
 
 const SITE_URL = siteConfig.url;
+const brandTitle = 'Nara Charm | Heritage-Inspired Jewelry & Phone Charms';
+const brandDescription = 'Heritage-inspired bracelets, necklaces, earrings and phone charms. Explore new studio designs and practical jewelry guides.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Nara Charm | Handmade Beaded Bracelets & Crystal Jewelry',
+    default: brandTitle,
     template: '%s | Nara Charm',
   },
-  description:
-    'Handmade beaded bracelets, crystal necklaces & phone charms. Tibetan silver, boho & natural stone jewelry with a story. Free shipping over $120.',
+  description: brandDescription,
   applicationName: 'Nara Charm',
-  keywords: [
-    'handmade jewelry',
-    'beaded bracelet',
-    'crystal necklace',
-    'phone charm',
-    'tibetan jewelry',
-    'boho bracelet',
-    'natural stone bracelet',
-    'amethyst bracelet',
-    'rose quartz bracelet',
-    'turquoise jewelry',
-    'evil eye bracelet',
-    'jade pendant',
-    'thai silk',
-    'miao filigree earrings',
-    'mongolian knot',
-    'ethnic jewelry',
-    'healing crystal jewelry',
-    'charm necklace',
-    'handmade earrings',
-    'protection bracelet',
-  ],
   authors: [{ name: 'Nara Charm' }],
   creator: 'Nara Charm',
   openGraph: {
@@ -56,23 +39,22 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: SITE_URL,
     siteName: 'Nara Charm',
-    title: 'Nara Charm | Handmade Beaded Bracelets, Crystal Jewelry & Phone Charms',
-    description:
-      'Shop handmade beaded bracelets, natural stone necklaces, Tibetan silver jewelry, boho phone charms & crystal earrings. Every piece carries a story.',
+    title: brandTitle,
+    description: brandDescription,
     images: [
       {
         url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'Nara Charm — Handmade Beaded Bracelets & Crystal Jewelry',
+        alt: brandTitle,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nara Charm | Handmade Beaded Bracelets & Crystal Jewelry',
+    title: brandTitle,
     description:
-      'Shop handmade beaded bracelets, natural stone necklaces, Tibetan silver jewelry & boho phone charms. Free shipping over $120.',
+      'Explore bracelets, necklaces, earrings and phone charms. Free standard shipping from ' + freeShippingFromLabel + ' at supported destinations.',
     images: ['/opengraph-image'],
   },
   robots: {
@@ -96,14 +78,11 @@ export const viewport: Viewport = {
 
 // 全站 Organization JSON-LD (在所有页面 head 注入)
 const organizationJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Nara Charm',
-  url: SITE_URL,
+  ...storeOrganization,
   logo: `${SITE_URL}/icon`,
   slogan: siteConfig.slogan,
   description:
-    'Handmade heritage jewelry — Tibetan silver, Miao filigree, Mongolian knots, Han jade, Thai silk. Jewelry with spirit, stories in every piece.',
+    'A heritage-inspired jewelry studio with bracelets, necklaces, earrings, phone charms and design notes.',
   sameAs: Object.entries(siteConfig.social).filter(([, handle]) => Boolean(handle)).map(([network, handle]) => `https://${network === 'youtube' ? 'youtube.com/@' : network === 'tiktok' ? 'tiktok.com/@' : `${network}.com/`}${handle.replace(/^@/, '')}`),
   contactPoint: {
     '@type': 'ContactPoint',
@@ -111,15 +90,6 @@ const organizationJsonLd = {
     email: siteConfig.company.supportEmail,
     availableLanguage: 'English',
   },
-  knowsAbout: [
-    'Handmade Jewelry',
-    'Tibetan Silver',
-    'Miao Filigree',
-    'Natural Gemstones',
-    'Silk Road Heritage',
-    'Healing Crystals',
-    'Artisan Craftsmanship',
-  ],
   address: {
     '@type': 'PostalAddress',
     addressLocality: siteConfig.company.address,
@@ -134,17 +104,12 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <script
-          id="plausible-init"
-          defer
-          data-domain="naracharm.com"
-          src="https://analytics.naralab.org/js/script.js"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationJsonLd) }}
         />
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
-        <AntdProvider>{children}</AntdProvider>
+        <StorefrontAnalytics />
+        {children}
       </body>
     </html>
   );

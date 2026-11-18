@@ -1,0 +1,13 @@
+.git
+**/.env*
+**/*.pem
+**/.next
+**/.pnpm-store
+**/.vercel
+**/node_modules
+**/out
+backups
+docs
+video
+youtube
+*.tar.gz

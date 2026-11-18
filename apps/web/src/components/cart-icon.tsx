@@ -8,6 +8,7 @@ import Link from 'next/link';
 export function CartIcon({ count }: { count: number }) {
   return (
     <Link
+      prefetch={false}
       href="/cart"
       aria-label={`Shopping cart with ${count} item${count === 1 ? '' : 's'}`}
       className="relative flex min-h-11 min-w-11 items-center justify-center hover:text-brand"

@@ -7,6 +7,8 @@ import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { AuthLayout, FormField, Input, Button } from '@/components/ui';
 import { signIn } from '@/lib/auth-client';
 
+const accountPages = ['/account', '/account/orders', '/account/profile', '/account/addresses', '/account/wishlist'];
+
 /**
  * /login - 登录页 (接 Better Auth)
  */
@@ -22,13 +24,15 @@ export default function LoginPage() {
     const formData = new FormData(e.currentTarget);
     const email = String(formData.get('email') || '');
     const password = String(formData.get('password') || '');
-    const result = await signIn(email, password);
-    setLoading(false);
-    if (result.error) {
-      setError(result.error.message || 'Login failed, please verify your email and password');
-    } else {
-      router.push('/account');
-      router.refresh();
+    try {
+      const result = await signIn(email, password, formData.has('remember'));
+      if (result.error) throw new Error(result.error.message || 'Check your email and password and try again.');
+      const next = new URLSearchParams(window.location.search).get('next') ?? '/account';
+      router.replace(accountPages.includes(next) ? next : '/account');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Could not sign in. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,7 +50,7 @@ export default function LoginPage() {
         }
       >
         {error && (
-          <div className="mb-4 rounded-md border border-brand/30 bg-brand/10 px-4 py-2.5 text-sm text-brand">
+          <div role="alert" className="mb-4 rounded-md border border-brand/30 bg-brand/10 px-4 py-2.5 text-sm text-brand">
             {error}
           </div>
         )}

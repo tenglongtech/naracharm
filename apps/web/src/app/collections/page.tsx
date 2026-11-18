@@ -1,98 +1,158 @@
-import { siteConfig } from '@/lib/site-config';
+import { pageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
-import Image from 'next/image';
-import type { Metadata } from 'next';
+import Image from '@/components/storefront-image';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
-import { getAllCollections, getActiveProducts } from '@/lib/storefront';
+import { StudioCollectionGrid } from '@/components/studio-collections';
 import { CATEGORIES } from '@/lib/categories';
+import { COLLECTION_EDITORIALS } from '@/lib/collection-editorials';
+import { isExternalProductImage } from '@/lib/product-media';
+import { absoluteUrl, serializeJsonLd } from '@/lib/seo';
+import { getAllCollections, getActiveProducts, type StorefrontProduct } from '@/lib/storefront';
+import { STUDIO_SERIES } from '@/lib/studio-designs';
+import tones from '../collection-tones.module.css';
+import styles from './collection-index.module.css';
 
-export const metadata: Metadata = {
-  title: 'Jewelry Collections | Beaded Bracelets, Crystal Necklaces & Phone Charms',
-  description: 'Browse all handmade jewelry collections: Tibetan silver, crystal bracelets, beaded necklaces, boho phone charms, Miao filigree earrings. Natural stone jewelry with a story.',
-  alternates: { canonical: '/collections' },
+const hero = {
+  src: '/editorial/nara-collection-still-life.webp',
+  alt: 'Red stone beads and a lotus-engraved silver bead on a dark walnut tray beside natural linen',
 };
 
-export default async function CollectionsIndexPage() {
-  const collections = await getAllCollections();
-  const products = await getActiveProducts();
-  const coverFor = (slug: string) => products.find((p) => p.collectionSlug === slug)?.primaryImage;
+export const metadata = pageMetadata({
+  title: 'Jewelry Collections | Shop and Studio',
+  description: 'Explore stone bracelets, silver pendants, earrings and cord charms by collection. Find Tibetan Silver, Han Jade, Caravan Fusion and studio design studies.',
+  path: '/collections',
+  image: { url: hero.src, width: 1536, height: 1024, alt: hero.alt },
+});
 
-  // BreadcrumbList + CollectionPage JSON-LD
-  const siteUrl = siteConfig.url;
-  const breadcrumbJsonLd = {
+function Arrow() {
+  return <span aria-hidden="true">↗</span>;
+}
+
+export default async function CollectionsIndexPage() {
+  const [collections, products] = await Promise.all([getAllCollections(), getActiveProducts()]);
+  const shopCollections = collections.filter(({ kind }) => kind !== 'studio');
+  const shopSlugs = new Set(shopCollections.map(({ slug }) => slug));
+  const features = COLLECTION_EDITORIALS.filter(({ slug }) => shopSlugs.has(slug));
+  const featureSlugs = new Set<string>(features.map(({ slug }) => slug));
+  const directory = shopCollections.filter(({ slug }) => !featureSlugs.has(slug));
+  const covers = new Map<string, StorefrontProduct>();
+  for (const product of products) {
+    if (!product.collectionSlug || !product.primaryImage || product.availability === 'preview') continue;
+    const current = covers.get(product.collectionSlug);
+    if (!current || (current.imageKind !== 'photo' && product.imageKind === 'photo')) covers.set(product.collectionSlug, product);
+  }
+
+  const collectionLinks = [
+    ...features.map(({ slug, title }) => ({ name: title, slug })),
+    ...directory,
+    ...STUDIO_SERIES,
+    { slug: 'studio-edit', name: 'Original Studio Edit' },
+  ];
+  const schema = {
     '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
-      { '@type': 'ListItem', position: 2, name: 'All Collections', item: `${siteUrl}/collections` },
-    ],
+    '@type': 'CollectionPage',
+    name: 'Nara Charm Jewelry Collections',
+    url: absoluteUrl('/collections'),
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: collectionLinks.map(({ slug, name }, index) => ({
+        '@type': 'ListItem', position: index + 1, name, url: absoluteUrl(`/collections/${slug}`),
+      })),
+    },
   };
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }} />
       <SiteHeader />
-      <main id="main">
-        {/* 头部 */}
-        <section className="border-b border-border bg-ink text-bg">
-          <div className="mx-auto max-w-7xl px-4 py-16 text-center md:py-24">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Explore by tradition</p>
-            <h1 className="mt-3 font-display text-4xl md:text-6xl">All Collections</h1>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-bg/80">
-              Every collection grows from a craft tradition. Choose the one whose story speaks to you.
-            </p>
-          </div>
-        </section>
-
-        {/* 系列卡片 */}
-        <section className="mx-auto max-w-7xl px-4 py-16 md:py-20">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {collections.map((c) => {
-              const cover = coverFor(c.slug);
-              return (
-                <Link key={c.slug} href={`/collections/${c.slug}`} className="group relative block overflow-hidden rounded-lg">
-                  <div className="relative aspect-[4/5] bg-surface">
-                    {cover ? (
-                      <Image src={cover} alt={c.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                    ) : (
-                      <div className="flex h-full items-center justify-center text-muted/40">[collection image]</div>
-                    )}
-                  </div>
-                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink/85 via-ink/20 to-transparent p-6 text-bg">
-                    <p className="text-xs uppercase tracking-wider text-gold">{c.heritage || 'Handmade'}</p>
-                    <h2 className="mt-1 font-display text-2xl">{c.name}</h2>
-                    <p className="mt-1 text-sm text-bg/80">{c.description}</p>
-                    <span className="mt-3 inline-block text-sm font-medium group-hover:underline">Discover →</span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* 按品类浏览 */}
-        <section className="border-t border-border bg-surface">
-          <div className="mx-auto max-w-7xl px-4 py-16 md:py-20">
-            <div className="text-center">
-              <p className="text-xs uppercase tracking-[0.3em] text-brand">Or browse by type</p>
-              <h2 className="mt-3 font-display text-3xl md:text-4xl">Shop by Category</h2>
+      <main id="main" className={styles.index}>
+        <header className={styles.hero}>
+          <div className={styles.heroCopy}>
+            <h1>Jewelry <em>collections.</em></h1>
+            <p>Discover the stone, silver and woven cord behind each collection. Browse pieces to wear, then see what’s taking shape in the studio.</p>
+            <div className={styles.heroLinks}>
+              {shopCollections.length ? <Link href="#shop-collections" className={styles.primaryLink}>Explore the collections <span aria-hidden="true">↓</span></Link> : null}
+              <Link href="#design-collections" className={styles.textLink}>Studio designs <span aria-hidden="true">↓</span></Link>
             </div>
-            <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-              {CATEGORIES.map((cat) => (
-                <Link
-                  key={cat.slug}
-                  href={`/collections/${cat.slug}`}
-                  className="group rounded-lg border border-border bg-bg p-8 text-center transition-colors hover:border-brand"
-                >
-                  <div className="text-4xl">{cat.icon}</div>
-                  <h3 className="mt-3 font-display text-lg group-hover:text-brand">{cat.name}</h3>
-                  <p className="mt-1 text-xs text-muted">{cat.desc}</p>
-                </Link>
-              ))}
+          </div>
+          <figure className={styles.heroImage}>
+            <Image src={hero.src} alt={hero.alt} fill preload sizes="(max-width: 819px) 100vw, 60vw" />
+            <figcaption>AI material illustration</figcaption>
+          </figure>
+        </header>
+
+        <nav aria-label="Shop by category" className={styles.categoryBar}>
+          <ul className={styles.shell}>
+            {CATEGORIES.map(({ slug, name }) => (
+              <li key={slug}><Link href={`/collections/${slug}`}>{name} <Arrow /></Link></li>
+            ))}
+          </ul>
+        </nav>
+
+        {shopCollections.length > 0 && (
+          <section id="shop-collections" aria-labelledby="shop-collections-title" className={`${styles.shell} ${styles.section}`}>
+            <div className={styles.sectionHeading}>
+              <h2 id="shop-collections-title">Shop collections</h2>
+              <Link href="/shop" className={styles.textLink}>Shop all jewelry <Arrow /></Link>
             </div>
+
+            {features.length > 0 && (
+              <>
+                <ul className={styles.features}>
+                  {features.map(({ slug, title, note, image, tone }) => (
+                    <li key={slug}>
+                      <Link href={`/collections/${slug}`} className={`${styles.feature} ${tones.tone}`} data-tone={tone}>
+                        <div className={styles.featureImage}>
+                          <Image src={image} alt="" fill sizes="(max-width: 639px) 92vw, (max-width: 1439px) 30vw, 420px" />
+                        </div>
+                        <div className={styles.featureCopy}>
+                          <h3>{title}</h3>
+                          <p>{note}</p>
+                          <Arrow />
+                        </div>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className={styles.studyNote}>Illustrative material studies</p>
+              </>
+            )}
+
+            {directory.length > 0 && (
+              <ul className={styles.directory} aria-label="More shop collections">
+                {directory.map(({ name, slug, productCount }) => {
+                  const cover = covers.get(slug);
+                  return (
+                    <li key={slug}>
+                      <Link href={`/collections/${slug}`} className={styles.directoryLink}>
+                        {cover?.primaryImage && (
+                          <div className={styles.directoryImage}>
+                            <Image src={cover.primaryImage} alt="" fill sizes="112px" unoptimized={isExternalProductImage(cover.primaryImage)} />
+                          </div>
+                        )}
+                        <div>
+                          <h3>{name}</h3>
+                          <p>{productCount} {productCount === 1 ? 'piece' : 'pieces'}{cover?.primaryImage && cover.imageKind !== 'photo' && ' · Illustrated cover'}</p>
+                        </div>
+                        <Arrow />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </section>
+        )}
+
+        <section id="design-collections" aria-labelledby="design-collections-title" className={styles.studio}>
+          <div className={`${styles.shell} ${styles.section}`}>
+            <div className={styles.sectionHeading}>
+              <h2 id="design-collections-title">Studio designs</h2>
+              <Link href="/studio" className={styles.textLink}>Visit the studio <Arrow /></Link>
+            </div>
+            <p className={styles.studioLead}>Illustrated previews of new jewelry, organized by material, pattern and silhouette.</p>
+            <StudioCollectionGrid />
+            <Link href="/collections/studio-edit" className={`${styles.textLink} ${styles.studioEdit}`}>Original Studio Edit <Arrow /></Link>
           </div>
         </section>
       </main>
@@ -100,5 +160,3 @@ export default async function CollectionsIndexPage() {
     </>
   );
 }
-
-// CATEGORIES 已从 @/lib/categories 导入

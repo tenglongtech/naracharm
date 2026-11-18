@@ -1,23 +1,17 @@
 import { siteConfig } from '@/lib/site-config';
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { STORIES } from '@/lib/stories-data';
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: 'Stories in Every Piece — The Craft Behind Nara Charm',
   description:
     'The silversmiths, the weavers, the braiders, and the meaning woven into every Nara Charm piece. Stories from Tibet, Mongolia, southwest China, the Han literati, and Thailand.',
-  alternates: { canonical: '/stories' },
-  openGraph: {
-    title: 'Stories in Every Piece | Nara Charm',
-    description:
-      'The craft behind every Nara Charm piece — the silversmiths, the weavers, the meaning.',
-    url: '/stories',
-    type: 'website',
-  },
-};
+  path: '/stories',
+  image: { url: '/editorial/nara-craft-materials.webp', alt: 'Illustrative study of braided cord, silver-colored wire and a pale green disc' },
+});
 
 export default function StoriesIndexPage() {
   const siteUrl = siteConfig.url;

@@ -6,7 +6,7 @@
  * 本地: 默认同源 (Vercel/Next dev)
  */
 export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || '';
+  (process.env.NEXT_PUBLIC_API_URL ?? '').replace(/\/+$/, '');
 
 /** 带 baseURL 的 fetch (跨源时携带 cookie) */
 export async function apiFetch(
@@ -14,12 +14,13 @@ export async function apiFetch(
   init?: RequestInit,
 ): Promise<Response> {
   const url = API_URL ? `${API_URL}${path}` : path;
+  const headers = new Headers(init?.headers);
+  if (typeof init?.body === 'string' && !headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json');
+  }
   return fetch(url, {
-    ...init,
     credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(init?.headers ?? {}),
-    },
+    ...init,
+    headers,
   });
 }

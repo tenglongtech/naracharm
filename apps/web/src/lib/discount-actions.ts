@@ -1,60 +1,29 @@
-'use server';
-
-/**
- * 优惠码验证 + 应用 (Server Actions)
- */
 import { db } from '@/lib/db';
 import { discounts } from '@jewelry/db';
-import { and, eq, lte, gte, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 export type DiscountValidation = {
   valid: boolean;
   error?: string;
-  discount?: {
-    id: string;
-    code: string;
-    type: 'percentage' | 'fixed_amount' | 'free_shipping';
-    value: number;
-    minSubtotalCents: number | null;
-  };
+  discount?: Pick<typeof discounts.$inferSelect, 'id' | 'code' | 'type' | 'value' | 'minSubtotalCents'>;
   discountAmountCents?: number;
   freeShipping?: boolean;
 };
 
-/**
- * 验证优惠码 (前端输入后调用)
- */
-export async function validateDiscountCode(code: string, subtotalCents: number): Promise<DiscountValidation> {
-  const trimmed = code.trim().toUpperCase();
-  if (!trimmed) {
-    return { valid: false, error: 'Please enter a discount code' };
-  }
-
-  const [discount] = await db
-    .select()
-    .from(discounts)
-    .where(and(eq(discounts.code, trimmed), eq(discounts.status, 'active')))
-    .limit(1);
-
-  if (!discount) {
+export function calculateDiscount(
+  discount: typeof discounts.$inferSelect | undefined,
+  subtotalCents: number,
+  now = new Date(),
+): DiscountValidation {
+  if (!discount || discount.status !== 'active' || (discount.endsAt && discount.endsAt < now)) {
     return { valid: false, error: 'Discount code is invalid or has expired' };
   }
-
-  // Check validity dates
-  const now = new Date();
   if (discount.startsAt && discount.startsAt > now) {
     return { valid: false, error: 'Discount code is not active yet' };
   }
-  if (discount.endsAt && discount.endsAt < now) {
-    return { valid: false, error: 'Discount code has expired' };
-  }
-
-  // Check usage limits
-  if (discount.usageLimit && discount.usedCount >= discount.usageLimit) {
+  if (discount.usageLimit !== null && discount.usedCount >= discount.usageLimit) {
     return { valid: false, error: 'Discount code has reached its usage limit' };
   }
-
-  // Check minimum order subtotal
   if (discount.minSubtotalCents && subtotalCents < discount.minSubtotalCents) {
     return {
       valid: false,
@@ -62,17 +31,9 @@ export async function validateDiscountCode(code: string, subtotalCents: number):
     };
   }
 
-  // 计算折扣金额
-  let discountAmountCents = 0;
-  let freeShipping = false;
-  if (discount.type === 'percentage') {
-    discountAmountCents = Math.round((subtotalCents * discount.value) / 100);
-  } else if (discount.type === 'fixed_amount') {
-    discountAmountCents = Math.min(discount.value, subtotalCents);
-  } else if (discount.type === 'free_shipping') {
-    freeShipping = true;
-  }
-
+  const rawAmount = discount.type === 'percentage'
+    ? Math.round((subtotalCents * discount.value) / 100)
+    : discount.type === 'fixed_amount' ? discount.value : 0;
   return {
     valid: true,
     discount: {
@@ -82,7 +43,12 @@ export async function validateDiscountCode(code: string, subtotalCents: number):
       value: discount.value,
       minSubtotalCents: discount.minSubtotalCents,
     },
-    discountAmountCents,
-    freeShipping,
+    discountAmountCents: Math.min(subtotalCents, Math.max(0, rawAmount)),
+    freeShipping: discount.type === 'free_shipping',
   };
+}
+
+export async function validateDiscountCode(code: string, subtotalCents: number): Promise<DiscountValidation> {
+  const [discount] = await db.select().from(discounts).where(eq(discounts.code, code.trim().toUpperCase())).limit(1);
+  return calculateDiscount(discount, subtotalCents);
 }

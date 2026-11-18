@@ -1,0 +1,62 @@
+.tone {
+  --series-paper: #e6e5d8;
+  --series-ink: #3c4431;
+  --series-shade: #4e4c35;
+  --series-focus: 78%;
+}
+
+.tone[data-tone='clay'] {
+  --series-paper: #efe1d8;
+  --series-ink: #6c352b;
+  --series-shade: #874c3b;
+  --series-focus: 69%;
+}
+
+.tone[data-tone='jade'] {
+  --series-paper: #dfe8df;
+  --series-ink: #314738;
+  --series-shade: #526b58;
+  --series-focus: 72%;
+}
+
+.tone[data-tone='amethyst'] {
+  --series-paper: #ede4e9;
+  --series-ink: #513a54;
+  --series-shade: #7b667b;
+  --series-focus: 52%;
+}
+
+.tone[data-tone='steppe'] {
+  --series-paper: #e6e4d6;
+  --series-ink: #384032;
+  --series-shade: #666a55;
+  --series-focus: 48%;
+}
+
+.tone[data-tone='silver'] {
+  --series-paper: #ece6df;
+  --series-ink: #3d3838;
+  --series-shade: #70645b;
+  --series-focus: 50%;
+}
+
+.tone[data-tone='silk'] {
+  --series-paper: #f0e1d1;
+  --series-ink: #693729;
+  --series-shade: #a17560;
+  --series-focus-x: 68%;
+  --series-focus: 53%;
+}
+
+.tone[data-tone='caravan'] {
+  --series-paper: #e4e4d8;
+  --series-ink: #374033;
+  --series-shade: #535c4b;
+  --series-focus: 57%;
+}
+
+.tone[data-tone='neutral'] {
+  --series-paper: #f1e8da;
+  --series-ink: #3a2e2b;
+  --series-shade: #b69176;
+}

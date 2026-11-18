@@ -27,6 +27,13 @@
       "/products/p07.jpg"
     ],
     "stock": 60,
+    "variant": {
+      "id": "09be038f-23b5-4858-9f33-182a19b57fbc",
+      "sku": "TIB-AMULET-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 5800,
+      "stock": 60
+    },
     "seoTitle": "Tibetan Silver Amulet Bracelet · Handmade 925 with Turquoise",
     "seoDescription": "A hand-hammered 925 silver amulet with a natural turquoise stone. Inspired by Lhasa silversmiths. Free worldwide shipping over $120."
   },
@@ -56,6 +63,13 @@
       "/products/p08.jpg"
     ],
     "stock": 79,
+    "variant": {
+      "id": "2cdf62ec-3cf7-4f30-aacc-2ae6e003eefc",
+      "sku": "MNG-ROAD-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 4200,
+      "stock": 79
+    },
     "seoTitle": "Mongolian Knot Bracelet · Hand-Braided Travel Cord",
     "seoDescription": "A hand-braided cord bracelet in the Mongolian steppe tradition. Adjustable sliding knot. Sterling silver end bead. Free worldwide shipping over $120."
   },
@@ -86,6 +100,13 @@
       "/products/p14.jpg"
     ],
     "stock": 40,
+    "variant": {
+      "id": "81f58643-0c34-45b8-9c70-c3a46dae0e1d",
+      "sku": "MIA-FILI-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 6800,
+      "stock": 40
+    },
     "seoTitle": "Miao Silver Filigree Drop Earrings · Handmade in Guizhou",
     "seoDescription": "Drop earrings of hand-coiled Miao silver filigree. Each wire is thinner than a hair. Sterling silver ear hooks. Free worldwide shipping over $120."
   },
@@ -116,6 +137,13 @@
       "/products/p15.jpg"
     ],
     "stock": 30,
+    "variant": {
+      "id": "ad0292eb-ada4-4c81-992e-60d28c5799f9",
+      "sku": "HAN-LOTUS-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 9600,
+      "stock": 30
+    },
     "seoTitle": "Jade Lotus Pendant Necklace · Handmade Chinese Jade",
     "seoDescription": "A small jade-tone lotus pendant on a hand-knotted waxed cord. Quiet, restrained, made to be worn close. Free worldwide shipping over $120."
   },
@@ -145,6 +173,13 @@
       "/products/p16.jpg"
     ],
     "stock": 100,
+    "variant": {
+      "id": "bdd4cb6b-7693-484a-8f23-3836484e7179",
+      "sku": "TAI-SILK-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 3200,
+      "stock": 100
+    },
     "seoTitle": "Thai Silk Phone Charm · Handmade Hand-Woven",
     "seoDescription": "A hand-woven Thai silk phone charm with a tiny silver lotus bead. Slow, meaningful, made to be carried. Free worldwide shipping over $120."
   },
@@ -174,6 +209,13 @@
       "/products/p19.jpg"
     ],
     "stock": 70,
+    "variant": {
+      "id": "a7080cad-ce52-4eed-a722-7c76425f0fb0",
+      "sku": "TIB-HADA-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 3800,
+      "stock": 70
+    },
     "seoTitle": "Tibetan Hada Knot Red Cord Bracelet · Handmade",
     "seoDescription": "A red cord bracelet in the Tibetan hada style. The knot never dies — it grows, it can be passed on. Sterling silver accent. Free worldwide shipping over $120."
   },
@@ -203,6 +245,13 @@
       "/products/p20.jpg"
     ],
     "stock": 90,
+    "variant": {
+      "id": "92ad7dea-775c-44c2-b0fa-0fa64d95f6f6",
+      "sku": "MNG-OBS-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 2800,
+      "stock": 90
+    },
     "seoTitle": "Black Obsidian Phone Charm · Handmade Protective Stone",
     "seoDescription": "A phone charm of natural black obsidian on a hand-braided cord. Worn since the Stone Age to guard against bad days. Free worldwide shipping over $120."
   },
@@ -235,6 +284,13 @@
       "/products/p21.jpg"
     ],
     "stock": 18,
+    "variant": {
+      "id": "44ed30c4-be1e-47bc-b895-aee886601fc4",
+      "sku": "CAR-FUSE-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 11800,
+      "stock": 18
+    },
     "seoTitle": "Tibetan Silver & Miao Filigree Fusion Necklace · Handmade",
     "seoDescription": "A fusion pendant of hand-hammered Tibetan silver and Miao filigree, set with natural turquoise, on a hand-woven silk cord. The Silk Road, in one piece. Free worldwide shipping."
   },
@@ -263,6 +319,13 @@
       "/products/p11.jpg"
     ],
     "stock": 50,
+    "variant": {
+      "id": "5ca1c8eb-88ff-4c75-b464-2ba7b0f5018e",
+      "sku": "TIB-AMET-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 4400,
+      "stock": 50
+    },
     "seoTitle": "Amethyst Bracelet · Handmade Natural Stone Jewelry",
     "seoDescription": "Natural 8mm amethyst beads hand-strung with Miao silver accents. The stone of quiet. Free worldwide shipping over $120."
   },
@@ -293,6 +356,13 @@
       "/products/p13.jpg"
     ],
     "stock": 24,
+    "variant": {
+      "id": "28d82e90-638b-4e02-b33c-286ffa907946",
+      "sku": "AMETHYST-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 3800,
+      "stock": 24
+    },
     "seoTitle": "Handmade Amethyst Bracelet · Natural Purple Crystal Beads for Peace & Calm | Nara Charm",
     "seoDescription": "Shop handmade natural amethyst beaded bracelet with Miao silver accents. Handcrafted for inner peace, stress relief and mindful everyday wear. Free shipping over $120."
   },
@@ -323,6 +393,13 @@
       "/products/p08.jpg"
     ],
     "stock": 18,
+    "variant": {
+      "id": "dabd241c-79e4-4471-b653-2cab04bc218f",
+      "sku": "STRAWBERRY-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 4200,
+      "stock": 18
+    },
     "seoTitle": "Strawberry Quartz Bracelet · Natural Red Gemstone Beads for Love & Joy | Nara Charm",
     "seoDescription": "Handmade natural strawberry quartz bracelet glowing with warm translucent red. A gentle stone of gratitude, emotional healing and joy. Handcrafted with care."
   },
@@ -352,6 +429,13 @@
       "/products/p10.jpg"
     ],
     "stock": 30,
+    "variant": {
+      "id": "e9daa8b8-ef97-4e17-94be-e95d7467ee33",
+      "sku": "ROSEQ-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 3600,
+      "stock": 30
+    },
     "seoTitle": "Rose Quartz Bracelet · Natural Pink Healing Crystal for Self-Love | Nara Charm",
     "seoDescription": "Handcrafted natural rose quartz bracelet featuring genuine soft-pink crystals and Tibetan silver beads. The ultimate stone of unconditional love and harmony."
   },
@@ -382,6 +466,13 @@
       "/products/p11.jpg"
     ],
     "stock": 40,
+    "variant": {
+      "id": "3118c038-3b62-44d6-9082-c875f3df4cc8",
+      "sku": "OBSIDIAN-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 2800,
+      "stock": 40
+    },
     "seoTitle": "Black Obsidian Phone Charm · Hand-Braided Protection Wrist Strap | Nara Charm",
     "seoDescription": "Protect your essentials with natural black obsidian stone and hand-braided cord. A durable, bohemian phone charm wrist strap rooted in nomadic traditions."
   },
@@ -411,6 +502,13 @@
       "/products/p12.jpg"
     ],
     "stock": 15,
+    "variant": {
+      "id": "2555efd0-e15d-42f8-a9e1-4af091cb94e6",
+      "sku": "MIXED-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 4500,
+      "stock": 15
+    },
     "seoTitle": "Chakra Mixed Crystal Bracelet · Multi-Stone Healing Beads for Balance | Nara Charm",
     "seoDescription": "Hand-selected blend of natural healing crystals including amethyst, rose quartz and turquoise. Harmonize mind and body with artisan craftsmanship."
   },
@@ -440,6 +538,13 @@
       "/products/p16.jpg"
     ],
     "stock": 20,
+    "variant": {
+      "id": "6c654180-ec44-4bb2-8c97-9be7dd4d475d",
+      "sku": "LOTUSJADE-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 4800,
+      "stock": 20
+    },
     "seoTitle": "Handmade Lotus Jade Bracelet · Natural Green Stone with 925 Silver Charm | Nara Charm",
     "seoDescription": "Quiet luxury in jade-green natural stone beads accented by a hand-carved silver lotus flower. Symbol of wisdom, purity and serene elegance."
   },
@@ -469,6 +574,13 @@
       "/products/p20.jpg"
     ],
     "stock": 35,
+    "variant": {
+      "id": "1e669125-f519-4a7c-b706-c08f6fed8b54",
+      "sku": "CINNABAR-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 2600,
+      "stock": 35
+    },
     "seoTitle": "Cinnabar Red Cord Phone Charm · Traditional Blessing & Protection Lanyard | Nara Charm",
     "seoDescription": "Artisan hand-woven red cord phone charm accented with auspicious cinnabar beads. A meaningful protective accessory for daily wanderers."
   },
@@ -498,6 +610,13 @@
       "/products/p21.jpg"
     ],
     "stock": 12,
+    "variant": {
+      "id": "4dd54b6e-1d1d-4854-baa9-e4e4b8d058a1",
+      "sku": "TURQ-DEFAULT",
+      "name": "Default",
+      "unitPriceCents": 4400,
+      "stock": 12
+    },
     "seoTitle": "Handmade Turquoise Bracelet · Natural Sky-Blue Stones & Tibetan Silver | Nara Charm",
     "seoDescription": "Genuine natural turquoise beads hand-strung with hammered Tibetan silver rondelles. Carry the Himalayan sky wherever you go. Free US shipping over $120."
   },
@@ -526,6 +645,13 @@
       "/products/placeholder-01.svg"
     ],
     "stock": 40,
+    "variant": {
+      "id": "e022639a-522d-4157-a29e-450ca87fcd4a",
+      "sku": "AMETHYST_EARRINGS_SILVER_STD",
+      "name": "Standard",
+      "unitPriceCents": 5400,
+      "stock": 40
+    },
     "seoTitle": "Amethyst Drop Earrings · Natural Purple Crystal in 925 Sterling Silver | Nara Charm",
     "seoDescription": "Delicate natural amethyst drop earrings set in hypoallergenic 925 sterling silver. Lightweight everyday gemstone elegance with handcrafted details."
   },
@@ -554,6 +680,13 @@
       "/products/placeholder-01.svg"
     ],
     "stock": 40,
+    "variant": {
+      "id": "9abe195d-14b6-4a41-a2ea-90796165bf5e",
+      "sku": "CITRINE_BRACELET_ABUNDANCE_STD",
+      "name": "Standard",
+      "unitPriceCents": 4800,
+      "stock": 40
+    },
     "seoTitle": "Golden Citrine Bracelet · Natural Stone of Abundance & Prosperity | Nara Charm",
     "seoDescription": "Golden citrine beads hand-strung for abundance, optimism and warm solar energy. Handcrafted gemstone bracelet with artisan details."
   },
@@ -582,6 +715,13 @@
       "/products/placeholder-01.svg"
     ],
     "stock": 40,
+    "variant": {
+      "id": "7e10b4cb-d293-4bb0-bc5c-591c05e524bc",
+      "sku": "HOWLITE_TURQUOISE_BRACELET_STD",
+      "name": "Standard",
+      "unitPriceCents": 3400,
+      "stock": 40
+    },
     "seoTitle": "White Howlite & Turquoise Bracelet · Calming Marble & Sky Stone Stack | Nara Charm",
     "seoDescription": "Turquoise-dyed howlite beads with silver spacer rings. Combining the cooling vibration of marble stone with vivid bohemian color."
   },
@@ -610,6 +750,13 @@
       "/products/placeholder-01.svg"
     ],
     "stock": 40,
+    "variant": {
+      "id": "6fd025d9-c5f2-4a6d-b65a-231c0b256e53",
+      "sku": "HEMATITE_BRACELET_MENS_STD",
+      "name": "Standard",
+      "unitPriceCents": 3800,
+      "stock": 40
+    },
     "seoTitle": "Men's Matte Black Hematite Bracelet · Grounding Stone on Waxed Cord | Nara Charm",
     "seoDescription": "Matte black hematite beads on waxed cord with an adjustable sliding knot. A grounding, masculine bracelet designed for daily resilience."
   },
@@ -638,6 +785,13 @@
       "/products/placeholder-01.svg"
     ],
     "stock": 40,
+    "variant": {
+      "id": "0b60434f-f256-4ede-aa4c-b04c78ee084f",
+      "sku": "UNAKITE_BRACELET_BALANCE_STD",
+      "name": "Standard",
+      "unitPriceCents": 4200,
+      "stock": 40
+    },
     "seoTitle": "Natural Unakite Bracelet · Moss Green & Pink Heart Balance Beads | Nara Charm",
     "seoDescription": "Green and pink unakite beads — the stone of gentle rebirth and emotional balance. Hand-strung natural gemstone beads for everyday wear."
   }

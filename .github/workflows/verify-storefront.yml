@@ -1,0 +1,48 @@
+name: Verify static storefront
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  storefront:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_PUBLIC_SITE_URL: https://naracharm.com
+      NEXT_PUBLIC_API_URL: https://api.naracharm.com
+      NEXT_TELEMETRY_DISABLED: '1'
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install locked dependencies
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile --filter web...
+      - name: Test release verification
+        run: |
+          python3 scripts/test-verify-storefront-live.py
+          node --test scripts/test-build-static-images.mjs
+      - name: Build, audit and package the storefront
+        run: pnpm package:static "$RUNNER_TEMP/nara-charm-pages.zip"
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: nara-charm-storefront
+          path: |
+            ${{ runner.temp }}/nara-charm-pages.zip
+            ${{ runner.temp }}/nara-charm-pages.report.json
+          if-no-files-found: error
+          compression-level: 0

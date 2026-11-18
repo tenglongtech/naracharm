@@ -3,6 +3,8 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { nextCookies } from 'better-auth/next-js';
 import { db } from '@/lib/db';
 import * as schema from '@jewelry/db';
+import { eq } from 'drizzle-orm';
+import { allowedStorefrontOrigins } from './checkout-origin';
 
 /**
  * Better Auth 配置
@@ -10,7 +12,6 @@ import * as schema from '@jewelry/db';
  * - 数据库: 复用 Drizzle (本地 PostgreSQL)
  * - 认证表: Better Auth 自管的 user/session/account/verification (需建表,见下方 migration)
  * - 业务表: customers (会员业务数据,与 auth user 通过 authUserId 关联)
- * - 邮件: 验证邮件本地用 console 打印 (Phase 接 Resend 后改为发邮件)
  *
  * 路由: app/api/auth/[...all]/route.ts
  */
@@ -36,15 +37,7 @@ export const auth = betterAuth({
   plugins: [nextCookies()],
   // 跨域: 后端 (api.naracharm.com) 服务,前端 (naracharm.com) 调用
   baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:37000',
-  trustedOrigins: [
-    process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:37000',
-    'https://naracharm.com',
-    'https://www.naracharm.com',
-    // 本地开发接受 localhost 所有端口 (生产可移除)
-    ...(process.env.NODE_ENV !== 'production'
-      ? ['http://localhost:37000', 'http://localhost:37001', 'http://localhost', 'http://naracharm.test', 'https://naracharm.test']
-      : []),
-  ],
+  trustedOrigins: () => allowedStorefrontOrigins(),
   advanced: {
     // 跨子域共享登录 cookie (.naracharm.com)
     cookiePrefix: 'nara_auth',
@@ -78,6 +71,7 @@ export async function getSession() {
 export async function requireAdmin() {
   const session = await getSession();
   if (!session) throw new Error('UNAUTHORIZED');
-  if ((session.user as { role?: string }).role !== 'admin') throw new Error('FORBIDDEN');
+  const [user] = await db.select({ role: schema.users.role }).from(schema.users).where(eq(schema.users.id, session.user.id)).limit(1);
+  if (user?.role !== 'admin') throw new Error('FORBIDDEN');
   return session;
 }

@@ -1,4 +1,6 @@
 import { STATIC_PRODUCTS, STATIC_COLLECTIONS } from './storefront-data';
+import type { StorefrontVariant } from './storefront-offer';
+import { CATEGORIES } from './categories';
 
 /**
  * 前台数据查询层 (静态数据)
@@ -27,8 +29,13 @@ export type StorefrontProduct = {
   primaryImage: string | null;
   images: string[];
   stock: number;
+  variant?: StorefrontVariant;
+  variants?: StorefrontVariant[];
   availability?: 'preview';
-  imageKind?: 'illustration';
+  imageKind?: 'illustration' | 'photo';
+  descriptionSource?: 'trained_algorithmic_media';
+  palette?: readonly [string, string, string];
+  updatedAt?: string;
   seoTitle: string | null;
   seoDescription: string | null;
 };
@@ -51,16 +58,9 @@ export async function getProductsByCollection(collectionSlug: string): Promise<S
 }
 
 // ─── 按品类查产品 ─────────────────────────────────────────────────────────
-const CATEGORY_MAP: Record<string, string> = {
-  'bracelets': 'bracelet',
-  'necklaces': 'necklace',
-  'phone-charms': 'phone-charm',
-  'earrings': 'earrings',
-};
-
 export async function getProductsByCategory(category: string): Promise<StorefrontProduct[]> {
   const all = await getActiveProducts();
-  const normalized = CATEGORY_MAP[category] || category.replace(/s$/, '');
+  const normalized = CATEGORIES.find(({ slug }) => slug === category)?.productType ?? category.replace(/s$/, '');
   return all.filter((p) => p.category === normalized || p.category === category);
 }
 
@@ -73,6 +73,7 @@ export type StorefrontCollection = {
   description: string | null;
   isFeatured: boolean;
   productCount: number;
+  kind?: 'studio';
 };
 
 export async function getAllCollections(): Promise<StorefrontCollection[]> {

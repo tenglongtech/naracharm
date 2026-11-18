@@ -1,240 +1,125 @@
-import Image from 'next/image';
-import { siteConfig } from '@/lib/site-config';
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
+import Image from '@/components/storefront-image';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { Breadcrumb } from '@/components/breadcrumb';
-import { ProductTile, type ProductCard } from '@/components/product-tile';
+import { ProductTile } from '@/components/product-tile';
 import { getActiveProducts } from '@/lib/storefront';
+import { productCard } from '@/lib/catalog';
+import { giftSelections } from '@/lib/gift-selections';
+import { absoluteUrl, serializeJsonLd } from '@/lib/seo';
+import styles from '../buying-guides.module.css';
 
-export const metadata: Metadata = {
-  title: 'Gift Guide — A Charm for Every Occasion',
-  description:
-    'Find the perfect handmade charm for her, for him, for milestones, for yourself. Curated Nara Charm gift ideas for Mother\'s Day, Valentine\'s Day, birthdays, thank-yous, and quiet self-care.',
-  alternates: { canonical: '/gift-guide' },
-  openGraph: {
-    title: 'Gift Guide — A Charm for Every Occasion | Nara Charm',
-    description: 'Curated handmade jewelry gifts for every occasion. Story card and blessing pouch included with every order.',
-    url: '/gift-guide',
-    type: 'website',
-  },
+const hero = {
+  image: '/editorial/nara-gift-still-life.webp',
+  alt: 'Illustrative gift styling with a pale green lotus pendant, cream note and warm red ribbon',
 };
+const path = '/gift-guide';
+const description = 'Shop in-stock jewelry gifts by price. Compare bracelets, pendants, earrings and phone charms, and check fit and delivery before ordering.';
 
-const OCCASIONS = [
-  {
-    icon: '💝',
-    title: "For Her",
-    pitch: 'The person who doesn\'t need anything but deserves something.',
-    picks: ['tibetan-amulet-925-bracelet', 'miao-filigree-drop-earrings', 'han-jade-lotus-pendant'],
-  },
-  {
-    icon: '🌸',
-    title: "Mother's Day",
-    pitch: 'A piece she can wear every day — and tell the story of, every time someone asks.',
-    picks: ['rose-quartz-tenderness-bracelet', 'amethyst-calm-bracelet', 'han-jade-lotus-pendant'],
-  },
-  {
-    icon: '💌',
-    title: "Valentine's Day",
-    pitch: 'Not a heart-shaped box. Something she can wear past February.',
-    picks: ['rose-quartz-tenderness-bracelet', 'mongolian-road-knot-cord', 'tai-silk-cord-phone-charm'],
-  },
-  {
-    icon: '🎂',
-    title: 'Birthdays',
-    pitch: 'Pick her birth-stone meaning, or just the one that caught your eye.',
-    picks: ['amethyst-calm-bracelet', 'obsidian-guardian-charm', 'caravan-fusion-necklace'],
-  },
-  {
-    icon: '🎓',
-    title: 'Graduation & New Beginnings',
-    pitch: 'A Hada knot for the road ahead — and the home they\'re leaving behind.',
-    picks: ['hadas-knot-red-cord', 'mongolian-road-knot-cord', 'han-jade-lotus-pendant'],
-  },
-  {
-    icon: '🙏',
-    title: 'Thank You',
-    pitch: 'When "thank you" needs to be something they can hold.',
-    picks: ['rose-quartz-tenderness-bracelet', 'tai-silk-cord-phone-charm', 'hadas-knot-red-cord'],
-  },
-  {
-    icon: '👯',
-    title: 'Bridesmaids',
-    pitch: 'Six of the same, or six of different — your call.',
-    picks: ['tai-silk-cord-phone-charm', 'hadas-knot-red-cord', 'obsidian-guardian-charm', 'miao-filigree-drop-earrings'],
-  },
-  {
-    icon: '🌿',
-    title: 'For Yourself',
-    pitch: 'The most important gift. Read the stories, pick the one that calls.',
-    picks: ['caravan-fusion-necklace', 'han-jade-lotus-pendant', 'amethyst-calm-bracelet'],
-  },
-];
+export const metadata = pageMetadata({
+  title: 'Jewelry Gift Guide | Bracelets, Pendants & Charms',
+  description,
+  path,
+  image: { url: hero.image, alt: hero.alt, width: 1536, height: 1024 },
+});
 
-const BY_BUDGET = [
-  {
-    range: 'Under $40',
-    picks: ['obsidian-guardian-charm', 'tai-silk-cord-phone-charm', 'hadas-knot-red-cord'],
-    note: 'Phone charms and small cord bracelets — perfect for stocking stuffers or a small thank-you.',
-  },
-  {
-    range: '$40 – $80',
-    picks: ['mongolian-road-knot-cord', 'amethyst-calm-bracelet', 'rose-quartz-tenderness-bracelet', 'miao-filigree-drop-earrings'],
-    note: 'The sweet spot. Crystal bracelets, the Miao earrings, a few meaningful pieces.',
-  },
-  {
-    range: '$80 +',
-    picks: ['han-jade-lotus-pendant', 'caravan-fusion-necklace'],
-    note: 'Statement pieces — the jade pendant, the fusion necklace. The ones you give for the milestone that matters.',
-  },
+const recipientChoices = [
+  { title: 'Bracelets', slug: 'bracelets', note: 'Use a bracelet they already wear or their wrist measurement to compare the listed fit range.' },
+  { title: 'Necklaces', slug: 'necklaces', note: 'Look at their usual neckline and compare the length of a necklace they reach for often.' },
+  { title: 'Earrings', slug: 'earrings', note: 'Choose the kind of fastening they like and compare the drop with earrings they already wear.' },
+  { title: 'Phone charms', slug: 'phone-charms', note: 'Check whether their phone case has a compatible attachment point.' },
 ];
 
 export default async function GiftGuidePage() {
-  const allProducts = await getActiveProducts();
-
-  // 拼装 product cards
-  const toCard = (slug: string): ProductCard | null => {
-    const p = allProducts.find((x) => x.slug === slug);
-    if (!p) return null;
-    return {
-      slug: p.slug,
-      name: p.name,
-      heritage: p.heritage ?? 'Handmade',
-      price: `$${(p.basePriceCents / 100).toFixed(0)}`,
-      compareAt: p.compareAtPriceCents ? `$${(p.compareAtPriceCents / 100).toFixed(0)}` : null,
-      tag: p.compareAtPriceCents ? 'Sale' : p.isFeatured ? 'Featured' : null,
-      image: p.primaryImage ?? undefined,
-    };
-  };
-
-  const siteUrl = siteConfig.url;
-  const pageJsonLd = {
+  const budgets = giftSelections(await getActiveProducts());
+  const picks = budgets.flatMap(({ picks }) => picks);
+  const schema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Gift Guide',
-    description: 'Curated handmade jewelry gifts for every occasion.',
-    url: `${siteUrl}/gift-guide`,
+    name: 'Nara Charm Jewelry Gift Guide',
+    description,
+    url: absoluteUrl(path),
+    ...(picks.length ? {
+      mainEntity: {
+        '@type': 'ItemList',
+        numberOfItems: picks.length,
+        itemListElement: picks.map(({ slug, name }, index) => ({
+          '@type': 'ListItem', position: index + 1, name, url: absoluteUrl(`/products/${slug}`),
+        })),
+      },
+    } : {}),
   };
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }} />
       <SiteHeader />
-      <main id="main">
-        <figure className="mx-auto max-w-5xl px-4 pt-10"><div className="relative aspect-[3/2] max-h-[480px] overflow-hidden rounded-lg"><Image src="/editorial/gifting.webp" alt="Illustrative jewelry gift scene with a blank note and ribbon" fill sizes="(max-width: 768px) 100vw, 1000px" className="object-cover" /></div><figcaption className="mt-2 text-xs text-muted">Gift inspiration · Illustrative styling and packaging.</figcaption></figure>
-        <section className="border-b border-border bg-ink text-bg">
-          <div className="mx-auto max-w-4xl px-4 py-16 text-center md:py-24">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Made for your journey</p>
-            <h1 className="mt-4 font-display text-4xl leading-tight md:text-6xl">
-              A gift that tells a story
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-bg/80">
-              Every order arrives in a keepsake box with a handwritten story card and a
-              blessing pouch. Ready to give — or to keep.
-            </p>
+      <main id="main" className={styles.guide}>
+        <header className={styles.hero}>
+          <div className={styles.shell}>
+            <Breadcrumb items={[{ label: 'Gift guide' }]} />
+            <div className={styles.spread}>
+              <div className={styles.heroCopy}>
+                <h1>Jewelry gifts. <em>Chosen well.</em></h1>
+                <p>Start with a color or a shape they already wear. Check the fit, then find a piece in your budget.</p>
+                <Link href="#gift-budget" className={styles.primaryLink}>Browse by price <span aria-hidden="true">↓</span></Link>
+              </div>
+              <figure className={styles.heroImage}>
+                <Image src={hero.image} alt={hero.alt} fill preload sizes="(max-width: 799px) 89vw, (max-width: 1439px) 50vw, 660px" />
+                <figcaption>Illustrative gift styling</figcaption>
+              </figure>
+            </div>
           </div>
+        </header>
+
+        <nav aria-label="Gift planning" className={styles.jumpBar}>
+          <ul className={styles.shell}>
+            <li><Link href="/size-guide">Check jewelry fit <span aria-hidden="true">↗</span></Link></li>
+            <li><Link href="/shipping">Delivery estimates <span aria-hidden="true">↗</span></Link></li>
+            <li><Link href="/blog/choose-a-meaningful-jewelry-gift">Gift advice <span aria-hidden="true">↗</span></Link></li>
+          </ul>
+        </nav>
+
+        <section id="gift-budget" className={`${styles.shell} ${styles.section}`} aria-labelledby="gift-budget-heading">
+          <div className={styles.sectionHeading}>
+            <div>
+              <h2 id="gift-budget-heading">Gifts by price</h2>
+              <p>In-stock picks in USD. Shipping is separate.</p>
+            </div>
+            <Link href="/shop" className={styles.textLink}>See all jewelry <span aria-hidden="true">↗</span></Link>
+          </div>
+          {budgets.length > 0 ? (
+            <>
+              <nav aria-label="Gift budgets" className={styles.budgetLinks}>
+                {budgets.map(({ id, label }) => <Link key={id} href={`#${id}`}>{label} <span aria-hidden="true">↓</span></Link>)}
+              </nav>
+              {budgets.map(({ id, label, description: note, picks }) => (
+                <section key={id} id={id} className={styles.budget} aria-labelledby={`${id}-title`}>
+                  <h3 id={`${id}-title`}>{label}</h3>
+                  <p>{note}</p>
+                  <div className={styles.products}>
+                    {picks.map((product) => <ProductTile key={product.slug} product={productCard(product)} heading="h4" />)}
+                  </div>
+                </section>
+              ))}
+            </>
+          ) : <p className={styles.empty}>For availability and help finding a gift, <Link href="/contact" className={styles.textLink}>contact us</Link>.</p>}
         </section>
 
-        <div className="mx-auto max-w-6xl px-4">
-          <Breadcrumb items={[{ label: 'Gift Guide' }]} />
-        </div>
-
-        {/* What's included */}
-        <section className="border-b border-border bg-surface">
-          <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
-            <h2 className="text-center font-display text-2xl md:text-3xl">
-              What arrives in every box
-            </h2>
-            <div className="mt-10 grid gap-6 md:grid-cols-4">
-              {[
-                { i: '✦', t: 'Keepsake box', d: 'A small kraft box stamped with the Nara Charm lotus — keepsake, not trash.' },
-                { i: '✎', t: 'Handwritten story card', d: 'The four-layer story of the piece — origin, craft, meaning, and how it speaks to you.' },
-                { i: '✦', t: 'Blessing pouch', d: 'A small pouch of dried herbs or paper blessings, the way gifts have been given in these cultures for centuries.' },
-                { i: '✦', t: 'Care note', d: 'How to clean it, store it, and keep the silver bright. A short card; honest, not preachy.' },
-              ].map((b) => (
-                <div key={b.t} className="text-center">
-                  <div className="text-3xl text-brand">{b.i}</div>
-                  <h3 className="mt-2 font-display text-lg">{b.t}</h3>
-                  <p className="mt-2 text-sm text-muted">{b.d}</p>
+        <section className={styles.choicePanel} aria-labelledby="gift-choice-heading">
+          <div className={`${styles.shell} ${styles.section}`}>
+            <div className={styles.sectionHeading}>
+              <h2 id="gift-choice-heading">Choose by what they wear</h2>
+            </div>
+            <div className={styles.choiceGrid}>
+              {recipientChoices.map(({ title, slug, note }) => (
+                <div key={slug}>
+                  <h3><Link href={`/collections/${slug}`}>{title} <span aria-hidden="true">↗</span></Link></h3>
+                  <p>{note}</p>
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* By occasion */}
-        <section className="mx-auto max-w-6xl px-4 py-14 md:py-20">
-          <div className="text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-brand">By occasion</p>
-            <h2 className="mt-3 font-display text-3xl md:text-4xl">Find the moment</h2>
-          </div>
-          <div className="mt-12 space-y-14">
-            {OCCASIONS.map((occ) => {
-              const products = occ.picks.map(toCard).filter(Boolean) as ProductCard[];
-              if (products.length === 0) return null;
-              return (
-                <div key={occ.title}>
-                  <div className="flex flex-wrap items-end gap-3 border-b border-border pb-4">
-                    <span className="text-3xl">{occ.icon}</span>
-                    <h3 className="font-display text-2xl md:text-3xl">{occ.title}</h3>
-                    <p className="ml-auto max-w-md text-sm text-muted">{occ.pitch}</p>
-                  </div>
-                  <div className="mt-6 grid grid-cols-2 gap-5 md:grid-cols-4 lg:gap-6">
-                    {products.map((p) => (
-                      <ProductTile key={p.slug} product={p} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* By budget */}
-        <section className="border-t border-border bg-surface">
-          <div className="mx-auto max-w-6xl px-4 py-14 md:py-20">
-            <div className="text-center">
-              <p className="text-xs uppercase tracking-[0.3em] text-brand">By budget</p>
-              <h2 className="mt-3 font-display text-3xl md:text-4xl">Whatever the number</h2>
-            </div>
-            <div className="mt-10 space-y-10">
-              {BY_BUDGET.map((b) => {
-                const products = b.picks.map(toCard).filter(Boolean) as ProductCard[];
-                if (products.length === 0) return null;
-                return (
-                  <div key={b.range}>
-                    <div className="flex items-end justify-between border-b border-border pb-3">
-                      <h3 className="font-display text-xl">{b.range}</h3>
-                      <p className="text-sm text-muted">{b.note}</p>
-                    </div>
-                    <div className="mt-6 grid grid-cols-2 gap-5 md:grid-cols-4 lg:gap-6">
-                      {products.map((p) => (
-                        <ProductTile key={p.slug} product={p} />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="border-t border-border bg-ink text-bg">
-          <div className="mx-auto max-w-4xl px-4 py-14 text-center md:py-20">
-            <h2 className="font-display text-3xl md:text-4xl">Still looking?</h2>
-            <p className="mx-auto mt-4 max-w-xl text-bg/75">
-              Browse the full collection — every piece arrives gift-ready.
-            </p>
-            <Link
-              href="/collections"
-              className="mt-7 inline-block rounded-md bg-brand px-7 py-3.5 text-sm font-medium text-bg transition-transform hover:-translate-y-0.5"
-            >
-              SHOP ALL PIECES
-            </Link>
           </div>
         </section>
       </main>

@@ -1,21 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Modal, Upload, Button, message, Image as AntImage, Empty, Spin, Popconfirm } from 'antd';
-import { UploadOutlined, StarOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import type { UploadFile } from 'antd';
+import { useEffect, useState, type FormEvent } from 'react';
+import { Modal, Upload, Button, message, Image as AntImage, Empty, Spin, Popconfirm, Input } from 'antd';
+import { UploadOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons';
 import {
   getProductImages,
   addProductImage,
   deleteProductImage,
   setPrimaryImage,
-} from '@/lib/admin-actions';
+} from '@/lib/admin-product-images';
 
 type Img = {
   id: string;
   url: string;
   altText: string | null;
   isPrimary: boolean;
+  isProductPhoto: boolean;
   sortOrder: number;
 };
 
@@ -38,6 +38,9 @@ export function ProductImagesModal({
   const [images, setImages] = useState<Img[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState('');
+  const [addingPhoto, setAddingPhoto] = useState(false);
+  const hasProductPhotos = images.some((image) => image.isProductPhoto);
   const [messageApi, msgCtx] = message.useMessage();
 
   const load = async () => {
@@ -45,14 +48,19 @@ export function ProductImagesModal({
     setLoading(true);
     try {
       const imgs = await getProductImages(productId);
-      setImages(imgs as Img[]);
+      setImages(imgs);
+    } catch {
+      messageApi.error('无法加载图片');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (open && productId) load();
+    if (open && productId) {
+      setPhotoUrl('');
+      void load();
+    }
   }, [open, productId]);
 
   const handleUpload = async (file: File) => {
@@ -64,30 +72,53 @@ export function ProductImagesModal({
       const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || '上传失败');
-      // 第一张自动设为主图
-      const isPrimary = images.length === 0;
-      await addProductImage(productId, data.url, file.name, isPrimary);
+      await addProductImage(productId, data.url, file.name);
       messageApi.success('图片已上传');
       await load();
-    } catch (e: any) {
-      messageApi.error(e.message || '上传失败');
+    } catch (error) {
+      messageApi.error(error instanceof Error ? error.message : '上传失败');
     } finally {
       setUploading(false);
     }
     return false; // 阻止 antd 默认上传
   };
 
-  const handleSetPrimary = async (imgId: string) => {
-    await setPrimaryImage(imgId, productId!);
-    messageApi.success('已设为主图');
-    load();
-  };
+  async function handleProductPhoto(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!productId || !photoUrl.trim()) return;
+    setAddingPhoto(true);
+    try {
+      await addProductImage(productId, photoUrl, productName, true);
+      setPhotoUrl('');
+      messageApi.success('商品实拍已添加');
+      await load();
+    } catch (error) {
+      messageApi.error(error instanceof Error ? error.message : '无法添加商品实拍');
+    } finally {
+      setAddingPhoto(false);
+    }
+  }
 
-  const handleDelete = async (imgId: string) => {
-    await deleteProductImage(imgId);
-    messageApi.success('已删除');
-    load();
-  };
+  async function handleSetPrimary(imgId: string) {
+    if (!productId) return;
+    try {
+      await setPrimaryImage(imgId, productId);
+      messageApi.success('已设为主图');
+      await load();
+    } catch {
+      messageApi.error('无法修改主图');
+    }
+  }
+
+  async function handleDelete(imgId: string) {
+    try {
+      await deleteProductImage(imgId);
+      messageApi.success('已删除');
+      await load();
+    } catch {
+      messageApi.error('无法删除图片');
+    }
+  }
 
   return (
     <>
@@ -100,7 +131,16 @@ export function ProductImagesModal({
         width={640}
         destroyOnHidden
       >
-        {/* 上传区 */}
+        <form className="mb-5 space-y-2" onSubmit={handleProductPhoto}>
+          <label className="block font-medium" htmlFor="product-photo-url">商品实拍地址</label>
+          <p className="text-xs text-neutral-600">填写与此款商品一致、可公开访问的 HTTPS 图片地址。重新导出商品数据后，实拍会进入商品页和购物 Feed。</p>
+          <div className="flex flex-wrap gap-2">
+            <Input id="product-photo-url" value={photoUrl} onChange={(event) => setPhotoUrl(event.target.value)} className="min-w-0 flex-1" placeholder="https://…" required />
+            <Button htmlType="submit" loading={addingPhoto}>添加商品实拍</Button>
+          </div>
+        </form>
+
+        {/* 本地素材上传 */}
         <Upload
           beforeUpload={handleUpload}
           showUploadList={false}
@@ -108,7 +148,7 @@ export function ProductImagesModal({
           multiple
         >
           <Button icon={<UploadOutlined />} loading={uploading}>
-            上传图片 (JPG/PNG/WebP, ≤10MB)
+            上传参考图 (JPG/PNG/WebP, ≤10MB)
           </Button>
         </Upload>
 
@@ -138,8 +178,9 @@ export function ProductImagesModal({
                       主图
                     </span>
                   )}
+                  {img.isProductPhoto && <p className="mt-1 text-xs font-medium text-green-700">商品实拍</p>}
                   <div style={{ display: 'flex', gap: 4, marginTop: 4 }}>
-                    {!img.isPrimary && (
+                    {!img.isPrimary && (!hasProductPhotos || img.isProductPhoto) && (
                       <Button size="small" icon={<StarOutlined />} onClick={() => handleSetPrimary(img.id)} style={{ flex: 1 }}>
                         设主图
                       </Button>

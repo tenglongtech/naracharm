@@ -1,79 +1,73 @@
-import { siteConfig } from '@/lib/site-config';
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/page-metadata';
 import { LegalPage } from '@/components/legal-page';
+import {
+  DAMAGE_REPORT_DAYS, RETURN_WINDOW_DAYS, freeShippingFromLabel, shippingCountryCodes,
+  shippingPreparationDays, shippingTransitDays, standardShippingLabel,
+} from '@/lib/store-policies';
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: 'FAQ',
   description:
-    'Answers to common questions about Nara Charm — handmade jewelry shipping, returns, materials, sizing, care, and payment.',
-  alternates: { canonical: '/faq' },
-  openGraph: {
-    title: 'FAQ | Nara Charm',
-    description: 'Common questions about Nara Charm — shipping, returns, materials, care.',
-    url: '/faq',
-    type: 'website',
-  },
-};
+    'Answers to common questions about Nara Charm jewelry, including shipping, returns, materials, sizing, care and payment.',
+  path: '/faq',
+});
 
 // FAQ 数据 — 同时用于页面渲染 + JSON-LD (Google rich result 资格)
 const FAQ_DATA: { heading: string; items: { q: string; a: string }[] }[] = [
   {
     heading: 'Orders & Shipping',
     items: [
-      { q: 'How long until my order ships?', a: 'Each piece is handmade, so please allow 1–3 business days for crafting, then 7–15 business days for international delivery. We will email you a tracking number as soon as it ships.' },
-      { q: 'Do you ship worldwide?', a: 'Yes, we ship globally via 4PX and EMS. Free standard shipping on orders over $120. Below that, shipping is a flat $6.90 to most countries.' },
-      { q: 'How do I track my order?', a: 'A tracking number is emailed once your order ships. You can also view it in My Account → Orders.' },
-      { q: 'Will I have to pay customs / import duties?', a: 'US orders under $800 are duty-free. EU and UK orders may be charged VAT at import — this is set by your local government and is the buyer\'s responsibility.' },
+      { q: 'How long until my order ships?', a: 'Allow ' + shippingPreparationDays.min + '–' + shippingPreparationDays.max + ' business days for preparation and typically another ' + shippingTransitDays.min + '–' + shippingTransitDays.max + ' business days in transit. We email tracking details when your order ships.' },
+      { q: 'Where can you ship?', a: 'The Shipping page lists all ' + shippingCountryCodes.length + ' destinations. Standard shipping costs ' + standardShippingLabel + ' below ' + freeShippingFromLabel + ' and is free from ' + freeShippingFromLabel + ' before discounts.' },
+      { q: 'How do I track my order?', a: 'A tracking link is emailed once your order ships. For help with a shipment, give support the order number from your confirmation.' },
+      { q: 'Will I have to pay customs / import duties?', a: 'Duties, import taxes or carrier fees may apply. Check with the customs authority for the shipping destination for current rules.' },
     ],
   },
   {
     heading: 'Returns & Exchanges',
     items: [
-      { q: 'What is your return policy?', a: '30 days from delivery for unworn items in original packaging. See our Returns page for full details.' },
+      { q: 'What is your return policy?', a: 'Eligible unworn, undamaged items can be returned within ' + RETURN_WINDOW_DAYS + ' days of delivery. See Returns & Exchanges for eligibility and exceptions.' },
       { q: 'Can I exchange for a different size?', a: 'Yes. The fastest way is to return for a refund and place a new order. Reach us at support@naracharm.com and we will help.' },
-      { q: 'My item arrived damaged', a: 'Contact us within 7 days with a photo. We will send a free replacement or issue a full refund — no need to return the damaged piece.' },
+      { q: 'My item arrived damaged', a: 'Contact us within ' + DAMAGE_REPORT_DAYS + ' days of delivery with a photo. We can arrange a free replacement or a full refund, including shipping.' },
       { q: 'Who pays return shipping?', a: 'For change-of-mind returns, the buyer. For damaged or incorrect items, we cover it.' },
     ],
   },
   {
     heading: 'Products & Materials',
     items: [
-      { q: 'Are your pieces really handmade?', a: 'Yes. Every piece is crafted by hand by skilled artisans. Slight variations are natural and part of what makes each unique.' },
-      { q: 'What materials do you use?', a: 'Natural stones (amethyst, rose quartz, turquoise, jade, obsidian), 925 sterling silver, brass, Thai silk, hand-braided waxed cotton cord. Materials are listed on each product page.' },
-      { q: 'Are your earrings hypoallergenic?', a: 'Our silver-post earrings are low-allergy (sterling silver). Brass pieces may contain nickel — check each product page for specifics.' },
-      { q: 'Where do the materials come from?', a: 'Silver is sourced from Tibetan and Miao workshops. Stones are hand-selected from regional suppliers. Silk is hand-woven in northern Thailand.' },
-      { q: 'How do I care for my jewelry?', a: 'Avoid water, perfume, and lotions on silver. Store in the provided airtight bag when not wearing. Full care notes are on every product page.' },
+      { q: 'Where can I check the materials in a piece?', a: 'Read the individual product page for the listed materials and finish. Contact us with the product name if you need to confirm the origin, assembly or material of a specific component.' },
+      { q: 'How can I check the material of an earring post?', a: 'See the materials listed on the product page. If the post, hook or back material is unclear, contact us with the piece name before ordering.' },
+      { q: 'What does design illustration mean?', a: 'An illustration shows the shape or styling of a concept. Check the studio listing for its preview status and the individual shop listing for the materials, dimensions and available product photos.' },
+      { q: 'How do I care for my jewelry?', a: 'Start with the care notes for your piece. Remove jewelry before showering or swimming, let cords dry before storage, and store pieces separately so they do not rub against one another.' },
     ],
   },
   {
     heading: 'Sizing',
     items: [
-      { q: 'How do I choose a bracelet size?', a: 'Measure your wrist snugly with a flexible tape and add 1–1.5cm of ease. See our Size Guide for details and a printable measuring tool.' },
-      { q: 'What necklace length should I pick?', a: '16in sits at the collarbone, 18in at the chest, 20in lower. See the Size Guide for a visual.' },
-      { q: 'Do phone charms fit all phones?', a: 'Yes — they attach through the small hole at the bottom of the case or directly to the phone body. A silicone loop is included for case-less phones.' },
+      { q: 'How do I choose a bracelet size?', a: 'Measure where you want the bracelet to sit, then compare your wrist circumference with the product’s stated fit range. Check whether the fastening opens or needs to pass over your hand.' },
+      { q: 'What necklace length should I pick?', a: 'Try the listed chain or cord length with a piece of string against the neckline you wear most often. Check pendant dimensions and the extender range separately.' },
+      { q: 'How do I check whether a phone charm fits my case?', a: 'Compare the product’s attachment loop with a compatible lanyard opening on your case. Check clearance around the camera and charging port.' },
     ],
   },
   {
     heading: 'Account & Payment',
     items: [
-      { q: 'Do I need an account to order?', a: 'No — you can check out as a guest. An account lets you track orders, save favorites, and check out faster next time.' },
-      { q: 'What payment methods do you accept?', a: 'Credit/debit cards (Visa, Mastercard, Amex), Apple Pay, Google Pay, and PayPal. All processed securely by Stripe — we never see your card number.' },
+      { q: 'Do I need an account to order?', a: 'You can check out as a guest. Use an email address you can access to receive your confirmation and shipping updates.' },
+      { q: 'What payment methods do you accept?', a: 'Stripe Checkout shows the payment methods available for your order and location.' },
       { q: 'Is my payment information safe?', a: 'Yes. All payments are handled by Stripe, which is PCI-DSS Level 1 certified. Nara Charm never stores your card number.' },
     ],
   },
   {
     heading: 'Gifting',
     items: [
-      { q: 'Do you offer gift wrapping?', a: 'Every order arrives gift-ready: a kraft keepsake box, a handwritten story card, and a blessing pouch. No extra charge.' },
-      { q: 'Can I include a personal message?', a: 'Yes — at checkout, look for "Gift note" and add your message. We handwrite it on a small card and tuck it in the box.' },
-      { q: 'Do you offer gift cards?', a: 'Not yet — coming soon. For now, the easiest way to let someone choose is to share a link to a specific product or collection.' },
+      { q: 'Can I ask about packaging for a gift?', a: 'Contact us with the piece and occasion before placing your order. We can confirm the available packaging and timing.' },
+      { q: 'Can I include a personal message?', a: 'Contact us about a gift message before you place your order so we can confirm your options.' },
+      { q: 'How can I let someone choose their own gift?', a: 'Share the Gift Guide or a collection link so the recipient can compare styles, sizes and prices.' },
     ],
   },
 ];
 
 export default function FaqPage() {
-  const siteUrl = siteConfig.url;
-
   // 拍平所有 Q/A → JSON-LD
   const allItems = FAQ_DATA.flatMap((s) => s.items);
   const faqJsonLd = {

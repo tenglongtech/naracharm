@@ -1,0 +1,142 @@
+.gallery {
+  display: grid;
+  grid-template-areas: 'image' 'caption';
+  align-self: start;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.gallery[data-views='multiple'] {
+  grid-template-areas: 'image' 'views' 'caption';
+}
+
+.frame {
+  grid-area: image;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.22;
+  background-color: #eee5d9;
+}
+
+.frame img,
+.thumbnails img {
+  object-fit: cover;
+}
+
+.frame[data-image-kind='photo'] img,
+.gallery[data-preview='true'] .frame img {
+  object-fit: contain;
+}
+
+.gallery[data-preview='true'] .frame {
+  aspect-ratio: 1;
+}
+
+.enlarge,
+.close {
+  position: absolute;
+  inset: auto 0.5rem 0.5rem auto;
+  z-index: 1;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.45rem;
+  padding-inline: 0.7rem;
+  background-color: #fbf7f0;
+  color: #302822;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.enlarge:hover,
+.close:hover {
+  background-color: #f1e5d4;
+}
+
+.thumbnails {
+  grid-area: views;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 0.65rem;
+}
+
+.thumbnails button {
+  position: relative;
+  width: min(2.875rem, 19vw);
+  aspect-ratio: 1;
+  flex-shrink: 0;
+  background-color: #eee5d9;
+  cursor: pointer;
+}
+
+.thumbnails button[aria-pressed='true'] {
+  box-shadow: 0 0 0 1px #fbf7f0, 0 0 0 2.5px #873e34;
+}
+
+.caption {
+  grid-area: caption;
+  color: #645248;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.gallery[data-preview='true'] .caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 0.65rem;
+}
+
+.gallery[data-preview='true'] .enlarge {
+  position: static;
+  margin-left: auto;
+}
+
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: min(96vw, 760px);
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background-color: #eee5d9;
+  color: #302822;
+}
+
+.dialog::backdrop {
+  background-color: rgb(32 24 20 / 82%);
+}
+
+.viewer {
+  position: relative;
+  height: min(86dvh, 820px);
+}
+
+.viewer img {
+  object-fit: contain;
+}
+
+.close {
+  inset: 0.5rem 0.5rem auto auto;
+}
+
+@media (min-width: 768px) {
+  .gallery[data-views='multiple'] {
+    grid-template-columns: 3.75rem minmax(0, 1fr);
+    grid-template-areas: 'views image' '. caption';
+    gap: 0.65rem 0.85rem;
+  }
+
+  .frame {
+    aspect-ratio: 1.03;
+  }
+
+  .thumbnails button {
+    width: 3.75rem;
+  }
+}

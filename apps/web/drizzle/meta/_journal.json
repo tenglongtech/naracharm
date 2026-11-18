@@ -29,6 +29,20 @@
       "when": 1782184020000,
       "tag": "0003_order_number_seq",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1795015535689,
+      "tag": "0004_verified_product_photos",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795019035368,
+      "tag": "0005_account_order_ownership",
+      "breakpoints": true
     }
   ]
 }

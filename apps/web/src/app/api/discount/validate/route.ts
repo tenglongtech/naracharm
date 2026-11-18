@@ -1,14 +1,29 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
 import { validateDiscountCode } from '@/lib/discount-actions';
+import { storefrontHeaders, storefrontPreflight, unsupportedOrigin } from '@/lib/checkout-origin';
 
-/**
- * POST /api/discount/validate
- * 验证优惠码,返回折扣信息
- * body: { code, subtotalCents }
- */
-export async function POST(req: NextRequest) {
-  const { code, subtotalCents } = await req.json();
-  if (!code) return NextResponse.json({ valid: false, error: 'Discount code is required' }, { status: 400 });
-  const result = await validateDiscountCode(code, subtotalCents || 0);
-  return NextResponse.json(result);
+const requestSchema = z.object({
+  code: z.string().trim().min(1).max(80),
+  subtotalCents: z.number().int().nonnegative().max(100_000_000),
+});
+
+export const OPTIONS = storefrontPreflight;
+
+export async function POST(request: Request) {
+  const headers = storefrontHeaders(request);
+  if (unsupportedOrigin(request, headers)) return NextResponse.json({ error: 'Origin is not allowed' }, { headers, status: 403 });
+
+  const input = requestSchema.safeParse(await request.json().catch(() => null));
+  if (!input.success) {
+    return NextResponse.json({ valid: false, error: 'Enter a discount code and a valid subtotal' }, { status: 400, headers });
+  }
+  const result = await validateDiscountCode(input.data.code, input.data.subtotalCents);
+  return NextResponse.json({
+    valid: result.valid,
+    error: result.error,
+    code: result.discount?.code,
+    discountCents: result.discountAmountCents,
+    freeShipping: result.freeShipping,
+  }, { headers });
 }

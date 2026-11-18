@@ -28,7 +28,7 @@ import {
 import { and, eq, sql } from 'drizzle-orm';
 import { getOrCreateCartToken, ensureCartCookie, getOrCreateCart, getCartByToken } from '@/lib/cart-cookie';
 import type { CartView } from './cart-types';
-import { FREE_SHIPPING_THRESHOLD_CENTS } from './cart-types';
+import { FREE_SHIPPING_THRESHOLD_CENTS, standardShippingCents } from './cart-types';
 
 // ── 读 ──────────────────────────────────────────────────────────────────
 /**
@@ -107,7 +107,7 @@ async function loadCart(cartId: string): Promise<CartView> {
   const itemCount = lines.reduce((s: number, l: any) => s + l.quantity, 0);
   const qualifiesFreeShipping = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS;
   const toFreeShippingCents = Math.max(0, FREE_SHIPPING_THRESHOLD_CENTS - subtotalCents);
-  const shippingCents = subtotalCents === 0 || qualifiesFreeShipping ? 0 : 690;
+  const shippingCents = standardShippingCents(subtotalCents);
   const totalCents = subtotalCents + shippingCents;
 
   return {

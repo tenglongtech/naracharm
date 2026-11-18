@@ -27,8 +27,4 @@ export const siteConfig = {
     youtube: process.env.NEXT_PUBLIC_YOUTUBE || '',
     pinterest: process.env.NEXT_PUBLIC_PINTEREST || '',
   },
-
-  // 业务参数 (与全站口径一致)
-  freeShippingThresholdUsd: 120,
-  returnWindowDays: 30,
 };

@@ -4,14 +4,23 @@
  * 后台数据访问层 (Server Actions)
  * 所有后台 CRUD 操作集中在此,供 antd 组件调用。
  *
- * 注意: 当前无权限校验。Phase 4 接 Better Auth 后,每个 action 加登录验证。
+ * Actions verify the administrator role before reading or writing store data.
  */
-import { db } from '@/lib/db';
-import { products, collections, orders, customers, discounts, productVariants, inventory, productImages } from '@jewelry/db';
-import { eq, desc, count, sql, and } from 'drizzle-orm';
+import { db as connection, type DB } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth';
+import { products, collections, orders, customers, discounts, productVariants, inventory } from '@jewelry/db';
+import { eq, desc, count, sql } from 'drizzle-orm';
+import { ZodError } from 'zod';
+import {
+  availableStudioDrafts, editableProduct, insertCatalogProduct, insertStudioDraft, updateCatalogProduct, ProductEditError,
+  type AddCatalogProduct, type UpdateCatalogProduct,
+} from './product-maintenance';
+
+const db: DB = connection;
 
 // ─── 仪表盘统计 ──────────────────────────────────────────────────────────
 export async function getDashboardStats() {
+  await requireAdmin();
   const [productCount] = await db.select({ value: count() }).from(products);
   const [orderCount] = await db.select({ value: count() }).from(orders);
   const [customerCount] = await db.select({ value: count() }).from(customers);
@@ -44,6 +53,7 @@ export async function getDashboardStats() {
 
 // ─── 商品 ────────────────────────────────────────────────────────────────
 export async function getAllProducts() {
+  await requireAdmin();
   const rows = await db
     .select({
       id: products.id,
@@ -57,39 +67,65 @@ export async function getAllProducts() {
       status: products.status,
       isFeatured: products.isFeatured,
       collectionName: collections.name,
-      stock: sql<number>`coalesce(${inventory.quantity}, 0)`,
+      stock: sql<number>`coalesce((
+        select sum(greatest(0, ${inventory.quantity} - ${inventory.reserved}))::double precision
+        from ${productVariants} join ${inventory} on ${inventory.variantId} = ${productVariants.id}
+        where ${productVariants.productId} = ${products.id}
+      ), 0)`,
       createdAt: products.createdAt,
     })
     .from(products)
     .leftJoin(collections, eq(products.collectionId, collections.id))
-    .leftJoin(productVariants, eq(productVariants.productId, products.id))
-    .leftJoin(inventory, eq(inventory.variantId, productVariants.id))
-    .orderBy(desc(products.createdAt))
-    .groupBy(products.id, collections.name, inventory.quantity);
+    .orderBy(desc(products.createdAt));
 
   return rows;
 }
 
 export async function getProductById(id: string) {
-  const [product] = await db.select().from(products).where(eq(products.id, id));
-  return product;
+  await requireAdmin();
+  return editableProduct(id);
 }
 
-export async function createProduct(data: typeof products.$inferInsert) {
-  const [created] = await db.insert(products).values(data).returning();
-  return created;
+export async function getStudioDraftOptions() {
+  await requireAdmin();
+  return availableStudioDrafts();
 }
 
-export async function updateProduct(id: string, data: Partial<typeof products.$inferInsert>) {
-  await db.update(products).set({ ...data, updatedAt: new Date() }).where(eq(products.id, id));
+async function productChange(operation: () => Promise<{ id: string }>) {
+  try {
+    const { id } = await operation();
+    return { ok: true as const, id };
+  } catch (error) {
+    if (error instanceof ProductEditError) return { ok: false as const, error: error.message };
+    if (error instanceof ZodError) return { ok: false as const, error: '请检查商品名称、网址、售价及库存数量。' };
+    console.error('Could not save catalog product', error instanceof Error ? error.name : 'Unknown error');
+    return { ok: false as const, error: '保存失败。请刷新商品后重试。' };
+  }
+}
+
+export async function createProduct(input: AddCatalogProduct) {
+  await requireAdmin();
+  return productChange(() => insertCatalogProduct(input));
+}
+
+export async function createStudioProductDraft(slug: string) {
+  await requireAdmin();
+  return productChange(() => insertStudioDraft(slug));
+}
+
+export async function updateProduct(id: string, input: UpdateCatalogProduct) {
+  await requireAdmin();
+  return productChange(() => updateCatalogProduct(id, input));
 }
 
 export async function deleteProduct(id: string) {
+  await requireAdmin();
   await db.delete(products).where(eq(products.id, id));
 }
 
 // ─── 系列 ────────────────────────────────────────────────────────────────
 export async function getAllCollections() {
+  await requireAdmin();
   return db
     .select({
       id: collections.id,
@@ -106,20 +142,24 @@ export async function getAllCollections() {
 }
 
 export async function createCollection(data: typeof collections.$inferInsert) {
+  await requireAdmin();
   const [created] = await db.insert(collections).values(data).returning();
   return created;
 }
 
 export async function updateCollection(id: string, data: Partial<typeof collections.$inferInsert>) {
+  await requireAdmin();
   await db.update(collections).set({ ...data, updatedAt: new Date() }).where(eq(collections.id, id));
 }
 
 export async function deleteCollection(id: string) {
+  await requireAdmin();
   await db.delete(collections).where(eq(collections.id, id));
 }
 
 // ─── 订单 ────────────────────────────────────────────────────────────────
 export async function getAllOrders() {
+  await requireAdmin();
   return db
     .select({
       id: orders.id,
@@ -138,6 +178,7 @@ export async function getAllOrders() {
 
 // ─── 顾客 ────────────────────────────────────────────────────────────────
 export async function getAllCustomers() {
+  await requireAdmin();
   return db
     .select({
       id: customers.id,
@@ -154,52 +195,17 @@ export async function getAllCustomers() {
 
 // ─── 优惠券 ──────────────────────────────────────────────────────────────
 export async function getAllDiscounts() {
+  await requireAdmin();
   return db.select().from(discounts).orderBy(desc(discounts.createdAt));
 }
 
 export async function createDiscount(data: typeof discounts.$inferInsert) {
+  await requireAdmin();
   const [created] = await db.insert(discounts).values(data).returning();
   return created;
 }
 
 export async function deleteDiscount(id: string) {
+  await requireAdmin();
   await db.delete(discounts).where(eq(discounts.id, id));
-}
-
-// ─── 产品图片 ────────────────────────────────────────────────────────────
-
-/** 查产品的所有图片 */
-export async function getProductImages(productId: string) {
-  return db
-    .select()
-    .from(productImages)
-    .where(eq(productImages.productId, productId))
-    .orderBy(productImages.sortOrder);
-}
-
-/** 给产品添加图片 */
-export async function addProductImage(productId: string, url: string, altText?: string, isPrimary = false) {
-  // 计算下一个 sortOrder
-  const existing = await db.select().from(productImages).where(eq(productImages.productId, productId));
-  const sortOrder = existing.length;
-  // 如果设为主图,先取消其他主图
-  if (isPrimary) {
-    await db.update(productImages).set({ isPrimary: false }).where(eq(productImages.productId, productId));
-  }
-  const [created] = await db
-    .insert(productImages)
-    .values({ productId, url, altText: altText || null, isPrimary, sortOrder })
-    .returning();
-  return created;
-}
-
-/** 删除产品图片 */
-export async function deleteProductImage(imageId: string) {
-  await db.delete(productImages).where(eq(productImages.id, imageId));
-}
-
-/** 设置主图 */
-export async function setPrimaryImage(imageId: string, productId: string) {
-  await db.update(productImages).set({ isPrimary: false }).where(eq(productImages.productId, productId));
-  await db.update(productImages).set({ isPrimary: true }).where(eq(productImages.id, imageId));
 }

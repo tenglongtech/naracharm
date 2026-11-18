@@ -1,71 +1,77 @@
 import Stripe from 'stripe';
+import { stripePublishableKey } from './stripe-publishable-key';
+import { shippingCountryCodes } from './store-policies';
 
-/**
- * Stripe 服务端实例 (测试模式)
- *
- * 使用 Stripe 官方标准测试密钥 (不会真扣款,用于本地开发)
- * 上线时替换为你自己 Stripe 账号的 sk_live_xxx / pk_live_xxx
- *
- * 测试卡号: 4242 4242 4242 4242 (任意未来日期 + 任意 CVC)
- */
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
-  apiVersion: '2025-08-27.basil' as any,
-  typescript: true,
+  maxNetworkRetries: 2,
+  timeout: 15_000,
 });
 
-/**
- * 创建 Stripe Checkout Session (Embedded Checkout 模式)
- *
- * 调用方传入订单项 (variant/quantity) + 成功/取消 URL,
- * 返回 clientSecret 供前端嵌入支付组件。
- */
-export async function createCheckoutSession(params: {
-  items: { name: string; amountCents: number; quantity: number; image?: string }[];
-  successUrl: string;
-  cancelUrl: string;
-  customerEmail?: string;
-  metadata?: Record<string, string>;
-}) {
-  const session = await stripe.checkout.sessions.create({
-    mode: 'payment',
-    line_items: params.items.map((it) => ({
-      quantity: it.quantity,
-      price_data: {
-        currency: 'usd',
-        unit_amount: it.amountCents,
-        product_data: {
-          name: it.name,
-          ...(it.image ? { images: [it.image] } : {}),
-        },
-      },
-    })),
-    success_url: params.successUrl,
-    cancel_url: params.cancelUrl,
-    customer_email: params.customerEmail,
-    // PayPal + Apple Pay + Google Pay 一起开 (Stripe 在 'card' 模式下自动启用 wallet,加 'paypal' 支持 PayPal)
-    payment_method_types: ['card', 'paypal'],
-    // 嵌入式 checkout
-    ui_mode: 'embedded' as any,
-    // 收集地址
-    billing_address_collection: 'auto',
-    shipping_address_collection: {
-      allowed_countries: ['US', 'GB', 'DE', 'FR', 'CA', 'AU', 'IT', 'ES', 'NL', 'BE', 'IE', 'SE', 'DK', 'NO', 'FI', 'AT', 'CH', 'PT', 'PL'],
-    },
-    metadata: {
-      source: 'naracharm-web',
-      ...(params.metadata ?? {}),
-    },
-  });
-
-  return {
-    clientSecret: session.client_secret,
-    sessionId: session.id,
-  };
+export function stripeWebhookSecret() {
+  const secret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
+  return secret?.startsWith('whsec_') && secret !== 'whsec_placeholder' ? secret : undefined;
 }
 
-/**
- * 根据 session id 查询支付状态 (用于 webhook 验证 / 成功页确认)
- */
-export async function getCheckoutSession(sessionId: string) {
-  return stripe.checkout.sessions.retrieve(sessionId);
+export function checkoutConfigured() {
+  const key = process.env.STRIPE_SECRET_KEY?.trim();
+  return Boolean(key && !/placeholder|_xxx/i.test(key) && stripeWebhookSecret());
+}
+
+export function checkoutPublishableKey() {
+  const mode = process.env.STRIPE_SECRET_KEY?.trim().match(/^(?:sk|rk)_(test|live)_/)?.[1];
+  const key = stripePublishableKey(process.env.STRIPE_PUBLISHABLE_KEY);
+  return mode && checkoutConfigured() && key?.startsWith('pk_' + mode + '_') ? key : undefined;
+}
+
+export async function createCheckoutSession(params: {
+  orderId: string;
+  items: { productName: string; unitPriceCents: number; quantity: number }[];
+  returnUrl: string;
+  email: string;
+  shippingCents: number;
+  discountCents: number;
+  expiresAt: number;
+}) {
+  const { orderId, items, returnUrl, email, shippingCents, discountCents, expiresAt } = params;
+  const coupon = discountCents > 0 ? await stripe.coupons.create({
+    amount_off: discountCents,
+    currency: 'usd',
+    duration: 'once',
+    max_redemptions: 1,
+  }, { idempotencyKey: `checkout-coupon/${orderId}` }) : undefined;
+
+  return stripe.checkout.sessions.create({
+    mode: 'payment',
+    ui_mode: 'embedded_page',
+    client_reference_id: orderId,
+    return_url: returnUrl,
+    redirect_on_completion: 'always',
+    customer_email: email,
+    adaptive_pricing: { enabled: false },
+    expires_at: expiresAt,
+    line_items: items.map((item) => ({
+      quantity: item.quantity,
+      price_data: {
+        currency: 'usd',
+        unit_amount: item.unitPriceCents,
+        product_data: { name: item.productName },
+      },
+    })),
+    shipping_address_collection: { allowed_countries: shippingCountryCodes },
+    shipping_options: [{
+      shipping_rate_data: {
+        display_name: 'Standard shipping',
+        type: 'fixed_amount',
+        fixed_amount: { currency: 'usd', amount: shippingCents },
+      },
+    }],
+    ...(coupon ? { discounts: [{ coupon: coupon.id }] } : {}),
+    metadata: { source: 'naracharm-checkout' },
+  }, { idempotencyKey: `checkout-session/${orderId}` });
+}
+
+export function isConfirmedCheckoutRejection(error: unknown) {
+  return error instanceof Stripe.errors.StripeAuthenticationError
+    || error instanceof Stripe.errors.StripePermissionError
+    || error instanceof Stripe.errors.StripeInvalidRequestError;
 }
