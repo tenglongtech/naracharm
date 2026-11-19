@@ -1,177 +1,116 @@
-import { siteConfig } from '@/lib/site-config';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import Image from '@/components/storefront-image';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { Breadcrumb } from '@/components/breadcrumb';
-import { ProductTile, type ProductCard } from '@/components/product-tile';
+import { ProductTile } from '@/components/product-tile';
+import { StoryCard } from '@/components/story-card';
 import { STORIES, getStoryBySlug } from '@/lib/stories-data';
 import { getActiveProducts } from '@/lib/storefront';
 import { productCard } from '@/lib/catalog';
-import { pageMetadata, productShareImage } from '@/lib/page-metadata';
+import { pageMetadata } from '@/lib/page-metadata';
+import { absoluteUrl, serializeJsonLd } from '@/lib/seo';
+import { formatBlogDate } from '@/lib/blog-data';
+import { siteConfig } from '@/lib/site-config';
 
 type Params = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return STORIES.map((s) => ({ slug: s.slug }));
+  return STORIES.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { slug } = await params;
-  const story = getStoryBySlug(slug);
+  const story = getStoryBySlug((await params).slug);
   if (!story) return { title: 'Story not found' };
-  const lead = (await getActiveProducts()).find((product) =>
-    product.primaryImage && story.relatedProducts.some(({ slug: related }) => related === product.slug));
   return pageMetadata({
     title: `${story.title} — ${story.heritage}`,
     description: story.excerpt,
     path: `/stories/${story.slug}`,
-    image: productShareImage(lead),
-    article: { publishedTime: story.publishedAt, modifiedTime: story.updatedAt },
+    image: story.cover,
+    article: { publishedTime: story.publishedAt, modifiedTime: story.updatedAt, authors: [siteConfig.brand] },
   });
 }
 
 export default async function StoryDetailPage({ params }: Params) {
-  const { slug } = await params;
-  const story = getStoryBySlug(slug);
+  const story = getStoryBySlug((await params).slug);
   if (!story) notFound();
 
-  const allProducts = await getActiveProducts();
-  const related: ProductCard[] = story.relatedProducts
-    .map((rp) => {
-      const p = allProducts.find((x) => x.slug === rp.slug);
-      if (!p) return null;
-      return productCard(p);
-    })
-    .filter(Boolean) as ProductCard[];
-
-  const siteUrl = siteConfig.url;
-
-  // Article JSON-LD (Google 搜索 article rich result 资格)
-  const articleJsonLd = {
+  const products = await getActiveProducts();
+  const related = story.relatedProducts.flatMap(({ slug }) => {
+    const product = products.find((item) => item.slug === slug && item.availability !== 'preview');
+    return product ? [productCard(product)] : [];
+  });
+  const nextStory = STORIES.indexOf(story) + 1;
+  const otherStories = [...STORIES.slice(nextStory), ...STORIES.slice(0, nextStory - 1)].slice(0, 3);
+  const collectionPath = `/collections/${story.relatedCollection.slug}`;
+  const author = { '@type': 'Organization', name: siteConfig.brand, url: absoluteUrl('/about') };
+  const article = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: story.title,
     description: story.excerpt,
+    image: [absoluteUrl(story.cover.url)],
     datePublished: story.publishedAt,
     dateModified: story.updatedAt,
-    author: { '@type': 'Organization', name: 'Nara Charm', url: siteUrl },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Nara Charm',
-      logo: { '@type': 'ImageObject', url: `${siteUrl}/icon` },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${siteUrl}/stories/${story.slug}`,
-    },
+    author,
+    mainEntityOfPage: absoluteUrl(`/stories/${story.slug}`),
     articleSection: story.heritage,
-    keywords: [
-      story.heritage,
-      'handmade jewelry',
-      'Nara Charm',
-      'craft story',
-      story.heritageSlug,
-    ].join(', '),
   };
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(article) }} />
       <SiteHeader />
-      <main id="main">
+      <main id="main" className="mx-auto max-w-7xl px-5 pb-16 md:px-10 md:pb-24">
+        <Breadcrumb items={[{ label: 'Stories', href: '/stories' }, { label: story.title }]} />
         <article>
-          {/* Hero */}
-          <header className="border-b border-border bg-ink text-bg">
-            <div className="mx-auto max-w-3xl px-4 py-16 text-center md:py-24">
-              <p className="text-6xl">{story.icon}</p>
-              <p className="mt-4 text-xs uppercase tracking-[0.3em] text-gold">
-                {story.heritage}
-              </p>
-              <h1 className="mt-3 font-display text-4xl leading-tight md:text-5xl">
-                {story.title}
-              </h1>
-              <p className="mt-5 text-sm text-bg/70">
-                {story.readMinutes} min read · {new Date(story.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          <header className="mt-6 grid gap-7 md:grid-cols-2 md:items-center md:gap-12 lg:gap-18">
+            <div className="py-4 md:py-10">
+              <Link href={collectionPath} className="text-sm font-medium text-brand underline underline-offset-4">{story.relatedCollection.name}</Link>
+              <h1 className="mt-4 font-display text-5xl leading-none tracking-tight lg:text-7xl">{story.title}</h1>
+              <p className="mt-5 max-w-lg text-lg leading-7 text-muted">{story.excerpt}</p>
+              <p className="mt-5 text-sm leading-6 text-muted">
+                By <Link href="/about" className="underline underline-offset-4">{siteConfig.brand}</Link>
+                {' · '}<time dateTime={story.publishedAt}>{formatBlogDate(story.publishedAt)}</time>
+                {' · '}{story.readMinutes} min read
               </p>
             </div>
+            <figure>
+              <div className="relative aspect-square overflow-hidden rounded-sm bg-surface">
+                <Image src={story.cover.url} alt={story.cover.alt} fill preload sizes="(min-width: 1280px) 558px, (min-width: 768px) 45vw, 92vw" className="object-cover" />
+              </div>
+              <figcaption className="mt-2 text-xs leading-5 text-muted">{story.cover.title}, studio illustration</figcaption>
+            </figure>
           </header>
 
-          <div className="mx-auto max-w-3xl px-4">
-            <Breadcrumb
-              items={[
-                { label: 'Stories', href: '/stories' },
-                { label: story.title },
-              ]}
-            />
-          </div>
-
-          {/* Body */}
-          <div className="mx-auto max-w-2xl px-4 py-12 md:py-16">
-            <p className="font-display text-xl italic leading-relaxed text-ink/85">
-              {story.excerpt}
-            </p>
-            <div className="mt-8 space-y-6 text-base leading-relaxed text-ink/85">
-              {story.body.map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
+          <div className="mx-auto mt-11 max-w-2xl border-t border-border pt-9 md:mt-18">
+            <div className="space-y-5 text-base leading-7 text-ink/90 md:text-lg md:leading-8">
+              {story.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
-            <p className="mt-10 font-display text-lg italic text-brand">
-              {story.closing}
-            </p>
-            <Link href={`/collections/${story.relatedCollection.slug}`} className="mt-6 inline-block text-sm text-brand underline underline-offset-4">
-              Explore {story.relatedCollection.name} ↗
-            </Link>
+            <p className="mt-7 font-display text-xl italic leading-snug text-brand">{story.closing}</p>
+            <Link href={collectionPath} className="shop-button mt-7">Explore {story.relatedCollection.name} <span aria-hidden="true">↗</span></Link>
           </div>
+        </article>
 
-          {/* Related products */}
-          {related.length > 0 && (
-            <section className="border-t border-border bg-surface">
-              <div className="mx-auto max-w-6xl px-4 py-14 md:py-16">
-                <h2 className="font-display text-2xl md:text-3xl">Pieces from this story</h2>
-                <p className="mt-2 text-sm text-muted">
-                  Wear what you just read about.
-                </p>
-                <div className="mt-8 grid grid-cols-2 gap-5 md:grid-cols-4 lg:gap-6">
-                  {related.map((p) => (
-                    <ProductTile key={p.slug} product={p} />
-                  ))}
-                </div>
-              </div>
-            </section>
-          )}
-
-          {/* Other stories */}
-          <section className="mx-auto max-w-6xl px-4 py-14">
-            <div className="flex items-end justify-between">
-              <h2 className="font-display text-2xl md:text-3xl">Read another</h2>
-              <Link href="/stories" className="text-sm text-brand hover:underline">
-                All stories →
-              </Link>
-            </div>
-            <div className="mt-6 grid gap-5 md:grid-cols-3">
-              {STORIES.filter((s) => s.slug !== story.slug)
-                .slice(0, 3)
-                .map((s) => (
-                  <Link
-                    key={s.slug}
-                    href={`/stories/${s.slug}`}
-                    className="group rounded-lg border border-border bg-bg p-6 transition-colors hover:border-brand"
-                  >
-                    <div className="text-3xl">{s.icon}</div>
-                    <p className="mt-3 text-xs uppercase tracking-wider text-gold">{s.heritage}</p>
-                    <h3 className="mt-1 font-display text-lg group-hover:text-brand">
-                      {s.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted">{s.excerpt}</p>
-                  </Link>
-                ))}
+        {related.length > 0 && (
+          <section aria-labelledby="story-pieces" className="mt-14 border-t border-border pt-7 md:mt-20">
+            <h2 id="story-pieces" className="font-display text-3xl">Related jewelry</h2>
+            <div className="mt-5 grid grid-cols-2 gap-5 md:grid-cols-4">
+              {related.map((product) => <ProductTile key={product.slug} product={product} />)}
             </div>
           </section>
-        </article>
+        )}
+
+        <section aria-labelledby="more-stories" className="mt-14 md:mt-20">
+          <div className="mb-5 flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2">
+            <h2 id="more-stories" className="font-display text-3xl tracking-tight md:text-4xl">More design stories</h2>
+            <Link href="/stories" className="py-2 text-sm font-medium text-brand underline underline-offset-4">All stories</Link>
+          </div>
+          <div className="grid gap-x-6 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+            {otherStories.map((other) => <StoryCard key={other.slug} story={other} />)}
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </>

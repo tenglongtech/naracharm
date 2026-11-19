@@ -2,7 +2,14 @@
 
 import { z } from 'zod';
 import { requireAdmin } from './auth';
-import { listOrderShipments, recordShipment, sendShipmentNotice, ShipmentError } from './order-fulfillment';
+import { getOrderPackingDetails, listOrderShipments, recordShipment, sendShipmentNotice, ShipmentError } from './order-fulfillment';
+
+export async function adminOrderDetails(orderId: string) {
+  await requireAdmin();
+  const id = z.uuid().parse(orderId);
+  const [packing, shipments] = await Promise.all([getOrderPackingDetails(id), listOrderShipments(id)]);
+  return packing ? { packing, shipments } : null;
+}
 
 export async function adminOrderShipments(orderId: string) {
   await requireAdmin();

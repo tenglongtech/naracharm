@@ -5,11 +5,12 @@ import { ProductCatalog } from '@/components/product-catalog';
 import { getActiveProducts, getAllCollections } from '@/lib/storefront';
 import { catalogEntry } from '@/lib/catalog';
 import { CATEGORIES } from '@/lib/categories';
+import { siteConfig } from '@/lib/site-config';
 import styles from '../catalog-page.module.css';
 
 export const metadata = pageMetadata({
   title: 'Shop Bracelets, Necklaces, Earrings & Phone Charms',
-  description: 'Find jewelry and phone charms by collection, category, material and availability. Explore Nara Charm’s current pieces and new studio designs.',
+  description: 'Find bracelets, necklaces, earrings and phone charms by collection, category and material. Browse current catalog pieces and designs from the Nara Charm studio.',
   path: '/shop',
   image: { url: '/editorial/nara-collection-still-life.webp', alt: 'Illustrative jewelry still life with red beads, an engraved silver bead and linen' },
 });
@@ -24,7 +25,9 @@ export default async function ShopPage() {
           <div className={styles.shell}>
             <div className={styles.heading}>
               <h1>Shop jewelry</h1>
-              <p>Find pieces ready to order, or explore new designs in the studio.</p>
+              <p>{siteConfig.checkoutEnabled
+                ? 'Find pieces ready to order, or explore new designs in the studio.'
+                : 'Browse the jewelry catalog and inquire about a piece. Studio previews show designs in development.'}</p>
             </div>
             <nav aria-label="Shop by category" className={styles.categories}>
               {CATEGORIES.map(({ slug, name }) => (

@@ -7,14 +7,14 @@ import styles from './order-policy.module.css';
 const links = [
   { label: 'Shipping', path: '/shipping' },
   { label: 'Returns', path: '/returns' },
-  { label: 'Order questions', path: '/faq' },
+  { label: 'FAQs', path: '/faq' },
 ];
 
 export function OrderPolicyPage({ path, title, intro, updated, schema, children }: {
-  path: '/shipping' | '/returns';
+  path: '/shipping' | '/returns' | '/faq';
   title: string;
   intro: string;
-  updated: string;
+  updated?: string;
   schema: object;
   children: ReactNode;
 }) {
@@ -34,7 +34,7 @@ export function OrderPolicyPage({ path, title, intro, updated, schema, children 
         </header>
         <div className={styles.shell + ' ' + styles.body}>
           {children}
-          <p className={styles.updated}>Policy updated {updated}</p>
+          {updated && <p className={styles.updated}>Policy updated {updated}</p>}
         </div>
       </main>
       <SiteFooter />

@@ -14,8 +14,13 @@ const links = [
   { href: '/account/profile', label: 'Profile' },
 ];
 
-export function CustomerAccountShell({ children }: { children: React.ReactNode }) {
+export function CustomerAccountShell({ children, enabled, fallback }: { children: React.ReactNode; enabled: boolean; fallback: React.ReactNode }) {
   const pathname = usePathname();
+  if (!enabled) return pathname === '/account/wishlist' ? children : fallback;
+  return <SignedInAccount pathname={pathname}>{children}</SignedInAccount>;
+}
+
+function SignedInAccount({ pathname, children }: { pathname: string; children: React.ReactNode }) {
   const { data, isPending, error, refetch } = authClient.useSession();
   const [signingOut, setSigningOut] = useState(false);
   const [signOutError, setSignOutError] = useState('');

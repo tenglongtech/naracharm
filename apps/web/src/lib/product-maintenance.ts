@@ -3,6 +3,7 @@ import { collections, inventory, products, productVariants } from '@jewelry/db';
 import { z } from 'zod';
 import { db as connection, type DB } from './db';
 import { getProductCopy } from './product-copy';
+import { defaultCatalogSku } from './storefront-offer';
 import { getStudioCollection, getStudioPreview, STUDIO_PREVIEWS } from './studio-listings';
 
 const db: DB = connection;
@@ -87,10 +88,6 @@ export async function availableStudioDrafts() {
   const created = new Set(existing.map((item) => item.slug));
   return STUDIO_PREVIEWS.filter((preview) => !created.has(preview.slug))
     .map(({ slug, name, collectionName }) => ({ slug, name, collectionName }));
-}
-
-export function defaultCatalogSku(slug: string) {
-  return `NC-${slug.toUpperCase()}`;
 }
 
 async function addVariant(tx: CatalogTransaction, productId: string, {

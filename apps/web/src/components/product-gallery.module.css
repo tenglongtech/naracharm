@@ -82,12 +82,25 @@
   line-height: 1.5;
 }
 
-.gallery[data-preview='true'] .caption {
+.gallery[data-preview='true'] .caption,
+.caption:has(.photoInquiry) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.25rem 0.65rem;
+}
+
+.photoInquiry {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.3rem;
+  color: #873e34;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
 }
 
 .gallery[data-preview='true'] .enlarge {

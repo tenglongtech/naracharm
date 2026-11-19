@@ -212,7 +212,9 @@ test('checkout and signed callbacks reserve, settle and release real PostgreSQL 
   assert.deepEqual(callbacks.map((result) => result.status), [200, 200]);
   assert.deepEqual(await stock(), { quantity: 1, reserved: 0 });
   const confirmed = await (await status(statusRequest)).json();
-  assert.deepEqual(confirmed, { status: 'paid', number: 'NC-10000', totalCents: 11500, currency: 'usd' });
+  const [paidOrder] = await sql`select number from orders where id = ${checkoutId}`;
+  assert.match(paidOrder.number, /^NC-\d{5,}$/);
+  assert.deepEqual(confirmed, { status: 'paid', number: paidOrder.number, totalCents: 11500, currency: 'usd' });
   const [paymentEvents] = await sql`select count(*)::int as count from order_events where type = 'payment_received'`;
   assert.equal(paymentEvents.count, 1);
 

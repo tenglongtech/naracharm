@@ -1,6 +1,7 @@
 import { pageMetadata } from '@/lib/page-metadata';
 import { LegalPage } from '@/components/legal-page';
 import { siteConfig } from '@/lib/site-config';
+import Link from 'next/link';
 
 export const metadata = pageMetadata({
   title: 'Terms of Service',
@@ -23,7 +24,9 @@ export default function TermsPage() {
             `${c.name} is the operator of this website.`,
             `Registered address: ${c.address}.`,
             c.registration ? `Business registration: ${c.registration}.` : '',
-            `Contact: ${c.contactEmail}.`,
+            siteConfig.inquiryFormEnabled
+              ? <Link href="/contact" className="text-brand underline">Contact Nara Charm</Link>
+              : `Contact: ${c.contactEmail}.`,
           ].filter(Boolean),
         },
         {
@@ -37,7 +40,9 @@ export default function TermsPage() {
           body: [
             'All jewelry is handmade, which means slight variations in color, texture, and dimensions are natural and part of what makes each piece unique.',
             'We make every effort to display accurate colors and details, but screens vary and we cannot guarantee an exact match.',
-            'Prices are listed in USD and may change at any time. The price at checkout is the price you pay.',
+            siteConfig.checkoutEnabled
+              ? 'Prices are listed in USD and may change at any time. The price at checkout is the price you pay.'
+              : 'Guide prices are listed in USD. Contact us to confirm current pricing and availability.',
             'We reserve the right to limit quantities or refuse an order.',
           ],
         },
@@ -45,7 +50,9 @@ export default function TermsPage() {
           heading: 'Orders & Payment',
           body: [
             'When you place an order, you receive an email confirmation. An order is not accepted until we send a shipping confirmation.',
-            'Payment is processed by Stripe. Checkout displays the payment methods available for your order.',
+            siteConfig.checkoutEnabled
+              ? 'Payment is processed by Stripe. Checkout displays the payment methods available for your order.'
+              : 'Online checkout is paused. Use the Contact page for product or order inquiries.',
           ],
         },
         {
@@ -68,7 +75,9 @@ export default function TermsPage() {
         },
         {
           heading: 'Contact',
-          body: [`Questions about these terms? Email ${c.contactEmail}.`],
+          body: [siteConfig.inquiryFormEnabled
+            ? <Link href="/contact" className="text-brand underline">Ask about these terms</Link>
+            : `Questions about these terms? Email ${c.contactEmail}.`],
         },
       ]}
     />

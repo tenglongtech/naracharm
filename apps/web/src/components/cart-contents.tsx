@@ -15,7 +15,7 @@ function price(cents: number) {
   return '$' + (cents / 100).toFixed(2);
 }
 
-export function CartContents() {
+export function CartContents({ checkoutEnabled }: { checkoutEnabled: boolean }) {
   const [cart, setCart] = useState<CartView | null>(null);
 
   useEffect(() => {
@@ -24,13 +24,13 @@ export function CartContents() {
   }, []);
 
   if (!cart) {
-    return <p role="status" className="py-10 text-sm text-muted">Loading your cart…</p>;
+    return <p role="status" className="py-10 text-sm text-muted">Loading {checkoutEnabled ? 'your cart' : 'saved pieces'}…</p>;
   }
 
   if (cart.lines.length === 0) {
     return (
       <section aria-labelledby="cart-empty" className="border-y border-border bg-surface px-6 py-12 md:p-12">
-        <h2 id="cart-empty" className="font-display text-2xl">Your cart is empty</h2>
+        <h2 id="cart-empty" className="font-display text-2xl">{checkoutEnabled ? 'Your cart is empty' : 'No saved pieces'}</h2>
         <div className="mt-5 flex flex-wrap items-center gap-4">
           <ButtonLink href="/shop" className="min-h-11">Shop jewelry</ButtonLink>
           <Link href="/gift-guide" className="inline-flex min-h-11 items-center text-sm text-brand underline underline-offset-4">Browse gifts</Link>
@@ -39,16 +39,21 @@ export function CartContents() {
     );
   }
 
+  const inquiry = new URLSearchParams({ topic: 'product', message: [
+    "I'd like to ask about these pieces:",
+    ...cart.lines.map((item) => `${item.quantity} × ${item.productName} (SKU ${item.sku})`),
+  ].join('\n').slice(0, 1400) });
+
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
       <div>
         <p className="text-sm text-muted" role="status">{cart.itemCount} {cart.itemCount === 1 ? 'item' : 'items'}</p>
-        <p className="mt-3 border-y border-border bg-surface px-4 py-3 text-sm leading-6 text-ink" role="status">
+        {checkoutEnabled && <p className="mt-3 border-y border-border bg-surface px-4 py-3 text-sm leading-6 text-ink" role="status">
           {cart.toFreeShippingCents > 0
             ? <>Add <strong>{price(cart.toFreeShippingCents)}</strong> in jewelry to reach free standard shipping at {freeShippingFromLabel}.</>
             : 'Your subtotal qualifies for free standard shipping.'}
           {' '}<Link href="/shipping" className="text-brand underline underline-offset-4">Delivery destinations</Link>
-        </p>
+        </p>}
 
         <ul aria-label="Cart items" className="mt-4 divide-y divide-border border-b border-border">
           {cart.lines.map((item) => (
@@ -70,7 +75,7 @@ export function CartContents() {
               <div className="min-w-0">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                   <h2 className="max-w-full font-display text-lg leading-tight sm:text-xl">
-                    <Link href={`/products/${item.productSlug}`} className="hover:text-brand">{item.productName}</Link>
+                    <Link href={`/products/${item.productSlug}?sku=${encodeURIComponent(item.sku)}`} className="hover:text-brand">{item.productName}</Link>
                   </h2>
                   <p className="text-sm tabular-nums">{price(item.lineTotalCents)}</p>
                 </div>
@@ -121,7 +126,8 @@ export function CartContents() {
       </div>
 
       <aside className="h-fit border border-border bg-surface p-5 lg:sticky lg:top-28 lg:p-6" aria-labelledby="cart-summary">
-        <h2 id="cart-summary" className="font-display text-2xl">Order summary</h2>
+        <h2 id="cart-summary" className="font-display text-2xl">{checkoutEnabled ? 'Order summary' : 'Ask about your selection'}</h2>
+        {checkoutEnabled ? <>
         <dl className="mt-5 space-y-3 text-sm">
           <div className="flex justify-between gap-3">
             <dt className="text-muted">Subtotal</dt>
@@ -138,6 +144,12 @@ export function CartContents() {
         </dl>
         <ButtonLink href="/checkout" className="mt-5 min-h-12 w-full">Continue to checkout</ButtonLink>
         <p className="mt-3 text-xs leading-5 text-muted">Review your delivery address and available payment methods in secure Stripe Checkout.</p>
+        </> : (
+          <>
+            <p className="mt-3 text-sm leading-6 text-muted">Send the list to confirm availability, pricing and delivery.</p>
+            <ButtonLink href={`/contact?${inquiry}`} className="mt-5 min-h-12 w-full">Ask about these pieces</ButtonLink>
+          </>
+        )}
       </aside>
     </div>
   );

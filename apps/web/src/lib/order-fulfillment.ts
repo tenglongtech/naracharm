@@ -1,6 +1,6 @@
 import { and, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
-import { orderEvents, orderFulfillments, orders } from '@jewelry/db';
+import { orderEvents, orderFulfillments, orderLines, orders } from '@jewelry/db';
 import { ShippingUpdateEmail } from '@/emails/shipping-update';
 import { db as connection, type DB } from './db';
 import { sendEmail } from './email';
@@ -20,6 +20,39 @@ export const shipmentInput = z.object({
 });
 
 export class ShipmentError extends Error {}
+
+function packingAddress(value: unknown) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const fields = value as Record<string, unknown>;
+  const textField = (key: string) => {
+    const field = fields[key];
+    return typeof field === 'string' ? field.trim() || null : null;
+  };
+  const address = {
+    name: textField('name'),
+    line1: textField('line1'),
+    line2: textField('line2'),
+    city: textField('city'),
+    state: textField('state'),
+    postalCode: textField('postal_code') ?? textField('postalCode'),
+    country: textField('country') ?? textField('countryCode'),
+  };
+  return Object.values(address).some(Boolean) ? address : null;
+}
+
+export async function getOrderPackingDetails(orderId: string) {
+  const [order] = await db.select({ shippingAddress: orders.shippingAddress })
+    .from(orders).where(eq(orders.id, orderId));
+  if (!order) return null;
+
+  const items = await db.select({
+    id: orderLines.id, productName: orderLines.productName, variantName: orderLines.variantName,
+    sku: orderLines.sku, quantity: orderLines.quantity,
+  }).from(orderLines).where(eq(orderLines.orderId, orderId))
+    .orderBy(orderLines.productName, orderLines.sku, orderLines.id);
+
+  return { shippingAddress: packingAddress(order.shippingAddress), items };
+}
 
 export async function listOrderShipments(orderId: string) {
   return db.select({

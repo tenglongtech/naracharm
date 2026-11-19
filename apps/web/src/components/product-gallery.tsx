@@ -1,15 +1,49 @@
 'use client';
 
-import { useId, useRef, useState } from 'react';
+import { useId, useRef, useState, type ReactNode } from 'react';
+import Link from 'next/link';
 import Image from '@/components/storefront-image';
-import { isExternalProductImage } from '@/lib/product-media';
+import { inquiryPath } from '@/lib/product-inquiry';
+import { isExternalProductImage, variantProductMedia } from '@/lib/product-media';
+import { variantTitle, type StorefrontVariant } from '@/lib/storefront-offer';
+import { useProductVariant } from './use-product-variant';
 import styles from './product-gallery.module.css';
 
-export function ProductGallery({ name, images, kind, preview = false }: {
+type GalleryVariant = Pick<StorefrontVariant, 'sku' | 'name' | 'photoUrls'>;
+
+const illustrationDetails: Partial<Record<string, string>> = {
+  '/products/redesigned/obsidian-guardian-charm-bead-study.webp': 'Black obsidian beads, a braided attachment loop and a silver accent',
+  '/products/redesigned/tai-silk-cord-phone-charm-lotus-detail.webp': 'Close-up of the silk braid and silver lotus bead',
+  '/products/redesigned/caravan-fusion-necklace-metalwork-detail.webp': 'Close-up of the hammered silver and turquoise setting',
+};
+
+export function VariantProductGallery({ name, media, variant, variants, fallback }: {
+  name: string;
+  media: Parameters<typeof variantProductMedia>[0];
+  variant: GalleryVariant;
+  variants: GalleryVariant[];
+  fallback: ReactNode;
+}) {
+  const selected = useProductVariant(variant, variants);
+  const { images, imageKind } = variantProductMedia(media, selected);
+  const photoInquiry = imageKind !== 'photo' ? inquiryPath(name, selected.sku, selected.name, { type: 'photo' }) : undefined;
+  if (!images.length) return <>{fallback}{photoInquiry && <ProductPhotoInquiryLink href={photoInquiry} />}</>;
+  return <ProductGallery
+    key={selected.sku} name={selected.photoUrls?.length ? variantTitle(name, selected) : name}
+    images={images} kind={imageKind} photoInquiry={photoInquiry}
+  />;
+}
+
+export function ProductPhotoInquiryLink({ href }: { href: string }) {
+  return <Link prefetch={false} href={href} className={styles.photoInquiry}>Request a product photo <span aria-hidden="true">↗</span></Link>;
+}
+
+export function ProductGallery({ name, images, kind, preview = false, photoInquiry }: {
   name: string;
   images: string[];
   kind?: 'photo' | 'illustration';
   preview?: boolean;
+  photoInquiry?: string;
 }) {
   const [selected, setSelected] = useState(0);
   const [expanded, setExpanded] = useState(false);
@@ -18,7 +52,9 @@ export function ProductGallery({ name, images, kind, preview = false }: {
   const src = images[selected];
   if (!src) return null;
 
-  const alt = `${name}${kind === 'illustration' ? ' design illustration' : ''}${selected > 0 ? `, view ${selected + 1}` : ''}`;
+  const detail = kind === 'illustration' ? illustrationDetails[src] : undefined;
+  const viewDescription = detail ? `: ${detail}` : selected > 0 ? `, view ${selected + 1}` : '';
+  const alt = `${name}${kind === 'illustration' ? ' design illustration' : ''}${viewDescription}`;
 
   function enlarge() {
     dialog.current?.showModal();
@@ -45,11 +81,14 @@ export function ProductGallery({ name, images, kind, preview = false }: {
       </div>
       {images.length > 1 && (
         <div role="group" aria-label="Product image views" className={styles.thumbnails}>
-          {images.map((image, index) => (
-            <button key={image} type="button" aria-label={`Show image ${index + 1} of ${images.length}`} aria-pressed={selected === index} onClick={() => setSelected(index)}>
-              <Image src={image} alt="" unoptimized={isExternalProductImage(image)} fill sizes="64px" />
-            </button>
-          ))}
+          {images.map((image, index) => {
+            const summary = kind === 'illustration' ? illustrationDetails[image] : undefined;
+            return (
+              <button key={image} type="button" aria-label={summary ? `Show ${summary.toLowerCase()}` : `Show image ${index + 1} of ${images.length}`} aria-pressed={selected === index} onClick={() => setSelected(index)}>
+                <Image src={image} alt="" unoptimized={isExternalProductImage(image)} fill sizes="64px" />
+              </button>
+            );
+          })}
         </div>
       )}
       <dialog id={dialogId} ref={dialog} aria-label={`${name} image viewer`} onClose={() => setExpanded(false)} className={styles.dialog}>
@@ -60,8 +99,9 @@ export function ProductGallery({ name, images, kind, preview = false }: {
       </dialog>
       {(preview || kind !== 'photo') && (
         <figcaption className={styles.caption}>
-          <span>{kind === 'illustration' ? 'AI-generated design illustration.' : kind === 'photo' ? 'Product photograph.' : 'Catalog image.'}</span>
+          <span>{kind === 'illustration' ? 'AI-generated design illustration.' : kind === 'photo' ? 'Product photograph.' : 'Catalog image.'}{detail && ` ${detail}.`}</span>
           {preview && enlargeButton}
+          {photoInquiry && <ProductPhotoInquiryLink href={photoInquiry} />}
         </figcaption>
       )}
     </figure>

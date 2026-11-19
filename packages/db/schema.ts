@@ -212,7 +212,10 @@ export const variantImages = pgTable(
     url: text('url').notNull(),
     altText: text('alt_text'),
     sortOrder: integer('sort_order').default(0).notNull(),
+    isPrimary: boolean('is_primary').default(false).notNull(),
+    isProductPhoto: boolean('is_product_photo').default(false).notNull(),
   },
+  (t) => ({ variantIdx: index('variant_images_variant_idx').on(t.variantId) }),
 );
 
 // ---------------------------------------------------------------------------

@@ -121,17 +121,36 @@ pnpm package:static /tmp/nara-charm-pages.zip --previous-sitemap /tmp/nara-previ
 pnpm package:catalog /tmp/nara-charm-pages.zip
 ```
 
-导出使用一次 PostgreSQL 只读事务，商品、变体、库存、确认的商品照片和系列读取自同一时点。只读角色需要对 `products`、`collections`、`product_variants`、`inventory`、`product_images`、`product_reviews` 和 `blog_comments` 有查询权限。数据库连接只交给导出进程。站内商品页、站点地图和购物 Feed 都从这份暂存快照生成。本地实拍图应位于 `apps/web/public/products/photos`，也可使用后台已确认的公开 HTTPS 图片地址。
+导出使用一次 PostgreSQL 只读事务，商品、变体、库存、确认的实拍和系列读取自同一时点。只读角色需要对 `products`、`collections`、`product_variants`、`inventory`、`product_images`、`variant_images`、`product_reviews` 和 `blog_comments` 有查询权限。数据库连接只交给导出进程。站内商品页、站点地图和购物 Feed 都从这份暂存快照生成。本地实拍图应位于 `apps/web/public/products/photos`，也可使用后台已确认的公开 HTTPS 图片地址。
 
 导出和验证成功后，才会更新目标 ZIP 与报告。数据库无法连接、没有上架商品或构建检查失败时，继续使用上一版发布包。仓库中的目录快照和本地预览目录由各自的常规命令更新。
 
+用 `pnpm package:catalog` 刷新正式目录时，新增网址须有后台标记为实拍的商品图或 SKU 图。若发现只有占位图片的旧测试商品，导出会列出对应 slug 并保留上一版快照。已在目录快照中的商品可继续使用现有图片。
+
+旧后台不可用且在线结账暂停时，可用已核对的商品表制作候选发布包。命令在隔离目录合并 `publish` 和 `photo` 行，随后执行常规图片和 SEO 审计。验收包通过后，保留用于发布的 CSV 和对应图片，后续构建沿用该批次，直到已确认的商品变更并入目录快照。
+
+```sh
+NEXT_PUBLIC_CHECKOUT_ENABLED=false pnpm package:static /tmp/nara-catalog-candidate.zip \
+  --catalog-intake "$PWD/nara-studio-intake.csv" --previous-sitemap /tmp/previous-release/sitemap.xml
+```
+
 打包时会检查已确认的站内实拍。缺失、无法读取或扩展名与图像格式不匹配的文件会阻止生成新包，日志会列出对应款式。对短边低于 500 像素或使用动态 GIF 的实拍，日志给出 Merchant Center 提示。外部图片可在批量预检表中打开和查看尺寸。
 
-新版前台在结账时通过 `GET /api/checkout?config=1` 获取 Stripe 公钥，并检查后端返回 `quoteReview: true`。后端的 `STRIPE_PUBLISHABLE_KEY` 应与 `STRIPE_SECRET_KEY` 属于同一个 Stripe 账户和环境。先验收该接口返回 HTTP 200 和金额核对标记，再发布新版前台。
+不同款式引用同一个外部图片地址，或使用内容完全相同的站内实拍时，打包会提示核对涉及的款式。确认同一张图确实能展示每款后，可以继续使用。
+
+前台默认为询价模式。商品页链接到咨询表单，在线付款和 Google 购物报价暂停。解压后用 `pnpm verify:release --exported-site /tmp/nara-pages-release` 验证此模式的公开页面和站点地图。
+
+账号和订单查询可独立于支付开启。源站恢复并验证登录和订单查询后，以 `NEXT_PUBLIC_CUSTOMER_SERVICES_ENABLED=true` 构建即可恢复这些入口。关闭时，收藏清单继续使用访客设备中的本地数据，旧账号和订单查询网址显示服务状态。
+
+需要恢复线上支付时，以 `NEXT_PUBLIC_CHECKOUT_ENABLED=true` 构建。前台通过 `GET /api/checkout?config=1` 获取 Stripe 公钥，并检查后端返回 `quoteReview: true`。后端的 `STRIPE_PUBLISHABLE_KEY` 应与 `STRIPE_SECRET_KEY` 属于同一个 Stripe 账户和环境。
 
 从仓库根目录运行 `pnpm verify:release` 检查公网 API、数据库迁移、Stripe 环境、匿名会话接口和浏览器跨域预检。命令只发送 GET 和 OPTIONS 请求。测试后台可通过 `--api-origin`、`--site-origin` 和 `--stripe-mode test` 指定目标。
 
-部署静态包后，在同一个命令上加 `--exported-site /tmp/nara-pages-release`，其中目录指向刚上传的解压文件。命令会对比公网的站点地图和购物 Feed，读取 robots.txt，并抽查规范链接、索引指令和主标题。用 Stripe 测试环境完成付款和登录的浏览器验收仍单独执行。
+上传前，用 `pnpm verify:release --catalog-export /tmp/nara-pages-release` 比对解压包与正式 API 的当前目录。整款商品漏导出或仍保留下架商品时会列出商品网址；规格遗漏、下架、变价或售罄会列出具体 SKU。目录数据由一次查询读取，有货和售罄的上架商品都纳入检查。
+
+上传后，改用 `pnpm verify:release --exported-site /tmp/nara-pages-release`。命令对比公网的站点地图和购物 Feed，再逐页核对地图中每个网址的 HTTP 响应、robots.txt 许可、索引指令、规范链接、主标题、网页标题和描述。询价模式还会核对正式商品的结构化数据，确保其中没有在线购买报价。开启支付时，脚本会额外核对后台与正式商品页上的 SKU、价格和可用状态。Stripe 测试环境的付款及登录浏览器验收单独执行。
+
+正式站的 IndexNow 验证文件存放在本地 `apps/web/public/indexnow-*.txt`，随静态包上传，文件名和内容应通过私密渠道交接。换机器发布前，先恢复同一份验证文件。发布完成后可按 [IndexNow 协议](https://www.indexnow.org/documentation) 通知支持该协议的搜索引擎，提交本次新增或实质更新的正式网址。其响应只确认接收或等待验证，实际收录需在搜索引擎后台查看。
 
 新版前台随结账请求提交顾客看到的商品小计、运费和折扣。金额有变动时，后端先返回最新明细，顾客确认后才创建付款会话。新后端仍接受旧前台的请求格式。
 
@@ -140,6 +159,35 @@ pnpm package:catalog /tmp/nara-charm-pages.zip
 新确认邮件及发货邮件含 180 天有效的订单跟踪链接。后端默认用现有 `BETTER_AUTH_SECRET` 签名，也可配置单独的 `ORDER_TRACKING_SECRET`，至少 32 个字符。多副本应使用同一份签名配置。更换签名密钥会导致此前发出的链接失效。
 
 GitHub Actions 的 `Verify static storefront` 在 PR、主分支更新或手动触发时执行相同的构建和检查，结果可在任务的 Artifacts 下载。发布时解压 ZIP，将解压目录作为 Wrangler 的上传目录。Cloudflare Pages 的控制台拖放限额为 1,000 个文件，本项目使用 Wrangler。`_headers` 为分享图设置 PNG 类型，并让 Pages 默认域名和预览域名返回 `X-Robots-Tag: noindex`。
+
+### 性能数据
+
+正式站已移除返回 522 的旧 Plausible 脚本。发布包只验证浏览器资源及页面行为。查看真实访客的 Core Web Vitals 时，使用 Google PageSpeed Insights 的真实用户数据，或在已启用 Web Analytics 的 Cloudflare 项目中查看。记录统计区间、设备和页面范围，自动化浏览器测试的结果单独记录。
+
+### 站内询价
+
+正式域名的发布包默认包含 `_worker.js` 和 `_routes.json`，询价入口由 Cloudflare Pages 的 `/api/inquiries` 处理。用 `wrangler.toml` 绑定正式环境的 D1 数据库，保留 Pages 项目中的 `INQUIRY_RATE_SECRET` 密钥。将发布包解压至发布目录的 `site/`，再将配置放到 `site/` 的同级目录。配置文件与密钥均应留在公开资产目录之外。
+
+```sh
+staging_dir=$(mktemp -d)
+cp cloudflare/inquiries/wrangler.toml "$staging_dir/wrangler.toml"
+unzip /tmp/nara-charm-pages.zip -d "$staging_dir/site"
+(cd "$staging_dir" && npx wrangler pages deploy ./site --project-name naracharm --branch main)
+```
+
+在 Cloudflare 控制台打开 **D1 SQL Database → naracharm-inquiries → Console**。通过 `pending_inquiries` 查看最近的待处理询价，从新到旧排列。询价只在已授权的 Cloudflare 账号内查看。系统目前没有邮件通知，回复客户需使用商家自己的发信渠道。
+
+```sql
+SELECT * FROM pending_inquiries LIMIT 50;
+```
+
+处理后，可在同一控制台把对应记录的 `reviewed_at` 更新为当前时间。记录按询价编号定位，避免修改其他记录。
+
+```sql
+UPDATE inquiries
+SET reviewed_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+WHERE id = '在此填入需要标记的询价编号' AND reviewed_at IS NULL;
+```
 
 浏览器可将带内容版本的脚本、样式、字体和响应式 WebP 缓存一年。打包会用 WebP 编码结果核对文件名的版本。HTML、站点地图、商品 Feed 和可原址替换的图片沿用 Pages 默认的重新验证策略。
 
@@ -151,8 +199,8 @@ GitHub Actions 的 `Verify static storefront` 在 PR、主分支更新或手动�
 
 ## 5. 已知风险与注意
 
-1. **库存快照**: products.json 的 stock 是构建时快照;真实校验在后端 `/api/checkout`。
-2. 购物 Feed 只收录后台标记的商品实拍。新版通过 `/google-feed.xml` 使用同一份目录快照生成 Feed。
+1. 商品页先显示构建时价格与库存，再从 `/api/catalog/offer?slug=<商品 slug>` 读取各 SKU 的当前售价和可购数量。该接口不可用时保留页面已知状态，付款前由 `/api/checkout` 再次核对。站点地图和 Google 购物 Feed 仍使用同一份构建快照。调整价格或库存后，需要重新导出目录并发布以同步搜索数据。
+2. 购物 Feed 使用后台确认的实拍。`/google-feed.xml` 与商品页使用同一份目录快照。各 SKU 链接预选对应规格，并输出该规格的价格、库存和实拍。没有专属实拍的 SKU 可使用通用实拍。两者都缺少时，该 SKU 不进入购物 Feed。
 3. **跨源登录**：应用根据配置的店铺域名处理 CORS。Caddy 直接转发应用的预检与会话响应。需要跨源登录的预览站与后端放在同一个 HTTPS 站点下，例如同为 `naracharm.com` 的子域。前端的 `NEXT_PUBLIC_API_URL` 指向实际接收会话的后端。
 4. **评价静态兜底已就绪**: 后端崩了评价/评论仍显示构建时数据。
 5. **回滚**：API 发布后保留前一版容器。Cloudflare Pages 前端回退使用其部署记录。

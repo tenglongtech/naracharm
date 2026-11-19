@@ -38,7 +38,8 @@
 
 .availability {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   border: 1px solid #c2cabc;
 }
 
@@ -89,6 +90,31 @@
   display: grid;
 }
 
+.activeFacets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.7rem;
+}
+
+.activeFacets button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid #cbbca9;
+  background: #fffaf1;
+  color: #584a3f;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.activeFacets button:hover {
+  border-color: #873e34;
+  color: #873e34;
+}
+
 .resultBar {
   display: flex;
   min-height: 49px;
@@ -98,6 +124,11 @@
   gap: 0 0.65rem;
   color: #584a3f;
   font-size: 0.8125rem;
+}
+
+.resultSummary:focus-visible {
+  outline: 2px solid #873e34;
+  outline-offset: 4px;
 }
 
 .resultActions {
@@ -193,7 +224,7 @@
   .facets {
     display: grid;
     grid-column: 1 / -1;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     padding-bottom: 0;
   }
 

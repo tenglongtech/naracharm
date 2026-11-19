@@ -1,107 +1,59 @@
-import { siteConfig } from '@/lib/site-config';
-import { pageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
+import Image from '@/components/storefront-image';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { Breadcrumb } from '@/components/breadcrumb';
-import { STORIES } from '@/lib/stories-data';
+import { StoryCard } from '@/components/story-card';
+import { STORIES, storiesCover } from '@/lib/stories-data';
+import { absoluteUrl, serializeJsonLd } from '@/lib/seo';
+import { pageMetadata } from '@/lib/page-metadata';
 
-export const metadata = pageMetadata({
-  title: 'Stories in Every Piece — The Craft Behind Nara Charm',
-  description:
-    'The silversmiths, the weavers, the braiders, and the meaning woven into every Nara Charm piece. Stories from Tibet, Mongolia, southwest China, the Han literati, and Thailand.',
-  path: '/stories',
-  image: { url: '/editorial/nara-craft-materials.webp', alt: 'Illustrative study of braided cord, silver-colored wire and a pale green disc' },
-});
+const title = 'Jewelry Design Stories';
+const description = 'See how folded ribbon, open silverwork and simple stone shapes inform six Nara Charm collections.';
+
+export const metadata = pageMetadata({ title, description, path: '/stories', image: storiesCover });
 
 export default function StoriesIndexPage() {
-  const siteUrl = siteConfig.url;
-
-  const collectionJsonLd = {
+  const collection = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Stories in Every Piece',
-    description: 'The craft stories behind every Nara Charm piece.',
-    url: `${siteUrl}/stories`,
+    name: title,
+    description,
+    url: absoluteUrl('/stories'),
+    primaryImageOfPage: { '@type': 'ImageObject', url: absoluteUrl(storiesCover.url) },
     mainEntity: {
       '@type': 'ItemList',
       numberOfItems: STORIES.length,
-      itemListElement: STORIES.map((s, i) => ({
+      itemListElement: STORIES.map((story, index) => ({
         '@type': 'ListItem',
-        position: i + 1,
-        url: `${siteUrl}/stories/${s.slug}`,
-        name: s.title,
+        position: index + 1,
+        url: absoluteUrl(`/stories/${story.slug}`),
+        name: story.title,
       })),
     },
   };
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(collection) }} />
       <SiteHeader />
-      <main id="main">
-        <section className="border-b border-border bg-ink text-bg">
-          <div className="mx-auto max-w-4xl px-4 py-16 text-center md:py-24">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Stories in Every Piece</p>
-            <h1 className="mt-4 font-display text-4xl leading-tight md:text-6xl">
-              Every charm carries a tale
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-bg/80">
-              Behind every piece is a craft, a place, and a meaning. Here are the stories
-              of the silversmiths, the weavers, the braiders, and the stones they chose.
-            </p>
+      <main id="main" className="mx-auto max-w-7xl px-5 pb-16 md:px-10 md:pb-24">
+        <Breadcrumb items={[{ label: 'Stories' }]} />
+        <header className="mt-6 grid gap-7 md:grid-cols-[4fr_5fr] md:items-center md:gap-12">
+          <div className="py-4 md:py-10">
+            <h1 className="font-display text-5xl leading-[0.98] tracking-tight sm:text-6xl lg:text-8xl">Jewelry design stories</h1>
+            <p className="mt-5 max-w-sm text-base leading-7 text-muted">{description}</p>
           </div>
-        </section>
-
-        <div className="mx-auto max-w-6xl px-4">
-          <Breadcrumb items={[{ label: 'Stories' }]} />
-        </div>
-
-        <section className="mx-auto max-w-6xl px-4 py-12 md:py-16">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {STORIES.map((s) => (
-              <article
-                key={s.slug}
-                className="group flex flex-col rounded-lg border border-border bg-surface p-7 transition-colors hover:border-brand"
-              >
-                <div className="text-4xl">{s.icon}</div>
-                <p className="mt-3 text-xs uppercase tracking-wider text-gold">
-                  {s.heritage}
-                </p>
-                <h2 className="mt-2 font-display text-2xl leading-tight group-hover:text-brand">
-                  <Link href={`/stories/${s.slug}`}>{s.title}</Link>
-                </h2>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{s.excerpt}</p>
-                <div className="mt-4 flex items-center justify-between text-xs text-muted">
-                  <span>{s.readMinutes} min read</span>
-                  <span>{new Date(s.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                </div>
-                <Link
-                  href={`/stories/${s.slug}`}
-                  className="mt-4 inline-block text-sm text-brand hover:underline"
-                >
-                  Read the story →
-                </Link>
-              </article>
-            ))}
+          <div className="relative aspect-[3/2] overflow-hidden rounded-sm bg-surface">
+            <Image src={storiesCover.url} alt={storiesCover.alt} fill preload sizes="(min-width: 1280px) 670px, (min-width: 768px) 53vw, 92vw" className="object-cover" />
           </div>
-        </section>
-
-        <section className="border-t border-border bg-surface">
-          <div className="mx-auto max-w-4xl px-4 py-14 text-center md:py-20">
-            <h2 className="font-display text-3xl md:text-4xl">Read the craft behind every piece</h2>
-            <p className="mx-auto mt-4 max-w-xl text-muted">
-              How a piece is made, where the materials come from, and the four principles
-              we will not compromise on.
-            </p>
-            <Link
-              href="/our-craft"
-              className="mt-7 inline-block rounded-md bg-brand px-7 py-3.5 text-sm font-medium text-bg transition-transform hover:-translate-y-0.5"
-            >
-              HOW EVERY CHARM IS MADE
-            </Link>
+        </header>
+        <section aria-labelledby="collection-stories" className="mt-12 md:mt-20">
+          <div className="mb-5 flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2">
+            <h2 id="collection-stories" className="font-display text-3xl tracking-tight md:text-4xl">Stories by collection</h2>
+            <Link href="/studio" className="py-2 text-sm font-medium text-brand underline underline-offset-4">Explore the studio</Link>
+          </div>
+          <div className="grid gap-x-6 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+            {STORIES.map((story) => <StoryCard key={story.slug} story={story} />)}
           </div>
         </section>
       </main>

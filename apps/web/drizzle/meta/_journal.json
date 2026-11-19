@@ -43,6 +43,13 @@
       "when": 1795019035368,
       "tag": "0005_account_order_ownership",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795042345680,
+      "tag": "0006_variant_photos",
+      "breakpoints": true
     }
   ]
 }

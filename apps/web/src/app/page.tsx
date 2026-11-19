@@ -39,7 +39,7 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 
 export default async function HomePage() {
   const [catalog, collections] = await Promise.all([getActiveProducts(), getAllCollections()]);
-  const products = catalog.filter((product) => product.availability !== 'preview' && product.stock > 0);
+  const products = catalog.filter((product) => product.availability !== 'preview' && (!siteConfig.checkoutEnabled || product.stock > 0));
   const collectionSlugs = new Set(collections.map(({ slug }) => slug));
   const collectionFeatures = COLLECTION_EDITORIALS.filter(({ slug }) => collectionSlugs.has(slug));
   const markedFeatured = products.filter((product) => product.isFeatured);
@@ -60,12 +60,12 @@ export default async function HomePage() {
             <h1 id="home-title" className={styles.heroTitle}>Rooted in craft. <em>Worn close.</em></h1>
             <p className={styles.heroDescription}>Carved stone, worked silver and woven cord. Jewelry inspired by the craft traditions of Asia.</p>
             <div className={styles.heroLinks}>
-              <Link href="/shop" className={styles.primaryLink}>Shop jewelry <Arrow /></Link>
+              <Link prefetch={false} href="/shop" className={styles.primaryLink}>Shop jewelry <Arrow /></Link>
               <Link prefetch={false} href="/studio" className={styles.textLink}>Explore the studio <Arrow diagonal /></Link>
             </div>
           </div>
           <figure className={styles.campaign}>
-            <Image src={campaignImage} alt={campaignAlt} fill preload sizes="(max-width: 899px) 100vw, 60vw" className={styles.campaignImage} />
+            <Image src={campaignImage} alt={campaignAlt} fill preload sizes="(max-width: 899px) 100vw, 58vw" className={styles.campaignImage} />
             <figcaption>AI styling illustration</figcaption>
           </figure>
         </section>

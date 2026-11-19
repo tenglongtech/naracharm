@@ -3,7 +3,7 @@ import { and, asc, eq, inArray, or, sql } from 'drizzle-orm';
 import { customers, discounts, inventory, orderEvents, orderLines, orders, products, productVariants } from '@jewelry/db';
 import type Stripe from 'stripe';
 import { db as connection, type DB } from './db';
-import { MAX_CART_LINE_QUANTITY, standardShippingCents } from './cart-types';
+import { MAX_CART_LINE_QUANTITY, orderItemLabel, standardShippingCents } from './cart-types';
 import { calculateDiscount } from './discount-actions';
 import { CheckoutError, type CheckoutRequest, type CheckoutTotals } from './checkout-request';
 
@@ -54,28 +54,31 @@ async function checkoutLines(tx: Transaction, input: CheckoutRequest) {
     .for('update', { of: inventory });
 
   const quantities = new Map<string, number>();
+  const activeById = new Map(candidates.map((candidate) => [candidate.variantId, candidate]));
   for (const line of input.lines) {
     const options = candidates.filter((candidate) => {
       if (line.productSlug) return candidate.slug === line.productSlug;
       if (line.sku) return candidate.sku === line.sku || candidate.slug === line.sku;
       return candidate.variantId === line.variantId || candidate.productId === line.variantId;
     });
-    const byId = options.find((candidate) => candidate.variantId === line.variantId);
-    const bySku = options.find((candidate) => candidate.sku === line.sku);
-    if (byId && bySku && byId !== bySku) {
-      throw new CheckoutError('A piece in your cart is no longer available. Review your cart and try again.', 409);
-    }
-    const exact = byId ?? bySku;
+    const knownId = line.variantId ? activeById.get(line.variantId) : undefined;
+    const exact = options.find((candidate) => candidate === knownId)
+      ?? options.find((candidate) => candidate.sku === line.sku);
     const only = options.length === 1 ? options[0] : undefined;
     const match = exact ?? (only && (!line.variantId || only.productId === line.variantId) ? only : undefined);
-    if (!match) throw new CheckoutError('A piece in your cart is no longer available. Review your cart and try again.', 409);
+    if (
+      !match || (knownId && match !== knownId)
+      || (line.sku && line.sku !== match.sku && line.sku !== match.slug)
+    ) {
+      throw new CheckoutError('A piece in your cart is no longer available. Review your cart and try again.', 409);
+    }
     quantities.set(match.variantId, (quantities.get(match.variantId) ?? 0) + line.quantity);
   }
 
   return candidates.filter((candidate) => quantities.has(candidate.variantId)).map((candidate) => {
     const quantity = quantities.get(candidate.variantId)!;
     if (quantity > MAX_CART_LINE_QUANTITY || quantity > candidate.stock - candidate.reserved || candidate.unitPriceCents <= 0) {
-      throw new CheckoutError(`${candidate.productName} is unavailable in the requested quantity.`, 409);
+      throw new CheckoutError(`${orderItemLabel(candidate.productName, candidate.variantName)} is unavailable in the requested quantity.`, 409);
     }
     return {
       variantId: candidate.variantId, productName: candidate.productName, variantName: candidate.variantName,
@@ -86,7 +89,7 @@ async function checkoutLines(tx: Transaction, input: CheckoutRequest) {
 
 function verifyExpectedTotals(
   expected: CheckoutRequest['expectedTotals'], totals: CheckoutTotals,
-  lines: Pick<OrderLine, 'productName' | 'unitPriceCents' | 'quantity'>[],
+  lines: Pick<OrderLine, 'productName' | 'variantName' | 'unitPriceCents' | 'quantity'>[],
 ) {
   const { subtotalCents, discountCents, shippingCents } = totals;
   if (!expected || (
@@ -97,7 +100,9 @@ function verifyExpectedTotals(
 
   throw new CheckoutError('Your order total has changed. Review the updated amounts before continuing.', 409, 'quote_changed', {
     subtotalCents, discountCents, shippingCents,
-    items: lines.map(({ productName, unitPriceCents, quantity }) => ({ productName, unitPriceCents, quantity })),
+    items: lines.map(({ productName, variantName, unitPriceCents, quantity }) => ({
+      productName: orderItemLabel(productName, variantName), unitPriceCents, quantity,
+    })),
   });
 }
 

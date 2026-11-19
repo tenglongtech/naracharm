@@ -489,6 +489,7 @@ export default function ProductsAdmin() {
 
       {/* 图片管理 Modal */}
       <ProductImagesModal
+        key={imagesModal?.productId ?? 'closed'}
         productId={imagesModal?.productId ?? null}
         productName={imagesModal?.productName ?? ''}
         open={!!imagesModal}

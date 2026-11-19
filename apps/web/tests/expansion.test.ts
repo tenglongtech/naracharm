@@ -8,6 +8,8 @@ import { filterProducts } from '../src/lib/catalog';
 import { getProductCopy } from '../src/lib/product-copy';
 import { CATEGORIES } from '../src/lib/categories';
 import { CATEGORY_EDITORIAL } from '../src/lib/category-editorial';
+import { getCollectionArtwork } from '../src/lib/collection-editorials';
+import { STORIES, storiesCover } from '../src/lib/stories-data';
 import sitemap from '../src/app/sitemap';
 
 test('the expanded catalog has unique designs with accurate collection counts', async () => {
@@ -84,6 +86,87 @@ test('category landing pages have distinct artwork and guides with canonical pub
     for (const guide of guides) assert.ok(entries.has('/blog/' + guide.slug), guide.slug);
   }
   assert.equal(covers.size, CATEGORIES.length);
+});
+
+test('illustrated fit guides expose a dedicated image at their existing canonical URL', async () => {
+  const entries = new Map((await sitemap()).map((entry) => [new URL(entry.url).pathname, entry]));
+  const illustrated = {
+    'bracelet-size-guide-how-to-measure': 'fit-wrist-paper-strip',
+    'necklace-length-paper-test': 'fit-necklace-string-template',
+    'reading-earring-drop-length': 'fit-earring-drop-template',
+    'does-my-phone-case-fit-a-charm': 'fit-phone-case-lanyard-eyelet',
+  };
+  for (const [slug, image] of Object.entries(illustrated)) {
+    const entry = entries.get(`/blog/${slug}`);
+    assert.ok(entry, slug);
+    assert.deepEqual(entry.images, [new URL(`/editorial/${image}.webp`, entry.url).href]);
+    assert.equal(entry.lastModified, '2026-11-19');
+  }
+});
+
+test('the gem history guide includes its cover and credited photographs in the image sitemap', async () => {
+  const article = getArticleBySlug('history-of-gemstone-jewelry');
+  const entry = (await sitemap()).find(({ url }) => new URL(url).pathname === '/blog/history-of-gemstone-jewelry');
+  assert.ok(article && entry);
+  assert.deepEqual(entry.images, [
+    '/editorial/senebtisi-collar.webp',
+    '/editorial/tiberius-intaglio-ring.webp',
+    '/editorial/qing-nephrite-pendant.webp',
+  ].map((path) => new URL(path, entry.url).href));
+  const images = article.content.flatMap(({ image }) => image ? [image] : []);
+  for (const image of images) {
+    assert.ok(image.alt && image.credit);
+    assert.ok(article.sources?.some(({ url }) => url === image.credit?.url));
+  }
+});
+
+test('original collection pages include their published cover images in the image sitemap', async () => {
+  const entries = new Map((await sitemap()).map((entry) => [new URL(entry.url).pathname, entry]));
+  for (const slug of ['crystal', 'charms', 'tibetan-silver', 'mongolian-steppe', 'southwest-filigree', 'han-jade', 'tai-silk', 'caravan-fusion']) {
+    const entry = entries.get(`/collections/${slug}`);
+    const artwork = getCollectionArtwork(slug);
+    assert.ok(entry && artwork, slug);
+    assert.deepEqual(entry.images, [new URL(artwork.image, entry.url).href]);
+  }
+});
+
+test('each story exposes a distinct cover on its existing canonical path and links to an indexed collection', async () => {
+  const entries = new Map((await sitemap()).map((entry) => [new URL(entry.url).pathname, entry]));
+  const index = entries.get('/stories');
+  assert.ok(index);
+  assert.deepEqual(index.images, [new URL(storiesCover.url, index.url).href]);
+  const images = new Set();
+  for (const { slug, cover, updatedAt, relatedCollection } of STORIES) {
+    const entry = entries.get(`/stories/${slug}`);
+    assert.ok(entry && cover.alt, slug);
+    assert.deepEqual(entry.images, [new URL(cover.url, entry.url).href]);
+    assert.equal(entry.lastModified, updatedAt);
+    assert.ok(entries.has(`/collections/${relatedCollection.slug}`), slug);
+    images.add(cover.url);
+  }
+  assert.equal(images.size, STORIES.length);
+});
+
+test('published guides prefer three distinct editorial recommendations', () => {
+  const fitRecommendations = {
+    'necklace-length-paper-test': ['how-to-compare-pendant-widths', 'how-to-layer-necklaces', 'small-pendants-for-button-downs'],
+    'reading-earring-drop-length': ['how-to-choose-lightweight-earrings', 'shorter-drops-for-high-collars', 'earrings-for-glasses'],
+    'does-my-phone-case-fit-a-charm': ['choosing-phone-charm-length', 'phone-charm-trend-2026', 'choosing-color-for-a-phone-case'],
+  };
+  for (const [slug, expected] of Object.entries(fitRecommendations)) {
+    assert.deepEqual(getRelatedArticles(slug).map((article) => article.slug), expected);
+  }
+  const published = BLOG_ARTICLES.filter(isPublishedGuide);
+  const linkedGuides = new Set<string>();
+  for (const article of published) {
+    const recommendations = article.relatedArticles?.slice(0, 3) ?? [];
+    assert.equal(new Set(recommendations).size, 3, article.slug);
+    assert.ok(!recommendations.includes(article.slug), article.slug);
+    assert.ok(!recommendations.some((slug) => `/blog/${slug}` === article.editorialLink), article.slug);
+    assert.deepEqual(getRelatedArticles(article.slug).map(({ slug }) => slug), recommendations, article.slug);
+    recommendations.forEach((slug) => linkedGuides.add(slug));
+  }
+  assert.deepEqual(published.filter(({ slug }) => !linkedGuides.has(slug)).map(({ slug }) => slug), []);
 });
 
 test('revised stone guides keep their canonical paths and connect to published guides and available catalog entries', async () => {

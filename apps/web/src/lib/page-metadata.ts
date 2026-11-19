@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import type { StorefrontProduct } from './storefront';
 import { siteConfig } from './site-config';
+import staticVariants from '@/data/static-image-variants.json';
 
 type ShareImage = { url: string; alt: string; width?: number; height?: number };
+const staticImages: Readonly<Record<string, { key: string; widths: number[]; share?: Omit<ShareImage, 'alt'> }>> = staticVariants;
 type PublicPage = {
   path: string;
   title: string;
@@ -34,8 +36,11 @@ export function pageMetadata({ path, title, description, image = brandImage, art
 }
 
 export function productShareImage(product?: Pick<StorefrontProduct, 'name' | 'primaryImage' | 'imageKind'>): ShareImage | undefined {
-  return product?.primaryImage ? {
-    url: product.primaryImage,
+  const source = product?.primaryImage;
+  if (!source) return undefined;
+  const path = source.startsWith(siteConfig.url + '/') ? source.slice(siteConfig.url.length) : source;
+  return {
+    ...(staticImages[path]?.share ?? { url: source }),
     alt: product.imageKind === 'illustration' ? `${product.name} design illustration` : product.name,
-  } : undefined;
+  };
 }

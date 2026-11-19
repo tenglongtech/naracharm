@@ -4,7 +4,7 @@ import postgres from 'postgres';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { POST as track } from '../src/app/api/order-status/route';
 import { orderIdForTrackingToken, orderTrackingToken, orderTrackingUrl } from '../src/lib/order-tracking-token';
-import { listOrderShipments, recordShipment, sendShipmentNotice } from '../src/lib/order-fulfillment';
+import { getOrderPackingDetails, listOrderShipments, recordShipment, sendShipmentNotice } from '../src/lib/order-fulfillment';
 import type { sendEmail } from '../src/lib/email';
 import { OrderConfirmationEmail } from '../src/emails/order-confirmation';
 
@@ -54,6 +54,35 @@ test('paid-order shipments are idempotent and the guest link exposes only status
   await sql`insert into orders (id, number, email, status, payment_status, shipping_address, subtotal_cents, total_cents)
     values (${orderId}, 'TEST-SHIP-42', 'dispatch@example.test', 'paid', 'paid', '{"address":"private fixture address"}', 6400, 6400),
     (${unpaidId}, 'TEST-UNPAID-42', 'unpaid@example.test', 'pending', 'unpaid', '{}', 6400, 6400)`;
+
+  await context.test('packing details use the original SKU and quantity and support both stored postal formats', async () => {
+    const legacyId = 'ff2e6ac4-2748-4e28-a5ad-019878804a9b';
+    await sql`update orders set shipping_address = ${sql.json({
+      name: 'Fixture Recipient', line1: '18 Test Lane', line2: 'Unit 5', city: 'Test City',
+      state: 'CA', postal_code: '94000', country: 'US', phone: 'private fixture field',
+    })}, billing_address = '{"line1":"private billing field"}' where id = ${orderId}`;
+    await sql`insert into orders (id, number, email, status, payment_status, shipping_address, subtotal_cents, total_cents)
+      values (${legacyId}, 'TEST-LEGACY-SHIP', 'legacy@example.test', 'paid', 'paid',
+        '{"line1":"24 Fixture Lane","city":"Test City","postalCode":"0140","countryCode":"NO"}', 1200, 1200)`;
+    await sql`insert into order_lines (id, order_id, variant_id, product_name, variant_name, sku, unit_price_cents, quantity)
+      values ('c58dfaf3-439e-4f8a-b65c-42e2bb79d0d1', ${orderId}, 'a0fce4e1-c3af-4b11-a488-0a18a5498313',
+        'Original band', 'Wide', 'BAND-WIDE-OLD', 3200, 2),
+      ('8d6e76aa-5f48-4eb7-b1b1-ae241a32cee3', ${legacyId}, null, 'Legacy band', null, null, 1200, 1)`;
+
+    assert.deepEqual(await getOrderPackingDetails(orderId), {
+      shippingAddress: {
+        name: 'Fixture Recipient', line1: '18 Test Lane', line2: 'Unit 5', city: 'Test City',
+        state: 'CA', postalCode: '94000', country: 'US',
+      },
+      items: [{ id: 'c58dfaf3-439e-4f8a-b65c-42e2bb79d0d1', productName: 'Original band', variantName: 'Wide', sku: 'BAND-WIDE-OLD', quantity: 2 }],
+    });
+    const legacy = await getOrderPackingDetails(legacyId);
+    assert.equal(legacy?.shippingAddress?.postalCode, '0140');
+    assert.equal(legacy?.shippingAddress?.country, 'NO');
+    assert.equal(legacy?.items[0].variantName, null);
+    assert.deepEqual(await getOrderPackingDetails(unpaidId), { shippingAddress: null, items: [] });
+    assert.equal(await getOrderPackingDetails('9528e70f-d4c8-4793-a9bd-7ce86759fb90'), null);
+  });
 
   const token = orderTrackingToken(orderId);
   assert.ok(token);

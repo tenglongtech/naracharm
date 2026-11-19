@@ -71,8 +71,8 @@ export default async function CollectionsIndexPage() {
             <h1>Jewelry <em>collections.</em></h1>
             <p>Discover the stone, silver and woven cord behind each collection. Browse pieces to wear, then see what’s taking shape in the studio.</p>
             <div className={styles.heroLinks}>
-              {shopCollections.length ? <Link href="#shop-collections" className={styles.primaryLink}>Explore the collections <span aria-hidden="true">↓</span></Link> : null}
-              <Link href="#design-collections" className={styles.textLink}>Studio designs <span aria-hidden="true">↓</span></Link>
+              {shopCollections.length ? <a href="#shop-collections" className={styles.primaryLink}>Explore the collections <span aria-hidden="true">↓</span></a> : null}
+              <a href="#design-collections" className={styles.textLink}>Studio designs <span aria-hidden="true">↓</span></a>
             </div>
           </div>
           <figure className={styles.heroImage}>
@@ -84,16 +84,16 @@ export default async function CollectionsIndexPage() {
         <nav aria-label="Shop by category" className={styles.categoryBar}>
           <ul className={styles.shell}>
             {CATEGORIES.map(({ slug, name }) => (
-              <li key={slug}><Link href={`/collections/${slug}`}>{name} <Arrow /></Link></li>
+              <li key={slug}><Link prefetch={false} href={`/collections/${slug}`}>{name} <Arrow /></Link></li>
             ))}
           </ul>
         </nav>
 
         {shopCollections.length > 0 && (
-          <section id="shop-collections" aria-labelledby="shop-collections-title" className={`${styles.shell} ${styles.section}`}>
+          <section id="shop-collections" aria-labelledby="shop-collections-title" className={`${styles.shell} ${styles.section}`} tabIndex={-1}>
             <div className={styles.sectionHeading}>
               <h2 id="shop-collections-title">Shop collections</h2>
-              <Link href="/shop" className={styles.textLink}>Shop all jewelry <Arrow /></Link>
+              <Link prefetch={false} href="/shop" className={styles.textLink}>Shop all jewelry <Arrow /></Link>
             </div>
 
             {features.length > 0 && (
@@ -101,7 +101,7 @@ export default async function CollectionsIndexPage() {
                 <ul className={styles.features}>
                   {features.map(({ slug, title, note, image, tone }) => (
                     <li key={slug}>
-                      <Link href={`/collections/${slug}`} className={`${styles.feature} ${tones.tone}`} data-tone={tone}>
+                      <Link prefetch={false} href={`/collections/${slug}`} className={`${styles.feature} ${tones.tone}`} data-tone={tone}>
                         <div className={styles.featureImage}>
                           <Image src={image} alt="" fill sizes="(max-width: 639px) 92vw, (max-width: 1439px) 30vw, 420px" />
                         </div>
@@ -124,7 +124,7 @@ export default async function CollectionsIndexPage() {
                   const cover = covers.get(slug);
                   return (
                     <li key={slug}>
-                      <Link href={`/collections/${slug}`} className={styles.directoryLink}>
+                      <Link prefetch={false} href={`/collections/${slug}`} className={styles.directoryLink}>
                         {cover?.primaryImage && (
                           <div className={styles.directoryImage}>
                             <Image src={cover.primaryImage} alt="" fill sizes="112px" unoptimized={isExternalProductImage(cover.primaryImage)} />
@@ -144,15 +144,15 @@ export default async function CollectionsIndexPage() {
           </section>
         )}
 
-        <section id="design-collections" aria-labelledby="design-collections-title" className={styles.studio}>
+        <section id="design-collections" aria-labelledby="design-collections-title" className={styles.studio} tabIndex={-1}>
           <div className={`${styles.shell} ${styles.section}`}>
             <div className={styles.sectionHeading}>
               <h2 id="design-collections-title">Studio designs</h2>
-              <Link href="/studio" className={styles.textLink}>Visit the studio <Arrow /></Link>
+              <Link prefetch={false} href="/studio" className={styles.textLink}>Visit the studio <Arrow /></Link>
             </div>
             <p className={styles.studioLead}>Illustrated previews of new jewelry, organized by material, pattern and silhouette.</p>
             <StudioCollectionGrid />
-            <Link href="/collections/studio-edit" className={`${styles.textLink} ${styles.studioEdit}`}>Original Studio Edit <Arrow /></Link>
+            <Link prefetch={false} href="/collections/studio-edit" className={`${styles.textLink} ${styles.studioEdit}`}>Original Studio Edit <Arrow /></Link>
           </div>
         </section>
       </main>

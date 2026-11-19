@@ -4,19 +4,28 @@ import argparse
 import json
 import re
 import sys
+from concurrent.futures import ThreadPoolExecutor
+from http.client import HTTPException
 from html.parser import HTMLParser
 from pathlib import Path
+from time import sleep
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
 from urllib.robotparser import RobotFileParser
 from xml.etree import ElementTree
 
 MAX_BODY = 4 * 1024 * 1024
 LOOPBACK = ("localhost", "127.0.0.1", "::1")
+PRODUCT_SLUG = r"[a-z0-9]+(?:-[a-z0-9]+)*"
+RETRYABLE_HTTP = {408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524}
 
 
 class VerificationError(Exception):
+    pass
+
+
+class ResponseReadError(VerificationError):
     pass
 
 
@@ -45,13 +54,13 @@ def read(opener, target, timeout, *, method="GET", headers=None):
         response = opener.open(request, timeout=timeout)
     except HTTPError as error:
         response = error
-    except (URLError, OSError) as error:
-        raise VerificationError(f"{method} {route} could not connect ({type(getattr(error, 'reason', error)).__name__})") from error
+    except (URLError, OSError, HTTPException) as error:
+        raise ResponseReadError(f"{method} {route} could not connect ({type(getattr(error, 'reason', error)).__name__})") from error
     with response:
         try:
             body = response.read(MAX_BODY + 1)
-        except OSError as error:
-            raise VerificationError(f"{method} {route} body could not be read") from error
+        except (OSError, HTTPException) as error:
+            raise ResponseReadError(f"{method} {route} body could not be read") from error
         require(len(body) <= MAX_BODY, f"{method} {route} response exceeds {MAX_BODY} bytes")
         return response.code, response.headers, body
 
@@ -146,6 +155,13 @@ class SearchPage(HTMLParser):
         self.canonicals = []
         self.noindex = False
         self.heading_count = 0
+        self.titles = []
+        self.descriptions = []
+        self.checkout_mode = None
+        self.inquiry_mode = None
+        self.schema = []
+        self._json_ld = None
+        self._title = None
         self.feed(body.decode("utf-8"))
 
     def handle_starttag(self, tag, attrs):
@@ -154,8 +170,31 @@ class SearchPage(HTMLParser):
             self.canonicals.append(attrs.get("href"))
         if tag == "meta" and (attrs.get("name") or "").lower() in ("robots", "googlebot"):
             self.noindex |= bool(re.search(r"\bnoindex\b", attrs.get("content") or "", re.I))
+        if tag == "meta" and (attrs.get("name") or "").lower() == "description":
+            self.descriptions.append(attrs.get("content"))
+        if tag == "title":
+            self._title = []
         if tag == "h1":
             self.heading_count += 1
+        if tag == "main" and attrs.get("id") == "main":
+            self.checkout_mode = attrs.get("data-checkout-mode")
+            self.inquiry_mode = attrs.get("data-inquiry-mode")
+        if tag == "script" and attrs.get("type") == "application/ld+json":
+            self._json_ld = []
+
+    def handle_data(self, data):
+        if self._json_ld is not None:
+            self._json_ld.append(data)
+        if self._title is not None:
+            self._title.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == "script" and self._json_ld is not None:
+            self.schema.append("".join(self._json_ld))
+            self._json_ld = None
+        if tag == "title" and self._title is not None:
+            self.titles.append("".join(self._title).strip())
+            self._title = None
 
 
 def xml(path, body, root_tag):
@@ -182,12 +221,182 @@ def compare_live_xml(opener, site, timeout, local_file, tag, label):
     return expected
 
 
-def verify_front(opener, site, timeout, exported):
-    sitemap = compare_live_xml(opener, site, timeout, exported / "sitemap.xml", "urlset", "sitemap")
+def sitemap_locations(sitemap, site):
     locations = [row.findtext("{*}loc") for row in sitemap.findall("{*}url")]
     require(locations and all(
         loc and f"{urlsplit(loc).scheme}://{urlsplit(loc).netloc}" == site for loc in locations
     ), "The export sitemap must target the storefront being checked.")
+    canonical = [site if urlsplit(loc).path in ("", "/") else loc for loc in locations]
+    require(
+        len(set(canonical)) == len(canonical) and all(not urlsplit(loc).query and not urlsplit(loc).fragment for loc in locations),
+        "The export sitemap contains a duplicate or non-canonical URL",
+    )
+    return canonical
+
+
+def exported_page(exported, label):
+    path = Path(unquote(label).lstrip("/"))
+    require(not path.is_absolute() and ".." not in path.parts, f"Invalid export path: {label}")
+    source = exported / path
+    if label != "/" and source.with_name(source.name + ".html").is_file():
+        source = source.with_name(source.name + ".html")
+    else:
+        source /= "index.html"
+    require(source.is_file(), f"The export has no HTML for {label}")
+    return SearchPage(source.read_bytes())
+
+
+def product_data(page, label):
+    try:
+        nodes = [json.loads(raw) for raw in page.schema]
+    except json.JSONDecodeError as error:
+        raise VerificationError(f"{label} has invalid structured data") from error
+    products = [node for node in nodes if isinstance(node, dict) and node.get("@type") in ("Product", "ProductGroup")]
+    require(len(products) == 1, f"{label} has no unique product markup")
+    return products[0]
+
+
+def product_offers(page, label):
+    product = product_data(page, label)
+    variants = product.get("hasVariant") if product.get("@type") == "ProductGroup" else [product]
+    require(isinstance(variants, list) and variants, f"{label} has no product offers")
+
+    offers = {}
+    for variant in variants:
+        sku = variant.get("sku") if isinstance(variant, dict) else None
+        require(isinstance(sku, str) and sku and sku not in offers, f"{label} has a missing or duplicate SKU")
+        offer = variant.get("offers")
+        require(isinstance(offer, dict) and offer.get("priceCurrency") == "USD", f"{label} has an invalid USD offer for {sku!r}")
+        price = offer.get("price")
+        status = offer.get("availability")
+        require(isinstance(price, str) and re.fullmatch(r"[0-9]+\.[0-9]{2}", price), f"{label} has an invalid price for {sku!r}")
+        require(status in ("https://schema.org/InStock", "https://schema.org/OutOfStock"), f"{label} has invalid availability for {sku!r}")
+        cents = int(price.replace(".", ""))
+        in_stock = status == "https://schema.org/InStock"
+        require(cents > 0 or not in_stock, f"{label} has in-stock availability with a zero price for {sku!r}")
+        offers[sku] = (cents, in_stock)
+    return {sku: offer for sku, offer in offers.items() if offer[0] > 0}
+
+
+def current_catalog(opener, api, site, timeout):
+    route = "/api/catalog/offer?catalog=1"
+    label = "GET " + route
+    code, headers, body = read(opener, api + route, timeout, headers={"Origin": site})
+    require(code == 200, f"{label} returned HTTP {code}")
+    verify_cors(headers, site, label)
+    data = json_response(headers, body, label)
+    require(isinstance(data, dict) and isinstance(data.get("catalog"), list), f"{label} returned an invalid catalog response")
+    catalog = {}
+    for product in data["catalog"]:
+        slug = product.get("slug") if isinstance(product, dict) else None
+        require(
+            isinstance(slug, str) and len(slug) <= 140 and re.fullmatch(PRODUCT_SLUG, slug)
+            and slug not in catalog and isinstance(product.get("offers"), list),
+            f"{label} returned an invalid or duplicate product",
+        )
+        offers = {}
+        for offer in product["offers"]:
+            require(isinstance(offer, dict), f"{label} returned an invalid offer for {slug}")
+            sku, cents, stock = (offer.get(key) for key in ("sku", "unitPriceCents", "stock"))
+            require(
+                isinstance(sku, str) and sku and sku not in offers
+                and type(cents) is int and cents > 0 and type(stock) is int and stock >= 0,
+                f"{label} returned an invalid offer or duplicate SKU for {slug}",
+            )
+            offers[sku] = (cents, stock > 0)
+        catalog[slug] = offers
+    return catalog
+
+
+def offer_differences(slug, expected, observed, source):
+    issues = []
+    stock_text = {True: "in stock", False: "out of stock"}
+    for sku in sorted(expected.keys() - observed.keys()):
+        issues.append(f"{slug} SKU {sku!r} is in the export but unavailable in the {source}")
+    for sku in sorted(observed.keys() - expected.keys()):
+        issues.append(f"{slug} SKU {sku!r} from the {source} is missing from the export")
+    for sku in sorted(expected.keys() & observed.keys()):
+        expected_price, expected_stock = expected[sku]
+        price, in_stock = observed[sku]
+        if price != expected_price:
+            old = f"${expected_price // 100}.{expected_price % 100:02}"
+            new = f"${price // 100}.{price % 100:02}"
+            issues.append(f"{slug} SKU {sku!r} price differs (export {old}, {source} {new})")
+        if in_stock != expected_stock:
+            issues.append(f"{slug} SKU {sku!r} availability differs (export {stock_text[expected_stock]}, {source} {stock_text[in_stock]})")
+    return issues
+
+
+def verify_catalog(opener, api, site, timeout, exported, published=None):
+    sitemap = xml("sitemap.xml", (exported / "sitemap.xml").read_bytes(), "urlset")
+    locations = sitemap_locations(sitemap, site)
+    slugs = set()
+    for url in locations:
+        path = urlsplit(url).path
+        if path.startswith("/products/"):
+            match = re.fullmatch(rf"/products/({PRODUCT_SLUG})/?", path)
+            require(match and len(match[1]) <= 140, "The export sitemap contains an invalid product URL")
+            slugs.add(match[1])
+    require(slugs, "The export sitemap has no product pages to verify")
+
+    catalog = current_catalog(opener, api, site, timeout)
+    issues = [f"Active product {slug!r} is missing from the export" for slug in sorted(catalog.keys() - slugs)]
+    issues += [f"Exported product {slug!r} is no longer active" for slug in sorted(slugs - catalog.keys())]
+    count = 0
+    for slug in sorted(slugs):
+        path = f"/products/{slug}"
+        exported_data = product_offers(exported_page(exported, path), path)
+        count += len(exported_data)
+        if slug in catalog:
+            issues.extend(offer_differences(slug, exported_data, catalog[slug], "API"))
+        if published is not None:
+            issues.extend(offer_differences(slug, exported_data, product_offers(published[path], path), "published page"))
+    require(not issues, "Catalog differences detected:\n" + "\n".join(issues))
+    print(f"Verified current price and availability for {len(slugs)} product pages and {count} SKUs.")
+
+
+def indexable_page(opener, timeout, url, robots):
+    label = urlsplit(url).path or "/"
+    require(robots.can_fetch("Googlebot", url), f"robots.txt blocks Googlebot on {label}")
+    for attempt in range(3):
+        try:
+            code, headers, body = read(opener, url, timeout)
+            if code not in RETRYABLE_HTTP or attempt == 2:
+                break
+        except ResponseReadError:
+            if attempt == 2:
+                raise
+        sleep(0.5 * (attempt + 1))
+    require(code == 200, f"GET {label} returned HTTP {code}")
+    require(headers.get_content_type() == "text/html", f"{label} did not return HTML")
+    document = SearchPage(body)
+    header_noindex = re.search(r"\bnoindex\b", ",".join(headers.get_all("X-Robots-Tag") or []), re.I)
+    require(not (document.noindex or header_noindex), f"{label} has a noindex directive")
+    require(document.canonicals == [url] and document.heading_count == 1, f"{label} has unexpected canonical or main heading markup")
+    return document
+
+
+def verify_inquiry_form(opener, site, timeout, exported):
+    contact = exported / "contact.html"
+    if not contact.is_file() or SearchPage(contact.read_bytes()).inquiry_mode != "online":
+        return
+    code, headers, body = read(opener, site + "/contact", timeout)
+    require(code == 200 and headers.get_content_type() == "text/html" and SearchPage(body).inquiry_mode == "online",
+            "Live inquiry form differs from the export")
+
+    label = "GET /api/inquiries"
+    code, headers, body = read(opener, site + "/api/inquiries", timeout)
+    require(code == 405 and tokens(headers, "Allow") == {"post"}, f"{label} did not return a POST-only response")
+    require("noindex" in tokens(headers, "X-Robots-Tag") and "no-store" in tokens(headers, "Cache-Control"),
+            f"{label} must prevent indexing and caching")
+    require(json_response(headers, body, label) == {"error": "method"}, f"{label} returned unexpected data")
+    print("The live inquiry endpoint is deployed and rejects read requests.")
+
+
+def verify_front(opener, site, timeout, exported, *, inquiry=False):
+    verify_inquiry_form(opener, site, timeout, exported)
+    sitemap = compare_live_xml(opener, site, timeout, exported / "sitemap.xml", "urlset", "sitemap")
+    locations = sitemap_locations(sitemap, site)
     compare_live_xml(opener, site, timeout, exported / "google-feed.xml", "rss", "Shopping Feed")
 
     code, _, body = read(opener, site + "/robots.txt", timeout)
@@ -198,23 +407,33 @@ def verify_front(opener, site, timeout, exported):
     robots = RobotFileParser()
     robots.parse(directives)
 
-    choices = {loc.removesuffix("/") for loc in locations}
-    samples = [site] + [site + path for path in ("/shop", "/studio", "/blog") if site + path in choices]
-    for prefix in ("/products/", "/blog/"):
-        sample = min((url for url in choices if url.startswith(site + prefix)), default=None)
-        if sample:
-            samples.append(sample)
-    for url in samples:
-        label = urlsplit(url).path or "/"
-        require(robots.can_fetch("Googlebot", url), f"robots.txt blocks Googlebot on {label}")
-        code, headers, body = read(opener, url, timeout)
-        require(code == 200, f"GET {label} returned HTTP {code}")
-        require(headers.get_content_type() == "text/html", f"{label} did not return HTML")
-        document = SearchPage(body)
-        header_noindex = re.search(r"\bnoindex\b", ",".join(headers.get_all("X-Robots-Tag") or []), re.I)
-        require(not (document.noindex or header_noindex), f"{label} has a noindex directive")
-        require(document.canonicals == [url] and document.heading_count == 1, f"{label} has unexpected canonical or main heading markup")
-    print(f"Live sitemap and Shopping Feed match the export. Verified robots.txt and {len(samples)} representative pages.")
+    def check(url):
+        path = urlsplit(url).path or "/"
+        try:
+            page = indexable_page(opener, timeout, url, robots)
+            source = exported_page(exported, path)
+            require((page.titles, page.descriptions) == (source.titles, source.descriptions),
+                    f"{path} search title or description differs from the export")
+            if path.startswith("/products/"):
+                if inquiry:
+                    product = product_data(page, path)
+                    variants = product.get("hasVariant", [])
+                    require(isinstance(variants, list) and all(isinstance(variant, dict) for variant in variants),
+                            f"{path} has invalid product variants")
+                    require("offers" not in product and all("offers" not in variant for variant in variants),
+                            f"{path} includes an offer in inquiry mode")
+                    require(product == product_data(source, path), f"{path} product markup differs from the export")
+                return path.removesuffix("/"), page, None
+            return path, None, None
+        except (VerificationError, UnicodeError, OSError) as error:
+            return path, None, str(error)
+
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        results = list(executor.map(check, locations))
+    issues = [error for _, _, error in results if error]
+    require(not issues, f"{len(issues)} canonical pages failed verification:\n" + "\n".join(issues[:15]))
+    print(f"Live sitemap and Shopping Feed match the export. Verified robots.txt and all {len(locations)} canonical pages.")
+    return {path: page for path, page, _ in results if page is not None}
 
 
 def main():
@@ -223,15 +442,35 @@ def main():
     parser.add_argument("--api-origin", type=origin, default="https://api.naracharm.com")
     parser.add_argument("--stripe-mode", choices=("live", "test"), default="live")
     parser.add_argument("--timeout", type=int, default=25, help="Timeout in seconds per HTTP request.")
-    parser.add_argument("--exported-site", type=Path, help="Also verify the public storefront against this extracted static export.")
+    exports = parser.add_mutually_exclusive_group()
+    exports.add_argument("--catalog-export", type=Path, help="Check the extracted export's offers against the current API before publishing.")
+    exports.add_argument("--exported-site", type=Path, help="Verify the public storefront and current offers against this extracted static export.")
     args = parser.parse_args()
     if args.timeout < 1:
         parser.error("--timeout must be at least one second.")
 
     try:
-        verify_api(origin_opener(args.api_origin), args.api_origin, args.site_origin, args.timeout, args.stripe_mode)
+        exported = args.catalog_export or args.exported_site
+        checkout_file = exported / "checkout.html" if exported else None
+        if checkout_file and checkout_file.is_file() and SearchPage(checkout_file.read_bytes()).checkout_mode == "inquiry":
+            require(args.exported_site, "Use --exported-site to verify a storefront with online checkout paused.")
+            site_opener = origin_opener(args.site_origin)
+            verify_front(site_opener, args.site_origin, args.timeout, exported, inquiry=True)
+            code, _, body = read(site_opener, args.site_origin + "/checkout", args.timeout)
+            require(code == 200, f"GET /checkout returned HTTP {code}")
+            checkout_page = SearchPage(body)
+            require(checkout_page.checkout_mode == "inquiry" and checkout_page.noindex, "Published checkout did not match the inquiry-only export")
+            print("Published storefront is open for inquiries. Online checkout is paused.")
+            return 0
+
+        api_opener = origin_opener(args.api_origin)
+        verify_api(api_opener, args.api_origin, args.site_origin, args.timeout, args.stripe_mode)
+        published = None
         if args.exported_site:
-            verify_front(origin_opener(args.site_origin), args.site_origin, args.timeout, args.exported_site)
+            site_opener = origin_opener(args.site_origin)
+            published = verify_front(site_opener, args.site_origin, args.timeout, args.exported_site)
+        if exported:
+            verify_catalog(api_opener, args.api_origin, args.site_origin, args.timeout, exported, published)
     except (VerificationError, UnicodeError, OSError) as error:
         print(f"Release verification failed: {error}", file=sys.stderr)
         return 1

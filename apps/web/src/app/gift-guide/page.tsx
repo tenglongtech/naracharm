@@ -7,6 +7,7 @@ import { ProductTile } from '@/components/product-tile';
 import { getActiveProducts } from '@/lib/storefront';
 import { productCard } from '@/lib/catalog';
 import { giftSelections } from '@/lib/gift-selections';
+import { siteConfig } from '@/lib/site-config';
 import { absoluteUrl, serializeJsonLd } from '@/lib/seo';
 import styles from '../buying-guides.module.css';
 
@@ -32,7 +33,7 @@ const recipientChoices = [
 ];
 
 export default async function GiftGuidePage() {
-  const budgets = giftSelections(await getActiveProducts());
+  const budgets = giftSelections(await getActiveProducts(), siteConfig.checkoutEnabled);
   const picks = budgets.flatMap(({ picks }) => picks);
   const schema = {
     '@context': 'https://schema.org',
@@ -63,7 +64,7 @@ export default async function GiftGuidePage() {
               <div className={styles.heroCopy}>
                 <h1>Jewelry gifts. <em>Chosen well.</em></h1>
                 <p>Start with a color or a shape they already wear. Check the fit, then find a piece in your budget.</p>
-                <Link href="#gift-budget" className={styles.primaryLink}>Browse by price <span aria-hidden="true">↓</span></Link>
+                <a href="#gift-budget" className={styles.primaryLink}>Browse by price <span aria-hidden="true">↓</span></a>
               </div>
               <figure className={styles.heroImage}>
                 <Image src={hero.image} alt={hero.alt} fill preload sizes="(max-width: 799px) 89vw, (max-width: 1439px) 50vw, 660px" />
@@ -81,21 +82,21 @@ export default async function GiftGuidePage() {
           </ul>
         </nav>
 
-        <section id="gift-budget" className={`${styles.shell} ${styles.section}`} aria-labelledby="gift-budget-heading">
+        <section id="gift-budget" className={`${styles.shell} ${styles.section}`} aria-labelledby="gift-budget-heading" tabIndex={-1}>
           <div className={styles.sectionHeading}>
             <div>
               <h2 id="gift-budget-heading">Gifts by price</h2>
-              <p>In-stock picks in USD. Shipping is separate.</p>
+              <p>{siteConfig.checkoutEnabled ? 'In-stock picks in USD.' : 'Guide prices in USD.'} Shipping is separate.</p>
             </div>
             <Link href="/shop" className={styles.textLink}>See all jewelry <span aria-hidden="true">↗</span></Link>
           </div>
           {budgets.length > 0 ? (
             <>
               <nav aria-label="Gift budgets" className={styles.budgetLinks}>
-                {budgets.map(({ id, label }) => <Link key={id} href={`#${id}`}>{label} <span aria-hidden="true">↓</span></Link>)}
+                {budgets.map(({ id, label }) => <a key={id} href={`#${id}`}>{label} <span aria-hidden="true">↓</span></a>)}
               </nav>
               {budgets.map(({ id, label, description: note, picks }) => (
-                <section key={id} id={id} className={styles.budget} aria-labelledby={`${id}-title`}>
+                <section key={id} id={id} className={styles.budget} aria-labelledby={`${id}-title`} tabIndex={-1}>
                   <h3 id={`${id}-title`}>{label}</h3>
                   <p>{note}</p>
                   <div className={styles.products}>
@@ -121,6 +122,21 @@ export default async function GiftGuidePage() {
               ))}
             </div>
           </div>
+        </section>
+        <section className={`${styles.shell} ${styles.section}`} aria-labelledby="gift-occasions">
+          <div className={styles.sectionHeading}>
+            <h2 id="gift-occasions">Gifts by occasion</h2>
+          </div>
+          <ul className="grid gap-5 sm:grid-cols-2">
+            <li className="border-t border-border pt-4">
+              <Link prefetch={false} href="/blog/best-jewelry-gifts-for-mom" className="text-brand underline underline-offset-4">Jewelry gifts for Mom</Link>
+              <p className="mt-2 text-sm text-muted">Choose by her everyday colors, favorite shapes and preferred fit.</p>
+            </li>
+            <li className="border-t border-border pt-4">
+              <Link prefetch={false} href="/blog/anniversary-wedding-crystal-gift-guide" className="text-brand underline underline-offset-4">Anniversary and wedding jewelry gifts</Link>
+              <p className="mt-2 text-sm text-muted">Give one piece or pair two around a shared detail.</p>
+            </li>
+          </ul>
         </section>
       </main>
       <SiteFooter />

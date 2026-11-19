@@ -1,4 +1,7 @@
 import { resolveSiteUrl } from './site-url';
+
+const checkoutEnabled = process.env.NEXT_PUBLIC_CHECKOUT_ENABLED === 'true';
+const customerServices = process.env.NEXT_PUBLIC_CUSTOMER_SERVICES_ENABLED;
 /**
  * 站点配置 (从环境变量读取)
  *
@@ -9,6 +12,9 @@ import { resolveSiteUrl } from './site-url';
 export const siteConfig = {
   brand: process.env.NEXT_PUBLIC_BRAND_NAME || 'Nara Charm',
   url: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL, process.env.NODE_ENV),
+  checkoutEnabled,
+  inquiryFormEnabled: process.env.NEXT_PUBLIC_INQUIRY_FORM_ENABLED === 'true',
+  customerServicesEnabled: customerServices === undefined ? checkoutEnabled : customerServices === 'true',
   slogan: 'Jewelry with Spirit · Stories in Every Piece',
 
   company: {

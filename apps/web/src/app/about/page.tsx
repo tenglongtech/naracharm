@@ -110,7 +110,7 @@ export default function AboutPage() {
         <section className={`${styles.shell} ${styles.section} ${styles.visit}`} aria-labelledby="brand-visit-title">
           <div>
             <h2 id="brand-visit-title">From the studio to the shop</h2>
-            <p>See the sketches and material studies behind new designs, or browse jewelry that’s available to order.</p>
+            <p>See the sketches and material studies behind new designs, or browse the current jewelry catalog.</p>
           </div>
           <div className={styles.actionRow}>
             <Link href="/shop" className={styles.primaryLink}>Shop jewelry <span aria-hidden="true">↗</span></Link>

@@ -9,6 +9,11 @@ export function cartLineQuantityLimit(stock: number) {
   return Math.min(stock, MAX_CART_LINE_QUANTITY);
 }
 
+export function orderItemLabel(productName: string, variantName?: string | null) {
+  const name = variantName?.trim();
+  return name && !/^(default|standard)$/i.test(name) ? `${productName} — ${name}` : productName;
+}
+
 export type CartLineView = {
   lineId: string;
   productId: string;

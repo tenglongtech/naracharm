@@ -70,5 +70,5 @@ h3,
   .section-title { @apply mt-4 font-display text-3xl leading-tight tracking-tight md:text-4xl; }
   .shop-button { @apply inline-flex min-h-12 w-fit items-center justify-center gap-8 rounded-sm bg-brand px-6 py-4 text-sm font-medium text-bg transition-colors hover:bg-ink; }
 }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
 html { scroll-padding-top: 100px; }

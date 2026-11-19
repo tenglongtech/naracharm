@@ -15,9 +15,9 @@ const budgets = [
   },
 ] as const;
 
-export function giftSelections(products: readonly StorefrontProduct[]) {
+export function giftSelections(products: readonly StorefrontProduct[], requireStock = true) {
   const available = products.filter(({ availability, basePriceCents, stock }) =>
-    availability !== 'preview' && stock > 0 && Number.isInteger(basePriceCents) && basePriceCents > 0,
+    availability !== 'preview' && (!requireStock || stock > 0) && Number.isInteger(basePriceCents) && basePriceCents > 0,
   );
   available.sort((left, right) => Number(right.isFeatured) - Number(left.isFeatured));
 

@@ -34,7 +34,8 @@ test('return markup points to the full policy for product and eligibility except
 test('product offers link to the same policy definitions and selling organization', async () => {
   const product = (await getActiveProducts()).find(({ category, stock }) => category === 'earrings' && stock > 0);
   assert.ok(product);
-  const { offers } = productSchema(product);
+  const markup = productSchema(product);
+  const offers = markup['@type'] === 'Product' ? markup.offers : markup.hasVariant[0].offers;
   const shipping = shippingPolicySchema();
   const returns = returnsPolicySchema();
   assert.deepEqual(offers.seller, { '@id': 'https://naracharm.com/#organization' });

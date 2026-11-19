@@ -13,6 +13,8 @@ dist
 .env.local
 .env.*.local
 !.env.example
+# 发布时使用的 IndexNow 域名验证文件
+/apps/web/public/indexnow-*.txt
 
 # misc
 .DS_Store

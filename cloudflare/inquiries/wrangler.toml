@@ -1,0 +1,11 @@
+name = "naracharm"
+compatibility_date = "2026-08-11"
+pages_build_output_dir = "./site"
+
+[env.production.vars]
+INQUIRY_ORIGIN = "https://naracharm.com"
+
+[[env.production.d1_databases]]
+binding = "INQUIRIES"
+database_name = "naracharm-inquiries"
+database_id = "dcaff1bb-88c1-4204-adbd-c11d54b59f54"

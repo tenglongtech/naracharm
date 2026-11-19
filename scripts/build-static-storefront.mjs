@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process';
-import { cp, mkdir, mkdtemp, rename, rm, symlink } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, rename, rm, symlink, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { join, relative, resolve, sep } from 'node:path';
@@ -99,15 +99,27 @@ async function installExport(generated) {
 let stage;
 try {
   const { values } = parseArgs({
-    options: { archive: { type: 'string' }, 'refresh-catalog': { type: 'boolean' }, 'previous-sitemap': { type: 'string' } },
+    options: {
+      archive: { type: 'string' },
+      'refresh-catalog': { type: 'boolean' },
+      'catalog-intake': { type: 'string' },
+      'previous-sitemap': { type: 'string' },
+    },
   });
   const archive = values.archive ? resolve(values.archive) : undefined;
   const refreshCatalog = values['refresh-catalog'];
+  const catalogIntake = values['catalog-intake'];
   const previousSitemap = values['previous-sitemap'];
   if ((values.archive !== undefined || refreshCatalog) && !archive?.endsWith('.zip')) {
     throw new Error('Usage: pnpm package:static <archive.zip> or pnpm package:catalog <archive.zip>');
   }
   if (previousSitemap && !archive) throw new Error('--previous-sitemap requires an archive path.');
+  if (catalogIntake && (!archive || refreshCatalog)) {
+    throw new Error('--catalog-intake requires package:static and an archive path.');
+  }
+  if (catalogIntake && process.env.NEXT_PUBLIC_CHECKOUT_ENABLED === 'true') {
+    throw new Error('Offline catalog intake requires checkout to be paused.');
+  }
   const exportDatabaseUrl = process.env.STOREFRONT_EXPORT_DATABASE_URL?.trim();
   if (refreshCatalog && !exportDatabaseUrl) {
     throw new Error('STOREFRONT_EXPORT_DATABASE_URL is required to package the current catalog.');
@@ -120,18 +132,41 @@ try {
     delete env.DATABASE_URL;
     env.NEXT_PUBLIC_SITE_URL = publicOrigin(env.NEXT_PUBLIC_SITE_URL || 'https://naracharm.com', 'NEXT_PUBLIC_SITE_URL');
     env.NEXT_PUBLIC_API_URL = publicOrigin(env.NEXT_PUBLIC_API_URL || 'https://api.naracharm.com', 'NEXT_PUBLIC_API_URL');
+    env.NEXT_PUBLIC_INQUIRY_FORM_ENABLED ??= String(env.NEXT_PUBLIC_SITE_URL === 'https://naracharm.com');
   }
   stage = await mkdtemp(join(tmpdir(), 'naracharm-static-'));
   const stagedWeb = await stageSources(stage);
-  if (refreshCatalog) {
+  if (catalogIntake) {
+    const scriptsDir = join(stagedWeb, 'scripts');
+    await mkdir(scriptsDir);
+    await Promise.all(['catalog-offline.ts', 'catalog-snapshot.ts'].map((script) =>
+      cp(join(web, 'scripts', script), join(scriptsDir, script))
+    ));
+    const candidate = join(stagedWeb, 'src/data/catalog-candidate.json');
+    await run(process.execPath, ['--import', 'tsx', join(scriptsDir, 'catalog-offline.ts'), 'snapshot', resolve(catalogIntake), candidate], {
+      cwd: stagedWeb, env,
+    }, 'Offline catalog intake');
+    await rename(candidate, join(stagedWeb, 'src/data/products.json'));
+  } else if (refreshCatalog) {
     await run(process.execPath, ['--import', 'tsx', join(web, 'scripts/export-storefront.ts')], {
       cwd: stagedWeb,
-      env: { ...env, DATABASE_URL: exportDatabaseUrl, STOREFRONT_DATA_DIR: join(stagedWeb, 'src/data') },
+      env: {
+        ...env,
+        DATABASE_URL: exportDatabaseUrl,
+        STOREFRONT_DATA_DIR: join(stagedWeb, 'src/data'),
+        STOREFRONT_REQUIRE_PUBLISHED_PHOTOS: 'true',
+      },
     }, 'Catalog snapshot export');
   }
   await buildStaticImages(stagedWeb, requireFromWeb('sharp'), env.NEXT_PUBLIC_SITE_URL || undefined);
   await run(process.execPath, [nextCli, 'build', '--webpack'], { cwd: stagedWeb, env }, 'Static storefront build');
   const generated = join(stagedWeb, 'out');
+  if (env.NEXT_PUBLIC_INQUIRY_FORM_ENABLED === 'true') {
+    await Promise.all([
+      cp(join(repo, 'cloudflare/inquiries/worker.mjs'), join(generated, '_worker.js')),
+      writeFile(join(generated, '_routes.json'), JSON.stringify({ version: 1, include: ['/api/inquiries'], exclude: [] }) + '\n'),
+    ]);
+  }
   if (archive) {
     await run('python3', [
       join(repo, 'scripts/audit-static-storefront.py'), generated,

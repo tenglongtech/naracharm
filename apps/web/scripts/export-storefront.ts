@@ -14,14 +14,14 @@
 import 'dotenv/config';
 import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import {
-  products, collections, productVariants, inventory, productImages,
+  products, collections, productVariants, inventory, productImages, variantImages,
   productReviews, blogComments,
 } from '../../../packages/db/schema';
-import { eq, sql } from 'drizzle-orm';
-import { selectProductPhotos } from '../src/lib/product-media';
+import { and, eq, sql } from 'drizzle-orm';
+import { productIndexPhotos, selectProductPhotos } from '../src/lib/product-media';
 import type { StorefrontProduct } from '../src/lib/storefront';
 import { storefrontOffer, type StorefrontVariant } from '../src/lib/storefront-offer';
 
@@ -32,7 +32,7 @@ if (!process.env.DATABASE_URL) {
 
 const client = postgres(process.env.DATABASE_URL, { max: 1, connect_timeout: 10 });
 const db = drizzle({ client, schema: {
-  products, collections, productVariants, inventory, productImages,
+  products, collections, productVariants, inventory, productImages, variantImages,
   productReviews, blogComments,
 } });
 type SnapshotReader = Pick<typeof db, 'select'>;
@@ -68,6 +68,20 @@ async function exportProducts(snapshot: SnapshotReader): Promise<StorefrontProdu
     .where(eq(products.status, 'active'))
     .orderBy(products.createdAt, products.id, productVariants.createdAt, productVariants.id, productImages.sortOrder, productImages.id);
 
+  const variantPhotoRows = await snapshot.select({
+    variantId: variantImages.variantId, url: variantImages.url, isProductPhoto: variantImages.isProductPhoto,
+    isPrimary: variantImages.isPrimary, sortOrder: variantImages.sortOrder,
+  }).from(variantImages)
+    .innerJoin(productVariants, eq(productVariants.id, variantImages.variantId))
+    .innerJoin(products, eq(products.id, productVariants.productId))
+    .where(and(eq(products.status, 'active'), eq(variantImages.isProductPhoto, true)));
+  const variantPhotos = new Map<string, typeof variantPhotoRows>();
+  for (const row of variantPhotoRows) {
+    const photos = variantPhotos.get(row.variantId) ?? [];
+    photos.push(row);
+    variantPhotos.set(row.variantId, photos);
+  }
+
   const map = new Map<string, { product: StorefrontProduct; photos: Parameters<typeof selectProductPhotos>[0][number][]; variants: Map<string, StorefrontVariant> }>();
   for (const r of rows) {
     if (!map.has(r.id)) {
@@ -85,9 +99,11 @@ async function exportProducts(snapshot: SnapshotReader): Promise<StorefrontProdu
     }
     const item = map.get(r.id)!;
     if (r.variantId && r.variantSku && r.variantName && !item.variants.has(r.variantId)) {
+      const photos = selectProductPhotos(variantPhotos.get(r.variantId) ?? []);
       item.variants.set(r.variantId, {
         id: r.variantId, sku: r.variantSku, name: r.variantName,
         unitPriceCents: r.variantPriceCents ?? r.basePriceCents, stock: Math.max(0, Number(r.stock)),
+        ...(photos ? { photoUrls: photos.images } : {}),
       });
     }
     if (r.imageUrl) {
@@ -179,6 +195,16 @@ async function main() {
   const dataDir = process.env.STOREFRONT_DATA_DIR
     ? resolve(process.env.STOREFRONT_DATA_DIR)
     : resolve(__dirname, '../src/data');
+  if (process.env.STOREFRONT_REQUIRE_PUBLISHED_PHOTOS === 'true') {
+    const published: Pick<StorefrontProduct, 'slug'>[] = JSON.parse(await readFile(resolve(dataDir, 'products.json'), 'utf8'));
+    const publishedSlugs = new Set(published.map(({ slug }) => slug));
+    const candidates = prods.filter((product) => !publishedSlugs.has(product.slug) && productIndexPhotos(product).length === 0);
+    if (candidates.length > 0) {
+      console.error('New listings require a verified product photo: ' + candidates.map(({ slug }) => slug).sort().join(', '));
+      process.exitCode = 1;
+      return;
+    }
+  }
   await mkdir(dataDir, { recursive: true });
 
   await writeFile(

@@ -2,6 +2,7 @@ import { desc, eq, inArray } from 'drizzle-orm';
 import { orderFulfillments, orderLines, orders } from '@jewelry/db';
 import { db as connection, type DB } from './db';
 import { trackingLink } from './order-progress';
+import { orderItemLabel } from './cart-types';
 
 const db: DB = connection;
 const pageSize = 10;
@@ -20,7 +21,7 @@ export async function listAccountOrders(userId: string, page: number) {
   const visible = rows.slice(0, pageSize);
   const ids = visible.map(({ id }) => id);
   const [items, shipments] = ids.length ? await Promise.all([
-    db.select({ orderId: orderLines.orderId, name: orderLines.productName, quantity: orderLines.quantity })
+    db.select({ orderId: orderLines.orderId, name: orderLines.productName, variant: orderLines.variantName, quantity: orderLines.quantity })
       .from(orderLines).where(inArray(orderLines.orderId, ids)).orderBy(orderLines.id),
     db.select({ orderId: orderFulfillments.orderId, carrier: orderFulfillments.carrier, number: orderFulfillments.trackingNumber, url: orderFulfillments.trackingUrl })
       .from(orderFulfillments).where(inArray(orderFulfillments.orderId, ids)).orderBy(orderFulfillments.shippedAt, orderFulfillments.id),
@@ -31,7 +32,7 @@ export async function listAccountOrders(userId: string, page: number) {
     orders: visible.map(({ id, createdAt, ...order }) => ({
       ...order,
       createdAt: createdAt.toISOString(),
-      items: items.filter((item) => item.orderId === id).map(({ name, quantity }) => ({ name, quantity })),
+      items: items.filter((item) => item.orderId === id).map(({ name, variant, quantity }) => ({ name: orderItemLabel(name, variant), quantity })),
       shipments: shipments.filter((shipment) => shipment.orderId === id)
         .map(({ carrier, number, url }) => ({ carrier, number, url: trackingLink(url) })),
     })),

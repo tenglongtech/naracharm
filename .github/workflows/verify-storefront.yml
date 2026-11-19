@@ -36,6 +36,7 @@ jobs:
         run: |
           python3 scripts/test-verify-storefront-live.py
           node --test scripts/test-build-static-images.mjs
+          node --test cloudflare/inquiries/worker.test.mjs
       - name: Build, audit and package the storefront
         run: pnpm package:static "$RUNNER_TEMP/nara-charm-pages.zip"
       - uses: actions/upload-artifact@v7.0.2

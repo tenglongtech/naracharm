@@ -74,7 +74,7 @@ export function SiteFooter() {
             <Link prefetch={false} href="/contact" className="hover:text-bg">Contact</Link>
             <Link prefetch={false} href="/size-guide" className="hover:text-bg">Size Guide</Link>
             <Link prefetch={false} href="/shipping" className="hover:text-bg">Shipping</Link>
-            <Link prefetch={false} href="/order-status" className="hover:text-bg">Track an order</Link>
+            {siteConfig.customerServicesEnabled && <Link prefetch={false} href="/order-status" className="hover:text-bg">Track an order</Link>}
             <Link prefetch={false} href="/returns" className="hover:text-bg">Returns</Link>
             <Link prefetch={false} href="/privacy" className="hover:text-bg">Privacy</Link>
             <Link prefetch={false} href="/terms" className="hover:text-bg">Terms</Link>
@@ -83,7 +83,7 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-bg/10">
-        <div className="mx-auto max-w-7xl px-4 py-5 text-center text-xs text-bg/50">
+        <div className="mx-auto max-w-7xl px-4 py-5 text-center text-xs text-bg/70">
           © {new Date().getFullYear()} Nara Charm. Handmade with spirit. All rights reserved.
         </div>
       </div>

@@ -192,9 +192,25 @@
   border-top: 1px solid #ded3c4;
 }
 
+.questions {
+  display: grid;
+  gap: 1.2rem clamp(1.4rem, 4vw, 3.4rem);
+  margin-top: 1.2rem;
+}
+
+.questions h3 {
+  font-size: 1.03rem;
+  font-weight: 600;
+}
+
+.questions p {
+  margin-top: 0.35rem;
+}
+
 @media (min-width: 800px) {
   .overview,
-  .details {
+  .details,
+  .questions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

@@ -78,7 +78,7 @@ export default function OurCraftPage() {
             <div className={styles.heroCopy}>
               <h1>Jewelry design <em>in detail.</em></h1>
               <p>Follow an open line, a folded braid and a layered edge through three Nara Charm studio studies.</p>
-              <Link href="#design-studies" className={styles.textLink}>Explore the studies <span aria-hidden="true">↓</span></Link>
+              <a href="#design-studies" className={styles.textLink}>Explore the studies <span aria-hidden="true">↓</span></a>
             </div>
             <figure className={styles.craftImage}>
               <Image src={hero.image} alt={hero.alt} fill preload sizes="(max-width: 819px) 89vw, (max-width: 1440px) 48vw, 665px" />
@@ -87,7 +87,7 @@ export default function OurCraftPage() {
           </div>
         </header>
 
-        <section id="design-studies" className={`${styles.shell} ${styles.section}`} aria-labelledby="design-studies-title">
+        <section id="design-studies" className={`${styles.shell} ${styles.section}`} aria-labelledby="design-studies-title" tabIndex={-1}>
           <div className={styles.sectionHead}>
             <h2 id="design-studies-title">From material to form</h2>
             <Link href="/studio" className={styles.textLink}>Visit the studio <span aria-hidden="true">↗</span></Link>

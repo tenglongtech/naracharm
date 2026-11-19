@@ -10,9 +10,8 @@ export type Story = {
   slug: StorySlug;
   title: string;
   excerpt: string;
-  icon: string;
+  cover: { url: string; alt: string; title: string };
   heritage: 'Tibetan Plateau' | 'Mongolian Steppe' | 'Miao Villages' | 'Han Literati' | 'Thai Tropics' | 'Caravan Road';
-  heritageSlug: 'tibetan' | 'mongol' | 'southwest' | 'han' | 'tai' | 'fusion';
   readMinutes: number;
   publishedAt: string;
   updatedAt: string;
@@ -22,12 +21,20 @@ export type Story = {
   relatedProducts: { slug: string; name: string }[];
 };
 
-const updatedAt = '2026-11-18';
+const updatedAt = '2026-11-19';
+
+export const storiesCover = {
+  url: '/editorial/nara-craft-materials.webp',
+  alt: 'Illustration of braided cord, silver-colored wire and a pale green disc laid out together',
+  width: 1536,
+  height: 1024,
+};
 
 export const STORIES: Story[] = [
   {
-    slug: 'silver-that-remembers', title: 'Silver That Remembers', icon: '🏔️',
-    heritage: 'Tibetan Plateau', heritageSlug: 'tibetan',
+    slug: 'silver-that-remembers', title: 'Silver That Remembers',
+    cover: { url: '/products/studio/high-lake-pendant.webp', alt: 'Blue-green oval pendant with a dark rim', title: 'High Lake Pendant' },
+    heritage: 'Tibetan Plateau',
     excerpt: 'A small blue-green accent changes the way we see a field of dark metal.',
     readMinutes: 1, publishedAt: '2026-05-12', updatedAt,
     body: [
@@ -40,8 +47,9 @@ export const STORIES: Story[] = [
     relatedProducts: [{ slug: 'tibetan-amulet-925-bracelet', name: 'Tibetan Amulet 925 Bracelet' }],
   },
   {
-    slug: 'the-knot-that-counts-home', title: 'The Knot That Counts Home', icon: '🐎',
-    heritage: 'Mongolian Steppe', heritageSlug: 'mongol',
+    slug: 'the-knot-that-counts-home', title: 'The Knot That Counts Home',
+    cover: { url: '/products/studio/long-horizon-braid.webp', alt: 'Tobacco-colored braid turning back into a green fold', title: 'Long Horizon Braid' },
+    heritage: 'Mongolian Steppe',
     excerpt: 'A fold that would normally hide at the fastening becomes the detail you see first.',
     readMinutes: 1, publishedAt: '2026-05-19', updatedAt,
     body: [
@@ -54,8 +62,9 @@ export const STORIES: Story[] = [
     relatedProducts: [{ slug: 'mongolian-road-knot-cord', name: 'Mongolian Road Knot Cord' }],
   },
   {
-    slug: 'silver-as-inheritance', title: 'Silver as Inheritance', icon: '🌿',
-    heritage: 'Miao Villages', heritageSlug: 'southwest',
+    slug: 'silver-as-inheritance', title: 'Silver as Inheritance',
+    cover: { url: '/products/studio/ink-window-drops.webp', alt: 'Open rectangular frames with silver-colored curls at the corners', title: 'Ink Window Drops' },
+    heritage: 'Miao Villages',
     excerpt: 'What stays with us in open silverwork can be the shape the wire leaves empty.',
     readMinutes: 1, publishedAt: '2026-05-26', updatedAt,
     body: [
@@ -68,8 +77,9 @@ export const STORIES: Story[] = [
     relatedProducts: [{ slug: 'miao-filigree-drop-earrings', name: 'Miao Filigree Drop Earrings' }],
   },
   {
-    slug: 'jade-that-listens', title: 'Jade That Listens', icon: '📜',
-    heritage: 'Han Literati', heritageSlug: 'han',
+    slug: 'jade-that-listens', title: 'Jade That Listens',
+    cover: { url: '/products/studio/paper-moon-pendant.webp', alt: 'Thin celadon crescent overlapping an uneven cream disc', title: 'Paper Moon Pendant' },
+    heritage: 'Han Literati',
     excerpt: 'A pale green edge and a warm cream field are enough to make a quiet pendant.',
     readMinutes: 1, publishedAt: '2026-06-02', updatedAt,
     body: [
@@ -82,8 +92,9 @@ export const STORIES: Story[] = [
     relatedProducts: [{ slug: 'han-jade-lotus-pendant', name: 'Han Jade Lotus Pendant' }],
   },
   {
-    slug: 'silk-that-holds-the-light', title: 'Silk That Holds the Light', icon: '🌊',
-    heritage: 'Thai Tropics', heritageSlug: 'tai',
+    slug: 'silk-that-holds-the-light', title: 'Silk That Holds the Light',
+    cover: { url: '/products/studio/reed-ripple-bracelet.webp', alt: 'Folded emerald ribbon with a slim cylindrical center', title: 'Reed Ripple Bracelet' },
+    heritage: 'Thai Tropics',
     excerpt: 'A surface that seems flat from one angle can become two colors when the fabric turns.',
     readMinutes: 1, publishedAt: '2026-06-09', updatedAt,
     body: [
@@ -96,8 +107,9 @@ export const STORIES: Story[] = [
     relatedProducts: [{ slug: 'tai-silk-cord-phone-charm', name: 'Thai Silk Cord Phone Charm' }],
   },
   {
-    slug: 'where-the-caravan-meets', title: 'Where the Caravan Meets', icon: '✨',
-    heritage: 'Caravan Road', heritageSlug: 'fusion',
+    slug: 'where-the-caravan-meets', title: 'Where the Caravan Meets',
+    cover: { url: '/products/studio/indigo-crossing-bracelet.webp', alt: 'Flat blue braid passing through a copper-colored loop', title: 'Indigo Crossing Bracelet' },
+    heritage: 'Caravan Road',
     excerpt: 'A soft cord and a firm metal-colored curve can meet in one visible crossing.',
     readMinutes: 1, publishedAt: '2026-06-16', updatedAt,
     body: [

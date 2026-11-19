@@ -36,6 +36,11 @@ export async function GET() {
           SELECT 1 FROM information_schema.columns
           WHERE table_schema = 'public' AND table_name = 'orders'
             AND column_name = 'account_user_id' AND data_type = 'text'
+        )
+        AND 2 = (
+          SELECT count(*) FROM information_schema.columns
+          WHERE table_schema = 'public' AND table_name = 'variant_images'
+            AND column_name IN ('is_primary', 'is_product_photo') AND data_type = 'boolean'
         ) AS ready`;
     return status('up', result?.ready ? 'ready' : 'pending');
   } catch {

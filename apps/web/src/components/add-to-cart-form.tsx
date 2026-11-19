@@ -1,15 +1,87 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import Link from 'next/link';
 import { addToLocalCart } from '@/lib/cart-local';
 import { cartLineQuantityLimit } from '@/lib/cart-types';
+import { priceLabel } from '@/lib/catalog';
+import { inquiryPath } from '@/lib/product-inquiry';
+import { applyLiveOffer, type StorefrontVariant } from '@/lib/storefront-offer';
+import { useProductOffers } from './product-offer-provider';
+import { setProductVariant, useProductVariant } from './use-product-variant';
+import styles from '@/app/products/[slug]/product-detail.module.css';
+
+export function ProductPurchase({ product, variant, variants, checkoutEnabled }: {
+  product: { id: string; name: string; slug: string; image: string | null; heritage: string | null };
+  variant: StorefrontVariant;
+  variants?: readonly StorefrontVariant[];
+  checkoutEnabled: boolean;
+}) {
+  const offers = useProductOffers();
+  const selected = applyLiveOffer(useProductVariant(variant, variants), offers);
+  const fieldId = useId();
+
+  return (
+    <div className={styles.order}>
+      {variants && variants.length > 1 && (
+        <div className={styles.variantChoice}>
+          <label htmlFor={fieldId}>Choose a variant</label>
+          <select id={fieldId} value={selected.sku} onChange={(event) => setProductVariant(event.target.value, variant.sku)}>
+            {variants.map((item) => {
+              const { id, sku, name, stock } = applyLiveOffer(item, offers);
+              return <option key={id} value={sku}>{name} · {sku}{checkoutEnabled && stock <= 0 ? ' · Sold out' : ''}</option>;
+            })}
+          </select>
+          <p className={styles.variantPrice} aria-live="polite">{!checkoutEnabled && 'Guide price '}{priceLabel(selected.unitPriceCents)}</p>
+        </div>
+      )}
+      <div className={styles.orderDetails}>
+        {checkoutEnabled && <p className={styles.availability} data-in-stock={selected.stock > 0} aria-live="polite">
+          {selected.stock > 0 ? 'Available to order' : 'Currently sold out'}
+        </p>}
+        <a href="#piece-fit">Size &amp; fit <span aria-hidden="true">↓</span></a>
+      </div>
+      {checkoutEnabled ? <AddToCartForm
+        key={selected.id}
+        productId={product.id}
+        productSlug={product.slug}
+        productName={product.name}
+        variantId={selected.id}
+        variantName={selected.name}
+        sku={selected.sku}
+        unitPriceCents={selected.unitPriceCents}
+        image={selected.photoUrls?.[0] ?? product.image}
+        heritage={product.heritage}
+        maxStock={selected.stock}
+      /> : (
+        <Link prefetch={false} href={inquiryPath(product.name, selected.sku, selected.name)} className="shop-button">
+          Inquire about this piece <span aria-hidden="true">↗</span>
+        </Link>
+      )}
+    </div>
+  );
+}
+
+export function ProductMeasurementsLink({ piece, variant, variants, measurements }: {
+  piece: string;
+  variant: StorefrontVariant;
+  variants?: readonly StorefrontVariant[];
+  measurements: string;
+}) {
+  const selected = useProductVariant(variant, variants);
+
+  return (
+    <Link prefetch={false} href={inquiryPath(piece, selected.sku, selected.name, { type: 'measurements', measurements })}>
+      Ask for measurements <span aria-hidden="true">↗</span>
+    </Link>
+  );
+}
 
 /**
  * PDP 加购按钮 (client)
  * 数量调整 + 写入 localStorage 购物车 → header 徽标自动更新
  */
-export function AddToCartForm({
+function AddToCartForm({
   productId,
   productSlug,
   productName,
@@ -37,6 +109,7 @@ export function AddToCartForm({
 
   const limit = cartLineQuantityLimit(maxStock);
   const outOfStock = limit <= 0;
+  const selectedQuantity = Math.min(qty, Math.max(1, limit));
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +126,7 @@ export function AddToCartForm({
         image,
         heritage,
         stock: maxStock,
-        quantity: qty,
+        quantity: selectedQuantity,
       });
       const quantity = cart.lines.find((line) => line.variantId === variantId)?.quantity ?? 0;
       setResult({ quantity });
@@ -68,18 +141,18 @@ export function AddToCartForm({
         <div role="group" aria-label="Quantity" className="flex items-center border border-border bg-bg">
           <button
             type="button"
-            onClick={() => setQty((q) => Math.max(1, q - 1))}
-            disabled={outOfStock || qty <= 1}
+            onClick={() => setQty(selectedQuantity - 1)}
+            disabled={outOfStock || selectedQuantity <= 1}
             aria-label="Decrease quantity"
             className="min-h-12 min-w-11 text-muted hover:text-ink disabled:opacity-50"
           >
             −
           </button>
-          <output aria-label="Selected quantity" className="min-w-5 text-center text-sm tabular-nums">{qty}</output>
+          <output aria-label="Selected quantity" className="min-w-5 text-center text-sm tabular-nums">{selectedQuantity}</output>
           <button
             type="button"
-            onClick={() => setQty((q) => Math.min(limit, q + 1))}
-            disabled={outOfStock || qty >= limit}
+            onClick={() => setQty(selectedQuantity + 1)}
+            disabled={outOfStock || selectedQuantity >= limit}
             aria-label="Increase quantity"
             className="min-h-12 min-w-11 text-muted hover:text-ink disabled:opacity-50"
           >

@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { stripePublishableKey } from './stripe-publishable-key';
 import { shippingCountryCodes } from './store-policies';
+import { orderItemLabel } from './cart-types';
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
   maxNetworkRetries: 2,
@@ -25,7 +26,7 @@ export function checkoutPublishableKey() {
 
 export async function createCheckoutSession(params: {
   orderId: string;
-  items: { productName: string; unitPriceCents: number; quantity: number }[];
+  items: { productName: string; variantName?: string | null; unitPriceCents: number; quantity: number }[];
   returnUrl: string;
   email: string;
   shippingCents: number;
@@ -54,7 +55,7 @@ export async function createCheckoutSession(params: {
       price_data: {
         currency: 'usd',
         unit_amount: item.unitPriceCents,
-        product_data: { name: item.productName },
+        product_data: { name: orderItemLabel(item.productName, item.variantName) },
       },
     })),
     shipping_address_collection: { allowed_countries: shippingCountryCodes },

@@ -1,13 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { CartIcon } from './cart-icon';
 import { LotusMark } from './lotus-mark';
 import { subscribeToCart, getLocalCart } from '@/lib/cart-local';
 import { FREE_SHIPPING_THRESHOLD_CENTS } from '@/lib/cart-types';
 import { catalogHashPrefix } from '@/lib/catalog-location';
+import { siteConfig } from '@/lib/site-config';
 
 const NAV_LINKS = [
   { href: '/shop', label: 'Shop All' },
@@ -20,6 +21,8 @@ const NAV_LINKS = [
 export function SiteHeaderClient() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const mobileNav = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
   // 购物车数量来自 localStorage (client-only, 避免 SSR 不匹配)
@@ -27,6 +30,10 @@ export function SiteHeaderClient() {
     setCartCount(getLocalCart().itemCount);
     return subscribeToCart((cart) => setCartCount(cart.itemCount));
   }, []);
+
+  useEffect(() => {
+    if (menuOpen) mobileNav.current?.querySelector('a')?.focus();
+  }, [menuOpen]);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
@@ -48,17 +55,22 @@ export function SiteHeaderClient() {
       </div>
 
       {/* 导航 */}
-      <header className="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur" onKeyDown={(event) => {
+        if (event.key !== 'Escape' || !menuOpen) return;
+        setMenuOpen(false);
+        menuButton.current?.focus();
+      }}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 md:py-5">
           <button
             type="button"
+            ref={menuButton}
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
-            className="-ml-2 p-2 lg:hidden"
+            className="-ml-2 flex min-h-11 min-w-11 items-center justify-center lg:hidden"
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               {menuOpen ? (
                 <>
                   <line x1="18" y1="6" x2="6" y2="18" />
@@ -87,6 +99,7 @@ export function SiteHeaderClient() {
                 prefetch={false}
                 key={l.href}
                 href={l.href}
+                aria-current={pathname === l.href ? 'page' : undefined}
                 className={`relative py-1 transition-colors hover:text-brand ${
                   isActive(l.href) ? 'text-brand' : ''
                 }`}
@@ -107,30 +120,35 @@ export function SiteHeaderClient() {
               event.preventDefault();
               field.focus();
             }} className="flex min-h-11 min-w-11 items-center justify-center hover:text-brand"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg></Link>
-            <Link prefetch={false} href="/account" aria-label="Account" className="flex min-h-11 min-w-11 items-center justify-center hover:text-brand"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></Link>
-            <CartIcon count={cartCount} />
+            {siteConfig.customerServicesEnabled ? (
+              <Link prefetch={false} href="/account" aria-label="Account" className="flex min-h-11 min-w-11 items-center justify-center hover:text-brand"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></Link>
+            ) : (
+              <Link prefetch={false} href="/account/wishlist" aria-label="Wishlist" className="flex min-h-11 min-w-11 items-center justify-center hover:text-brand">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20.5 4.6 13.1a4.65 4.65 0 0 1 6.6-6.55l.8.8.8-.8a4.65 4.65 0 0 1 6.6 6.55z" /></svg>
+              </Link>
+            )}
+            {(siteConfig.checkoutEnabled || cartCount > 0) && <CartIcon count={cartCount} />}
           </div>
         </div>
 
-        {menuOpen && (
-          <div id="mobile-navigation" className="border-t border-border bg-bg lg:hidden">
-            <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2" aria-label="Mobile">
-              {NAV_LINKS.map((l) => (
-                <Link
-                  prefetch={false}
-                  key={l.href}
-                  href={l.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={`border-b border-border/60 py-3 text-sm transition-colors ${
-                    isActive(l.href) ? 'text-brand' : 'text-ink hover:text-brand'
-                  }`}
-                >
-                  {l.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        )}
+        <div id="mobile-navigation" hidden={!menuOpen} className="border-t border-border bg-bg lg:hidden">
+          <nav ref={mobileNav} className="mx-auto flex max-w-7xl flex-col px-4 py-2" aria-label="Mobile">
+            {NAV_LINKS.map((l) => (
+              <Link
+                prefetch={false}
+                key={l.href}
+                href={l.href}
+                aria-current={pathname === l.href ? 'page' : undefined}
+                onClick={() => setMenuOpen(false)}
+                className={`border-b border-border/60 py-3 text-sm transition-colors ${
+                  isActive(l.href) ? 'text-brand' : 'text-ink hover:text-brand'
+                }`}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
       </header>
     </>
   );

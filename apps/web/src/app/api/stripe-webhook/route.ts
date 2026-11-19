@@ -6,6 +6,7 @@ import { sendEmail } from '@/lib/email';
 import { OrderConfirmationEmail } from '@/emails/order-confirmation';
 import { orderTrackingUrl } from '@/lib/order-tracking-token';
 import { clearCartByToken } from '@/lib/cart-actions';
+import { orderItemLabel } from '@/lib/cart-types';
 
 const legacyLines = z.array(z.object({
   variantId: z.uuid(),
@@ -71,7 +72,7 @@ async function sendConfirmation(order: Awaited<ReturnType<typeof settleCheckout>
         discountCents: order.discountCents, taxCents: order.taxCents,
         orderStatusUrl: orderTrackingUrl(order.id),
         items: order.lines.map((line) => ({
-          name: line.productName, quantity: line.quantity, priceCents: line.unitPriceCents,
+          name: orderItemLabel(line.productName, line.variantName), quantity: line.quantity, priceCents: line.unitPriceCents,
         })),
       }),
     });

@@ -6,9 +6,9 @@ import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { JournalList } from '@/components/journal-list';
 import { ProductTile } from '@/components/product-tile';
-import { editorialArt } from '@/lib/editorial-art';
+import { articleImagePaths, editorialArt } from '@/lib/editorial-art';
 import { absoluteUrl, serializeJsonLd } from '@/lib/seo';
-import { BLOG_ARTICLES, getArticleBySlug, getRelatedArticles, isPublishedGuide, formatBlogDate } from '@/lib/blog-data';
+import { BLOG_ARTICLES, getArticleBySlug, getRelatedArticles, isPublishedGuide, formatBlogDate, type ArticleImage } from '@/lib/blog-data';
 import { CATEGORIES } from '@/lib/categories';
 import { CATEGORY_EDITORIAL } from '@/lib/category-editorial';
 import { getJournalTopic } from '@/lib/journal-topics';
@@ -45,9 +45,11 @@ const usefulPages: Record<string, string> = {
   '/shop': 'Shop jewelry',
   '/size-guide': 'Jewelry size guide',
   '/gift-guide': 'Find a jewelry gift',
+  '/studio': 'Browse the design studio',
   '/shipping': 'Delivery information',
   '/stories': 'Stories behind the jewelry',
   '/blog/topic/care': 'Browse jewelry care guides',
+  '/blog/topic/motifs': 'Browse motif and meaning guides',
   '/collections/bracelets': 'Browse bracelets',
   '/collections/necklaces': 'Browse necklaces',
   '/collections/earrings': 'Browse earrings',
@@ -61,6 +63,7 @@ async function editorialLink(path: string | undefined) {
     const article = getArticleBySlug(path.slice('/blog/'.length));
     return article && isPublishedGuide(article) ? { path, title: article.title } : undefined;
   }
+  if (!path.startsWith('/collections/')) return undefined;
   const collection = await getCollectionBySlug(path.slice('/collections/'.length));
   return collection ? { path, title: `Explore ${collection.name}` } : undefined;
 }
@@ -77,6 +80,17 @@ function RichParagraph({ text, catalogLinks }: { text: string; catalogLinks: Rea
     if (token.startsWith('**') && token.endsWith('**')) return <strong key={index}>{token.slice(2, -2)}</strong>;
     return <span key={index}>{token}</span>;
   })}</p>;
+}
+
+function ArticleImageCaption({ art }: { art: ArticleImage }) {
+  return (
+    <figcaption className="mt-2 text-xs leading-5 text-muted">
+      {art.credit ? <>
+        {art.caption}{' '}
+        <a href={art.credit.url} className="underline underline-offset-4">{art.credit.label}</a>
+      </> : art.caption ? <>Illustration. {art.caption}</> : 'Editorial illustration'}
+    </figcaption>
+  );
 }
 
 export default async function BlogArticlePage({ params }: Params) {
@@ -101,6 +115,7 @@ export default async function BlogArticlePage({ params }: Params) {
   }
 
   const art = editorialArt(article);
+  const images = articleImagePaths(article).map(absoluteUrl);
   const [suggested, products, collections] = await Promise.all([
     editorialLink(article.editorialLink),
     getActiveProducts(),
@@ -130,7 +145,7 @@ export default async function BlogArticlePage({ params }: Params) {
     datePublished: article.publishedAt, dateModified: article.updatedAt,
     mainEntityOfPage: absoluteUrl(`/blog/${slug}`),
     author: { '@type': 'Organization', name: article.author, url: absoluteUrl('/about') },
-    ...(art ? { image: [absoluteUrl(art.src)] } : {}),
+    ...(images.length ? { image: images } : {}),
     ...(article.sources?.length ? { citation: article.sources.map(({ title, url }) => ({ '@type': 'CreativeWork', name: title, url })) } : {}),
   };
 
@@ -154,9 +169,9 @@ export default async function BlogArticlePage({ params }: Params) {
           {art && (
             <figure className="mx-auto mb-9 max-w-4xl px-5 md:px-8">
               <div className="relative aspect-[3/2] overflow-hidden rounded-sm bg-surface">
-                <Image src={art.src} alt={art.alt} fill preload sizes="(max-width: 768px) 100vw, 830px" className="object-cover" />
+                <Image src={art.src} alt={art.alt} fill preload sizes="(max-width: 768px) 92vw, 830px" className={art.credit ? 'object-contain' : 'object-cover'} />
               </div>
-              <figcaption className="mt-2 text-xs text-muted">Editorial illustration</figcaption>
+              <ArticleImageCaption art={art} />
             </figure>
           )}
           <div className="mx-auto max-w-3xl space-y-8 px-5 pb-10">
@@ -166,6 +181,16 @@ export default async function BlogArticlePage({ params }: Params) {
                 <div className="mt-3 space-y-3 leading-7 text-ink/90 md:text-lg md:leading-8">
                   {section.body.map((text, paragraph) => <RichParagraph key={paragraph} text={text} catalogLinks={catalogLinks} />)}
                 </div>
+                {section.image && (
+                  <figure className="mt-5">
+                    <Image
+                      src={section.image.src} alt={section.image.alt} width={section.image.width} height={section.image.height}
+                      sizes="(max-width: 540px) 90vw, 460px"
+                      className="h-auto w-full max-w-[460px] max-h-[34rem] rounded-sm bg-surface object-contain"
+                    />
+                    <ArticleImageCaption art={section.image} />
+                  </figure>
+                )}
               </section>
             ))}
             {article.sources?.length ? (

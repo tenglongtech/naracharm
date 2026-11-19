@@ -118,7 +118,7 @@ export default async function CollectionPage({ params }: Params) {
               <div className={styles.copy}>
                 <h1>{n?.heroTitle || collection.name}</h1>
                 {(n?.heroSubtitle || collection.description) && <p>{n?.heroSubtitle || collection.description}</p>}
-                <Link href="#collection-pieces">{isStudio ? 'View the designs' : 'Browse the pieces'} <span aria-hidden="true">↓</span></Link>
+                <a href="#collection-pieces">{isStudio ? 'View the designs' : 'Browse the pieces'} <span aria-hidden="true">↓</span></a>
               </div>
               {artwork && (
                 <figure className={styles.figure}>
@@ -132,7 +132,7 @@ export default async function CollectionPage({ params }: Params) {
           </div>
         </header>
 
-        <section id="collection-pieces" aria-labelledby="collection-pieces-title" className={`${styles.shell} py-10 md:py-14`}>
+        <section id="collection-pieces" aria-labelledby="collection-pieces-title" className={`${styles.shell} py-10 md:py-14`} tabIndex={-1}>
           <div className="flex flex-wrap items-end justify-between gap-2">
             <h2 id="collection-pieces-title" className="font-display text-3xl md:text-4xl">{isStudio ? 'Pieces in the collection' : `Shop ${collection.name}`}</h2>
             <span className="text-sm text-muted">{products.length} {products.length === 1 ? 'piece' : 'pieces'}</span>

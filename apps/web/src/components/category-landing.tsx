@@ -37,8 +37,8 @@ export function CategoryLanding({ category, products }: { category: Category; pr
               <h1>{name}</h1>
               <p>{heroSubtitle}</p>
               <div className={styles.actions}>
-                <Link href="#category-pieces" className={styles.primaryLink}>Browse the pieces <span aria-hidden="true">↓</span></Link>
-                <Link href="#category-guides" className={styles.textLink}>What to look for <span aria-hidden="true">↓</span></Link>
+                <a href="#category-pieces" className={styles.primaryLink}>Browse the pieces <span aria-hidden="true">↓</span></a>
+                <a href="#category-guides" className={styles.textLink}>What to look for <span aria-hidden="true">↓</span></a>
               </div>
             </div>
             <figure className={styles.artwork}>
@@ -53,14 +53,14 @@ export function CategoryLanding({ category, products }: { category: Category; pr
         <ul className={styles.shell}>
           {CATEGORIES.map(({ slug: itemSlug, name: itemName }) => (
             <li key={itemSlug}>
-              <Link href={`/collections/${itemSlug}`} aria-current={itemSlug === slug ? 'page' : undefined}>{itemName}</Link>
+              <Link prefetch={false} href={`/collections/${itemSlug}`} aria-current={itemSlug === slug ? 'page' : undefined}>{itemName}</Link>
             </li>
           ))}
         </ul>
       </nav>
 
       <div className={`${styles.shell} ${styles.layout}`}>
-        <section id="category-pieces" aria-labelledby="category-pieces-title">
+        <section id="category-pieces" aria-labelledby="category-pieces-title" tabIndex={-1}>
           <div className={styles.piecesHeading}>
             <h2 id="category-pieces-title">Shop {name.toLowerCase()}</h2>
             <p>{products.length} {products.length === 1 ? 'piece' : 'pieces'}</p>
@@ -75,24 +75,24 @@ export function CategoryLanding({ category, products }: { category: Category; pr
           ) : (
             <>
               <p>This category is between listings.</p>
-              <Link href="/shop" className={styles.textLink}>Browse all jewelry <span aria-hidden="true">↗</span></Link>
+              <Link prefetch={false} href="/shop" className={styles.textLink}>Browse all jewelry <span aria-hidden="true">↗</span></Link>
             </>
           )}
         </section>
 
-        <aside id="category-guides" aria-labelledby="category-guides-title" className={styles.guides}>
+        <aside id="category-guides" aria-labelledby="category-guides-title" className={styles.guides} tabIndex={-1}>
           <h2 id="category-guides-title">Before you choose</h2>
           <ul>
             {guides.map(({ slug: guide, label, note }) => (
               <li key={guide}>
-                <Link href={`/blog/${guide}`} className={styles.guideLink}>
+                <Link prefetch={false} href={`/blog/${guide}`} className={styles.guideLink}>
                   <span>{label}</span><span aria-hidden="true">↗</span>
                 </Link>
                 <p>{note}</p>
               </li>
             ))}
           </ul>
-          <Link href="/studio" className={styles.textLink}>Explore studio designs <span aria-hidden="true">↗</span></Link>
+          <Link prefetch={false} href="/studio" className={styles.textLink}>Explore studio designs <span aria-hidden="true">↗</span></Link>
         </aside>
       </div>
     </main>

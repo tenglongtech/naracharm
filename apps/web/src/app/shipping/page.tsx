@@ -57,13 +57,23 @@ export default function ShippingPage() {
             </li>
           ))}
         </ul>
+        {!siteConfig.checkoutEnabled && siteConfig.inquiryFormEnabled && (
+          <>
+            <p>To confirm delivery for a piece, include the piece name and destination country in your inquiry.</p>
+            <a href="/contact?topic=product" className={styles.contactLink}>
+              Ask about delivery <span aria-hidden="true">↗</span>
+            </a>
+          </>
+        )}
       </section>
 
       <div className={styles.details}>
         <section className={styles.section} aria-labelledby="tracking">
           <h2 id="tracking">Track your order</h2>
           <p>We email tracking details when your order ships. Include your order number if you contact us about a shipment.</p>
-          <a href={'mailto:' + support} className={styles.contactLink}>Email order support <span aria-hidden="true">↗</span></a>
+          <a href={siteConfig.inquiryFormEnabled ? '/contact?topic=order' : 'mailto:' + support} className={styles.contactLink}>
+            Contact order support <span aria-hidden="true">↗</span>
+          </a>
         </section>
         <section className={styles.section} aria-labelledby="customs">
           <h2 id="customs">Customs and duties</h2>

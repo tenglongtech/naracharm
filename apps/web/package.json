@@ -12,6 +12,7 @@
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "export-storefront": "node --import tsx scripts/export-storefront.ts",
+    "catalog:offline": "node --import tsx scripts/catalog-offline.ts",
     "feed:google": "node --import tsx ../../scripts/generate-google-feed.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

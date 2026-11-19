@@ -1,4 +1,7 @@
 import { SiteHeader, SiteFooter, LotusMark } from '@/components/site-chrome';
+import Link from 'next/link';
+import type { ReactNode } from 'react';
+import { siteConfig } from '@/lib/site-config';
 
 /** 政策/帮助页通用布局 (Shipping/Returns/Privacy/Terms/FAQ 等) */
 export function LegalPage({
@@ -10,7 +13,7 @@ export function LegalPage({
   title: string;
   updated?: string;
   intro?: string;
-  sections: { heading: string; body: string[] }[];
+  sections: { heading: string; body: ReactNode[] }[];
 }) {
   return (
     <>
@@ -37,10 +40,10 @@ export function LegalPage({
         </div>
 
         <div className="mt-12 rounded-lg border border-border bg-surface p-6 text-sm text-muted">
-          Questions? Reach us anytime at{' '}
-          <a href="mailto:hello@naracharm.com" className="text-brand underline">
-            hello@naracharm.com
-          </a>
+          Questions?{' '}
+          {siteConfig.inquiryFormEnabled
+            ? <Link href="/contact" className="text-brand underline">Send us an inquiry</Link>
+            : <a href={`mailto:${siteConfig.company.contactEmail}`} className="text-brand underline">{siteConfig.company.contactEmail}</a>}
           .
         </div>
       </main>

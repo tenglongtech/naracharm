@@ -1,5 +1,4 @@
 import { createHash } from 'node:crypto';
-import { stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { asc, eq, inArray, sql } from 'drizzle-orm';
 import { collections, inventory, productImages, products, productVariants } from '@jewelry/db';
@@ -8,9 +7,11 @@ import {
   CatalogIntakeError, catalogCsv, MAX_CATALOG_ROWS, parseCatalogIntake, type IntakeIssue, type IntakeRow,
 } from './catalog-intake-csv';
 import { productPhotoUrl } from './product-media';
+import { checkCatalogPhotoFiles } from './catalog-photo-files';
 import { saveProductImage } from './product-image-write';
+import { defaultCatalogSku } from './storefront-offer';
 import {
-  defaultCatalogSku, ensureStudioCollection, insertCatalogProductInTransaction,
+  ensureStudioCollection, insertCatalogProductInTransaction,
   ProductEditError, updateCatalogProductInTransaction, type CatalogTransaction,
 } from './product-maintenance';
 import { getStudioCollection, getStudioPreview, STUDIO_PREVIEWS } from './studio-listings';
@@ -97,23 +98,12 @@ async function buildPlan(tx: CatalogTransaction, csv: string, lock: boolean) {
   const usedSkus = await tx.select({ sku: productVariants.sku, productId: productVariants.productId })
     .from(productVariants).where(inArray(productVariants.sku, [...skuRows.keys()]));
   const skuByName = new Map(usedSkus.map((item) => [item.sku, item.productId]));
-  const localPhotos = [...new Set(rows.map(({ photoUrl }) => photoUrl).filter((url): url is string => Boolean(url?.startsWith('/'))))];
-  const existingLocalPhotos = new Set((await Promise.all(localPhotos.map(async (url) => {
-    try {
-      const file = await stat(join(process.cwd(), 'public', url.slice(1)));
-      return file.isFile() ? url : null;
-    } catch {
-      return null;
-    }
-  }))).filter(Boolean));
+  issues.push(...await checkCatalogPhotoFiles(rows, join(process.cwd(), 'public')));
 
   for (const entry of planned) {
     const { row, sku, current } = entry;
     const occupant = sku && skuByName.get(sku);
     if (occupant && occupant !== current?.id) issues.push({ row: row.row, message: '这个 SKU 已被另一款商品使用。' });
-    if (row.photoUrl?.startsWith('/') && !existingLocalPhotos.has(row.photoUrl)) {
-      issues.push({ row: row.row, message: '找不到本地实拍文件。请使用已部署的图片路径或公开 HTTPS 地址。' });
-    }
   }
 
   const revision = issues.length ? null : createHash('sha256').update(csv).update(JSON.stringify(planned.map((entry) => ({

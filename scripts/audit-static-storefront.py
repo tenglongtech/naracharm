@@ -4,11 +4,10 @@ import json
 import re
 import sys
 from collections import deque
-from decimal import Decimal, InvalidOperation
 from html.parser import HTMLParser
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from urllib.parse import unquote, urlsplit
+from urllib.parse import parse_qsl, unquote, urlsplit
 from xml.etree import ElementTree
 from zipfile import ZIP_DEFLATED, ZipFile
 
@@ -30,6 +29,8 @@ class Page(HTMLParser):
         self.images = []
         self.image_preloads = []
         self.assets = []
+        self.checkout_mode = None
+        self.inquiry_mode = None
         self._json_ld = None
         self._title = None
         self.feed(path.read_text(encoding="utf-8"))
@@ -38,6 +39,9 @@ class Page(HTMLParser):
         attrs = dict(attrs)
         if attrs.get("id"):
             self.ids.add(attrs["id"])
+        if tag == "main" and attrs.get("id") == "main":
+            self.checkout_mode = attrs.get("data-checkout-mode")
+            self.inquiry_mode = attrs.get("data-inquiry-mode")
         property_name = attrs.get("property") or attrs.get("name") or ""
         if tag == "meta" and property_name.startswith(("og:", "twitter:")):
             self.social.setdefault(property_name, []).append(attrs.get("content") or "")
@@ -263,7 +267,7 @@ def check_offer_policy_definitions(site_url, pages, problems):
     return policies
 
 
-def check_commerce(rows, all_product_pages, items, offer_policies, problems):
+def check_commerce(rows, all_product_pages, items, offer_policies, problems, checkout_enabled=True):
     sitemap_images = {
         (row.findtext("{*}loc") or "").rstrip("/"): [image.findtext("{*}loc") for image in row.findall("{*}image")]
         for row in rows
@@ -271,43 +275,61 @@ def check_commerce(rows, all_product_pages, items, offer_policies, problems):
     offers = {}
     available = 0
     for url, page in all_product_pages.items():
-        products = [entry for entry in page.schema if entry.get("@type") == "Product"]
+        products = [entry for entry in page.schema if entry.get("@type") in ("Product", "ProductGroup")]
         if is_noindex(page):
             if products:
                 problems.add(f"Design preview has product offer markup: {url}")
             continue
-        if len(products) != 1 or not isinstance(products[0].get("offers"), dict):
-            problems.add(f"Product page has no single offer: {url}")
+        if len(products) != 1:
+            problems.add(f"Expected one product or product group: {url}")
             continue
         product = products[0]
-        offer = product["offers"]
-        for field, expected in offer_policies.items():
-            if offer.get(field) != expected:
-                problems.add(f"Product offer has an incorrect {field} reference: {url}")
+        if not checkout_enabled and "offers" in product:
+            problems.add(f"Inquiry-only page advertises an online offer: {url}")
         images = product.get("image", [])
-        price = offer.get("price")
-        currency = offer.get("priceCurrency")
-        availability = offer.get("availability")
-        try:
-            cents = Decimal(price)
-            if cents.is_nan() or cents.is_infinite() or cents < 0:
-                raise InvalidOperation
-        except (InvalidOperation, TypeError):
-            problems.add(f"Invalid product price: {url}")
-            continue
-        availability_map = {
-            "https://schema.org/InStock": "in_stock",
-            "https://schema.org/OutOfStock": "out_of_stock",
-        }
-        if availability not in availability_map or currency != "USD" or offer.get("url") != url or not product.get("sku"):
-            problems.add(f"Invalid product offer details: {url}")
-            continue
-        if availability_map[availability] == "in_stock" and cents > 0:
-            available += 1
         if images != sitemap_images.get(url, []):
             problems.add(f"Product page and sitemap list different photos: {url}")
-        if images and cents > 0:
-            offers[url] = (images, f"{price} {currency}", availability_map[availability])
+
+        grouped = product.get("@type") == "ProductGroup"
+        group = product.get("productGroupID") if grouped else None
+        variants = product.get("hasVariant") if grouped else [product]
+        if grouped and (not group or product.get("url") != url or not isinstance(variants, list) or len(variants) < 2):
+            problems.add(f"Invalid product group: {url}")
+            continue
+
+        any_in_stock = False
+        skus = set()
+        combined_photos = set()
+        for variant in variants:
+            if not isinstance(variant, dict):
+                problems.add(f"Invalid variant entry: {url}")
+                continue
+            sku = variant.get("sku")
+            offer = variant.get("offers")
+            if variant.get("@type") != "Product" or not sku or sku in skus:
+                problems.add(f"Missing or duplicate product SKU: {url}")
+                continue
+            skus.add(sku)
+            variant_images = variant.get("image", [])
+            combined_photos.update(variant_images)
+            if not checkout_enabled:
+                if "offers" in variant:
+                    problems.add(f"Inquiry-only page advertises an online offer: {url}")
+                continue
+            if not isinstance(offer, dict):
+                problems.add(f"Missing product offer: {url}")
+                continue
+            availability = check_offer(offer, url, sku if grouped else None, offer_policies, problems)
+            if not availability:
+                continue
+            in_stock, price = availability
+            has_price = price != "0.00"
+            any_in_stock |= in_stock and has_price
+            if variant_images and has_price:
+                offers[offer["url"]] = (variant_images, price + " USD", in_stock, product, variant)
+        if combined_photos != set(images):
+            problems.add(f"Product variants and sitemap list different photos: {url}")
+        available += int(any_in_stock)
 
     feed_urls, feed_ids = set(), set()
     for item in items:
@@ -322,19 +344,62 @@ def check_commerce(rows, all_product_pages, items, offer_policies, problems):
         if not offer:
             problems.add(f"Feed item has no eligible photographed product offer: {url}")
             continue
-        images, price, availability = offer
+        images, price, in_stock, product, variant = offer
         photo = item.findtext(MERCHANT_NS + "image_link")
         extra_photos = [node.text for node in item.findall(MERCHANT_NS + "additional_image_link")]
         if photo != images[0] or extra_photos != images[1:11]:
             problems.add(f"Feed photos differ from the product page or sitemap: {url}")
         if price != item.findtext(MERCHANT_NS + "price"):
             problems.add(f"Feed price differs from the product page: {url}")
-        if availability != item.findtext(MERCHANT_NS + "availability"):
+        if ("in_stock" if in_stock else "out_of_stock") != item.findtext(MERCHANT_NS + "availability"):
             problems.add(f"Feed availability differs from the product page: {url}")
+        if variant.get("name") != item.findtext(MERCHANT_NS + "title"):
+            problems.add(f"Feed title differs from the product page: {url}")
+        group = item.findtext(MERCHANT_NS + "item_group_id")
+        option = item.find(MERCHANT_NS + "variant_option")
+        if product.get("@type") == "ProductGroup":
+            expected_option = variant.get("additionalProperty", {})
+            if (
+                group != product["productGroupID"]
+                or item.findtext(MERCHANT_NS + "item_group_title") != product.get("name")
+                or option is None
+                or option.findtext(MERCHANT_NS + "name") != expected_option.get("name")
+                or option.findtext(MERCHANT_NS + "value") != expected_option.get("value")
+            ):
+                problems.add(f"Feed variant grouping differs from the product page: {url}")
+        elif group or option is not None:
+            problems.add(f"Feed groups a single product without variants: {url}")
 
     for url in offers.keys() - feed_urls:
         problems.add(f"Photographed product is missing from the Shopping Feed: {url}")
     return available
+
+
+def check_offer(offer, canonical, sku, offer_policies, problems):
+    url = offer.get("url")
+    if sku and isinstance(url, str):
+        variant_url = urlsplit(url)
+        valid_url = (
+            variant_url._replace(query="", fragment="").geturl() == canonical
+            and not variant_url.fragment
+            and parse_qsl(variant_url.query, keep_blank_values=True) == [("sku", sku)]
+        )
+    else:
+        valid_url = url == canonical
+    for field, expected in offer_policies.items():
+        if offer.get(field) != expected:
+            problems.add(f"Product offer has an incorrect {field} reference: {url}")
+    price = offer.get("price")
+    availability = offer.get("availability")
+    if not isinstance(price, str) or not re.fullmatch(r"(?:0|[1-9][0-9]*)\.[0-9]{2}", price):
+        problems.add(f"Invalid product price: {url}")
+        return None
+    if not valid_url or offer.get("priceCurrency") != "USD" or availability not in (
+        "https://schema.org/InStock", "https://schema.org/OutOfStock",
+    ):
+        problems.add(f"Invalid product offer details: {url}")
+        return None
+    return availability == "https://schema.org/InStock", price
 
 
 def check_release_files(root, checkout, api_origin, problems):
@@ -355,8 +420,13 @@ def check_release_files(root, checkout, api_origin, problems):
 
         if parts[0] == "image":
             variant = re.fullmatch(r"([0-9a-f]{20})-([1-9][0-9]*)\.webp", name)
-            if len(parts) != 2 or not variant:
+            share = re.fullmatch(r"share-([0-9a-f]{20})\.jpg", name)
+            if len(parts) != 2 or not (variant or share):
                 problems.add(f"Unexpected file in the immutable image directory: {file.relative_to(root)}")
+            elif share:
+                data = file.read_bytes()
+                if not data.startswith(b"\xff\xd8\xff") or not hashlib.sha256(data).hexdigest().startswith(share[1]):
+                    problems.add(f"Share JPEG fingerprint differs from its contents: {name}")
             else:
                 key, width = variant.groups()
                 versions.setdefault(key, []).append((int(width), file))
@@ -475,15 +545,34 @@ def audit(root, site_url=None, api_origin=None, archive=None, previous_sitemap=N
             check_share_card(product_page, url, site_url, root, problems)
     check_page_coverage(root, site_url, pages, "blog", problems)
     items = ElementTree.parse(root / "google-feed.xml").findall("channel/item")
+    checkout = utility.get("/checkout")
+    checkout_enabled = not checkout or checkout.checkout_mode != "inquiry"
+    if not checkout_enabled:
+        if items:
+            problems.add("Inquiry-only release advertises products in its Shopping Feed")
+        if "/contact?topic=product" not in checkout.links:
+            problems.add("Inquiry-only checkout is missing its contact link")
     offer_policies = check_offer_policy_definitions(site_url, pages, problems)
-    available = check_commerce(rows, all_products, items, offer_policies, problems)
+    available = check_commerce(rows, all_products, items, offer_policies, problems, checkout_enabled)
     robots = root / "robots.txt"
     if not robots.is_file() or f"Sitemap: {site_url}/sitemap.xml" not in robots.read_text().splitlines():
         problems.add("robots.txt does not point to the canonical sitemap")
 
     guide_count = sum(urlsplit(url).path.startswith("/blog/") and "/topic/" not in url for url in urls)
     print(f"{len(urls)} sitemap URLs, {guide_count} editorial articles, {len(items)} Shopping Feed items")
-    files = check_release_files(root, utility.get("/checkout"), api_origin, problems) if archive else []
+    files = check_release_files(root, checkout if checkout_enabled else None, api_origin, problems) if archive else []
+    contact = pages.get(site_url + "/contact")
+    if contact and contact.inquiry_mode == "online":
+        routes = root / "_routes.json"
+        worker = root / "_worker.js"
+        if not worker.is_file() or not routes.is_file() or json.loads(routes.read_text()) != {
+            "version": 1, "include": ["/api/inquiries"], "exclude": [],
+        }:
+            problems.add("Online inquiry form is missing its scoped Cloudflare worker")
+        for route, topic in (("/shipping", "order"), ("/returns", "returns")):
+            page = pages.get(site_url + route)
+            if not page or f"/contact?topic={topic}" not in page.links:
+                problems.add(f"Missing contact form link for {route}")
     if problems:
         for issue in sorted(problems):
             print(issue, file=sys.stderr)
@@ -498,6 +587,9 @@ def audit(root, site_url=None, api_origin=None, archive=None, previous_sitemap=N
             "sitemapUrls": len(urls),
             "maxInternalLinkDepth": crawl_depth,
             "indexableArticles": guide_count,
+            "onlineInquiry": bool(contact and contact.inquiry_mode == "online"),
+            "checkoutMode": "online" if checkout_enabled else "inquiry",
+            "catalogProducts": len(all_products) - previews,
             "productsInStock": available,
             "designPreviews": previews,
             "shoppingFeedItems": len(items),

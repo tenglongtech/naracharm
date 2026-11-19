@@ -51,7 +51,7 @@ export default function BlogPage() {
             <div className={styles.intro}>
               <h1>The Nara <em>Journal.</em></h1>
               <p>Practical guides to fit, care and wearing jewelry, with a closer look at the materials and motifs behind each piece.</p>
-              <Link className={styles.topicJump} href="#journal-topics">Browse topics <span aria-hidden="true">↓</span></Link>
+              <a className={styles.topicJump} href="#journal-topics">Browse topics <span aria-hidden="true">↓</span></a>
               <nav aria-label="Common jewelry questions" className={styles.quickLinks}>
                 <ul>
                   {startingGuides.map(({ slug, label }) => (
@@ -80,7 +80,7 @@ export default function BlogPage() {
           </div>
         </header>
 
-        <section id="journal-topics" className={`${styles.shell} ${styles.topics}`} aria-labelledby="topics-title">
+        <section id="journal-topics" className={`${styles.shell} ${styles.topics}`} aria-labelledby="topics-title" tabIndex={-1}>
           <h2 id="topics-title">Browse by topic</h2>
           <ul className={styles.topicList}>
             {JOURNAL_TOPICS.map((topic) => {

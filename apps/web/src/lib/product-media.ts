@@ -1,3 +1,5 @@
+import type { StorefrontVariant } from './storefront-offer';
+
 type ProductMedia = {
   primaryImage: string | null;
   images: string[];
@@ -5,6 +7,8 @@ type ProductMedia = {
 };
 
 type ProductPhotoRow = { url: string; isProductPhoto: boolean; isPrimary: boolean; sortOrder: number };
+type PhotoVariant = Pick<StorefrontVariant, 'photoUrls'>;
+type PhotoProduct = ProductMedia & { availability?: 'preview'; variant?: PhotoVariant; variants?: PhotoVariant[] };
 
 export function productPhotoUrl(value: string): string | undefined {
   const source = value.trim();
@@ -38,6 +42,23 @@ export function searchableProductPhotos(product: ProductMedia & { availability?:
   const primary = productPhotoUrl(product.primaryImage);
   if (!primary) return [];
   return [...new Set([primary, ...product.images.map(productPhotoUrl)])].filter((url): url is string => Boolean(url));
+}
+
+export function searchableVariantPhotos(product: PhotoProduct, variant?: PhotoVariant): string[] {
+  if (product.availability === 'preview') return [];
+  const assigned = variant?.photoUrls?.map(productPhotoUrl).filter((photo): photo is string => Boolean(photo));
+  return assigned?.length ? [...new Set(assigned)] : searchableProductPhotos(product);
+}
+
+export function productIndexPhotos(product: PhotoProduct): string[] {
+  const variants = product.variants?.length ? product.variants : [product.variant];
+  return [...new Set(variants.flatMap((variant) => searchableVariantPhotos(product, variant)))];
+}
+
+export function variantProductMedia(product: PhotoProduct, variant?: PhotoVariant): ProductMedia {
+  const photos = searchableVariantPhotos(product, variant);
+  if (photos.length) return { primaryImage: photos[0], images: photos, imageKind: 'photo' };
+  return { primaryImage: product.primaryImage, images: product.images, imageKind: product.imageKind };
 }
 
 export function withProductMedia<T extends ProductMedia>(product: T, illustration?: ProductMedia): T {

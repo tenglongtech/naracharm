@@ -17,6 +17,7 @@ type Img = {
   isPrimary: boolean;
   isProductPhoto: boolean;
   sortOrder: number;
+  variantId: string | null;
 };
 
 /**
@@ -39,16 +40,19 @@ export function ProductImagesModal({
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [photoUrl, setPhotoUrl] = useState('');
+  const [variantId, setVariantId] = useState('');
+  const [variants, setVariants] = useState<Awaited<ReturnType<typeof getProductImages>>['variants']>([]);
   const [addingPhoto, setAddingPhoto] = useState(false);
-  const hasProductPhotos = images.some((image) => image.isProductPhoto);
+  const hasSharedPhotos = images.some((image) => !image.variantId && image.isProductPhoto);
   const [messageApi, msgCtx] = message.useMessage();
 
   const load = async () => {
     if (!productId) return;
     setLoading(true);
     try {
-      const imgs = await getProductImages(productId);
-      setImages(imgs);
+      const result = await getProductImages(productId);
+      setImages(result.images);
+      setVariants(result.variants);
     } catch {
       messageApi.error('无法加载图片');
     } finally {
@@ -59,6 +63,7 @@ export function ProductImagesModal({
   useEffect(() => {
     if (open && productId) {
       setPhotoUrl('');
+      setVariantId('');
       void load();
     }
   }, [open, productId]);
@@ -88,7 +93,8 @@ export function ProductImagesModal({
     if (!productId || !photoUrl.trim()) return;
     setAddingPhoto(true);
     try {
-      await addProductImage(productId, photoUrl, productName, true);
+      const variant = variants.find((candidate) => candidate.id === variantId);
+      await addProductImage(productId, photoUrl, variant ? `${productName} ${variant.name}` : productName, true, variantId || undefined);
       setPhotoUrl('');
       messageApi.success('商品实拍已添加');
       await load();
@@ -99,10 +105,10 @@ export function ProductImagesModal({
     }
   }
 
-  async function handleSetPrimary(imgId: string) {
+  async function handleSetPrimary(img: Img) {
     if (!productId) return;
     try {
-      await setPrimaryImage(imgId, productId);
+      await setPrimaryImage(img.id, productId, img.variantId ?? undefined);
       messageApi.success('已设为主图');
       await load();
     } catch {
@@ -110,9 +116,9 @@ export function ProductImagesModal({
     }
   }
 
-  async function handleDelete(imgId: string) {
+  async function handleDelete(img: Img) {
     try {
-      await deleteProductImage(imgId);
+      await deleteProductImage(img.id, img.variantId ?? undefined);
       messageApi.success('已删除');
       await load();
     } catch {
@@ -133,10 +139,23 @@ export function ProductImagesModal({
       >
         <form className="mb-5 space-y-2" onSubmit={handleProductPhoto}>
           <label className="block font-medium" htmlFor="product-photo-url">商品实拍地址</label>
-          <p className="text-xs text-neutral-600">填写与此款商品一致、可公开访问的 HTTPS 图片地址。重新导出商品数据后，实拍会进入商品页和购物 Feed。</p>
+          <p className="text-xs text-neutral-600">填写公开 HTTPS 图片地址。颜色或材质不同的规格请分别添加实拍。</p>
+          {variants.length > 0 && (
+            <label className="flex flex-col gap-1 text-sm" htmlFor="product-photo-scope">
+              适用规格
+              <select
+                id="product-photo-scope" value={variantId} disabled={loading || addingPhoto}
+                onChange={(event) => setVariantId(event.target.value)}
+                className="w-full rounded-md border border-neutral-300 bg-white px-3 py-1.5"
+              >
+                <option value="">所有规格通用</option>
+                {variants.map((variant) => <option key={variant.id} value={variant.id}>{variant.name} · {variant.sku}</option>)}
+              </select>
+            </label>
+          )}
           <div className="flex flex-wrap gap-2">
             <Input id="product-photo-url" value={photoUrl} onChange={(event) => setPhotoUrl(event.target.value)} className="min-w-0 flex-1" placeholder="https://…" required />
-            <Button htmlType="submit" loading={addingPhoto}>添加商品实拍</Button>
+            <Button htmlType="submit" disabled={loading} loading={addingPhoto}>添加商品实拍</Button>
           </div>
         </form>
 
@@ -161,7 +180,7 @@ export function ProductImagesModal({
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
               {images.map((img) => (
-                <div key={img.id} style={{ position: 'relative' }}>
+                <div key={`${img.variantId ?? 'shared'}:${img.id}`} style={{ position: 'relative' }}>
                   <AntImage
                     src={img.url}
                     alt={img.altText || ''}
@@ -178,14 +197,18 @@ export function ProductImagesModal({
                       主图
                     </span>
                   )}
-                  {img.isProductPhoto && <p className="mt-1 text-xs font-medium text-green-700">商品实拍</p>}
+                  {img.isProductPhoto && (
+                    <p className="mt-1 break-words text-xs font-medium text-green-700">
+                      {img.variantId ? `规格实拍 · ${variants.find(({ id }) => id === img.variantId)?.sku ?? ''}` : '通用实拍'}
+                    </p>
+                  )}
                   <div style={{ display: 'flex', gap: 4, marginTop: 4 }}>
-                    {!img.isPrimary && (!hasProductPhotos || img.isProductPhoto) && (
-                      <Button size="small" icon={<StarOutlined />} onClick={() => handleSetPrimary(img.id)} style={{ flex: 1 }}>
+                    {!img.isPrimary && (img.isProductPhoto || (!img.variantId && !hasSharedPhotos)) && (
+                      <Button size="small" icon={<StarOutlined />} onClick={() => handleSetPrimary(img)} style={{ flex: 1 }}>
                         设主图
                       </Button>
                     )}
-                    <Popconfirm title="删除此图片?" onConfirm={() => handleDelete(img.id)}>
+                    <Popconfirm title="删除此图片?" onConfirm={() => handleDelete(img)}>
                       <Button size="small" danger icon={<DeleteOutlined />} />
                     </Popconfirm>
                   </div>

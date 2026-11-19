@@ -4,7 +4,6 @@ import localFont from 'next/font/local';
 import '@/styles/globals.css';
 import { serializeJsonLd, storeOrganization } from '@/lib/seo';
 import { freeShippingFromLabel } from '@/lib/store-policies';
-import { StorefrontAnalytics } from '@/components/storefront-analytics';
 
 const inter = localFont({
   src: './fonts/inter-latin.woff2',
@@ -87,7 +86,7 @@ const organizationJsonLd = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'Customer Service',
-    email: siteConfig.company.supportEmail,
+    ...(siteConfig.inquiryFormEnabled ? { url: `${SITE_URL}/contact` } : { email: siteConfig.company.supportEmail }),
     availableLanguage: 'English',
   },
   address: {
@@ -108,7 +107,6 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
-        <StorefrontAnalytics />
         {children}
       </body>
     </html>

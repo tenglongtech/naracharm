@@ -30,7 +30,8 @@
   "tai-silk-cord-phone-charm": {
     "primaryImage": "/products/redesigned/tai-silk-cord-phone-charm.webp",
     "images": [
-      "/products/redesigned/tai-silk-cord-phone-charm.webp"
+      "/products/redesigned/tai-silk-cord-phone-charm.webp",
+      "/products/redesigned/tai-silk-cord-phone-charm-lotus-detail.webp"
     ],
     "imageKind": "illustration"
   },
@@ -42,9 +43,9 @@
     "imageKind": "illustration"
   },
   "obsidian-guardian-charm": {
-    "primaryImage": "/products/redesigned/obsidian-guardian-charm.webp",
+    "primaryImage": "/products/redesigned/obsidian-guardian-charm-bead-study.webp",
     "images": [
-      "/products/redesigned/obsidian-guardian-charm.webp"
+      "/products/redesigned/obsidian-guardian-charm-bead-study.webp"
     ],
     "imageKind": "illustration"
   },
@@ -52,14 +53,14 @@
     "primaryImage": "/products/redesigned/caravan-fusion-necklace-slate.webp",
     "images": [
       "/products/redesigned/caravan-fusion-necklace-slate.webp",
-      "/products/redesigned/caravan-fusion-necklace.webp"
+      "/products/redesigned/caravan-fusion-necklace-metalwork-detail.webp"
     ],
     "imageKind": "illustration"
   },
   "amethyst-calm-bracelet": {
-    "primaryImage": "/products/redesigned/amethyst-peace-bracelet.webp",
+    "primaryImage": "/products/redesigned/amethyst-calm-bracelet.webp",
     "images": [
-      "/products/redesigned/amethyst-peace-bracelet.webp"
+      "/products/redesigned/amethyst-calm-bracelet.webp"
     ],
     "imageKind": "illustration"
   },

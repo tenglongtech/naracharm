@@ -33,12 +33,12 @@ export default function SizeGuidePage() {
         </header>
         <nav aria-label="Size guide sections" className={`${styles.jumpBar} ${styles.fitJump}`}>
           <ul className={styles.shell}>
-            {topics.map(({ id, label }) => <li key={id}><Link href={`#${id}`}>{label} <span aria-hidden="true">↓</span></Link></li>)}
+            {topics.map(({ id, label }) => <li key={id}><a href={`#${id}`}>{label} <span aria-hidden="true">↓</span></a></li>)}
           </ul>
         </nav>
 
         <div className={`${styles.shell} ${styles.section} ${styles.fitSections}`}>
-          <section id="bracelet-fit" aria-labelledby="bracelet-fit-title">
+          <section id="bracelet-fit" aria-labelledby="bracelet-fit-title" tabIndex={-1}>
             <h2 id="bracelet-fit-title">Bracelets</h2>
             <div>
               <ol>
@@ -47,25 +47,25 @@ export default function SizeGuidePage() {
                 <li>Check the fastening. A stretch bracelet needs to pass over the hand. For an adjustable cord, compare its smallest and largest closed sizes with your wrist.</li>
               </ol>
               <p className={styles.fitExample}>For a wrist measuring 16 cm, a listing that fits wrists from 15.5 to 17 cm includes your measurement. If the listing gives a laid-flat length, ask for the closed fit range.</p>
-              <Link href="/blog/bracelet-size-guide-how-to-measure" className={styles.textLink}>Read the bracelet measurement guide <span aria-hidden="true">↗</span></Link>
+              <Link href="/blog/bracelet-size-guide-how-to-measure" className={styles.textLink}>See how to measure your wrist <span aria-hidden="true">↗</span></Link>
             </div>
           </section>
-          <section id="necklace-fit" aria-labelledby="necklace-fit-title">
+          <section id="necklace-fit" aria-labelledby="necklace-fit-title" tabIndex={-1}>
             <h2 id="necklace-fit-title">Necklaces</h2>
             <div>
               <p>Use a piece of string to try the listed chain or cord length against the neckline you plan to wear. Measure the string laid flat after you find a length you like.</p>
               <p>Check pendant dimensions and the extender range separately. When layering, try the shortest piece first and leave room so the pendants sit apart.</p>
-              <Link href="/collections/necklaces" className={styles.textLink}>Browse necklaces <span aria-hidden="true">↗</span></Link>
+              <Link href="/blog/necklace-length-paper-test" className={styles.textLink}>Test necklace length with string <span aria-hidden="true">↗</span></Link>
             </div>
           </section>
-          <section id="earring-fit" aria-labelledby="earring-fit-title">
+          <section id="earring-fit" aria-labelledby="earring-fit-title" tabIndex={-1}>
             <h2 id="earring-fit-title">Earrings</h2>
             <div>
               <p>Measure an earring you already wear from its hook or post to its lowest point. Compare that drop with the listing and check whether a longer pair would touch a collar or scarf.</p>
-              <Link href="/blog/choosing-openwork-earrings" className={styles.textLink}>Compare openwork earring styles <span aria-hidden="true">↗</span></Link>
+              <Link href="/blog/reading-earring-drop-length" className={styles.textLink}>Make an earring drop template <span aria-hidden="true">↗</span></Link>
             </div>
           </section>
-          <section id="charm-fit" aria-labelledby="charm-fit-title">
+          <section id="charm-fit" aria-labelledby="charm-fit-title" tabIndex={-1}>
             <h2 id="charm-fit-title">Phone charms</h2>
             <div>
               <p>Compare the charm’s attachment loop with a compatible lanyard opening on your case. Check that the charm has room to move clear of the camera and charging port.</p>

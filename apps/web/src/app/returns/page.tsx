@@ -13,6 +13,7 @@ export const metadata = pageMetadata({
 
 export default function ReturnsPage() {
   const { contactEmail, returnAddress } = siteConfig.company;
+  const returnContact = siteConfig.inquiryFormEnabled ? '/contact?topic=returns' : 'mailto:' + contactEmail + '?subject=Nara%20Charm%20return%20request';
 
   return (
     <OrderPolicyPage
@@ -34,11 +35,11 @@ export default function ReturnsPage() {
         <section aria-labelledby="return-request">
           <h2 id="return-request">Request a return</h2>
           <ol className={styles.steps}>
-            <li>Email us with your order number and the reason for your return.</li>
+            <li>Contact us with your order number and the reason for your return.</li>
             <li>Wait for the return address in {returnAddress} and mailing instructions.</li>
             <li>After we receive and inspect your item, we issue the refund to your original payment method within {REFUND_PROCESSING_DAYS} business days.</li>
           </ol>
-          <a href={'mailto:' + contactEmail + '?subject=Nara%20Charm%20return%20request'} className={styles.contactLink}>Email a return request <span aria-hidden="true">↗</span></a>
+          <a href={returnContact} className={styles.contactLink}>Request a return <span aria-hidden="true">↗</span></a>
         </section>
       </div>
 
@@ -54,7 +55,7 @@ export default function ReturnsPage() {
         </section>
         <section className={styles.section} aria-labelledby="damage">
           <h2 id="damage">Damage or defects</h2>
-          <p>If your piece arrives damaged or defective, email us a photo within {DAMAGE_REPORT_DAYS} days. We can arrange a free replacement or a full refund, including shipping, by email.</p>
+          <p>If your piece arrives damaged or defective, contact us within {DAMAGE_REPORT_DAYS} days and keep a photo of the damage. We can arrange a free replacement or a full refund, including shipping.</p>
         </section>
       </div>
 
