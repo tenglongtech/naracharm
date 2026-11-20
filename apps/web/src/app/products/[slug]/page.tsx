@@ -12,7 +12,7 @@ import { DesignPalette } from '@/components/design-palette';
 import { LotusMark } from '@/components/lotus-mark';
 import { getProductBySlug, getActiveProducts } from '@/lib/storefront';
 import { priceLabel, productCard } from '@/lib/catalog';
-import { catalogProductSchema, productSchema, serializeJsonLd } from '@/lib/seo';
+import { absoluteUrl, catalogProductSchema, productSchema, serializeJsonLd } from '@/lib/seo';
 import { variantProductMedia } from '@/lib/product-media';
 import { pageMetadata, productShareImage } from '@/lib/page-metadata';
 import { inquiryPath } from '@/lib/product-inquiry';
@@ -20,6 +20,7 @@ import { siteConfig } from '@/lib/site-config';
 import { freeShippingFromLabel, RETURN_WINDOW_DAYS, standardShippingLabel } from '@/lib/store-policies';
 import { COLLECTION_EDITORIALS } from '@/lib/collection-editorials';
 import { STUDIO_SERIES } from '@/lib/studio-designs';
+import { designArticles } from '@/lib/studio-editorial';
 import { getArticleBySlug, isPublishedGuide } from '@/lib/blog-data';
 import { CATEGORIES } from '@/lib/categories';
 import { CATEGORY_EDITORIAL } from '@/lib/category-editorial';
@@ -33,13 +34,14 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const product = await getProductBySlug(slug);
   if (!product) return { title: 'Product not found' };
 
-  const title = product.seoTitle || product.name;
-  const description = product.seoDescription || product.description || product.subtitle || `Explore ${product.name} by ${siteConfig.brand}.`;
+  const article = product.availability === 'preview' ? designArticles[slug] : undefined;
+  const title = article?.title ?? (product.seoTitle || product.name);
+  const description = (article ? article.detail.split('. ', 1)[0].replace(/\.$/, '') + '.' : product.seoDescription) || product.description || product.subtitle || `Explore ${product.name} by ${siteConfig.brand}.`;
   return {
     ...pageMetadata({ title, description, path: `/products/${slug}`, image: productShareImage({
       name: product.name, ...variantProductMedia(product, product.variant),
     }) }),
-    ...(product.availability === 'preview' ? { robots: { index: false, follow: true } } : {}),
+    ...(product.availability === 'preview' && !article ? { robots: { index: false, follow: true } } : {}),
   };
 }
 
@@ -95,6 +97,7 @@ export default async function ProductPage({ params }: Params) {
   if (!product) notFound();
 
   const isPreview = product.availability === 'preview';
+  const designArticle = isPreview ? designArticles[slug] : undefined;
   const { checkoutEnabled } = siteConfig;
   const variant = product.variant ?? { id: product.id, name: 'Standard', sku: slug, unitPriceCents: product.basePriceCents, stock: product.stock };
   const care = careGuides[product.category];
@@ -125,7 +128,7 @@ export default async function ProductPage({ params }: Params) {
   const categoryGuide = !isPreview && category
     ? CATEGORY_EDITORIAL[category.slug].guides.find(({ slug: candidate }) => `/blog/${candidate}` !== fit.href)
     : undefined;
-  const guideSlug = series?.relatedGuide ?? buyingGuides[slug] ?? categoryGuide?.slug;
+  const guideSlug = designArticle?.guide ?? series?.relatedGuide ?? buyingGuides[slug] ?? categoryGuide?.slug;
   const article = guideSlug ? getArticleBySlug(guideSlug) : undefined;
   const guide = article && isPublishedGuide(article) ? article : undefined;
   const catalog = await getActiveProducts();
@@ -141,7 +144,14 @@ export default async function ProductPage({ params }: Params) {
 
   return (
     <>
-      {!isPreview && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(checkoutEnabled ? productSchema(product) : catalogProductSchema(product)) }} />}
+      {(!isPreview || designArticle) && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(
+        designArticle ? {
+          '@context': 'https://schema.org', '@type': 'VisualArtwork', name: product.name,
+          description: designArticle.detail, url: absoluteUrl(`/products/${slug}`),
+          ...(product.primaryImage ? { image: [absoluteUrl(product.primaryImage)] } : {}),
+          creator: { '@type': 'Organization', name: siteConfig.brand, url: absoluteUrl('/about') },
+        } : checkoutEnabled ? productSchema(product) : catalogProductSchema(product)
+      ) }} />}
       <SiteHeader />
       <main id="main" className={editorial ? `${styles.page} ${collectionStyles.tone}` : styles.page} data-tone={editorial?.tone}>
         <div className={`${styles.shell} ${styles.crumb}`}>
@@ -153,9 +163,9 @@ export default async function ProductPage({ params }: Params) {
         </div>
         <ProductOfferSection key={slug} slug={!isPreview && checkoutEnabled ? slug : null} className={`${styles.shell} ${styles.hero}`} headingId="piece-title">
           <header className={styles.identity}>
-            <p className={styles.kicker}>{isPreview ? 'Studio design preview' : typeNames[product.category]}</p>
+            <p className={styles.kicker}>{isPreview && !designArticle ? 'Studio design preview' : typeNames[product.category]}</p>
             <h1 id="piece-title">{product.name}</h1>
-            {product.basePriceCents > 0 && !(product.variants && product.variants.length > 1) && (isPreview || !checkoutEnabled
+            {!designArticle && product.basePriceCents > 0 && !(product.variants && product.variants.length > 1) && (isPreview || !checkoutEnabled
               ? <p className={styles.price}>{isPreview ? 'Planned price' : 'Guide price'} {priceLabel(product.basePriceCents)}</p>
               : <ProductOfferPrice variant={variant} compareAt={product.compareAtPriceCents} />)}
           </header>
@@ -164,7 +174,7 @@ export default async function ProductPage({ params }: Params) {
             {variantGallery ? (
               <VariantProductGallery name={product.name} media={sharedMedia} {...variantGallery} fallback={fallback} />
             ) : gallery.images.length ? (
-              <ProductGallery key={slug} name={product.name} images={gallery.images} kind={gallery.imageKind} preview={isPreview} photoInquiry={photoInquiry} />
+              <ProductGallery key={slug} name={product.name} images={gallery.images} kind={gallery.imageKind} preview={isPreview} photoInquiry={photoInquiry} showCaption={!designArticle} />
             ) : <>{fallback}{photoInquiry && <ProductPhotoInquiryLink href={photoInquiry} />}</>}
             {sharedIllustration && (
               <p className={`${styles.note} mt-2`}>
@@ -176,10 +186,12 @@ export default async function ProductPage({ params }: Params) {
           </div>
 
           <div className={styles.purchase}>
-            {(product.description || product.subtitle) && <p className={styles.description}>{product.description || product.subtitle}</p>}
+            {(product.description || product.subtitle) && <p className={styles.description}>{designArticle && slug === 'warm-light-pendant'
+              ? 'A honey-colored oval framed by a slender bezel on a fine chain.'
+              : product.description || product.subtitle}</p>}
             {isPreview ? (
               <div className={styles.order}>
-                <p className={styles.note}>This design is in development. Final materials, measurements and availability are pending.</p>
+                {!designArticle && <p className={styles.note}>This design is in development. Final materials, measurements and availability are pending.</p>}
                 <Link prefetch={false} href={designInquiryHref} className="shop-button mt-3">Ask about this design <span aria-hidden="true">↗</span></Link>
               </div>
             ) : (
@@ -234,12 +246,16 @@ export default async function ProductPage({ params }: Params) {
           </div>
         </ProductOfferSection>
 
-        {(product.craftStory || guide) && (
+        {(designArticle || product.craftStory || guide) && (
           <section className={styles.story} aria-labelledby="piece-story">
             <div className={styles.shell}>
               <h2 id="piece-story">{isPreview ? 'Design notes' : 'The story behind the piece'}</h2>
               <div className={styles.storyCopy}>
-                {product.craftStory?.split(/\n\n+/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                {designArticle ? (<>
+                  <p>{designArticle.detail}</p>
+                  <h3 className="font-display text-xl text-ink">How to style it</h3>
+                  <p>{designArticle.styling}</p>
+                </>) : product.craftStory?.split(/\n\n+/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 {guide && <Link prefetch={false} href={`/blog/${guide.slug}`} className={styles.storyLink}>{guide.title} <span aria-hidden="true">↗</span></Link>}
               </div>
             </div>

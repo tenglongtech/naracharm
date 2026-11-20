@@ -103,7 +103,7 @@
   text-underline-offset: 0.25em;
 }
 
-.gallery[data-preview='true'] .enlarge {
+.gallery[data-preview='true'] .caption .enlarge {
   position: static;
   margin-left: auto;
 }

@@ -38,12 +38,13 @@ export function ProductPhotoInquiryLink({ href }: { href: string }) {
   return <Link prefetch={false} href={href} className={styles.photoInquiry}>Request a product photo <span aria-hidden="true">↗</span></Link>;
 }
 
-export function ProductGallery({ name, images, kind, preview = false, photoInquiry }: {
+export function ProductGallery({ name, images, kind, preview = false, photoInquiry, showCaption = true }: {
   name: string;
   images: string[];
   kind?: 'photo' | 'illustration';
   preview?: boolean;
   photoInquiry?: string;
+  showCaption?: boolean;
 }) {
   const [selected, setSelected] = useState(0);
   const [expanded, setExpanded] = useState(false);
@@ -77,7 +78,7 @@ export function ProductGallery({ name, images, kind, preview = false, photoInqui
             ? '(max-width: 767px) calc(100vw - 36px), (max-width: 1351px) 43vw, 565px'
             : '(max-width: 767px) calc(100vw - 36px), (max-width: 1351px) 49vw, 640px'}
         />
-        {!preview && enlargeButton}
+        {(!preview || !showCaption) && enlargeButton}
       </div>
       {images.length > 1 && (
         <div role="group" aria-label="Product image views" className={styles.thumbnails}>
@@ -97,7 +98,7 @@ export function ProductGallery({ name, images, kind, preview = false, photoInqui
           {expanded && <Image src={src} alt={alt} unoptimized={isExternalProductImage(src)} fill loading="eager" sizes="(max-width: 767px) 95vw, 760px" />}
         </div>
       </dialog>
-      {(preview || kind !== 'photo') && (
+      {showCaption && (preview || kind !== 'photo') && (
         <figcaption className={styles.caption}>
           <span>{kind === 'illustration' ? 'AI-generated design illustration.' : kind === 'photo' ? 'Product photograph.' : 'Catalog image.'}{detail && ` ${detail}.`}</span>
           {preview && enlargeButton}

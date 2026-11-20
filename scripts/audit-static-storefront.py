@@ -276,6 +276,13 @@ def check_commerce(rows, all_product_pages, items, offer_policies, problems, che
     available = 0
     for url, page in all_product_pages.items():
         products = [entry for entry in page.schema if entry.get("@type") in ("Product", "ProductGroup")]
+        artwork = [entry for entry in page.schema if entry.get("@type") == "VisualArtwork"]
+        if artwork:
+            if (len(artwork) != 1 or products or is_noindex(page) or url not in sitemap_images
+                or artwork[0].get("url") != url or "offers" in artwork[0]
+                or not artwork[0].get("image") or artwork[0]["image"] != sitemap_images[url]):
+                problems.add(f"Invalid studio design markup or sitemap images: {url}")
+            continue
         if is_noindex(page):
             if products:
                 problems.add(f"Design preview has product offer markup: {url}")
@@ -589,9 +596,10 @@ def audit(root, site_url=None, api_origin=None, archive=None, previous_sitemap=N
             "indexableArticles": guide_count,
             "onlineInquiry": bool(contact and contact.inquiry_mode == "online"),
             "checkoutMode": "online" if checkout_enabled else "inquiry",
-            "catalogProducts": len(all_products) - previews,
+            "catalogProducts": sum(any(node.get("@type") in ("Product", "ProductGroup") for node in page.schema) for page in all_products.values()),
+            "indexableDesigns": sum(any(node.get("@type") == "VisualArtwork" for node in page.schema) for page in all_products.values()),
             "productsInStock": available,
-            "designPreviews": previews,
+            "designPreviews": previews + sum(any(node.get("@type") == "VisualArtwork" for node in page.schema) for page in all_products.values()),
             "shoppingFeedItems": len(items),
             "fileCount": len(files),
             **migration,

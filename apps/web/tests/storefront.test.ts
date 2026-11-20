@@ -9,6 +9,9 @@ import { giftSelections } from '../src/lib/gift-selections';
 import { applyLiveOffer } from '../src/lib/storefront-offer';
 import { inquiryPath } from '../src/lib/product-inquiry';
 import type { StorefrontProduct } from '../src/lib/storefront';
+import { designArticles, seriesEditorial } from '../src/lib/studio-editorial';
+import { STUDIO_PREVIEWS } from '../src/lib/studio-listings';
+import { getArticleBySlug, isPublishedGuide } from '../src/lib/blog-data';
 const items = products as StorefrontProduct[];
 
 test('catalog listings keep descriptive product markup and open an inquiry for the selected SKU', () => {
@@ -191,7 +194,7 @@ test('new guides link to real products and other published guides', () => {
     for (const slug of article.relatedArticles ?? []) assert.ok(BLOG_ARTICLES.some(a=>a.slug===slug), slug);
   }
 });
-test('all catalog images exist and studio concepts stay out of the sitemap', async () => {
+test('the sitemap includes editorial design pages while keeping other concepts outside the sitemap', async () => {
   for (const p of items) for (const src of p.images) if (src.startsWith('/')) assert.ok(existsSync(resolve('public',src.slice(1))),src);
   const drafts = JSON.parse(readFileSync('../../docs/products/2026-09-22-product-drafts.json','utf8'));
   const entries = await sitemap();
@@ -201,7 +204,19 @@ test('all catalog images exist and studio concepts stay out of the sitemap', asy
     assert.equal(draft.price,null);
     assert.equal(draft.stock,null);
     assert.ok(!items.some(p=>p.slug===draft.slug));
-    assert.ok(!entries.some(e=>e.url.endsWith('/'+draft.slug)));
+  }
+  const selected = STUDIO_PREVIEWS.filter((design) => designArticles[design.slug]);
+  assert.equal(selected.length, 13);
+  assert.equal(new Set(selected.map(({ collectionSlug }) => collectionSlug)).size, 9);
+  assert.equal(Object.keys(seriesEditorial).length, 9);
+  for (const design of STUDIO_PREVIEWS) {
+    const article = designArticles[design.slug];
+    const entry = entries.find(({ url }) => url.endsWith('/products/' + design.slug));
+    assert.equal(Boolean(entry), Boolean(article), design.slug);
+    if (!article) continue;
+    assert.ok(entry?.images?.[0].endsWith(design.primaryImage!), design.slug);
+    const guide = getArticleBySlug(article.guide);
+    assert.ok(guide && isPublishedGuide(guide), article.guide);
   }
 });
 

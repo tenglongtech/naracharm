@@ -8,6 +8,7 @@ import { ProductTile } from '@/components/product-tile';
 import { CategoryLanding } from '@/components/category-landing';
 import { productCard } from '@/lib/catalog';
 import { getStudioCover, STUDIO_SERIES } from '@/lib/studio-designs';
+import { designArticles, seriesEditorial } from '@/lib/studio-editorial';
 import { StudioSeriesPage } from '@/components/studio-series-page';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { getCollectionBySlug, getProductsByCollection, getProductsByCategory, getAllCollections } from '@/lib/storefront';
@@ -33,8 +34,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const collection = await getCollectionBySlug(slug);
   if (collection) {
     const narrative = getCollectionNarrative(slug);
-    const title = narrative?.heroTitle ?? (collection.kind === 'studio' ? `${collection.name} | Studio Jewelry Collection` : `${collection.name} Jewelry Collection`);
-    const description = narrative?.heroSubtitle || collection.description || `Explore the ${collection.name} jewelry collection and its design details.`;
+    const editorial = seriesEditorial[slug];
+    const title = editorial?.title ?? narrative?.heroTitle ?? `${collection.name} Jewelry Collection`;
+    const description = editorial?.summary || narrative?.heroSubtitle || collection.description || `Explore the ${collection.name} jewelry collection and its design details.`;
     const artwork = getCollectionArtwork(slug);
     const isStudioSeries = STUDIO_SERIES.some((series) => series.slug === slug);
     const pieces = isStudioSeries || !artwork ? await getProductsByCollection(slug) : [];
@@ -81,6 +83,7 @@ export default async function CollectionPage({ params }: Params) {
   const relatedCollections = allCollections.filter((item) => item.slug !== slug && item.kind !== 'studio');
   const showNotesBesidePiece = Boolean(n?.intro.length && products.length === 1);
   const isStudio = collection.kind === 'studio';
+  const editorial = seriesEditorial[slug];
   const notesCopy = n?.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>);
 
   // Collection + ItemList JSON-LD
@@ -89,7 +92,7 @@ export default async function CollectionPage({ params }: Params) {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: collection.name,
-    description: n?.heroSubtitle || collection.description || undefined,
+    description: editorial?.summary || n?.heroSubtitle || collection.description || undefined,
     url: `${siteUrl}/collections/${slug}`,
     mainEntity: {
       '@type': 'ItemList',
@@ -117,7 +120,7 @@ export default async function CollectionPage({ params }: Params) {
             <div className={artwork ? styles.spread : styles.textOnly}>
               <div className={styles.copy}>
                 <h1>{n?.heroTitle || collection.name}</h1>
-                {(n?.heroSubtitle || collection.description) && <p>{n?.heroSubtitle || collection.description}</p>}
+                {(editorial?.summary || n?.heroSubtitle || collection.description) && <p>{editorial?.summary || n?.heroSubtitle || collection.description}</p>}
                 <a href="#collection-pieces">{isStudio ? 'View the designs' : 'Browse the pieces'} <span aria-hidden="true">↓</span></a>
               </div>
               {artwork && (
@@ -153,6 +156,23 @@ export default async function CollectionPage({ params }: Params) {
             <Link href="/shop" className={styles.textLink}>Browse all jewelry <span aria-hidden="true">↗</span></Link>
           )}
         </section>
+
+        {editorial && (
+          <section className={styles.notes} aria-labelledby="studio-edit-notes">
+            <div className={styles.shell}>
+              <h2 id="studio-edit-notes">What to look for</h2>
+              <div>
+                <p>{editorial.detail}</p>
+                <h3 className="mt-4 font-display text-2xl">How to style it</h3>
+                <p>{editorial.styling}</p>
+                {products.filter(({ slug: piece, isPreview }) => isPreview && designArticles[piece]).map(({ slug: piece, name }) => (
+                  <p key={piece}><Link prefetch={false} href={`/products/${piece}`} className={styles.textLink}>{name} design details <span aria-hidden="true">↗</span></Link></p>
+                ))}
+                <p><Link prefetch={false} href="/blog/how-to-compare-pendant-widths" className={styles.textLink}>Comparing pendant width <span aria-hidden="true">↗</span></Link></p>
+              </div>
+            </div>
+          </section>
+        )}
 
         {notesCopy && !showNotesBesidePiece && (
           <section className={styles.notes} aria-labelledby="collection-notes">

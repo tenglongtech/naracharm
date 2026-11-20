@@ -246,12 +246,15 @@ def exported_page(exported, label):
     return SearchPage(source.read_bytes())
 
 
-def product_data(page, label):
+def structured_data(page, label):
     try:
-        nodes = [json.loads(raw) for raw in page.schema]
+        return [node for raw in page.schema if isinstance(node := json.loads(raw), dict)]
     except json.JSONDecodeError as error:
         raise VerificationError(f"{label} has invalid structured data") from error
-    products = [node for node in nodes if isinstance(node, dict) and node.get("@type") in ("Product", "ProductGroup")]
+
+
+def product_data(page, label):
+    products = [node for node in structured_data(page, label) if node.get("@type") in ("Product", "ProductGroup")]
     require(len(products) == 1, f"{label} has no unique product markup")
     return products[0]
 
@@ -334,6 +337,8 @@ def verify_catalog(opener, api, site, timeout, exported, published=None):
     for url in locations:
         path = urlsplit(url).path
         if path.startswith("/products/"):
+            if any(node.get("@type") == "VisualArtwork" for node in structured_data(exported_page(exported, path), path)):
+                continue
             match = re.fullmatch(rf"/products/({PRODUCT_SLUG})/?", path)
             require(match and len(match[1]) <= 140, "The export sitemap contains an invalid product URL")
             slugs.add(match[1])
@@ -415,6 +420,13 @@ def verify_front(opener, site, timeout, exported, *, inquiry=False):
             require((page.titles, page.descriptions) == (source.titles, source.descriptions),
                     f"{path} search title or description differs from the export")
             if path.startswith("/products/"):
+                designs = [node for node in structured_data(source, path) if node.get("@type") == "VisualArtwork"]
+                if designs:
+                    nodes = structured_data(page, path)
+                    actual = [node for node in nodes if node.get("@type") == "VisualArtwork"]
+                    require(actual == designs and not any(node.get("@type") in ("Product", "ProductGroup") for node in nodes),
+                            f"{path} studio design markup differs from the export or advertises a product")
+                    return path, None, None
                 if inquiry:
                     product = product_data(page, path)
                     variants = product.get("hasVariant", [])

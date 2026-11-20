@@ -10,6 +10,7 @@ import { BLOG_ARTICLES, isPublishedGuide } from '@/lib/blog-data';
 import { articleImagePaths } from '@/lib/editorial-art';
 import { JOURNAL_TOPICS } from '@/lib/journal-topics';
 import { productIndexPhotos } from '@/lib/product-media';
+import { designArticles } from '@/lib/studio-editorial';
 
 export const dynamic = 'force-static';
 
@@ -33,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const artwork = getCollectionArtwork(slug);
     if (artwork) pageImages.set(`/collections/${slug}`, [artwork.image]);
   }
-  for (const { slug } of STUDIO_SERIES) {
+  for (const { slug } of [{ slug: 'studio-edit' }, ...STUDIO_SERIES]) {
     const designs = products.filter((item) => item.collectionSlug === slug);
     const cover = getStudioCover(slug, designs);
     if (!cover) continue;
@@ -47,8 +48,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const images = pageImages.get(url)?.map(absoluteUrl);
       return { url: absoluteUrl(url), ...(images?.length ? { images } : {}) };
     }),
-    ...products.filter((product) => product.availability !== 'preview').map((product) => {
-      const images = productIndexPhotos(product).map(absoluteUrl);
+    ...products.filter((product) => product.availability !== 'preview' || designArticles[product.slug]).map((product) => {
+      const images = (product.availability === 'preview' && product.primaryImage ? [product.primaryImage] : productIndexPhotos(product)).map(absoluteUrl);
       return {
         url: absoluteUrl(`/products/${product.slug}`),
         ...(product.updatedAt ? { lastModified: product.updatedAt } : {}),
