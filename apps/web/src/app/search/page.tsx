@@ -21,7 +21,7 @@ export default async function SearchPage() {
           </div>
         </header>
         <div className={`${styles.shell} ${styles.catalog}`}>
-          <ProductCatalog products={products.map(catalogEntry)} collections={collections.map(({ slug, name }) => ({ slug, name }))} />
+          <ProductCatalog products={products.map(catalogEntry)} collections={collections.map(({ slug, name, kind }) => ({ slug, name, kind }))} />
         </div>
       </main>
       <SiteFooter />

@@ -43,7 +43,6 @@ export function CategoryLanding({ category, products }: { category: Category; pr
             </div>
             <figure className={styles.artwork}>
               <Image src={image.src} alt={image.alt} fill preload sizes="(max-width: 819px) 90vw, (max-width: 1439px) 48vw, 700px" />
-              <figcaption>AI editorial illustration</figcaption>
             </figure>
           </div>
         </div>

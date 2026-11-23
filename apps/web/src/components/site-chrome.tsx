@@ -30,11 +30,27 @@ export function SiteFooter() {
             Heritage-inspired jewelry with international delivery.
             Every piece carries a story.
           </p>
-          <div className="mt-4 flex gap-3 text-lg">
-            {socialConfig.instagram && <a href={`https://instagram.com/${socialConfig.instagram}`} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-gold">📷</a>}
-            {socialConfig.tiktok && <a href={`https://tiktok.com/@${socialConfig.tiktok}`} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-gold">🎵</a>}
-            {socialConfig.youtube && <a href={`https://youtube.com/@${socialConfig.youtube}`} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-gold">▶️</a>}
-            {socialConfig.pinterest && <a href={`https://pinterest.com/${socialConfig.pinterest}`} target="_blank" rel="noopener noreferrer" aria-label="Pinterest" className="hover:text-gold">📌</a>}
+          <div className="mt-4 flex gap-3.5 text-bg/75">
+            {socialConfig.instagram && (
+              <a href={`https://instagram.com/${socialConfig.instagram}`} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex min-h-9 min-w-9 items-center justify-center transition-colors hover:text-gold">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
+              </a>
+            )}
+            {socialConfig.tiktok && (
+              <a href={`https://tiktok.com/@${socialConfig.tiktok}`} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="inline-flex min-h-9 min-w-9 items-center justify-center transition-colors hover:text-gold">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
+              </a>
+            )}
+            {socialConfig.youtube && (
+              <a href={`https://youtube.com/@${socialConfig.youtube}`} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex min-h-9 min-w-9 items-center justify-center transition-colors hover:text-gold">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="3.5" /><path d="m10 9.5 5 2.5-5 2.5z" fill="currentColor" stroke="none" /></svg>
+              </a>
+            )}
+            {socialConfig.pinterest && (
+              <a href={`https://pinterest.com/${socialConfig.pinterest}`} target="_blank" rel="noopener noreferrer" aria-label="Pinterest" className="inline-flex min-h-9 min-w-9 items-center justify-center transition-colors hover:text-gold">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9.5" /><path d="M9.5 19.5 11.5 13m0 0a3.5 3.5 0 1 1 3.7 1.3c-1.4.4-2.7-.2-3.2-1.3" /></svg>
+              </a>
+            )}
           </div>
         </div>
 
@@ -69,7 +85,7 @@ export function SiteFooter() {
           <h3 className="font-display text-sm uppercase tracking-wider text-gold">A little guidance</h3>
           <p className="mt-4 text-sm leading-7 text-bg/75">Questions about fit, materials or your order? We’re here to help you choose with care.</p>
           <Link prefetch={false} href="/contact" className="mt-5 inline-flex min-h-11 items-center border-b border-gold text-sm text-gold">Get in touch ↗</Link>
-          <div className="mt-5 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[11px] text-bg/55">
+          <div className="mt-5 flex flex-wrap justify-start gap-x-4 gap-y-1.5 text-[11px] text-bg/60">
             <Link prefetch={false} href="/faq" className="hover:text-bg">FAQ</Link>
             <Link prefetch={false} href="/contact" className="hover:text-bg">Contact</Link>
             <Link prefetch={false} href="/size-guide" className="hover:text-bg">Size Guide</Link>

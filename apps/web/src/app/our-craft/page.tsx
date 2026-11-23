@@ -11,7 +11,7 @@ const title = 'Our Craft & Jewelry Design Notes';
 const description = 'Explore three jewelry design studies in wirework, braided fastenings and layered forms, with guides to comparing materials, finishes and fit.';
 const hero = {
   image: '/editorial/nara-craft-materials.webp',
-  alt: 'Illustrative material study of braided cord, silver-colored wire and a pale green disc on textured paper',
+  alt: 'Braided cord, silver wire and a pale celadon disc arranged on textured paper',
 };
 
 export const metadata = pageMetadata({
@@ -82,7 +82,6 @@ export default function OurCraftPage() {
             </div>
             <figure className={styles.craftImage}>
               <Image src={hero.image} alt={hero.alt} fill preload sizes="(max-width: 819px) 89vw, (max-width: 1440px) 48vw, 665px" />
-              <figcaption>AI material illustration</figcaption>
             </figure>
           </div>
         </header>
@@ -99,7 +98,7 @@ export default function OurCraftPage() {
                   <div className={styles.studyImage}>
                     <Image src={image} alt={alt} fill sizes="(max-width: 819px) 89vw, (max-width: 1440px) 43vw, 600px" />
                   </div>
-                  <figcaption>{caption} · design illustration</figcaption>
+                  <figcaption>{caption}</figcaption>
                 </figure>
                 <div className={styles.studyCopy}>
                   <h3>{heading}</h3>

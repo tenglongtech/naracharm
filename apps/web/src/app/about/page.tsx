@@ -11,7 +11,7 @@ const title = 'About Nara Charm';
 const description = 'Meet Nara Charm, a heritage-inspired jewelry studio. Explore the wirework, knots, stone colors and textile details behind our collections.';
 const hero = {
   image: '/editorial/nara-brand-portrait.webp',
-  alt: 'Illustrative styling portrait with a red stone bracelet, pale pendant and ivory linen',
+  alt: 'Styling portrait with a red stone bracelet, pale pendant and ivory linen',
 };
 
 export const metadata = pageMetadata({
@@ -59,7 +59,6 @@ export default function AboutPage() {
           </div>
           <figure className={styles.aboutPortrait}>
             <Image src={hero.image} alt={hero.alt} fill preload sizes="(max-width: 819px) 100vw, 60vw" />
-            <figcaption>AI styling illustration</figcaption>
           </figure>
         </header>
 
@@ -103,7 +102,6 @@ export default function AboutPage() {
                 </article>
               ))}
             </div>
-            <p className={styles.studyCaption}>Illustrated design studies</p>
           </div>
         </section>
 

@@ -58,7 +58,7 @@ export function CartContents({ checkoutEnabled }: { checkoutEnabled: boolean }) 
         <ul aria-label="Cart items" className="mt-4 divide-y divide-border border-b border-border">
           {cart.lines.map((item) => (
             <li key={item.lineId} className="grid grid-cols-[clamp(4.2rem,20vw,6rem)_minmax(0,1fr)] gap-3 py-5 sm:gap-5">
-              <div className="relative aspect-square overflow-hidden bg-surface">
+              <div className="relative aspect-[4/5] overflow-hidden bg-surface">
                 {item.image ? (
                   <Image
                     src={item.image}

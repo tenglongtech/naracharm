@@ -116,7 +116,7 @@ export async function buildStaticImages(stagedWeb, sharp, siteUrl = 'https://nar
   async function shareImage(image, key, isIllustration) {
     shareLabels ??= Promise.all([
       sharp({ text: { text: '<span foreground="#304637">Nara Charm</span>', font: 'Serif 64', rgba: true } }).png().toBuffer(),
-      sharp({ text: { text: '<span foreground="#6c5041">Design illustration</span>', font: 'Sans 27', rgba: true } }).png().toBuffer(),
+      sharp({ text: { text: '<span foreground="#6c5041">Heritage-inspired jewelry</span>', font: 'Sans 27', rgba: true } }).png().toBuffer(),
     ]);
     const [brand, label] = await shareLabels;
     const shareKey = key + (isIllustration ? ':illustration' : ':photo');

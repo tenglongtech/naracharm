@@ -65,7 +65,6 @@ export default async function TopicPage({ params }: Params) {
             <article className="mb-10 grid items-center overflow-hidden border border-border bg-surface sm:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
               <figure className="relative aspect-[3/2] min-h-[220px] w-full self-stretch overflow-hidden bg-bg">
                 <Image src={art.src} alt={art.alt} fill preload sizes="(max-width: 639px) 92vw, (max-width: 960px) 50vw, 490px" className="object-cover" />
-                <figcaption className="absolute bottom-2 right-2 bg-ink px-2 py-1 text-[0.6875rem] text-bg">Editorial illustration</figcaption>
               </figure>
               <div className="px-5 py-6 sm:px-8 sm:py-9">
                 <h2 className="font-display text-3xl leading-tight tracking-tight text-ink">

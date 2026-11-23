@@ -12,10 +12,13 @@ import { siteConfig } from '@/lib/site-config';
 
 const NAV_LINKS = [
   { href: '/shop', label: 'Shop All' },
+  { href: '/collections/bracelets', label: 'Bracelets' },
+  { href: '/collections/necklaces', label: 'Necklaces' },
+  { href: '/collections/earrings', label: 'Earrings' },
+  { href: '/collections/phone-charms', label: 'Phone Charms' },
   { href: '/collections', label: 'Collections' },
   { href: '/studio', label: 'Studio' },
   { href: '/blog', label: 'Journal' },
-  { href: '/gift-guide', label: 'Gift Guide' },
 ];
 
 export function SiteHeaderClient() {
@@ -35,7 +38,10 @@ export function SiteHeaderClient() {
     if (menuOpen) mobileNav.current?.querySelector('a')?.focus();
   }, [menuOpen]);
 
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
+  const isActive = (href: string) => {
+    if (href === '/collections') return pathname === '/collections';
+    return pathname === href || pathname.startsWith(href + '/');
+  };
 
   return (
     <>
@@ -50,7 +56,7 @@ export function SiteHeaderClient() {
       {/* 公告栏 */}
       <div className="bg-[#843d30] text-bg">
         <div className="mx-auto flex max-w-7xl items-center justify-center px-4 py-2 text-[11px] tracking-wide md:text-xs">
-          <Link prefetch={false} href="/shipping" className="underline-offset-4 hover:underline focus-visible:outline-bg">Free standard shipping from ${FREE_SHIPPING_THRESHOLD_CENTS / 100} <span aria-hidden="true">↗</span></Link>
+          <Link prefetch={false} href="/shipping" className="underline-offset-4 hover:underline focus-visible:outline-bg">Complimentary standard shipping from ${FREE_SHIPPING_THRESHOLD_CENTS / 100} · Worldwide delivery <span aria-hidden="true">↗</span></Link>
         </div>
       </div>
 
@@ -93,7 +99,7 @@ export function SiteHeaderClient() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-5 text-sm lg:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-4 text-[13px] lg:flex xl:gap-5 xl:text-sm" aria-label="Primary">
             {NAV_LINKS.map((l) => (
               <Link
                 prefetch={false}

@@ -35,7 +35,7 @@ export function VariantProductGallery({ name, media, variant, variants, fallback
 }
 
 export function ProductPhotoInquiryLink({ href }: { href: string }) {
-  return <Link prefetch={false} href={href} className={styles.photoInquiry}>Request a product photo <span aria-hidden="true">↗</span></Link>;
+  return <Link prefetch={false} href={href} className={styles.photoInquiry}>Ask for a close-up photo <span aria-hidden="true">↗</span></Link>;
 }
 
 export function ProductGallery({ name, images, kind, preview = false, photoInquiry, showCaption = true }: {
@@ -55,7 +55,7 @@ export function ProductGallery({ name, images, kind, preview = false, photoInqui
 
   const detail = kind === 'illustration' ? illustrationDetails[src] : undefined;
   const viewDescription = detail ? `: ${detail}` : selected > 0 ? `, view ${selected + 1}` : '';
-  const alt = `${name}${kind === 'illustration' ? ' design illustration' : ''}${viewDescription}`;
+  const alt = `${name}${viewDescription}`;
 
   function enlarge() {
     dialog.current?.showModal();
@@ -98,9 +98,9 @@ export function ProductGallery({ name, images, kind, preview = false, photoInqui
           {expanded && <Image src={src} alt={alt} unoptimized={isExternalProductImage(src)} fill loading="eager" sizes="(max-width: 767px) 95vw, 760px" />}
         </div>
       </dialog>
-      {showCaption && (preview || kind !== 'photo') && (
+      {showCaption && (preview || detail || photoInquiry) && (
         <figcaption className={styles.caption}>
-          <span>{kind === 'illustration' ? 'AI-generated design illustration.' : kind === 'photo' ? 'Product photograph.' : 'Catalog image.'}{detail && ` ${detail}.`}</span>
+          <span>{detail ? `${detail}.` : preview ? 'Upcoming studio design.' : 'Want to see this piece in hand?'}</span>
           {preview && enlargeButton}
           {photoInquiry && <ProductPhotoInquiryLink href={photoInquiry} />}
         </figcaption>

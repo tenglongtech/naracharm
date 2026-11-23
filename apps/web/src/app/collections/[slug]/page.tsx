@@ -128,7 +128,6 @@ export default async function CollectionPage({ params }: Params) {
                   <div className={styles.image}>
                     <Image src={artwork.image} alt={artwork.alt} fill preload sizes="(max-width: 767px) 89vw, (max-width: 1120px) 42vw, 512px" />
                   </div>
-                  <figcaption>Illustrative material study</figcaption>
                 </figure>
               )}
             </div>

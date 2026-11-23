@@ -69,7 +69,7 @@ export async function StudioSeriesPage({ series }: { series: (typeof STUDIO_SERI
               </div>
             </Link>
             <figcaption className="mt-2 text-xs text-muted">
-              {cover.lead.imageKind === 'illustration' ? 'AI design illustration' : cover.lead.imageKind === 'photo' ? 'Product photograph' : 'Catalog image'} · {listingLabel(cover.lead)}
+              {cover.lead.name} · {listingLabel(cover.lead)}
             </figcaption>
           </figure>
         )}
@@ -79,7 +79,7 @@ export async function StudioSeriesPage({ series }: { series: (typeof STUDIO_SERI
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
             <div>
               <h2 id="compare-designs-title" className="font-display text-3xl tracking-tight md:text-4xl">Pieces in the collection</h2>
-              {allIllustratedPreviews && <p className="mt-2 text-xs text-muted">Design previews · AI illustrations</p>}
+              {allIllustratedPreviews && <p className="mt-2 text-xs text-muted">Upcoming studio pieces</p>}
             </div>
             <nav aria-label="Browse this collection by jewelry type" className="flex flex-wrap gap-x-3 text-xs text-brand sm:gap-x-5 sm:text-sm">
               {CATEGORIES.filter(({ productType }) => designTypes.has(productType)).map(({ slug, productType, name }) => (
@@ -107,7 +107,7 @@ export async function StudioSeriesPage({ series }: { series: (typeof STUDIO_SERI
                     <p className="mt-2 text-xs leading-5 text-muted sm:text-sm sm:leading-6">{design.description}</p>
                     {!allIllustratedPreviews && (
                       <p className="mt-2 text-xs text-brand">
-                        {listingLabel(design)}{design.imageKind === 'illustration' && ' · AI illustration'}
+                        {listingLabel(design)}
                       </p>
                     )}
                   </div>

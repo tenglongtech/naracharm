@@ -530,8 +530,8 @@
     "isFeatured": true,
     "craftStory": "In the East, jade has been treasured above gold for thousands of years...",
     "careNotes": null,
-    "collectionSlug": "crystal",
-    "collectionName": "Crystal Collection",
+    "collectionSlug": "han-jade",
+    "collectionName": "Han Jade",
     "primaryImage": "/products/p09.jpg",
     "images": [
       "/products/p09.jpg",
@@ -708,8 +708,8 @@
     "isFeatured": false,
     "craftStory": null,
     "careNotes": null,
-    "collectionSlug": "charms",
-    "collectionName": "Phone Charms",
+    "collectionSlug": "crystal",
+    "collectionName": "Crystal Collection",
     "primaryImage": "/products/placeholder-01.svg",
     "images": [
       "/products/placeholder-01.svg"

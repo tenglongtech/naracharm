@@ -11,7 +11,13 @@ export const defaultCatalogFilters: CatalogFilters = {
 
 export type CatalogView = { filters: CatalogFilters; pages: number };
 
-export function parseCatalogLocation(location: string, collections: ReadonlySet<string>, maxPages: number, checkoutEnabled = true): CatalogView {
+export function parseCatalogLocation(
+  location: string,
+  collections: ReadonlySet<string>,
+  maxPages: number,
+  checkoutEnabled = true,
+  defaultCatalogOnly = false,
+): CatalogView {
   const hashAt = location.indexOf('#');
   const hash = hashAt === -1 ? '' : location.slice(hashAt);
   const search = hashAt === -1 ? location : location.slice(0, hashAt);
@@ -22,7 +28,12 @@ export function parseCatalogLocation(location: string, collections: ReadonlySet<
   const collection = params.get('collection') ?? '';
   const material = CATALOG_MATERIALS.find(({ value }) => value === params.get('material'));
   const availability = params.get('availability');
-  const catalogOnly = availability === 'catalog' || (availability === 'stock' && !checkoutEnabled);
+  const explicitAll = availability === 'all';
+  const isStock = checkoutEnabled && availability === 'stock';
+  const isPreview = availability === 'preview';
+  const catalogOnly = availability === 'catalog'
+    || (availability === 'stock' && !checkoutEnabled)
+    || (defaultCatalogOnly && !explicitAll && !isStock && !isPreview);
   const sort = params.get('sort');
   const page = params.get('page') ?? '';
 
@@ -32,7 +43,7 @@ export function parseCatalogLocation(location: string, collections: ReadonlySet<
       category: CATEGORIES.some(({ productType }) => productType === category) ? category : 'all',
       collection: collections.has(collection) ? collection : 'all',
       ...(material ? { material: material.value } : {}),
-      inStock: checkoutEnabled && availability === 'stock', previewsOnly: availability === 'preview',
+      inStock: isStock, previewsOnly: isPreview,
       ...(catalogOnly ? { catalogOnly } : {}),
       sort: sort === 'price-asc' || sort === 'price-desc' ? sort : 'featured',
     },
@@ -40,15 +51,16 @@ export function parseCatalogLocation(location: string, collections: ReadonlySet<
   };
 }
 
-export function catalogFragment({ filters, pages }: CatalogView) {
+export function catalogFragment({ filters, pages }: CatalogView, defaultCatalogOnly = false) {
   const params = new URLSearchParams();
   if (filters.query.trim()) params.set('q', filters.query.slice(0, catalogQueryLimit));
   if (filters.category !== 'all') params.set('category', filters.category);
   if (filters.collection && filters.collection !== 'all') params.set('collection', filters.collection);
   if (filters.material) params.set('material', filters.material);
   if (filters.inStock) params.set('availability', 'stock');
-  else if (filters.catalogOnly) params.set('availability', 'catalog');
+  else if (filters.catalogOnly && !defaultCatalogOnly) params.set('availability', 'catalog');
   else if (filters.previewsOnly) params.set('availability', 'preview');
+  else if (defaultCatalogOnly && !filters.catalogOnly) params.set('availability', 'all');
   if (filters.sort !== 'featured') params.set('sort', filters.sort);
   if (pages > 1) params.set('page', String(pages));
   return params.size ? catalogHashPrefix + params.toString() : '';

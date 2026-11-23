@@ -13,7 +13,7 @@ import styles from '../buying-guides.module.css';
 
 const hero = {
   image: '/editorial/nara-gift-still-life.webp',
-  alt: 'Illustrative gift styling with a pale green lotus pendant, cream note and warm red ribbon',
+  alt: 'Gift presentation with a pale green lotus pendant, cream note card and warm red ribbon',
 };
 const path = '/gift-guide';
 const description = 'Shop in-stock jewelry gifts by price. Compare bracelets, pendants, earrings and phone charms, and check fit and delivery before ordering.';
@@ -68,7 +68,6 @@ export default async function GiftGuidePage() {
               </div>
               <figure className={styles.heroImage}>
                 <Image src={hero.image} alt={hero.alt} fill preload sizes="(max-width: 799px) 89vw, (max-width: 1439px) 50vw, 660px" />
-                <figcaption>Illustrative gift styling</figcaption>
               </figure>
             </div>
           </div>

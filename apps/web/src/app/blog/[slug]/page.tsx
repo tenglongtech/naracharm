@@ -83,12 +83,13 @@ function RichParagraph({ text, catalogLinks }: { text: string; catalogLinks: Rea
 }
 
 function ArticleImageCaption({ art }: { art: ArticleImage }) {
+  if (!art.credit && !art.caption) return null;
   return (
     <figcaption className="mt-2 text-xs leading-5 text-muted">
       {art.credit ? <>
         {art.caption}{' '}
         <a href={art.credit.url} className="underline underline-offset-4">{art.credit.label}</a>
-      </> : art.caption ? <>Illustration. {art.caption}</> : 'Editorial illustration'}
+      </> : art.caption}
     </figcaption>
   );
 }

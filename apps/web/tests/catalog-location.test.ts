@@ -36,4 +36,11 @@ test('catalog-only links are shareable and old stock links open the catalog in i
   const checkout = parseCatalogLocation('#catalog?availability=stock', collections, 3, true);
   assert.equal(checkout.filters.inStock, true);
   assert.equal(checkout.filters.catalogOnly, undefined);
+
+  const shopDefault = parseCatalogLocation('', collections, 3, true, true);
+  assert.equal(shopDefault.filters.catalogOnly, true);
+  assert.equal(catalogFragment(shopDefault, true), '');
+  const shopAll = parseCatalogLocation('#catalog?availability=all', collections, 3, true, true);
+  assert.equal(shopAll.filters.catalogOnly, undefined);
+  assert.equal(catalogFragment(shopAll, true), '#catalog?availability=all');
 });

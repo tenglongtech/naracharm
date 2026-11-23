@@ -178,9 +178,9 @@ export default async function ProductPage({ params }: Params) {
             ) : <>{fallback}{photoInquiry && <ProductPhotoInquiryLink href={photoInquiry} />}</>}
             {sharedIllustration && (
               <p className={`${styles.note} mt-2`}>
-                This design illustration is also used for the{' '}
+                This studio image is also shared with the{' '}
                 <Link prefetch={false} href={`/products/${sharedIllustration.slug}`} className="font-medium underline underline-offset-4">{sharedIllustration.name}</Link>.
-                Use the item code when asking about either piece.
+                Include the item code when asking about either piece.
               </p>
             )}
           </div>
@@ -205,6 +205,11 @@ export default async function ProductPage({ params }: Params) {
             )}
             <div className={styles.pieceDetails}>
               {!isPreview && <>
+                <ul aria-label="Order assurances" className={styles.assurances}>
+                  <li>{checkoutEnabled ? 'Secure Stripe Checkout' : 'Small-batch studio'}</li>
+                  <li>Gift-ready pouch included</li>
+                  <li>Worldwide delivery</li>
+                </ul>
                 <nav aria-label="Shopping information" className={styles.serviceLinks}>
                   <Link prefetch={false} href="/shipping#standard" className={styles.serviceRow}>
                     <span>Delivery</span>

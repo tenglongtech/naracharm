@@ -15,7 +15,7 @@ export function StudioCollectionGrid({ limit, editorial = false }: { limit?: num
         return (
           <Link key={series.slug} href={`/collections/${series.slug}`} className={`group min-w-0 ${layout}`}>
             <div className={`relative overflow-hidden bg-surface ${wide ? 'aspect-[4/3] lg:aspect-[1.55]' : 'aspect-square'}`}>
-              {cover && lead && <Image src={cover} alt={`${lead.name} design illustration`} fill sizes={wide ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 820px' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px'} className="object-cover transition-transform duration-500 group-hover:scale-[1.025]" />}
+              {cover && lead && <Image src={cover} alt={lead.name} fill sizes={wide ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 820px' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px'} className="object-cover transition-transform duration-500 group-hover:scale-[1.025]" />}
             </div>
             <div className="flex items-center justify-between gap-4 border-b border-border pb-3 pt-4">
               <h3 className="font-display text-2xl group-hover:text-brand">{series.name}</h3>

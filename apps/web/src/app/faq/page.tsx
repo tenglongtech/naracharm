@@ -42,7 +42,7 @@ const FAQ_DATA: { heading: string; items: { q: string; a: string; link?: { href:
     items: [
       { q: 'Where can I check the materials in a piece?', a: 'Read the individual product page for the listed materials and finish. Contact us with the product name if you need to confirm the origin, assembly or material of a specific component.' },
       { q: 'How can I check the material of an earring post?', a: 'See the materials listed on the product page. If the post, hook or back material is unclear, contact us with the piece name before ordering.' },
-      { q: 'What does design illustration mean?', a: 'An illustration shows the shape or styling of a concept. Check the studio listing for its preview status and the individual shop listing for the materials, dimensions and available product photos.' },
+      { q: 'Can I request additional close-up photos before ordering?', a: 'Yes. Use the close-up photo link on any product page or contact us with the piece name, and our studio can share additional views, measurements and natural stone variation details.' },
       { q: 'How do I care for my jewelry?', a: 'Start with the care notes for your piece. Remove jewelry before showering or swimming, let cords dry before storage, and store pieces separately so they do not rub against one another.' },
     ],
   },

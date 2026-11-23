@@ -7,7 +7,7 @@ export const metadata = pageMetadata({
   title: 'Studio Collections and Jewelry Design Previews',
   description: 'See new Nara Charm jewelry designs in progress, from offset silver outlines and woven cords to celadon pendants and lotus shapes.',
   path: '/studio',
-  image: { url: '/editorial/studio-campaign.webp', alt: 'Studio illustration of a pale green crescent over a cream pendant' },
+  image: { url: '/editorial/studio-campaign.webp', alt: 'Pale celadon crescent over a cream pendant in the Nara Charm studio' },
 });
 
 export default function StudioPage() {

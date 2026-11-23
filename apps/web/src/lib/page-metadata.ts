@@ -41,6 +41,6 @@ export function productShareImage(product?: Pick<StorefrontProduct, 'name' | 'pr
   const path = source.startsWith(siteConfig.url + '/') ? source.slice(siteConfig.url.length) : source;
   return {
     ...(staticImages[path]?.share ?? { url: source }),
-    alt: product.imageKind === 'illustration' ? `${product.name} design illustration` : product.name,
+    alt: product.name,
   };
 }

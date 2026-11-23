@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from '@/components/storefront-image';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import { ProductTile } from '@/components/product-tile';
+import NewsletterSection from '@/components/newsletter-section';
 import { getActiveProducts, getAllCollections } from '@/lib/storefront';
 import { productCard } from '@/lib/catalog';
 import { getArticleBySlug } from '@/lib/blog-data';
@@ -11,6 +12,8 @@ import { COLLECTION_EDITORIALS } from '@/lib/collection-editorials';
 import { CATEGORIES } from '@/lib/categories';
 import { siteConfig } from '@/lib/site-config';
 import { STUDIO_SERIES } from '@/lib/studio-designs';
+import { serializeJsonLd } from '@/lib/seo';
+import { freeShippingFromLabel, RETURN_WINDOW_DAYS } from '@/lib/store-policies';
 import collectionStyles from './collection-tones.module.css';
 import styles from './home.module.css';
 
@@ -25,7 +28,16 @@ export const metadata = pageMetadata({
 });
 
 const homeGuides = ['how-to-layer-necklaces-and-bracelets', 'choosing-openwork-earrings', 'everyday-jewelry-care-storage'];
-const featuredPieces = ['caravan-fusion-necklace', 'tibetan-amulet-925-bracelet', 'amethyst-earrings-silver', 'tai-silk-cord-phone-charm'];
+const featuredPieces = [
+  'caravan-fusion-necklace',
+  'tibetan-amulet-925-bracelet',
+  'miao-filigree-drop-earrings',
+  'tai-silk-cord-phone-charm',
+  'han-jade-lotus-pendant',
+  'amethyst-earrings-silver',
+  'lotus-jade-bracelet',
+  'obsidian-guardian-charm',
+];
 const studioNotes: Record<string, string> = {
   'ink-silver': 'Open wire silhouettes',
   'steppe-lines': 'Folded, braided and knotted cord',
@@ -43,31 +55,79 @@ export default async function HomePage() {
   const collectionSlugs = new Set(collections.map(({ slug }) => slug));
   const collectionFeatures = COLLECTION_EDITORIALS.filter(({ slug }) => collectionSlugs.has(slug));
   const markedFeatured = products.filter((product) => product.isFeatured);
-  const curated = featuredPieces.flatMap((slug) => markedFeatured.filter((product) => product.slug === slug));
-  const featured = [...new Set([...curated, ...markedFeatured, ...products])].slice(0, 4);
+  const curated = featuredPieces.flatMap((slug) => products.filter((product) => product.slug === slug));
+  const featured = [...new Set([...curated, ...markedFeatured, ...products])].slice(0, 8);
   const [leadArticle, ...otherArticles] = homeGuides.map(getArticleBySlug).filter((article) => article !== undefined);
   const leadArt = leadArticle && editorialArt(leadArticle);
-  const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: siteConfig.brand, url: siteConfig.url };
+  const website = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteConfig.brand,
+    url: siteConfig.url,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteConfig.url.replace(/\/$/, '')}/search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(website) }} />
       <SiteHeader />
       <main id="main" className={styles.home}>
         <section className={styles.hero} aria-labelledby="home-title">
           <div className={styles.heroCopy}>
             <p className={styles.kicker}>Heritage-inspired jewelry</p>
             <h1 id="home-title" className={styles.heroTitle}>Rooted in craft. <em>Worn close.</em></h1>
-            <p className={styles.heroDescription}>Carved stone, worked silver and woven cord. Jewelry inspired by the craft traditions of Asia.</p>
+            <p className={styles.heroDescription}>Carved stone, worked silver and woven cord. Small-batch jewelry inspired by the craft traditions of Asia.</p>
             <div className={styles.heroLinks}>
               <Link prefetch={false} href="/shop" className={styles.primaryLink}>Shop jewelry <Arrow /></Link>
-              <Link prefetch={false} href="/studio" className={styles.textLink}>Explore the studio <Arrow diagonal /></Link>
+              <Link prefetch={false} href="/collections" className={styles.textLink}>Browse collections <Arrow diagonal /></Link>
             </div>
+            <p className={styles.heroReassurance}>Free standard shipping from {freeShippingFromLabel} · {RETURN_WINDOW_DAYS}-day eligible returns</p>
           </div>
           <figure className={styles.campaign}>
             <Image src={campaignImage} alt={campaignAlt} fill preload sizes="(max-width: 899px) 100vw, 58vw" className={styles.campaignImage} />
-            <figcaption>AI styling illustration</figcaption>
           </figure>
+        </section>
+
+        <section className={styles.trustBar} aria-label="Studio assurances">
+          <ul className={`${styles.shell} ${styles.trustList}`}>
+            <li>
+              <strong>Small-batch craft</strong>
+              <span>Worked silver, natural stone &amp; braided cord</span>
+            </li>
+            <li>
+              <strong>Worldwide delivery</strong>
+              <span>Free standard shipping from {freeShippingFromLabel}</span>
+            </li>
+            <li>
+              <strong>Gift-ready packaging</strong>
+              <span>Protective pouch included with every order</span>
+            </li>
+            <li>
+              <strong>{RETURN_WINDOW_DAYS}-day returns</strong>
+              <span>Straightforward returns on eligible pieces</span>
+            </li>
+          </ul>
+        </section>
+
+        <section className={styles.shop} aria-labelledby="home-shop">
+          <div className={`${styles.shell} ${styles.section}`}>
+            <div className={styles.sectionHeading}>
+              <h2 id="home-shop">Featured jewelry</h2>
+              <Link prefetch={false} href="/shop" className={styles.textLink}>Shop all jewelry <Arrow diagonal /></Link>
+            </div>
+            <nav aria-label="Shop by category" className={styles.categoryNav}>
+              {CATEGORIES.map(({ slug, name }) => <Link prefetch={false} key={slug} href={`/collections/${slug}`}>{name}</Link>)}
+            </nav>
+            {featured.length > 0 && (
+              <div className={styles.products}>
+                {featured.map((product) => <ProductTile key={product.slug} product={productCard(product)} />)}
+              </div>
+            )}
+          </div>
         </section>
 
         {collectionFeatures.length > 0 && <section className={`${styles.shell} ${styles.section} ${styles.collections}`} aria-labelledby="home-collections">
@@ -95,33 +155,14 @@ export default async function HomePage() {
               </li>
             ))}
           </ul>
-          <p className={styles.studyNote}>Illustrative material studies</p>
         </section>}
-
-        <section className={styles.shop} aria-labelledby="home-shop">
-          <div className={`${styles.shell} ${styles.section}`}>
-            <div className={styles.sectionHeading}>
-              <h2 id="home-shop">Featured jewelry</h2>
-              <Link prefetch={false} href="/shop" className={styles.textLink}>Shop all jewelry <Arrow diagonal /></Link>
-            </div>
-            <nav aria-label="Shop by category" className={styles.categoryNav}>
-              {CATEGORIES.map(({ slug, name }) => <Link prefetch={false} key={slug} href={`/collections/${slug}`}>{name}</Link>)}
-            </nav>
-            {featured.length > 0 && (
-              <div className={styles.products}>
-                {featured.map((product) => <ProductTile key={product.slug} product={productCard(product)} />)}
-              </div>
-            )}
-          </div>
-        </section>
 
         <section className={styles.studio}>
           <div className={`${styles.shell} ${styles.studioLayout}`}>
             <figure className={styles.studioFigure}>
               <div className={styles.studioFrame}>
-                <Image src="/editorial/cord-and-silver.webp" alt="Deep red braided cord threaded through a hammered silver bead on rough paper" fill sizes="(max-width: 767px) 100vw, (max-width: 1450px) 54vw, 740px" className="object-cover" />
+                <Image src="/editorial/cord-and-silver.webp" alt="Coiled crimson braided silk cord, a hammered sterling silver lotus bead, a turquoise cabochon and brass tweezers on cotton paper" fill sizes="(max-width: 767px) 100vw, (max-width: 1450px) 54vw, 740px" className="object-cover" />
               </div>
-              <figcaption>Illustrative material study</figcaption>
             </figure>
             <div className={styles.studioCopy}>
               <h2>Inside the <em>studio.</em></h2>
@@ -179,6 +220,7 @@ export default async function HomePage() {
             <Link prefetch={false} href="/shipping">Check delivery options <Arrow diagonal /></Link>
           </nav>
         </div>
+        <NewsletterSection />
       </main>
       <SiteFooter />
     </>

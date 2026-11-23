@@ -77,7 +77,6 @@ export default async function CollectionsIndexPage() {
           </div>
           <figure className={styles.heroImage}>
             <Image src={hero.src} alt={hero.alt} fill preload sizes="(max-width: 819px) 100vw, 60vw" />
-            <figcaption>AI material illustration</figcaption>
           </figure>
         </header>
 
@@ -114,7 +113,6 @@ export default async function CollectionsIndexPage() {
                     </li>
                   ))}
                 </ul>
-                <p className={styles.studyNote}>Illustrative material studies</p>
               </>
             )}
 
@@ -132,7 +130,7 @@ export default async function CollectionsIndexPage() {
                         )}
                         <div>
                           <h3>{name}</h3>
-                          <p>{productCount} {productCount === 1 ? 'piece' : 'pieces'}{cover?.primaryImage && cover.imageKind !== 'photo' && ' · Illustrated cover'}</p>
+                          <p>{productCount} {productCount === 1 ? 'piece' : 'pieces'}</p>
                         </div>
                         <Arrow />
                       </Link>
@@ -150,7 +148,7 @@ export default async function CollectionsIndexPage() {
               <h2 id="design-collections-title">Studio designs</h2>
               <Link prefetch={false} href="/studio" className={styles.textLink}>Visit the studio <Arrow /></Link>
             </div>
-            <p className={styles.studioLead}>Illustrated previews of new jewelry, organized by material, pattern and silhouette.</p>
+            <p className={styles.studioLead}>Early previews of upcoming jewelry, organized by material, pattern and silhouette.</p>
             <StudioCollectionGrid />
             <Link prefetch={false} href="/collections/studio-edit" className={`${styles.textLink} ${styles.studioEdit}`}>Original Studio Edit <Arrow /></Link>
           </div>

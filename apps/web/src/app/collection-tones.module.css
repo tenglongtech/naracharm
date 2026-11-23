@@ -2,21 +2,21 @@
   --series-paper: #e6e5d8;
   --series-ink: #3c4431;
   --series-shade: #4e4c35;
-  --series-focus: 78%;
+  --series-focus: 50%;
 }
 
 .tone[data-tone='clay'] {
   --series-paper: #efe1d8;
   --series-ink: #6c352b;
   --series-shade: #874c3b;
-  --series-focus: 69%;
+  --series-focus: 50%;
 }
 
 .tone[data-tone='jade'] {
   --series-paper: #dfe8df;
   --series-ink: #314738;
   --series-shade: #526b58;
-  --series-focus: 72%;
+  --series-focus: 50%;
 }
 
 .tone[data-tone='amethyst'] {

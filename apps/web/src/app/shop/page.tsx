@@ -12,7 +12,7 @@ export const metadata = pageMetadata({
   title: 'Shop Bracelets, Necklaces, Earrings & Phone Charms',
   description: 'Find bracelets, necklaces, earrings and phone charms by collection, category and material. Browse current catalog pieces and designs from the Nara Charm studio.',
   path: '/shop',
-  image: { url: '/editorial/nara-collection-still-life.webp', alt: 'Illustrative jewelry still life with red beads, an engraved silver bead and linen' },
+  image: { url: '/editorial/nara-collection-still-life.webp', alt: 'Jewelry still life with red stone beads, an engraved silver lotus bead and natural linen' },
 });
 
 export default async function ShopPage() {
@@ -37,7 +37,11 @@ export default async function ShopPage() {
           </div>
         </header>
         <div className={`${styles.shell} ${styles.catalog}`}>
-          <ProductCatalog products={products.map(catalogEntry)} collections={collections.map(({ slug, name }) => ({ slug, name }))} />
+          <ProductCatalog
+            products={products.map(catalogEntry)}
+            collections={collections.map(({ slug, name, kind }) => ({ slug, name, kind }))}
+            defaultView="catalog"
+          />
         </div>
       </main>
       <SiteFooter />

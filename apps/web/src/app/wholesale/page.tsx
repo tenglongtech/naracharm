@@ -22,9 +22,9 @@ export default function WholesalePage() {
         </div>
         <figure>
           <div className="relative aspect-[3/2] overflow-hidden rounded-sm">
-            <Image src="/editorial/studio-materials.webp" alt="An illustration of cord, stone and metalwork in the Nara Charm studio palette" fill sizes="(max-width: 768px) 100vw, 600px" className="object-cover" />
+            <Image src="/editorial/studio-materials.webp" alt="Cord, stone and metalwork in the Nara Charm studio palette" fill sizes="(max-width: 768px) 100vw, 600px" className="object-cover" />
           </div>
-          <figcaption className="mt-2 text-xs text-muted">Nara Charm studio illustration</figcaption>
+          <figcaption className="mt-2 text-xs text-muted">Nara Charm studio materials</figcaption>
         </figure>
       </main>
       <SiteFooter />

@@ -66,7 +66,6 @@ export default function BlogPage() {
                   {leadArt && (
                     <div className={styles.leadImage}>
                       <Image src={leadArt.src} alt="" fill preload sizes="(max-width: 799px) 90vw, (max-width: 1439px) 50vw, 728px" />
-                      <span>Editorial illustration</span>
                     </div>
                   )}
                   <div className={styles.leadCopy}>
@@ -104,7 +103,6 @@ export default function BlogPage() {
               );
             })}
           </ul>
-          <p className={styles.topicCaption}>Topic images are editorial illustrations.</p>
         </section>
       </main>
       <SiteFooter />

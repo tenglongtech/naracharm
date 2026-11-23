@@ -10,7 +10,7 @@ export const metadata = pageMetadata({
   title: 'Featured Jewelry and Phone Charms',
   description: 'Browse Nara Charm’s featured bracelets, necklaces, earrings and phone charms, chosen for distinctive colors, cordwork and details.',
   path: '/best-sellers',
-  image: { url: '/editorial/nara-worn-close.webp', alt: 'Illustrative styling with red beads, hammered silver and a green drop earring' },
+  image: { url: '/editorial/nara-worn-close.webp', alt: 'Red stone beads, a hammered silver pendant and a green drop earring worn with ivory linen' },
 });
 
 export default async function FeaturedJewelryPage() {

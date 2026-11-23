@@ -10,6 +10,7 @@ import { CATEGORIES } from '../src/lib/categories';
 import { CATEGORY_EDITORIAL } from '../src/lib/category-editorial';
 import { getCollectionArtwork } from '../src/lib/collection-editorials';
 import { STORIES, storiesCover } from '../src/lib/stories-data';
+import { designArticles } from '../src/lib/studio-editorial';
 import sitemap from '../src/app/sitemap';
 
 test('the expanded catalog has unique designs with accurate collection counts', async () => {
@@ -43,7 +44,7 @@ test('article topics and the studio index are crawlable while concepts stay out 
   assert.ok(urls.has('/blog/topic/care'));
   assert.ok(urls.has('/studio'));
   for (const product of products) {
-    assert.equal(urls.has('/products/' + product.slug), product.availability !== 'preview');
+    assert.equal(urls.has('/products/' + product.slug), product.availability !== 'preview' || Boolean(designArticles[product.slug]));
   }
   for (const article of BLOG_ARTICLES) {
     assert.equal(urls.has('/blog/' + article.slug), isPublishedGuide(article));

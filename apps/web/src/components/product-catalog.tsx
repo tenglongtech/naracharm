@@ -45,9 +45,9 @@ function CatalogLocationObserver() {
   return null;
 }
 
-function writeCatalogLocation(view: CatalogView, mode: 'pushState' | 'replaceState') {
+function writeCatalogLocation(view: CatalogView, mode: 'pushState' | 'replaceState', defaultCatalogOnly = false) {
   const url = new URL(window.location.href);
-  const fragment = catalogFragment(view);
+  const fragment = catalogFragment(view, defaultCatalogOnly);
   if (fragment || url.hash.startsWith(catalogHashPrefix)) url.hash = fragment;
   if (url.searchParams.has('q')) url.searchParams.delete('q');
   if (url.href === window.location.href) return false;
@@ -58,9 +58,9 @@ function writeCatalogLocation(view: CatalogView, mode: 'pushState' | 'replaceSta
 }
 
 const availabilityOptions = ([
-  { value: 'all', label: 'All pieces' },
   { value: 'catalog', label: 'Catalog pieces' },
   { value: 'stock', label: 'In stock' },
+  { value: 'all', label: 'All pieces' },
   { value: 'preview', label: 'Studio previews' },
 ] as const).filter(({ value }) => siteConfig.checkoutEnabled || value !== 'stock');
 
@@ -72,10 +72,12 @@ const sortOptions = [
 
 type Props = {
   products: CatalogProduct[];
-  collections: { slug: string; name: string }[];
+  collections: { slug: string; name: string; kind?: 'studio' }[];
+  defaultView?: 'catalog' | 'all';
 };
 
-export function ProductCatalog({ products, collections }: Props) {
+export function ProductCatalog({ products, collections, defaultView = 'all' }: Props) {
+  const defaultCatalogOnly = defaultView === 'catalog';
   const location = useSyncExternalStore(subscribeCatalogLocation, catalogLocation, initialLocation);
   const [facetOpen, setFacetOpen] = useState(false);
   const [copyResult, setCopyResult] = useState<{ location: string; message: string } | null>(null);
@@ -85,11 +87,16 @@ export function ProductCatalog({ products, collections }: Props) {
   const firstAddedResult = useRef<number | null>(null);
   const facetsId = useId();
   const collectionSlugs = useMemo(() => new Set(collections.map(({ slug }) => slug)), [collections]);
+  const studioSlugs = useMemo(() => new Set(collections.filter(({ kind }) => kind === 'studio').map(({ slug }) => slug)), [collections]);
   const maxPages = Math.max(1, Math.ceil(products.length / catalogPageSize));
-  const { filters, pages } = useMemo(() => parseCatalogLocation(location, collectionSlugs, maxPages, siteConfig.checkoutEnabled), [location, collectionSlugs, maxPages]);
+  const { filters, pages } = useMemo(
+    () => parseCatalogLocation(location, collectionSlugs, maxPages, siteConfig.checkoutEnabled, defaultCatalogOnly),
+    [location, collectionSlugs, maxPages, defaultCatalogOnly],
+  );
   const matches = useMemo(() => filterProducts(products, filters), [products, filters]);
   const visible = matches.slice(0, pages * catalogPageSize);
   const availability = filters.inStock ? 'stock' : filters.catalogOnly ? 'catalog' : filters.previewsOnly ? 'preview' : 'all';
+  const defaultAvailability = defaultCatalogOnly ? 'catalog' : 'all';
   const previews = matches.filter(({ availability }) => availability === 'preview').length;
   const listed = matches.length - previews;
   const resultCount = [
@@ -107,7 +114,7 @@ export function ProductCatalog({ products, collections }: Props) {
     ...(sort ? [{ name: 'sort', label: sort.label, clear: { sort: 'featured' as const } }] : []),
   ];
   const facetCount = activeFacets.length;
-  const hasFilters = Boolean(filters.query.trim() || facetCount || availability !== 'all');
+  const hasFilters = Boolean(filters.query.trim() || facetCount || availability !== defaultAvailability);
 
   useEffect(() => {
     const index = firstAddedResult.current;
@@ -118,17 +125,25 @@ export function ProductCatalog({ products, collections }: Props) {
   }, [visible.length]);
 
   function update(next: Partial<CatalogFilters>) {
-    writeCatalogLocation({ filters: { ...filters, ...next }, pages: 1 }, 'pushState');
+    const merged = { ...filters, ...next };
+    if (next.collection && studioSlugs.has(next.collection) && merged.catalogOnly) {
+      merged.catalogOnly = false;
+    }
+    writeCatalogLocation({ filters: merged, pages: 1 }, 'pushState', defaultCatalogOnly);
   }
 
   function updateQuery(query: string) {
-    const changed = writeCatalogLocation({ filters: { ...filters, query }, pages: 1 }, editingQuery.current ? 'replaceState' : 'pushState');
+    const changed = writeCatalogLocation(
+      { filters: { ...filters, query }, pages: 1 },
+      editingQuery.current ? 'replaceState' : 'pushState',
+      defaultCatalogOnly,
+    );
     if (changed) editingQuery.current = true;
   }
 
   function showMore() {
     firstAddedResult.current = visible.length;
-    if (!writeCatalogLocation({ filters, pages: pages + 1 }, 'replaceState')) firstAddedResult.current = null;
+    if (!writeCatalogLocation({ filters, pages: pages + 1 }, 'replaceState', defaultCatalogOnly)) firstAddedResult.current = null;
   }
 
   async function copyLink() {
@@ -211,7 +226,7 @@ export function ProductCatalog({ products, collections }: Props) {
         <div className={styles.resultActions}>
           {(hasFilters || pages > 1) && <button type="button" onClick={copyLink}>Copy link</button>}
           {hasFilters && <button type="button" onClick={() => {
-            writeCatalogLocation({ filters: defaultCatalogFilters, pages: 1 }, 'pushState');
+            writeCatalogLocation({ filters: { ...defaultCatalogFilters, ...(defaultCatalogOnly ? { catalogOnly: true } : {}) }, pages: 1 }, 'pushState', defaultCatalogOnly);
             resultSummary.current?.focus();
           }}>Clear filters</button>}
         </div>

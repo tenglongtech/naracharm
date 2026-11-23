@@ -27,12 +27,12 @@ export function ProductTile({
   const tag = product.tag === 'Sold out' && !siteConfig.checkoutEnabled ? null : product.tag;
   return (
     <Link href={product.href ?? `/products/${product.slug}`} prefetch={false} className="group block min-w-0">
-      <div className={`relative overflow-hidden rounded-sm bg-surface ${product.palette && !product.image ? 'aspect-[4/1]' : 'aspect-square'}`}>
+      <div className={`relative overflow-hidden rounded-sm bg-surface ${product.palette && !product.image ? 'aspect-[4/1]' : product.isPreview ? 'aspect-square' : 'aspect-[4/5]'}`}>
         {product.image ? (
           <Image
             src={product.image}
             unoptimized={isExternalProductImage(product.image)}
-            alt={`${product.name}${product.isIllustration ? ' design illustration' : ''}`}
+            alt={product.name}
             fill
             sizes={sizes}
             loading={prioritizeImage ? 'eager' : undefined}
@@ -55,7 +55,6 @@ export function ProductTile({
         {siteConfig.checkoutEnabled && !product.isPreview && product.compareAt && <span className="text-muted line-through">{product.compareAt}</span>}
         {!product.image && (tag || !hasVisual) && <span className="text-xs text-muted">{tag ?? 'Photo pending'}</span>}
       </div>
-      {product.isIllustration && <p className="mt-1 text-xs text-muted">Design illustration</p>}
     </Link>
   );
 }

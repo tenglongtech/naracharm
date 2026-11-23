@@ -14,11 +14,14 @@
   grid-area: image;
   position: relative;
   overflow: hidden;
-  aspect-ratio: 1.22;
-  background-color: #eee5d9;
+  aspect-ratio: 4 / 5;
+  background-color: #f3ede2;
 }
 
-.frame img,
+.frame img {
+  object-fit: contain;
+}
+
 .thumbnails img {
   object-fit: cover;
 }
@@ -146,7 +149,9 @@
   }
 
   .frame {
-    aspect-ratio: 1.03;
+    aspect-ratio: 4 / 5;
+    max-height: min(68vh, 600px);
+    width: 100%;
   }
 
   .thumbnails button {

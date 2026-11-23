@@ -80,7 +80,7 @@ export default async function StoryDetailPage({ params }: Params) {
               <div className="relative aspect-square overflow-hidden rounded-sm bg-surface">
                 <Image src={story.cover.url} alt={story.cover.alt} fill preload sizes="(min-width: 1280px) 558px, (min-width: 768px) 45vw, 92vw" className="object-cover" />
               </div>
-              <figcaption className="mt-2 text-xs leading-5 text-muted">{story.cover.title}, studio illustration</figcaption>
+              <figcaption className="mt-2 text-xs leading-5 text-muted">{story.cover.title}</figcaption>
             </figure>
           </header>
 

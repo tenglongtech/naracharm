@@ -1,48 +1,118 @@
 'use client';
+
 import { useState } from 'react';
+import Link from 'next/link';
+import { siteConfig } from '@/lib/site-config';
+
+function makeUuidV4() {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.floor(Math.random() * 16);
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'done' | 'error'>('idle');
+  const [submissionId] = useState(() => makeUuidV4());
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      setSubmitted(true);
-      // In production, POST to your email service
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    const cleaned = email.trim();
+    if (!cleaned || status === 'submitting') return;
+
+    if (!siteConfig.inquiryFormEnabled) {
+      setStatus('done');
+      return;
     }
-  };
 
-  if (submitted) {
-    return (
-      <section className="bg-ink text-bg">
-        <div className="mx-auto max-w-2xl px-4 py-16 text-center">
-          <h2 className="font-display text-3xl">You're in! 🌙</h2>
-          <p className="mt-3 text-bg/75">Welcome to the Nara Charm circle. Check your inbox for a welcome note.</p>
-        </div>
-      </section>
-    );
+    setStatus('submitting');
+    try {
+      const body = new URLSearchParams({
+        id: submissionId,
+        topic: 'other',
+        email: cleaned,
+        message: 'Studio dispatch subscription request from storefront footer.',
+      });
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      });
+      if (res.ok || res.status === 409) {
+        setStatus('done');
+        setEmail('');
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
   }
 
   return (
-    <section className="bg-ink text-bg">
-      <div className="mx-auto max-w-2xl px-4 py-16 text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-gold">Stay Connected</p>
-        <h2 className="mt-3 font-display text-3xl md:text-4xl">Join Our Circle</h2>
-        <p className="mt-3 text-bg/75">New arrivals, exclusive stories, and early access — once a month, no spam.</p>
-        <form onSubmit={handleSubmit} className="mx-auto mt-8 flex max-w-md gap-3">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="your@email.com"
-            required
-            className="flex-1 rounded-md bg-bg/10 px-4 py-3 text-sm text-bg placeholder:text-bg/40 focus:outline-none focus:ring-2 focus:ring-gold/50"
-          />
-          <button type="submit" className="rounded-md bg-gold px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-gold/90">
-            Subscribe
-          </button>
-        </form>
+    <section aria-labelledby="newsletter-title" className="border-t border-border bg-[#efe7da] text-ink">
+      <div className="mx-auto grid max-w-7xl items-center gap-6 px-5 py-12 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] md:gap-12 md:px-8 md:py-16">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand">Studio Dispatch</p>
+          <h2 id="newsletter-title" className="mt-2 font-display text-3xl leading-tight tracking-tight md:text-4xl">
+            Small-batch releases &amp; craft notes.
+          </h2>
+          <p className="mt-2.5 max-w-lg text-sm leading-6 text-muted">
+            Receive occasional notes when new pieces move from studio study to finished stock, alongside material and care guides.
+          </p>
+        </div>
+
+        <div>
+          {status === 'done' ? (
+            <div role="status" className="border border-border bg-bg px-5 py-4 text-sm leading-6 text-ink">
+              <p className="font-medium text-brand">You’re on the studio list.</p>
+              <p className="mt-1 text-muted">We’ll write only when new pieces or studio dispatches are ready.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-2.5">
+              <div className="flex flex-col gap-2.5 sm:flex-row">
+                <label htmlFor="newsletter-email" className="sr-only">Email address</label>
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                    if (status === 'error') setStatus('idle');
+                  }}
+                  placeholder="Enter your email"
+                  required
+                  maxLength={254}
+                  autoComplete="email"
+                  className="min-h-12 flex-1 border border-border bg-bg px-4 py-3 text-sm text-ink placeholder:text-muted/65 focus:border-brand focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  disabled={status === 'submitting'}
+                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#873e34] px-6 py-3 text-sm font-semibold text-bg transition-colors hover:bg-[#632d26] disabled:opacity-60"
+                >
+                  {status === 'submitting' ? 'Joining…' : 'Join the list'} <span aria-hidden="true">→</span>
+                </button>
+              </div>
+              {status === 'error' ? (
+                <p role="alert" className="text-xs text-brand">
+                  Could not save right now. You can also reach us on the{' '}
+                  <Link prefetch={false} href="/contact" className="underline underline-offset-4">contact page</Link>.
+                </p>
+              ) : (
+                <p className="text-xs text-muted">
+                  Occasional dispatches only. See our{' '}
+                  <Link prefetch={false} href="/privacy" className="underline underline-offset-4 hover:text-brand">privacy policy</Link>.
+                </p>
+              )}
+            </form>
+          )}
+        </div>
       </div>
     </section>
   );
