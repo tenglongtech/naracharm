@@ -18,8 +18,8 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin', '/api'],
       },
       {
-        userAgent: ['GPTBot', 'PerplexityBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended'],
-        allow: ['/', '/llms.txt', '/blog', '/products', '/collections', '/stories', '/our-craft'],
+        userAgent: ['GPTBot', 'OAI-SearchBot', 'PerplexityBot', 'Perplexity-User', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended'],
+        allow: ['/', '/llms.txt', '/llms-full.txt', '/blog', '/products', '/collections', '/stories', '/our-craft', '/size-guide', '/faq'],
         disallow: ['/admin', '/api', '/account', '/cart', '/checkout'],
       },
     ],

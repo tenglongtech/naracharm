@@ -27,7 +27,11 @@ export const metadata = pageMetadata({
   image: { url: campaignImage, width: 1536, height: 1024, alt: campaignAlt },
 });
 
-const homeGuides = ['how-to-layer-necklaces-and-bracelets', 'choosing-openwork-earrings', 'everyday-jewelry-care-storage'];
+const homeGuides = [
+  'tibetan-silver-vs-925-sterling-silver',
+  'natural-turquoise-vs-dyed-howlite-guide',
+  'meaningful-handmade-jewelry-gifts-under-100',
+];
 const featuredPieces = [
   'caravan-fusion-necklace',
   'tibetan-amulet-925-bracelet',

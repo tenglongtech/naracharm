@@ -12,9 +12,11 @@ const lead = getArticleBySlug('how-to-layer-necklaces-and-bracelets');
 const leadArt = lead && editorialArt(lead);
 
 const startingGuides = [
+  { slug: 'tibetan-silver-vs-925-sterling-silver', label: 'Tibetan silver vs 925 sterling' },
+  { slug: 'natural-turquoise-vs-dyed-howlite-guide', label: 'Natural turquoise vs dyed howlite' },
   { slug: 'bracelet-size-guide-how-to-measure', label: 'Measure your wrist' },
+  { slug: 'meaningful-handmade-jewelry-gifts-under-100', label: 'Handmade gifts under $100' },
   { slug: 'everyday-jewelry-care-storage', label: 'Care for everyday jewelry' },
-  { slug: 'choose-a-meaningful-jewelry-gift', label: 'Choose a jewelry gift' },
 ].filter(({ slug }) => {
   const article = getArticleBySlug(slug);
   return article && isPublishedGuide(article);

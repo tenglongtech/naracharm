@@ -22,6 +22,31 @@ export function serializeJsonLd(schema: object) {
   return JSON.stringify(schema).replace(/</g, '\\u003c');
 }
 
+type EntityReference = { '@type': 'Thing'; name: string; sameAs: string };
+
+const knowledgeEntities: readonly { pattern: RegExp; entity: EntityReference }[] = [
+  { pattern: /\btibetan[\s-]+silver\b/i, entity: { '@type': 'Thing', name: 'Tibetan silver', sameAs: 'https://en.wikipedia.org/wiki/Tibetan_silver' } },
+  { pattern: /\b(?:925|sterling)[\s-]+silver\b/i, entity: { '@type': 'Thing', name: 'Sterling silver', sameAs: 'https://en.wikipedia.org/wiki/Sterling_silver' } },
+  { pattern: /\bfiligree\b/i, entity: { '@type': 'Thing', name: 'Filigree', sameAs: 'https://en.wikipedia.org/wiki/Filigree' } },
+  { pattern: /\bturquoise\b/i, entity: { '@type': 'Thing', name: 'Turquoise', sameAs: 'https://en.wikipedia.org/wiki/Turquoise' } },
+  { pattern: /\bhowlite\b/i, entity: { '@type': 'Thing', name: 'Howlite', sameAs: 'https://en.wikipedia.org/wiki/Howlite' } },
+  { pattern: /\bamethyst\b/i, entity: { '@type': 'Thing', name: 'Amethyst', sameAs: 'https://en.wikipedia.org/wiki/Amethyst' } },
+  { pattern: /\brose[\s-]+quartz\b/i, entity: { '@type': 'Thing', name: 'Rose quartz', sameAs: 'https://en.wikipedia.org/wiki/Quartz#Rose_quartz' } },
+  { pattern: /\bcitrine\b/i, entity: { '@type': 'Thing', name: 'Citrine', sameAs: 'https://en.wikipedia.org/wiki/Citrine' } },
+  { pattern: /\bobsidian\b/i, entity: { '@type': 'Thing', name: 'Obsidian', sameAs: 'https://en.wikipedia.org/wiki/Obsidian' } },
+  { pattern: /\bhematite\b/i, entity: { '@type': 'Thing', name: 'Hematite', sameAs: 'https://en.wikipedia.org/wiki/Hematite' } },
+  { pattern: /\bunakite\b/i, entity: { '@type': 'Thing', name: 'Unakite', sameAs: 'https://en.wikipedia.org/wiki/Unakite' } },
+  { pattern: /\bjade\b/i, entity: { '@type': 'Thing', name: 'Jade', sameAs: 'https://en.wikipedia.org/wiki/Jade' } },
+  { pattern: /\bsilk\b/i, entity: { '@type': 'Thing', name: 'Thai silk', sameAs: 'https://en.wikipedia.org/wiki/Thai_silk' } },
+  { pattern: /\bcinnabar\b/i, entity: { '@type': 'Thing', name: 'Cinnabar', sameAs: 'https://en.wikipedia.org/wiki/Cinnabar' } },
+];
+
+export function extractKnowledgeEntities(text: string): EntityReference[] {
+  return knowledgeEntities
+    .filter(({ pattern }) => pattern.test(text))
+    .map(({ entity }) => entity);
+}
+
 function offer(path: string, cents: number, stock: number) {
   return {
     '@type': 'Offer',
@@ -42,11 +67,13 @@ function offer(path: string, cents: number, stock: number) {
 export function productSchema(product: StorefrontProduct) {
   const images = productIndexPhotos(product).map(absoluteUrl);
   const basePath = productOfferPath(product.slug);
+  const entities = extractKnowledgeEntities([product.name, product.description, ...(product.materials ?? [])].filter(Boolean).join(' '));
   const common = {
     description: product.description || product.subtitle || undefined,
     brand: { '@type': 'Brand', name: siteConfig.brand },
     category: product.category,
     material: product.materials?.join(', '),
+    ...(entities.length ? { isSimilarTo: entities } : {}),
   };
   if (product.variants && product.variants.length > 1) {
     const option = variantOption(product.variants);

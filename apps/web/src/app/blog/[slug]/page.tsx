@@ -7,7 +7,7 @@ import { Breadcrumb } from '@/components/breadcrumb';
 import { JournalList } from '@/components/journal-list';
 import { ProductTile } from '@/components/product-tile';
 import { articleImagePaths, editorialArt } from '@/lib/editorial-art';
-import { absoluteUrl, serializeJsonLd } from '@/lib/seo';
+import { absoluteUrl, extractKnowledgeEntities, serializeJsonLd, storeOrganization } from '@/lib/seo';
 import { BLOG_ARTICLES, getArticleBySlug, getRelatedArticles, isPublishedGuide, formatBlogDate, type ArticleImage } from '@/lib/blog-data';
 import { CATEGORIES } from '@/lib/categories';
 import { CATEGORY_EDITORIAL } from '@/lib/category-editorial';
@@ -141,18 +141,33 @@ export default async function BlogArticlePage({ params }: Params) {
       return matches && path !== suggested?.path ? [{ path, title: `Browse ${name.toLowerCase()}` }] : [];
     }),
   ];
+  const entities = extractKnowledgeEntities([article.title, article.description, ...article.keywords].join(' '));
   const articleData = {
     '@context': 'https://schema.org', '@type': 'Article', headline: article.title, description: article.description,
     datePublished: article.publishedAt, dateModified: article.updatedAt,
+    articleSection: article.category,
+    ...(article.keywords.length ? { keywords: article.keywords.join(', ') } : {}),
     mainEntityOfPage: absoluteUrl(`/blog/${slug}`),
     author: { '@type': 'Organization', name: article.author, url: absoluteUrl('/about') },
+    publisher: { '@id': storeOrganization['@id'] },
+    ...(entities.length ? { about: entities } : {}),
     ...(images.length ? { image: images } : {}),
     ...(article.sources?.length ? { citation: article.sources.map(({ title, url }) => ({ '@type': 'CreativeWork', name: title, url })) } : {}),
   };
+  const faqData = article.faq?.length ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: article.faq.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  } : null;
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleData) }} />
+      {faqData && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqData) }} />}
       <SiteHeader />
       <main id="main">
         <div className="mx-auto max-w-4xl px-5 md:px-8"><Breadcrumb items={[...breadcrumb, { label: article.title }]} /></div>
@@ -176,12 +191,46 @@ export default async function BlogArticlePage({ params }: Params) {
             </figure>
           )}
           <div className="mx-auto max-w-3xl space-y-8 px-5 pb-10">
+            {(article.quickAnswer || article.keyTakeaways?.length) && (
+              <aside aria-labelledby="guide-summary-title" className="border-l-2 border-brand bg-surface px-5 py-5 md:px-6">
+                <p id="guide-summary-title" className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand">Quick summary</p>
+                {article.quickAnswer && <p className="mt-2.5 text-sm leading-6 text-ink md:text-base md:leading-7">{article.quickAnswer}</p>}
+                {article.keyTakeaways?.length ? (
+                  <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-6 text-muted">
+                    {article.keyTakeaways.map((point) => <li key={point}>{point}</li>)}
+                  </ul>
+                ) : null}
+              </aside>
+            )}
             {article.content.map((section, index) => (
               <section key={`${section.heading}-${index}`}>
                 <h2 className="font-display text-2xl md:text-3xl">{section.heading}</h2>
                 <div className="mt-3 space-y-3 leading-7 text-ink/90 md:text-lg md:leading-8">
                   {section.body.map((text, paragraph) => <RichParagraph key={paragraph} text={text} catalogLinks={catalogLinks} />)}
                 </div>
+                {section.table && (
+                  <div className="mt-5 overflow-x-auto border border-border bg-bg">
+                    <table className="w-full border-collapse text-left text-xs sm:text-sm">
+                      {section.table.caption && <caption className="sr-only">{section.table.caption}</caption>}
+                      <thead>
+                        <tr className="border-b border-border bg-surface text-ink">
+                          {section.table.headers.map((header) => (
+                            <th key={header} scope="col" className="px-3.5 py-2.5 font-semibold">{header}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-border text-muted">
+                        {section.table.rows.map((row) => (
+                          <tr key={row[0]}>
+                            {row.map((cell, cellIndex) => (
+                              <td key={`${row[0]}-${cellIndex}`} className={`px-3.5 py-2.5 align-top leading-5 ${cellIndex === 0 ? 'font-medium text-ink' : ''}`}>{cell}</td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
                 {section.image && (
                   <figure className="mt-5">
                     <Image
@@ -194,6 +243,19 @@ export default async function BlogArticlePage({ params }: Params) {
                 )}
               </section>
             ))}
+            {article.faq?.length ? (
+              <section aria-labelledby="article-faq" className="border-t border-border pt-7">
+                <h2 id="article-faq" className="font-display text-2xl md:text-3xl">Frequently asked questions</h2>
+                <dl className="mt-4 divide-y divide-border border-y border-border">
+                  {article.faq.map(({ question, answer }) => (
+                    <div key={question} className="py-4">
+                      <dt className="font-display text-lg text-ink">{question}</dt>
+                      <dd className="mt-1.5 text-sm leading-6 text-muted md:text-base md:leading-7">{answer}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+            ) : null}
             {article.sources?.length ? (
               <aside aria-labelledby="article-sources" className="border-y border-border py-5">
                 <h2 id="article-sources" className="font-display text-xl">Sources</h2>
@@ -202,6 +264,12 @@ export default async function BlogArticlePage({ params }: Params) {
                 </ul>
               </aside>
             ) : null}
+            <aside aria-label="About the author" className="border-t border-border pt-5 text-sm leading-6 text-muted">
+              <p>
+                Written by <Link href="/about" className="font-medium text-ink underline underline-offset-4">Nara Charm Studio</Link> — heritage-inspired jewelry design, natural stone curation, and practical fit &amp; care notes.{' '}
+                <Link href="/our-craft" className="text-brand underline underline-offset-4">Read our craft notes ↗</Link>
+              </p>
+            </aside>
             {onwardLinks.length > 0 && (
               <div className="flex flex-wrap gap-x-5 gap-y-1">
                 {onwardLinks.map(({ path, title }) => (

@@ -1,5 +1,6 @@
 import { JOURNAL_GUIDES } from './journal-guides';
 import { ARCHIVED_WELLNESS_GUIDES, JOURNAL_MATERIAL_REVISIONS } from './journal-material-revisions';
+import { JOURNAL_PILLAR_GUIDES } from './journal-pillars';
 
 /**
  * Blog/SEO 内容文章数据
@@ -18,6 +19,17 @@ export type ArticleImage = {
   credit?: { url: string; label: string };
 };
 
+export type ArticleTable = {
+  caption?: string;
+  headers: string[];
+  rows: string[][];
+};
+
+export type ArticleFaq = {
+  question: string;
+  answer: string;
+};
+
 export type BlogArticle = {
   slug: string;
   title: string;           // SEO title (含关键词)
@@ -29,12 +41,15 @@ export type BlogArticle = {
   updatedAt: string;
   readingTime: string;     // "5 min read"
   heroImage?: string;
+  quickAnswer?: string;    // GEO direct answer summary (40-60 words)
+  keyTakeaways?: string[]; // GEO structured takeaways
   relatedProducts: string[]; // product slugs
   relatedArticles?: string[]; // article slugs
   editorialLink?: string;
   publication?: 'archived';
   sources?: readonly { title: string; url: string }[];
-  content: { heading: string; body: string[]; image?: ArticleImage & { width: number; height: number } }[];
+  faq?: ArticleFaq[];
+  content: { heading: string; body: string[]; table?: ArticleTable; image?: ArticleImage & { width: number; height: number } }[];
 };
 
 const legacyArticles: BlogArticle[] = [
@@ -654,7 +669,7 @@ const legacyArticles: BlogArticle[] = [
 ];
 
 export const BLOG_ARTICLES: BlogArticle[] = [
-  ...JOURNAL_MATERIAL_REVISIONS, ...JOURNAL_GUIDES, ...legacyArticles, ...ARCHIVED_WELLNESS_GUIDES,
+  ...JOURNAL_PILLAR_GUIDES, ...JOURNAL_MATERIAL_REVISIONS, ...JOURNAL_GUIDES, ...legacyArticles, ...ARCHIVED_WELLNESS_GUIDES,
 ];
 
 export function isPublishedGuide(article: BlogArticle): boolean {

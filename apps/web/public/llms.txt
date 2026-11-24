@@ -1,19 +1,40 @@
 # Nara Charm
 
-> Nara Charm is a heritage-inspired jewelry studio with bracelets, necklaces, earrings and phone charms. The studio section presents new design previews and their visual references.
+> Nara Charm is a heritage-inspired jewelry studio crafting bracelets, necklaces, earrings and phone charms rooted in Tibetan silverwork, Miao filigree, Han jade-tone lotus motifs, Mongolian braided cord and Thai silk traditions.
 
-## Shop and design
+- Full machine-readable studio reference: [llms-full.txt](https://naracharm.com/llms-full.txt)
 
-- [Shop jewelry](https://naracharm.com/shop): The catalog with category, collection and availability filters.
-- [Collections](https://naracharm.com/collections): Shop collections, product categories and studio collections.
-- [Inside the studio](https://naracharm.com/studio): Design previews and collection notes.
-- [Our craft](https://naracharm.com/our-craft): The design details behind wirework, braided cords and layered shapes.
+## Shop by category
 
-## Guides and service
+- [Shop all jewelry](https://naracharm.com/shop): Browse the full 22-piece catalog by category, collection, material and price.
+- [Bracelets](https://naracharm.com/collections/bracelets): Natural stone bead strands, oxidized silver amulets and adjustable braided cord bracelets ($34–$58).
+- [Necklaces](https://naracharm.com/collections/necklaces): Carved celadon lotus pendants and hammered silver-and-turquoise necklaces ($96–$118).
+- [Earrings](https://naracharm.com/collections/earrings): Openwork Miao-inspired silver filigree flowers and amethyst sterling silver drops ($54–$68).
+- [Phone charms](https://naracharm.com/collections/phone-charms): Braided silk and natural obsidian or cinnabar-red stone charms with slim lanyard loops ($26–$32).
 
-- [The Nara Journal](https://naracharm.com/blog): Guides to materials, fit, care, styling, gifts, motifs and stone colors.
-- [Jewelry size guide](https://naracharm.com/size-guide): How to measure for a bracelet or necklace.
-- [Shipping](https://naracharm.com/shipping): Current rates, delivery estimates and destination information.
-- [Returns](https://naracharm.com/returns): Return conditions and instructions.
-- [Contact](https://naracharm.com/contact): Ask about a specific product, design or order.
-- [Sitemap](https://naracharm.com/sitemap.xml): Canonical public pages.
+## Collections & craft
+
+- [All collections](https://naracharm.com/collections): Tibetan Silver, Caravan Fusion, Han Jade, Crystal Collection, Mongolian Steppe, Southwest Filigree, Thai Silk and Cord & Stone Charms.
+- [Inside the studio](https://naracharm.com/studio): Early design studies and upcoming small-batch collections.
+- [Our craft](https://naracharm.com/our-craft): Material and construction notes covering wirework, braided closures and layered forms.
+- [Stories](https://naracharm.com/stories): Cultural narratives behind regional silverwork, knots, jade and silk.
+- [About Nara Charm](https://naracharm.com/about): Studio overview and regional craft inspirations.
+
+## Flagship buying & material guides
+
+- [Tibetan Silver vs 925 Sterling Silver](https://naracharm.com/blog/tibetan-silver-vs-925-sterling-silver): Composition, hallmarks, tarnishing and care comparison.
+- [Natural Turquoise vs Dyed Howlite](https://naracharm.com/blog/natural-turquoise-vs-dyed-howlite-guide): How to compare veining, hardness, price and care.
+- [Red Cord Bracelet Meaning & Which Wrist](https://naracharm.com/blog/red-cord-bracelet-meaning-which-wrist): Himalayan, East Asian and personal traditions plus knot care.
+- [Bead Size Guide: 6 mm vs 8 mm vs 10 mm](https://naracharm.com/blog/bead-size-guide-6mm-vs-8mm-vs-10mm-bracelets): Wrist proportions, bead counts and stacking balance.
+- [Meaningful Handmade Jewelry Gifts Under $100](https://naracharm.com/blog/meaningful-handmade-jewelry-gifts-under-100): Curated picks under $40, $40–$70 and $70–$100.
+- [The Nara Journal](https://naracharm.com/blog): Complete library of material, fit, styling, gift and care guides.
+
+## Sizing, policies & contact
+
+- [Jewelry size guide](https://naracharm.com/size-guide): Wrist circumference (cm/in), necklace drop lengths, earring drops and phone case checks.
+- [Gift guide](https://naracharm.com/gift-guide): Curated gift picks organized by budget.
+- [Shipping & delivery](https://naracharm.com/shipping): Standard worldwide shipping ($6.90, free from $120) and preparation timelines.
+- [Returns](https://naracharm.com/returns): 30-day eligible return policy and earring hygiene guidelines.
+- [FAQ](https://naracharm.com/faq): Direct answers on materials, sizing, shipping, returns and inquiries.
+- [Contact](https://naracharm.com/contact): Inquire about a piece, request close-up studio photos or confirm measurements.
+- [Sitemap](https://naracharm.com/sitemap.xml): Canonical public URLs.
