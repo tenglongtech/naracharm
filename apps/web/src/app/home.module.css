@@ -62,13 +62,6 @@
   margin-top: 1.35rem;
 }
 
-.heroReassurance {
-  margin-top: 0.9rem;
-  color: #6b5649;
-  font-size: 0.75rem;
-  letter-spacing: 0.01em;
-}
-
 .trustBar {
   border-block: 1px solid var(--home-line);
   background-color: #fbf7f0;

@@ -11,7 +11,7 @@ export type BreadcrumbItem = { label: string; href?: string };
  *   <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Stories' }]} />
  *   最后一项不需要 href (当前页)
  */
-export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
+export function Breadcrumb({ items, hideCurrentOnMobile = false }: { items: BreadcrumbItem[]; hideCurrentOnMobile?: boolean }) {
   const siteUrl = siteConfig.url;
 
   // 拼装 JSON-LD (强制第一个为 Home)
@@ -37,10 +37,11 @@ export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
         <ol className="flex flex-wrap items-center gap-2 py-3 text-xs text-muted">
           {fullItems.map((item, i) => {
             const isLast = i === fullItems.length - 1;
+            const currentClass = isLast && hideCurrentOnMobile ? 'hidden md:block' : undefined;
             return (
               <Fragment key={`${item.label}-${i}`}>
-                {i > 0 && <li aria-hidden="true">/</li>}
-                <li>
+                {i > 0 && <li className={currentClass} aria-hidden="true">/</li>}
+                <li className={currentClass}>
                   {item.href && !isLast ? (
                     <Link prefetch={false} href={item.href} className="hover:text-brand">
                       {item.label}

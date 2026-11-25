@@ -164,13 +164,28 @@ export default async function BlogArticlePage({ params }: Params) {
     })),
   } : null;
 
+  const headingCounts = new Map<string, number>();
+  const sections = article.content.map((section) => {
+    const label = section.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const base = `guide-section-${label || 'details'}`;
+    const count = (headingCounts.get(base) ?? 0) + 1;
+    headingCounts.set(base, count);
+    return { ...section, id: count === 1 ? base : `${base}--${count}` };
+  });
+  const showContents = sections.length >= 5 || sections.some(({ table }) => table);
+  const contents = [
+    ...sections.map(({ id, heading }) => ({ id, heading })),
+    ...(article.faq?.length ? [{ id: 'article-faq', heading: 'Frequently asked questions' }] : []),
+    ...(article.sources?.length ? [{ id: 'article-sources', heading: 'Sources' }] : []),
+  ];
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleData) }} />
       {faqData && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqData) }} />}
       <SiteHeader />
       <main id="main">
-        <div className="mx-auto max-w-4xl px-5 md:px-8"><Breadcrumb items={[...breadcrumb, { label: article.title }]} /></div>
+        <div className="mx-auto max-w-4xl px-5 md:px-8"><Breadcrumb items={[...breadcrumb, { label: article.title }]} hideCurrentOnMobile /></div>
         <article>
           <header className="mx-auto max-w-3xl px-5 py-9 md:py-14">
             <Link href={topicPath} className="text-sm text-brand underline underline-offset-4">{topicTitle}</Link>
@@ -202,33 +217,49 @@ export default async function BlogArticlePage({ params }: Params) {
                 ) : null}
               </aside>
             )}
-            {article.content.map((section, index) => (
-              <section key={`${section.heading}-${index}`}>
-                <h2 className="font-display text-2xl md:text-3xl">{section.heading}</h2>
+            {showContents && (
+              <nav aria-labelledby="guide-contents-title" className="rounded-sm border border-border bg-surface px-5 py-4 md:px-6">
+                <h2 id="guide-contents-title" className="font-display text-xl">On this page</h2>
+                <ul className="mt-2 grid gap-x-6 text-sm leading-5 md:grid-cols-2">
+                  {contents.map(({ id, heading }) => (
+                    <li key={id}>
+                      <a href={`#${id}`} className="inline-flex min-h-11 items-center py-2 text-brand underline underline-offset-4">{heading}</a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+            {sections.map((section) => (
+              <section key={section.id}>
+                <h2 id={section.id} tabIndex={-1} className="font-display text-2xl md:text-3xl">{section.heading}</h2>
                 <div className="mt-3 space-y-3 leading-7 text-ink/90 md:text-lg md:leading-8">
                   {section.body.map((text, paragraph) => <RichParagraph key={paragraph} text={text} catalogLinks={catalogLinks} />)}
                 </div>
                 {section.table && (
-                  <div className="mt-5 overflow-x-auto border border-border bg-bg">
-                    <table className="w-full border-collapse text-left text-xs sm:text-sm">
-                      {section.table.caption && <caption className="sr-only">{section.table.caption}</caption>}
-                      <thead>
-                        <tr className="border-b border-border bg-surface text-ink">
-                          {section.table.headers.map((header) => (
-                            <th key={header} scope="col" className="px-3.5 py-2.5 font-semibold">{header}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-border text-muted">
-                        {section.table.rows.map((row) => (
-                          <tr key={row[0]}>
-                            {row.map((cell, cellIndex) => (
-                              <td key={`${row[0]}-${cellIndex}`} className={`px-3.5 py-2.5 align-top leading-5 ${cellIndex === 0 ? 'font-medium text-ink' : ''}`}>{cell}</td>
+                  <div className="mt-5">
+                    <p className="mb-2 text-xs text-muted sm:hidden">Swipe across the table to compare columns.</p>
+                    <div role="region" aria-label={section.table.caption ?? section.heading} tabIndex={0} className="overflow-x-auto border border-border bg-bg">
+                      <table className="w-full min-w-[26rem] border-collapse text-left text-xs sm:text-sm">
+                        {section.table.caption && <caption className="sr-only">{section.table.caption}</caption>}
+                        <thead>
+                          <tr className="border-b border-border bg-surface text-ink">
+                            {section.table.headers.map((header) => (
+                              <th key={header} scope="col" className="px-3.5 py-2.5 font-semibold">{header}</th>
                             ))}
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="divide-y divide-border text-muted">
+                          {section.table.rows.map((row) => (
+                            <tr key={row[0]}>
+                              <th scope="row" className="px-3.5 py-2.5 align-top font-medium leading-5 text-ink">{row[0]}</th>
+                              {row.slice(1).map((cell, cellIndex) => (
+                                <td key={cellIndex} className="px-3.5 py-2.5 align-top leading-5">{cell}</td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 )}
                 {section.image && (
@@ -245,7 +276,7 @@ export default async function BlogArticlePage({ params }: Params) {
             ))}
             {article.faq?.length ? (
               <section aria-labelledby="article-faq" className="border-t border-border pt-7">
-                <h2 id="article-faq" className="font-display text-2xl md:text-3xl">Frequently asked questions</h2>
+                <h2 id="article-faq" tabIndex={-1} className="font-display text-2xl md:text-3xl">Frequently asked questions</h2>
                 <dl className="mt-4 divide-y divide-border border-y border-border">
                   {article.faq.map(({ question, answer }) => (
                     <div key={question} className="py-4">
@@ -258,7 +289,7 @@ export default async function BlogArticlePage({ params }: Params) {
             ) : null}
             {article.sources?.length ? (
               <aside aria-labelledby="article-sources" className="border-y border-border py-5">
-                <h2 id="article-sources" className="font-display text-xl">Sources</h2>
+                <h2 id="article-sources" tabIndex={-1} className="font-display text-xl">Sources</h2>
                 <ul className="mt-3 space-y-2 text-sm leading-6 text-brand">
                   {article.sources.map(({ title, url }) => <li key={url}><a href={url} className="underline underline-offset-4">{title} <span aria-hidden="true">↗</span></a></li>)}
                 </ul>

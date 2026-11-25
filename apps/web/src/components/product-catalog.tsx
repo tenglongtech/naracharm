@@ -114,7 +114,8 @@ export function ProductCatalog({ products, collections, defaultView = 'all' }: P
     ...(sort ? [{ name: 'sort', label: sort.label, clear: { sort: 'featured' as const } }] : []),
   ];
   const facetCount = activeFacets.length;
-  const hasFilters = Boolean(filters.query.trim() || facetCount || availability !== defaultAvailability);
+  const hasMatchingFilters = Boolean(filters.query.trim() || category || collection || material);
+  const hasFilters = hasMatchingFilters || Boolean(sort) || availability !== defaultAvailability;
 
   useEffect(() => {
     const index = firstAddedResult.current;
@@ -193,8 +194,8 @@ export function ProductCatalog({ products, collections, defaultView = 'all' }: P
             </select>
           </label>
           <label>Material
-            <select value={filters.material ?? ''} onChange={(event) => update({ material: event.target.value || undefined })}>
-              <option value="">All materials</option>
+            <select aria-label="Material" disabled={filters.previewsOnly} value={filters.material ?? ''} onChange={(event) => update({ material: event.target.value || undefined })}>
+              <option value="">{filters.previewsOnly ? 'Available outside studio previews' : 'All materials'}</option>
               {CATALOG_MATERIALS.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
             </select>
           </label>
@@ -246,9 +247,15 @@ export function ProductCatalog({ products, collections, defaultView = 'all' }: P
       ) : (
         <div className={styles.empty}>
           <h2>No pieces match these filters</h2>
-          <p>{material && filters.previewsOnly
-            ? 'Material filters apply to catalog pieces. Choose a different catalog view to browse by material.'
-            : 'Try another material, collection or catalog view.'}</p>
+          <p>{hasMatchingFilters
+            ? 'Clear your search and filters to see more pieces in this view.'
+            : 'Try browsing all pieces.'}</p>
+          <button type="button" className="mt-3 inline-flex min-h-11 items-center text-sm font-medium text-brand underline underline-offset-4" onClick={() => {
+            update(hasMatchingFilters
+              ? { query: '', category: 'all', collection: 'all', material: undefined }
+              : { inStock: false, catalogOnly: false, previewsOnly: false });
+            resultSummary.current?.focus();
+          }}>{hasMatchingFilters ? 'Clear search and filters in this view' : 'Browse all pieces'}</button>
         </div>
       )}
       {visible.length < matches.length && (

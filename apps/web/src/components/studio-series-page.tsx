@@ -11,6 +11,7 @@ import { catalogFragment, defaultCatalogFilters } from '@/lib/catalog-location';
 import { CATEGORIES } from '@/lib/categories';
 import { absoluteUrl, serializeJsonLd } from '@/lib/seo';
 import { designArticles, seriesEditorial } from '@/lib/studio-editorial';
+import { StudioDesignCloseups } from './studio-design-closeups';
 import { siteConfig } from '@/lib/site-config';
 
 function listingLabel(design: StorefrontProduct) {
@@ -53,9 +54,16 @@ export async function StudioSeriesPage({ series }: { series: (typeof STUDIO_SERI
           <h1 className="mt-3 font-display text-[clamp(3.1rem,6.5vw,6.5rem)] leading-[0.92] tracking-[-0.06em]">{series.name}</h1>
           <p className="mt-5 max-w-md text-lg leading-7">{editorial.summary}</p>
           <div className="mt-6 h-2 w-28"><DesignPalette palette={series.palette} /></div>
-          <a href={gallery.length ? '#compare-designs' : '#design-list'} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand underline underline-offset-4">
-            Compare the designs <span aria-hidden="true">↓</span>
-          </a>
+          <div className="mt-4 flex flex-wrap gap-x-5">
+            <a href={gallery.length ? '#compare-designs' : '#design-list'} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand underline underline-offset-4">
+              Compare the designs <span aria-hidden="true">↓</span>
+            </a>
+            {featured.length > 0 && (
+              <a href="#design-close-ups" className="inline-flex min-h-11 items-center gap-2 text-sm text-brand underline underline-offset-4">
+                Design close-ups <span aria-hidden="true">↓</span>
+              </a>
+            )}
+          </div>
         </div>
         {cover && (
           <figure className="md:col-start-1 md:row-start-1">
@@ -74,8 +82,9 @@ export async function StudioSeriesPage({ series }: { series: (typeof STUDIO_SERI
           </figure>
         )}
       </section>
+      {featured.length > 0 && <StudioDesignCloseups designs={featured} />}
       {gallery.length > 0 && (
-        <section id="compare-designs" aria-labelledby="compare-designs-title" className="border-b border-border py-9 lg:py-14">
+        <section id="compare-designs" tabIndex={-1} aria-labelledby="compare-designs-title" className="border-b border-border py-9 lg:py-14">
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
             <div>
               <h2 id="compare-designs-title" className="font-display text-3xl tracking-tight md:text-4xl">Pieces in the collection</h2>
@@ -117,7 +126,7 @@ export async function StudioSeriesPage({ series }: { series: (typeof STUDIO_SERI
           </ul>
         </section>
       )}
-      <section id="design-list" className="grid items-start gap-8 py-9 lg:grid-cols-[1fr_2fr] lg:gap-20 lg:py-14">
+      <section id="design-list" tabIndex={-1} className="grid items-start gap-8 py-9 lg:grid-cols-[1fr_2fr] lg:gap-20 lg:py-14">
         <div>
           <h2 className="font-display text-3xl tracking-tight md:text-4xl">Design notes</h2>
           <p className="mt-4 max-w-prose text-sm leading-7 text-muted">{series.designNotes}</p>
@@ -128,9 +137,6 @@ export async function StudioSeriesPage({ series }: { series: (typeof STUDIO_SERI
           <p className="max-w-prose leading-7">{editorial.detail}</p>
           <h3 className="font-display text-2xl">How to style it</h3>
           <p className="max-w-prose leading-7">{editorial.styling}</p>
-          {featured.length > 0 && <ul className="space-y-2" aria-label="Design close-ups">
-            {featured.map(({ slug, name }) => <li key={slug}><Link href={`/products/${slug}`} prefetch={false} className="text-brand underline underline-offset-4">{name} design details <span aria-hidden="true">↗</span></Link></li>)}
-          </ul>}
         </div>
         {studies.length > 0 && (
           <div>

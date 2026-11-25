@@ -13,7 +13,7 @@ import { CATEGORIES } from '@/lib/categories';
 import { siteConfig } from '@/lib/site-config';
 import { STUDIO_SERIES } from '@/lib/studio-designs';
 import { serializeJsonLd } from '@/lib/seo';
-import { freeShippingFromLabel, RETURN_WINDOW_DAYS } from '@/lib/store-policies';
+import { freeShippingFromLabel, RETURN_WINDOW_DAYS, shippingDestinationsLabel } from '@/lib/store-policies';
 import collectionStyles from './collection-tones.module.css';
 import styles from './home.module.css';
 
@@ -89,7 +89,6 @@ export default async function HomePage() {
               <Link prefetch={false} href="/shop" className={styles.primaryLink}>Shop jewelry <Arrow /></Link>
               <Link prefetch={false} href="/collections" className={styles.textLink}>Browse collections <Arrow diagonal /></Link>
             </div>
-            <p className={styles.heroReassurance}>Free standard shipping from {freeShippingFromLabel} · {RETURN_WINDOW_DAYS}-day eligible returns</p>
           </div>
           <figure className={styles.campaign}>
             <Image src={campaignImage} alt={campaignAlt} fill preload sizes="(max-width: 899px) 100vw, 58vw" className={styles.campaignImage} />
@@ -103,7 +102,7 @@ export default async function HomePage() {
               <span>Worked silver, natural stone &amp; braided cord</span>
             </li>
             <li>
-              <strong>Worldwide delivery</strong>
+              <strong>{shippingDestinationsLabel}</strong>
               <span>Free standard shipping from {freeShippingFromLabel}</span>
             </li>
             <li>

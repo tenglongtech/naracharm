@@ -60,7 +60,7 @@ export default function ShippingPage() {
         {!siteConfig.checkoutEnabled && siteConfig.inquiryFormEnabled && (
           <>
             <p>To confirm delivery for a piece, include the piece name and destination country in your inquiry.</p>
-            <a href="/contact?topic=product" className={styles.contactLink}>
+            <a href="/contact?topic=product&message=Could%20you%20confirm%20delivery%20to%20my%20country%3F" className={styles.contactLink}>
               Ask about delivery <span aria-hidden="true">↗</span>
             </a>
           </>

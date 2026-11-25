@@ -17,7 +17,7 @@ import { variantProductMedia } from '@/lib/product-media';
 import { pageMetadata, productShareImage } from '@/lib/page-metadata';
 import { inquiryPath } from '@/lib/product-inquiry';
 import { siteConfig } from '@/lib/site-config';
-import { freeShippingFromLabel, RETURN_WINDOW_DAYS, standardShippingLabel } from '@/lib/store-policies';
+import { freeShippingFromLabel, RETURN_WINDOW_DAYS, shippingDestinationsLabel, standardShippingLabel } from '@/lib/store-policies';
 import { COLLECTION_EDITORIALS } from '@/lib/collection-editorials';
 import { STUDIO_SERIES } from '@/lib/studio-designs';
 import { designArticles } from '@/lib/studio-editorial';
@@ -213,7 +213,7 @@ export default async function ProductPage({ params }: Params) {
                 <ul aria-label="Order assurances" className={styles.assurances}>
                   <li>{checkoutEnabled ? 'Secure Stripe Checkout' : 'Small-batch studio'}</li>
                   <li>Gift-ready pouch included</li>
-                  <li>Worldwide delivery</li>
+                  <li>{shippingDestinationsLabel}</li>
                 </ul>
                 <nav aria-label="Shopping information" className={styles.serviceLinks}>
                   <Link prefetch={false} href="/shipping#standard" className={styles.serviceRow}>

@@ -9,6 +9,7 @@ import { CategoryLanding } from '@/components/category-landing';
 import { productCard } from '@/lib/catalog';
 import { getStudioCover, STUDIO_SERIES } from '@/lib/studio-designs';
 import { designArticles, seriesEditorial } from '@/lib/studio-editorial';
+import { StudioDesignCloseups } from '@/components/studio-design-closeups';
 import { StudioSeriesPage } from '@/components/studio-series-page';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { getCollectionBySlug, getProductsByCollection, getProductsByCategory, getAllCollections } from '@/lib/storefront';
@@ -84,6 +85,7 @@ export default async function CollectionPage({ params }: Params) {
   const showNotesBesidePiece = Boolean(n?.intro.length && products.length === 1);
   const isStudio = collection.kind === 'studio';
   const editorial = seriesEditorial[slug];
+  const featured = editorial ? products.filter(({ slug: piece, isPreview }) => isPreview && designArticles[piece]) : [];
   const notesCopy = n?.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>);
 
   // Collection + ItemList JSON-LD
@@ -121,7 +123,10 @@ export default async function CollectionPage({ params }: Params) {
               <div className={styles.copy}>
                 <h1>{n?.heroTitle || collection.name}</h1>
                 {(editorial?.summary || n?.heroSubtitle || collection.description) && <p>{editorial?.summary || n?.heroSubtitle || collection.description}</p>}
-                <a href="#collection-pieces">{isStudio ? 'View the designs' : 'Browse the pieces'} <span aria-hidden="true">↓</span></a>
+                <div className="flex flex-wrap gap-x-5">
+                  <a href="#collection-pieces">{isStudio ? 'View the designs' : 'Browse the pieces'} <span aria-hidden="true">↓</span></a>
+                  {featured.length > 0 && <a href="#design-close-ups">Design close-ups <span aria-hidden="true">↓</span></a>}
+                </div>
               </div>
               {artwork && (
                 <figure className={styles.figure}>
@@ -134,6 +139,7 @@ export default async function CollectionPage({ params }: Params) {
           </div>
         </header>
 
+        {featured.length > 0 && <div className={styles.shell}><StudioDesignCloseups designs={featured} /></div>}
         <section id="collection-pieces" aria-labelledby="collection-pieces-title" className={`${styles.shell} py-10 md:py-14`} tabIndex={-1}>
           <div className="flex flex-wrap items-end justify-between gap-2">
             <h2 id="collection-pieces-title" className="font-display text-3xl md:text-4xl">{isStudio ? 'Pieces in the collection' : `Shop ${collection.name}`}</h2>
@@ -164,9 +170,6 @@ export default async function CollectionPage({ params }: Params) {
                 <p>{editorial.detail}</p>
                 <h3 className="mt-4 font-display text-2xl">How to style it</h3>
                 <p>{editorial.styling}</p>
-                {products.filter(({ slug: piece, isPreview }) => isPreview && designArticles[piece]).map(({ slug: piece, name }) => (
-                  <p key={piece}><Link prefetch={false} href={`/products/${piece}`} className={styles.textLink}>{name} design details <span aria-hidden="true">↗</span></Link></p>
-                ))}
                 <p><Link prefetch={false} href="/blog/how-to-compare-pendant-widths" className={styles.textLink}>Comparing pendant width <span aria-hidden="true">↗</span></Link></p>
               </div>
             </div>

@@ -42,7 +42,7 @@ export function parseCatalogLocation(
       query: (params.get('q') ?? '').slice(0, catalogQueryLimit),
       category: CATEGORIES.some(({ productType }) => productType === category) ? category : 'all',
       collection: collections.has(collection) ? collection : 'all',
-      ...(material ? { material: material.value } : {}),
+      ...(material && !isPreview ? { material: material.value } : {}),
       inStock: isStock, previewsOnly: isPreview,
       ...(catalogOnly ? { catalogOnly } : {}),
       sort: sort === 'price-asc' || sort === 'price-desc' ? sort : 'featured',
@@ -56,7 +56,7 @@ export function catalogFragment({ filters, pages }: CatalogView, defaultCatalogO
   if (filters.query.trim()) params.set('q', filters.query.slice(0, catalogQueryLimit));
   if (filters.category !== 'all') params.set('category', filters.category);
   if (filters.collection && filters.collection !== 'all') params.set('collection', filters.collection);
-  if (filters.material) params.set('material', filters.material);
+  if (filters.material && !filters.previewsOnly) params.set('material', filters.material);
   if (filters.inStock) params.set('availability', 'stock');
   else if (filters.catalogOnly && !defaultCatalogOnly) params.set('availability', 'catalog');
   else if (filters.previewsOnly) params.set('availability', 'preview');

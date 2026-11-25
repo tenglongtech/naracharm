@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { CartIcon } from './cart-icon';
 import { LotusMark } from './lotus-mark';
 import { subscribeToCart, getLocalCart } from '@/lib/cart-local';
-import { FREE_SHIPPING_THRESHOLD_CENTS } from '@/lib/cart-types';
+import { freeShippingFromLabel, shippingDestinationsLabel } from '@/lib/store-policies';
 import { catalogHashPrefix } from '@/lib/catalog-location';
 import { siteConfig } from '@/lib/site-config';
 
@@ -56,7 +56,7 @@ export function SiteHeaderClient() {
       {/* 公告栏 */}
       <div className="bg-[#843d30] text-bg">
         <div className="mx-auto flex max-w-7xl items-center justify-center px-4 py-2 text-[11px] tracking-wide md:text-xs">
-          <Link prefetch={false} href="/shipping" className="underline-offset-4 hover:underline focus-visible:outline-bg">Complimentary standard shipping from ${FREE_SHIPPING_THRESHOLD_CENTS / 100} · Worldwide delivery <span aria-hidden="true">↗</span></Link>
+          <Link prefetch={false} href="/shipping" className="underline-offset-4 hover:underline focus-visible:outline-bg">{shippingDestinationsLabel} · Free from {freeShippingFromLabel}</Link>
         </div>
       </div>
 

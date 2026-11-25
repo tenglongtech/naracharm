@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRef, useState, type FormEvent } from 'react';
 
 const topics = {
-  product: 'Question about a piece',
+  product: 'Piece, availability or delivery',
   studio: 'Studio design inquiry',
   order: 'Order inquiry',
   returns: 'Return or exchange',
@@ -24,6 +24,9 @@ export function ContactComposer({ email, supportEmail, submitOnline }: { email: 
   const piece = params.get('piece')?.slice(0, 140) ?? '';
   const message = params.get('message')?.slice(0, 1400) ?? '';
   const order = params.get('order')?.slice(0, 60) ?? '';
+  const [topicDraft, setTopicDraft] = useState({ params, value: topic });
+  const selectedTopic = topicDraft.params === params ? topicDraft.value : topic;
+  const showOrder = selectedTopic === 'order' || selectedTopic === 'returns';
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const [reference, setReference] = useState('');
@@ -90,6 +93,7 @@ export function ContactComposer({ email, supportEmail, submitOnline }: { email: 
         <button type="button" className="shop-button" onClick={() => {
           submission.current = null;
           setReference('');
+          setTopicDraft({ params, value: topic });
         }}>Send another inquiry</button>
       </section>
     );
@@ -97,7 +101,7 @@ export function ContactComposer({ email, supportEmail, submitOnline }: { email: 
   return (
     <form onSubmit={compose} method="post" aria-busy={sending} className="mt-8 space-y-4 rounded-sm border border-border bg-surface p-5 sm:p-7">
       <label className="block text-sm font-medium">Topic
-        <select name="topic" aria-label="Topic" key={topic} defaultValue={topic} className={input}>
+        <select name="topic" aria-label="Topic" value={selectedTopic} onChange={(event) => setTopicDraft({ params, value: event.target.value })} className={input}>
           {Object.entries(topics).map(([value, label]) => <option value={value} key={value}>{label}</option>)}
         </select>
       </label>
@@ -107,8 +111,8 @@ export function ContactComposer({ email, supportEmail, submitOnline }: { email: 
       <label className="block text-sm font-medium">Piece name <span className="font-normal text-muted">(optional)</span>
         <input name="piece" key={piece} defaultValue={piece} autoComplete="off" maxLength={140} className={input} />
       </label>
-      <label className="block text-sm font-medium">Order number <span className="font-normal text-muted">(optional)</span>
-        <input name="order" key={order} defaultValue={order} spellCheck={false} autoComplete="off" maxLength={60} className={input} />
+      <label hidden={!showOrder} className={showOrder ? 'block text-sm font-medium' : undefined}>Order number <span className="font-normal text-muted">(optional)</span>
+        <input name="order" disabled={!showOrder} key={order} defaultValue={order} spellCheck={false} autoComplete="off" maxLength={60} className={input} />
       </label>
       <label className="block text-sm font-medium">Message
         <textarea name="message" key={message} defaultValue={message} rows={5} required maxLength={1400} className={input} />

@@ -6,7 +6,7 @@ const collections = new Set(['crystal', 'jade-and-paper']);
 
 test('catalog filters and expanded results round-trip in a shareable fragment', () => {
   const original = {
-    filters: { query: 'silver & 石', category: 'necklace', collection: 'jade-and-paper', material: 'sterling-silver', inStock: false, previewsOnly: true, sort: 'price-desc' as const },
+    filters: { query: 'silver & 石', category: 'necklace', collection: 'jade-and-paper', material: 'sterling-silver', inStock: false, previewsOnly: false, sort: 'price-desc' as const },
     pages: 3,
   };
   const hash = catalogFragment(original);
@@ -43,4 +43,17 @@ test('catalog-only links are shareable and old stock links open the catalog in i
   const shopAll = parseCatalogLocation('#catalog?availability=all', collections, 3, true, true);
   assert.equal(shopAll.filters.catalogOnly, undefined);
   assert.equal(catalogFragment(shopAll, true), '#catalog?availability=all');
+});
+
+test('studio preview links discard material while retaining compatible filters', () => {
+  const view = parseCatalogLocation('#catalog?q=silver&category=necklace&collection=jade-and-paper&material=sterling-silver&availability=preview', collections, 5, false, true);
+  assert.equal(view.filters.previewsOnly, true);
+  assert.equal(view.filters.material, undefined);
+  assert.equal(view.filters.query, 'silver');
+  assert.equal(view.filters.category, 'necklace');
+  assert.equal(view.filters.collection, 'jade-and-paper');
+  assert.equal(
+    catalogFragment({ ...view, filters: { ...view.filters, material: 'sterling-silver' } }, true),
+    '#catalog?q=silver&category=necklace&collection=jade-and-paper&availability=preview',
+  );
 });

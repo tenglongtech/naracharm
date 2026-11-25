@@ -46,6 +46,8 @@ export const shippingRegions = [
 
 export const shippingCountryCodes = shippingRegions.flatMap((region) => region.countries.map((country) => country.code));
 
+export const shippingDestinationsLabel = `Shipping to ${shippingCountryCodes.length} destinations`;
+
 export function standardShippingCents(subtotalCents: number, freeShipping = false) {
   return subtotalCents === 0 || freeShipping || subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS
     ? 0
